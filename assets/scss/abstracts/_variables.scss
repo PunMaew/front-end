@@ -1,0 +1,26 @@
+$dark: #2f3542;
+$white: #ffffff;
+$green: #19ba88;
+$yellow: #fdcb6e;
+$red: #f77272;
+
+$orange: #ffb88a;
+$orange2: #ff8053;
+$salmon: #fabaab;
+$salmon2: #ffebe7;
+$blue: #bbd5f7;
+$blue2: #1e58c6;
+$purple: #ccabd5;
+$purple2: #f4def3;
+$grey_placeholder: #a3a3a3;
+$field: #f4f4f4;
+$header_height: 54px;
+
+.text-default {
+  color: $dark;
+}
+.text-white {
+  color: $white;
+}
+
+@import "mixins";
