@@ -1,6 +1,9 @@
-import colors from "vuetify/es5/util/colors";
+// import colors from "vuetify/es5/util/colors";
 
 export default {
+  server: {
+    port: 8080, // default: 3000
+  },
   // Global page headers: https://go.nuxtjs.dev/config-head
   head: {
     // titleTemplate: '%s - fe-punmaew',
@@ -11,10 +14,20 @@ export default {
     meta: [
       { charset: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { hid: "description", name: "description", content: "" },
-      { name: "format-detection", content: "telephone=no" },
+      {
+        hid: "description",
+        name: "description",
+        content: "Web Application สำหรับช่วยเหลือน้องแมวไร้บ้าน",
+      },
+      // { name: "format-detection", content: "telephone=no" },
     ],
-    link: [{ rel: "icon", type: "image/x-icon", href: "/favicon.ico" }],
+    link: [
+      { rel: "icon", type: "image/x-icon", href: "/favicon.ico" },
+      {
+        rel: "stylesheet",
+        href: "https://cdn-uicons.flaticon.com/uicons-regular-rounded/css/uicons-regular-rounded.css",
+      },
+    ],
   },
 
   // Global CSS: https://go.nuxtjs.dev/config-css

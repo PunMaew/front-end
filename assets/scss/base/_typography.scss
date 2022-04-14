@@ -3,27 +3,13 @@
 // The variables you want to modify
 // $font-size-root: 20px;
 
-@import url("https://fonts.googleapis.com/css2?family=Bai+Jamjuree&display=swap");
-
-// @font-face {
-//   font-family: "Bai Jamjuree";
-//   src: url("https://fonts.googleapis.com/css2?family=Bai+Jamjuree&display=swap");
-//   font-weight: 400;
-// }
-// @font-face {
-//   font-family: "Bai Jamjuree";
-//   src: url("https://fonts.googleapis.com/css2?family=Bai+Jamjuree:wght@500&display=swap");
-// }
-// @font-face {
-//   font-family: "Bai Jamjuree";
-//   src: url("https://fonts.googleapis.com/css2?family=Bai+Jamjuree:wght@600&display=swap");
-// }
-
+// @import url("https://fonts.googleapis.com/css2?family=Bai+Jamjuree&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Kodchasan&display=swap");
 html,
 body {
   font-size: 16px;
   color: $dark;
-  font-family: "Bai Jamjuree";
+  font-family: "Kodchasan" !important;
   h1,
   .h1 {
     font-size: 1.802rem;
@@ -50,5 +36,17 @@ body {
   }
   p {
     font-size: 1rem;
+  }
+  .v-application h1,
+  .v-application h2,
+  .v-application h3,
+  .v-application h4,
+  .v-application h5,
+  .v-application h6,
+  .v-application .title {
+    font-family: "Kodchasan" !important;
+  }
+  .v-application {
+    font-family: "Kodchasan" !important;
   }
 }
