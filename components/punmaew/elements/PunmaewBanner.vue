@@ -50,20 +50,24 @@ export default {
 
 <style scoped lang="scss">
 .banner-description {
-  font-size: 18px;
+  font-size: 14px;
 }
 .banner-title {
-  font-size: 40px;
+  font-size: 20px;
 }
 .btn-search {
   background: linear-gradient(180deg, #fdc454 0%, #ff9474 100%);
   box-shadow: 0px 4px 15px #ffcab4;
   border-radius: 50px;
-  width: 287px;
+  width: 100%;
   color: $white;
-  padding: 14px 30px;
+  padding: 10px 20px;
   font-weight: bold;
   letter-spacing: 1px;
+  @media (min-width: 1440px) {
+    padding: 14px 30px;
+    width: 287px;
+  }
 }
 .set-flex-row {
   justify-content: flex-start !important;
@@ -72,7 +76,7 @@ export default {
 .card-banner {
   background: $yellow-light;
   border-radius: 30px;
-  margin: 40px 0px;
+  margin-top: 40px;
   padding: 15px 15px;
   @media (min-width: 768px) {
     border-radius: 14px;
@@ -80,14 +84,16 @@ export default {
   }
   @media (min-width: 1024px) {
     border-radius: 16px;
-    margin: 50px 0px;
+    margin-top: 50px;
     padding: 40px 65px;
   }
 }
 .set-bg-banner {
-  position: absolute;
-  top: 650px;
-  left: 0%;
+  // position: absolute;
+  // top: 650px;
+  // left: 0%;
+  margin-top: -173px;
+  z-index: 20;
   width: 100%;
 }
 </style>

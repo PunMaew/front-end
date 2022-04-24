@@ -26,7 +26,6 @@
           </ul>
         </v-col>
         <!-- <v-col>
-      
           <div class="d-md-none">
             <v-menu min-width="200" offset-y>
               <template v-slot:activator="{ on: menu, attrs }">
@@ -50,7 +49,6 @@
               </v-list>
             </v-menu>
           </div>
-         
         </v-col> -->
       </v-row>
     </v-container>
@@ -101,7 +99,7 @@ header {
   z-index: 50;
   position: relative;
   // border-bottom: 1px solid#f9f9f9;
-  background-color: $orange-light;
+  // background-color: $orange-light;
 }
 #logo {
   height: 35px;
@@ -128,12 +126,10 @@ ul#menu {
     }
   }
 }
-@media (min-width: 1024px) {
-}
 
-// @media (min-width: 1264px) {
-//   .container {
-//     max-width: 1185px;
-//   }
-// }
+@media (min-width: 1264px) {
+  .container {
+    max-width: 1185px;
+  }
+}
 </style>

@@ -29,9 +29,8 @@ export default {
 
 <style lang="scss" scoped>
 .btn {
-  // background: $dark;
   background: linear-gradient(180deg, #93a3ff 0%, #609fff 100%);
-  // box-shadow: 0px 4px 15px rgba(105, 161, 255, 0.5);
+
   padding-top: 10px;
   padding-bottom: 10px;
   padding-left: 20px;
@@ -43,7 +42,7 @@ export default {
   cursor: pointer;
   display: inline-block;
   font-weight: bold;
-  // transition: 0.3s box-shadow;
+
   width: 160px;
   max-width: 100%;
   & + .btn {
@@ -60,22 +59,6 @@ export default {
       box-shadow: none;
     }
   }
-  // &.outline {
-  //   border: 1px solid $dark;
-  //   background: #fff;
-  //   color: $dark;
-  //   &:hover {
-  //     background: $dark;
-  //     color: #fff;
-  //   }
-  // }
-  // &.fill {
-  //   width: 100%;
-  //   display: block;
-  // }
-  // &:hover {
-  //   box-shadow: 0px 2px 4px rgba(39, 40, 51, 0.12);
-  // }
 }
 
 .btn {
@@ -84,13 +67,6 @@ export default {
   &:hover {
     background: $dark;
   }
-  // &.outline {
-  //   &:hover {
-  //     background: $orange;
-  //     color: #fff;
-  //     border-color: #fff;
-  //   }
-  // }
 }
 
 .btn.btn-cmd {

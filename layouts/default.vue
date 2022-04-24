@@ -1,15 +1,18 @@
 <template>
   <v-app>
-    <BaseNav />
+    <TheHeader />
     <nuxt />
+    <TheFooter />
   </v-app>
 </template>
 
 <script>
-import BaseNav from "@/components/punmaew/components/BaseNav.vue";
+import TheFooter from "../components/punmaew/components/TheFooter.vue";
+import TheHeader from "../components/punmaew/components/TheHeader.vue";
 export default {
   components: {
-    BaseNav,
+    TheFooter,
+    TheHeader,
   },
 };
 </script>
