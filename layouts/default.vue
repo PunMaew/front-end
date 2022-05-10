@@ -1,8 +1,10 @@
 <template>
   <v-app>
-    <TheHeader />
-    <nuxt />
-    <TheFooter />
+    <v-main>
+      <TheHeader />
+      <nuxt />
+      <TheFooter />
+    </v-main>
   </v-app>
 </template>
 

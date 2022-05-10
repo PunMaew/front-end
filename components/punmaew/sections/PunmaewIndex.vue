@@ -94,8 +94,9 @@ export default {};
   color: $orange;
 }
 .pm-articles {
-  margin-bottom: 115px;
-  margin-top: 139px;
+  margin-top: 64px;
+  // margin-bottom: 115px;
+  // margin-top: 139px;
 }
 .backDrop {
   filter: brightness(0.5);
@@ -136,6 +137,7 @@ export default {};
 .pm-title {
   font-size: 22px;
   font-weight: bold;
+  text-align: center;
   @media (min-width: 1024px) {
     font-size: 36px;
   }

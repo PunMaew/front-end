@@ -18,7 +18,7 @@
             </li>
           </ul>
         </v-col>
-        <v-col cols="4" class="nav-right">
+        <v-col sm="4" class="nav-right">
           <ul id="menu" class="d-none d-md-flex">
             <li>
               <base-button>เข้าสู่ระบบ</base-button>
