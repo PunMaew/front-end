@@ -21,30 +21,24 @@
                 <div class="pm-title text-center text-sm-left">
                   <h1>PunMaew</h1>
                   <p class="pm-description">
-                    Web Application <br />
-                    สำหรับช่วยเหลือน้องแมวไร้บ้าน
+                    Web Application สำหรับช่วยเหลือน้องแมวไร้บ้าน
                   </p>
                 </div>
 
-                <div class="btn-area">
-                  <v-row no-gutters justify="center" class="btn-set-row">
-                    <v-col align-self="center">
-                      <button @click="finderHome" class="adoption-btn">
-                        <img
-                          src="@/assets/imgs/icon-cat.svg"
-                          alt="finderHome"
-                        />
-                        <span>หาบ้านให้แมว</span>
-                      </button>
-                    </v-col>
-                    <v-col align-self="center">
-                      <button @click="adoptCat" class="adoption-btn">
-                        <img src="@/assets/imgs/icon-cat2.svg" alt="adoptCat" />
-                        <span>รับเลี้ยงแมว</span>
-                      </button>
-                    </v-col>
-                  </v-row>
-                </div>
+                <adopt-btn-group>
+                  <template slot="finderHome">
+                    <button @click="finderHome" class="adoption-btn">
+                      <img src="@/assets/imgs/icon-cat.svg" alt="finderHome" />
+                      <span>หาบ้านให้แมว</span>
+                    </button>
+                  </template>
+                  <template slot="adoptCat">
+                    <button @click="adoptCat" class="adoption-btn">
+                      <img src="@/assets/imgs/icon-cat2.svg" alt="adoptCat" />
+                      <span>รับเลี้ยงแมว</span>
+                    </button>
+                  </template>
+                </adopt-btn-group>
               </v-col>
             </v-row>
           </v-col>
@@ -55,137 +49,74 @@
       </div> -->
     </section>
 
-    <section class="pm-banner">
-      <v-container>
-        <v-row justify="center">
-          <v-col cols="12" sm="10" lg="12" align-self="center">
-            <div class="set-banner">
-              <v-row justify="center">
-                <v-col cols="4" sm="4" lg="3" class="pb-0" align-self="center">
-                  <img src="@/assets/imgs/banner.png" alt="" />
-                </v-col>
-                <v-col cols="12" sm="6" lg="7" align-self="center" class="pt-0">
-                  <p
-                    class="text-center font-weight-bold text-sm-left mb-2 title-banner"
-                  >
-                    Lorem ipsum
-                  </p>
-                  <p class="text-center text-sm-left desc-banner mb-0">
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                    Velit
-                  </p>
-                  <button class="btn-search d-none d-sm-flex mt-4">
-                    <img src="@/assets/imgs/icon-search.svg" alt="" />
-                    เริ่มค้นหาแมวในอุดมคติ
+    <punmaew-banner :ordersm="false" :color="true">
+      <template slot="img-banner">
+        <img src="@/assets/imgs/banner.png" alt="" />
+      </template>
+      <template slot="content-banner">
+        <div>
+          <p class="text-center text-sm-left desc-banner mb-0">
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Velit
+          </p>
+
+          <base-button :fillSearch="true" class="d-none d-sm-flex mt-4">
+            <img src="@/assets/imgs/icon-search.svg" alt="" />
+            เริ่มค้นหาแมวในอุดมคติ
+          </base-button>
+        </div>
+      </template>
+      <template slot="details-other">
+        <v-col
+          cols="10"
+          align-self="center"
+          class="pt-0 d-sm-none d-md-none d-lg-none d-xl-none"
+        >
+          <base-button :fillSearch="true">
+            <img src="@/assets/imgs/icon-search.svg" alt="" />
+            เริ่มค้นหาแมวในอุดมคติ
+          </base-button>
+        </v-col>
+      </template>
+    </punmaew-banner>
+    <PunmaewIndex class="mt-6" />
+    <punmaew-banner :color="false" :ordersm="true">
+      <template slot="img-banner">
+        <img src="@/assets/imgs/banner2.png" alt="" />
+      </template>
+      <template slot="content-banner">
+        <div>
+          <v-row justify="center" class="banner-set-row">
+            <v-col cols="12" lg="10" align-self="center" class="pt-0">
+              <adopt-btn-group>
+                <template slot="finderHome">
+                  <button @click="finderHome" class="adoption-btn">
+                    <img src="@/assets/imgs/icon-cat.svg" alt="finderHome" />
+                    <span>หาบ้านให้แมว</span>
                   </button>
-                </v-col>
-                <v-col
-                  cols="10"
-                  align-self="center"
-                  class="pt-0 d-sm-none d-md-none d-lg-none d-xl-none"
-                >
-                  <button class="btn-search">
-                    <img src="@/assets/imgs/icon-search.svg" alt="" />
-                    เริ่มค้นหาแมวในอุดมคติ
+                </template>
+                <template slot="adoptCat">
+                  <button @click="adoptCat" class="adoption-btn">
+                    <img src="@/assets/imgs/icon-cat2.svg" alt="adoptCat" />
+                    <span>รับเลี้ยงแมว</span>
                   </button>
-                </v-col>
-              </v-row>
-            </div>
-          </v-col>
-        </v-row>
-      </v-container>
-    </section>
-    <PunmaewIndex class="pm-set-top" />
-    <section class="pm-banner2 pm-set-top">
-      <v-container>
-        <v-row justify="center">
-          <v-col
-            cols="12"
-            sm="10"
-            lg="12"
-            align-self="center"
-            class="px-0 py-0"
-          >
-            <div class="set-banner2">
-              <v-row justify="center">
-                <v-col
-                  order-sm="2"
-                  cols="4"
-                  sm="4"
-                  lg="3"
-                  class="pb-0"
-                  align-self="center"
-                >
-                  <img src="@/assets/imgs/banner2.png" alt="" />
-                </v-col>
-                <v-col cols="12" sm="6" lg="7" align-self="center" class="pt-0">
-                  <p
-                    class="text-center font-weight-bold text-sm-left mb-2 title-banner"
-                  >
-                    Lorem ipsum
-                  </p>
-                  <div>
-                    <v-row justify="center" class="banner-set-row">
-                      <v-col cols="12" lg="10" align-self="center" class="pt-0">
-                        <div class="btn-area">
-                          <v-row
-                            no-gutters
-                            justify="center"
-                            class="btn-set-row"
-                          >
-                            <v-col align-self="center">
-                              <button @click="finderHome" class="adoption-btn">
-                                <img
-                                  src="@/assets/imgs/icon-cat.svg"
-                                  alt="finderHome"
-                                />
-                                <span>หาบ้านให้แมว</span>
-                              </button>
-                            </v-col>
-                            <v-col align-self="center">
-                              <button @click="adoptCat" class="adoption-btn">
-                                <img
-                                  src="@/assets/imgs/icon-cat2.svg"
-                                  alt="adoptCat"
-                                />
-                                <span>รับเลี้ยงแมว</span>
-                              </button>
-                            </v-col>
-                          </v-row>
-                        </div>
-                      </v-col>
-                    </v-row>
-                  </div>
-                  <!-- <button class="btn-search d-none d-sm-flex mt-4">
-                    <img src="@/assets/imgs/icon-search.svg" alt="" />
-                    เริ่มค้นหาแมวในอุดมคติ
-                  </button> -->
-                </v-col>
-                <!-- <v-col
-                  cols="10"
-                  align-self="center"
-                  class="pt-0 d-sm-none d-md-none d-lg-none d-xl-none"
-                >
-                  <button class="btn-search">
-                    <img src="@/assets/imgs/icon-search.svg" alt="" />
-                    เริ่มค้นหาแมวในอุดมคติ
-                  </button>
-                </v-col> -->
-              </v-row>
-            </div>
-          </v-col>
-        </v-row>
-      </v-container>
-    </section>
+                </template>
+              </adopt-btn-group>
+            </v-col>
+          </v-row>
+        </div>
+      </template>
+    </punmaew-banner>
   </div>
 </template>
 
 <script>
 import PunmaewIndex from "../components/punmaew/sections/PunmaewIndex.vue";
 import PunmaewBanner from "../components/punmaew/elements/PunmaewBanner.vue";
-import PunmaewBanner2 from "../components/punmaew/elements/PunmaewBanner2.vue";
+import BaseButton from "../components/punmaew/components/BaseButton.vue";
+import AdoptBtnGroup from "../components/punmaew/components/AdoptBtnGroup.vue";
+// import PunmaewBanner2 from "../components/punmaew/elements/PunmaewBanner2.vue";
 export default {
-  components: { PunmaewBanner, PunmaewIndex, PunmaewBanner2 },
+  components: { PunmaewBanner, PunmaewIndex, BaseButton, AdoptBtnGroup },
   methods: {
     finderHome() {
       this.$router.push(`/finderHome`);
@@ -203,29 +134,14 @@ export default {
     justify-content: flex-start !important;
   }
 }
-.title-banner {
-  @media (min-width: 1440px) {
-    font-size: 40px;
-  }
-}
+
 .desc-banner {
   font-size: 14px;
   @media (min-width: 1440px) {
     font-size: 18px;
   }
 }
-.btn-set-row {
-  gap: 10px;
-  @media (min-width: 768px) {
-    justify-content: left !important;
-  }
-  @media (min-width: 1440px) {
-    gap: 30px;
-  }
-}
-.btn-area {
-  margin-top: 24px;
-}
+
 .adoption-btn {
   width: 100%;
   background: #ffffff;
@@ -246,77 +162,11 @@ export default {
   @media (min-width: 1440px) {
     border: 2px solid $purple-dark;
     border-radius: 10px;
-    padding: 34px 30px;
+    padding: 34px 25px;
     font-size: 20px;
     img {
       width: 54px !important;
       margin-right: 15px;
-    }
-  }
-}
-.pm-banner2 {
-  background-color: $purple-light;
-  padding: 30px 20px;
-
-  .set-banner2 {
-    background-color: $white;
-    padding: 18px 9px;
-    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
-    border-radius: 15px;
-
-    img {
-      width: 100%;
-    }
-  }
-}
-.pm-set-top {
-  margin-top: 64px;
-}
-.btn-search {
-  background: linear-gradient(180deg, #fdc454 0%, #ff9474 100%);
-  box-shadow: 0px 4px 15px #ffcab4;
-  border-radius: 50px;
-  width: 100%;
-  color: $white;
-  padding-top: 10px;
-  padding-bottom: 10px;
-  font-size: 12px;
-  font-weight: bold;
-  letter-spacing: 1px;
-  justify-content: center;
-  img {
-    width: 15px !important;
-    margin-right: 5px;
-  }
-  @media (min-width: 1440px) {
-    width: 55%;
-    padding-top: 14px;
-    padding-bottom: 14px;
-    font-size: 18px;
-    img {
-      width: 20px !important;
-      margin-right: 12px;
-    }
-  }
-}
-.pm-banner {
-  background-color: $yellow-light;
-  padding: 18px 8px;
-
-  .set-banner {
-    background-color: $white;
-    padding: 18px 9px;
-    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
-    border-radius: 15px;
-
-    img {
-      width: 100%;
-    }
-    @media (min-width: 768px) {
-      padding: 32px 16px !important;
-    }
-    @media (min-width: 1440px) {
-      padding: 40px 16px !important;
     }
   }
 }

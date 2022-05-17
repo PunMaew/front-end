@@ -137,9 +137,14 @@ export default {};
 .pm-title {
   font-size: 22px;
   font-weight: bold;
-  text-align: center;
+  text-align: left;
   @media (min-width: 1024px) {
     font-size: 36px;
+  }
+}
+@media (min-width: 1264px) {
+  .container {
+    max-width: 1185px;
   }
 }
 </style>

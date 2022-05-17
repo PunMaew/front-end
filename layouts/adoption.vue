@@ -1,19 +1,19 @@
 <template>
   <v-app>
     <v-main>
-      <TheHeader :bgColor="false" />
+      <TheHeader :bgColor="true" />
       <nuxt />
-      <TheFooter />
+      <!-- <TheFooter /> -->
     </v-main>
   </v-app>
 </template>
 
 <script>
-import TheFooter from "../components/punmaew/components/TheFooter.vue";
+// import TheFooter from "../components/punmaew/components/TheFooter.vue";
 import TheHeader from "../components/punmaew/components/TheHeader.vue";
 export default {
   components: {
-    TheFooter,
+    // TheFooter,
     TheHeader,
   },
 };
