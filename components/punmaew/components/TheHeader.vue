@@ -1,9 +1,11 @@
 <template>
-  <header class="d-flex align-center position-relative">
+  <header class="d-flex align-center position-relative" :class="`${_bg_color}`">
     <v-container class="justify-center d-flex">
       <v-row justify="center">
         <v-col sm="4" class="nav-left">
-          <img src="~/assets/imgs/logo.png" alt="punmaew" id="logo" />
+          <n-link to="/" class="opunmai">
+            <img src="~/assets/imgs/logo.png" alt="punmaew" id="logo" />
+          </n-link>
         </v-col>
         <v-col sm="4" class="nav-center">
           <ul id="menu" class="d-none d-md-flex">
@@ -11,17 +13,21 @@
               <p class="mb-0">บทความ</p>
             </li>
             <li>
-              <p class="mb-0">หาบ้านให้แมว</p>
+              <n-link to="/finderHome" class="opunmai">
+                <p class="mb-0">หาบ้านให้แมว</p>
+              </n-link>
             </li>
             <li>
-              <p class="mb-0">รับเลี้ยงแมว</p>
+              <n-link to="/adoptCat" class="opunmai">
+                <p class="mb-0">รับเลี้ยงแมว</p>
+              </n-link>
             </li>
           </ul>
         </v-col>
         <v-col sm="4" class="nav-right">
           <ul id="menu" class="d-none d-md-flex">
             <li>
-              <base-button>เข้าสู่ระบบ</base-button>
+              <base-button :fill="true">เข้าสู่ระบบ</base-button>
             </li>
           </ul>
         </v-col>
@@ -59,7 +65,17 @@
 import BaseButton from "./BaseButton.vue";
 export default {
   components: { BaseButton },
-  props: {},
+  props: {
+    bgColor: {
+      type: Boolean,
+      default: false,
+    },
+  },
+  computed: {
+    _bg_color() {
+      return this.bgColor ? "bgColor" : "";
+    },
+  },
   methods: {
     // logout() {
     //   this.$auth.logout();
@@ -75,6 +91,9 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.bgColor {
+  background-color: $orange-light;
+}
 .nav-left {
   padding-top: 0px;
   padding-bottom: 0px;
@@ -118,9 +137,17 @@ header {
 ul#menu {
   padding: 0;
   display: flex;
+
+  &:active {
+    color: $orange;
+  }
   li {
     list-style: none;
     align-self: center;
+    color: $dark;
+    &:hover {
+      color: $orange;
+    }
     & + li {
       margin-left: 40px;
     }

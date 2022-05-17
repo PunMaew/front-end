@@ -1,5 +1,5 @@
 <template>
-  <div @click="$emit('click')" :class="`btn ${_outline} ${_fill}`">
+  <div @click="$emit('click')" :class="`btn ${_fill} ${_fill_search}`">
     <slot></slot>
   </div>
 </template>
@@ -7,21 +7,21 @@
 <script>
 export default {
   props: {
-    outline: {
+    fill: {
       type: Boolean,
       default: false,
     },
-    fill: {
+    fillSearch: {
       type: Boolean,
       default: false,
     },
   },
   computed: {
-    _outline() {
-      return this.outline ? "outline" : "";
-    },
     _fill() {
       return this.fill ? "fill" : "";
+    },
+    _fill_search() {
+      return this.fillSearch ? "fillSearch" : "";
     },
   },
 };
@@ -29,56 +29,65 @@ export default {
 
 <style lang="scss" scoped>
 .btn {
-  background: linear-gradient(180deg, #93a3ff 0%, #609fff 100%);
+  border-radius: 50px;
+  color: $white;
+  font-size: 18px;
+  text-align: center;
+  font-weight: bold;
+  cursor: pointer;
+}
+.fill {
+  background-image: linear-gradient(
+    to right,
+    #609fff 0%,
+    #93a3ff 51%,
+    #609fff 100%
+  );
+  background-size: 200% auto;
+  transition: 0.5s;
+  box-shadow: 0px 4px 15px rgba(105, 161, 255, 0.5);
+  width: 160px;
+  padding: 11px 36px;
+  &:hover {
+    background-position: right center;
+  }
+}
 
+.fillSearch {
+  background-image: linear-gradient(
+    to right,
+    #ff9474 0%,
+    #fdc454 51%,
+    #ff9474 100%
+  );
+  background-size: 200% auto;
+  transition: 0.5s;
+  box-shadow: 0px 4px 15px #ffcab4;
+  border-radius: 50px;
+  width: 100%;
+  color: $white;
   padding-top: 10px;
   padding-bottom: 10px;
-  padding-left: 20px;
-  padding-right: 20px;
-  border-radius: 50px;
-  text-align: center;
-  color: #fff;
-  font-size: 16px;
-  cursor: pointer;
-  display: inline-block;
+  font-size: 12px;
   font-weight: bold;
-
-  width: 160px;
-  max-width: 100%;
-  & + .btn {
-    margin-left: 20px;
-  }
-  &.disable {
-    background: #dcdcdf;
-    color: #000;
-    box-shadow: none;
-    cursor: default;
-    &:hover {
-      background: #dcdcdf;
-      color: #000;
-      box-shadow: none;
-    }
-  }
-}
-
-.btn {
-  @include box-shadow;
-  transition: 0.3s background !important;
+  letter-spacing: 1px;
+  justify-content: center;
   &:hover {
-    background: $dark;
+    background-position: right center;
   }
-}
-
-.btn.btn-cmd {
-  width: auto !important;
-  font-weight: 300 !important;
-  font-size: 14px;
-  padding: 8px 15px 5px;
-  @media (min-width: 920px) {
-    padding-top: 10px;
-    padding-bottom: 8px;
-    padding-left: 20px;
-    padding-right: 20px;
+  img {
+    width: 15px !important;
+    margin-right: 5px;
+  }
+  @media (min-width: 1440px) {
+    width: 55%;
+    padding-top: 14px;
+    padding-bottom: 14px;
+    font-size: 18px;
+    img {
+      width: 20px !important;
+      margin-right: 12px;
+    }
   }
 }
 </style>

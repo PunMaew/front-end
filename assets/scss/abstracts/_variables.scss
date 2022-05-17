@@ -23,6 +23,14 @@ $header_height: 54px;
 .text-white {
   color: $white;
 }
+.v-application a,
+.v-application a:hover {
+  color: $dark;
+  text-decoration: none;
+  &:hover {
+    color: $orange;
+  }
+}
 // .v-application {
 //   background-color: $orange-light !important;
 // }
