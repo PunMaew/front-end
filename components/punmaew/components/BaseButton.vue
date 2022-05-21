@@ -1,5 +1,8 @@
 <template>
-  <div @click="$emit('click')" :class="`btn ${_fill} ${_fill_search}`">
+  <div
+    @click="$emit('click')"
+    :class="`btn ${_fill} ${_fill_search} ${_outline}`"
+  >
     <slot></slot>
   </div>
 </template>
@@ -15,6 +18,10 @@ export default {
       type: Boolean,
       default: false,
     },
+    outline: {
+      type: Boolean,
+      default: false,
+    },
   },
   computed: {
     _fill() {
@@ -22,6 +29,9 @@ export default {
     },
     _fill_search() {
       return this.fillSearch ? "fillSearch" : "";
+    },
+    _outline() {
+      return this.outline ? "outline" : "";
     },
   },
 };
@@ -36,7 +46,22 @@ export default {
   font-weight: bold;
   cursor: pointer;
 }
+.outline {
+  width: 100%;
+  padding: 9px 20px;
+  font-size: 12px;
+  font-weight: bold;
+  background-color: $white;
+  color: $yellow-dark;
+  border: 2px solid transparent;
+  border-radius: 50px;
+  background: linear-gradient(to right, white, white),
+    linear-gradient(to right, rgba(253, 196, 84, 1), rgba(255, 148, 116, 1));
+  background-clip: padding-box, border-box;
+  background-origin: padding-box, border-box;
+}
 .fill {
+  // border-radius: 50px;
   background-image: linear-gradient(
     to right,
     #609fff 0%,
@@ -54,6 +79,7 @@ export default {
 }
 
 .fillSearch {
+  // border-radius: 50px;
   background-image: linear-gradient(
     to right,
     #ff9474 0%,
@@ -80,7 +106,7 @@ export default {
     margin-right: 5px;
   }
   @media (min-width: 1440px) {
-    width: 55%;
+    // width: 55%;
     padding-top: 14px;
     padding-bottom: 14px;
     font-size: 18px;

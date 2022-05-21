@@ -10,7 +10,10 @@
             Lorem ipsum dolor sit amet, consectetur adipiscing elit. Velit
           </p>
 
-          <base-button :fillSearch="true" class="d-none d-sm-flex mt-4">
+          <base-button
+            :fillSearch="true"
+            class="d-none d-sm-flex mt-4 btn-banner"
+          >
             <img src="@/assets/imgs/icon-search.svg" alt="" />
             เริ่มค้นหาแมวในอุดมคติ
           </base-button>
@@ -243,6 +246,9 @@ export default {
 @media (min-width: 1440px) {
   .banner-set-row {
     justify-content: flex-start !important;
+  }
+  .btn-banner {
+    width: 55% !important;
   }
 }
 .adoption-btn {
