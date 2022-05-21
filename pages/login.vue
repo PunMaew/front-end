@@ -9,7 +9,7 @@
                 <div class="py-16">
                   <div class="bg-card">
                     <v-row justify="center">
-                      <v-col cols="8" align-self="center">
+                      <v-col cols="9" align-self="center">
                         <v-row justify="center">
                           <v-col cols="6" align-self="center">
                             <div class="set-img-logo">
@@ -70,87 +70,109 @@
                           </base-button>
                         </div>
                         <!-- Register -->
-                        <div v-else>
-                          <div class="mt-12 mb-12">
-                            <v-row justify="center">
-                              <v-col align-self="center">
-                                <div class="input-area">
-                                  <p>ชื่อจริง</p>
-                                  <input
-                                    type="text"
-                                    placeholder="กรุณากรอกชื่อจริง"
-                                  />
-                                </div>
-                              </v-col>
+                        
+                          <div v-else>
+                            <form @submit.prevent="submitForm">
+                            <div class="mt-12 mb-12">
+                              <v-row justify="center">
+                                <v-col align-self="center">
+                                  <div class="input-area">
+                                    <p>ชื่อจริง</p>
+                                    <input
+                                      type="text"
+                                      placeholder="กรุณากรอกชื่อจริง"
+                                      v-model="firstName"
+                                    />
+                                    <p
+                                      v-if="invalidFirstName"
+                                      class="invalid-form"
+                                    >
+                                      ** กรุณากรอกชื่อจริง **
+                                    </p>
+                                  </div>
+                                </v-col>
 
-                              <v-col align-self="center">
-                                <div class="input-area">
-                                  <p>นามสกุล</p>
-                                  <input
-                                    type="text"
-                                    placeholder="กรุณากรอกนามสกุล"
-                                  />
-                                </div>
-                              </v-col>
-                            </v-row>
+                                <v-col align-self="center">
+                                  <div class="input-area">
+                                    <p>นามสกุล</p>
+                                    <input
+                                      type="text"
+                                      placeholder="กรุณากรอกนามสกุล"
+                                      v-model="lastName"
+                                    />
+                                    <p
+                                      v-if="invalidLastName"
+                                      class="invalid-form"
+                                    >
+                                      ** กรุณากรอกนามสกุล **
+                                    </p>
+                                  </div>
+                                </v-col>
+                              </v-row>
 
-                            <div class="input-area mt-5">
-                              <p>อีเมล</p>
-                              <input
-                                type="email"
-                                placeholder="กรุณากรอกอีเมล"
-                              />
+                              <div class="input-area mt-5">
+                                <p>อีเมล</p>
+                                <input
+                                  type="email"
+                                  placeholder="กรุณากรอกอีเมล"
+                                  v-model="email"
+                                />
+                              </div>
+                              <v-row justify="center">
+                                <v-col align-self="center">
+                                  <div class="input-area mt-5">
+                                    <p>จังหวัด</p>
+                                    <input
+                                      type="text"
+                                      placeholder="กรุณาเลือกจังหวัด"
+                                      v-model="province"
+                                    />
+                                  </div>
+                                </v-col>
+
+                                <v-col align-self="center">
+                                  <div class="input-area mt-5">
+                                    <p>รหัสไปรษณีย์</p>
+                                    <input
+                                      type="text"
+                                      placeholder="กรุณากรอกรหัสไปรษณีย์"
+                                      v-model="zipCode"
+                                    />
+                                  </div>
+                                </v-col>
+                              </v-row>
+                              <v-row justify="center">
+                                <v-col align-self="center">
+                                  <div class="input-area">
+                                    <p>รหัสผ่าน</p>
+                                    <input
+                                      type="password"
+                                      placeholder="กรุณากรอกรหัสผ่าน"
+                                    />
+                                  </div>
+                                </v-col>
+
+                                <v-col align-self="center">
+                                  <div class="input-area">
+                                    <p>ยืนยันรหัสผ่าน</p>
+                                    <input
+                                      type="password"
+                                      placeholder="กรุณายืนยันรหัสผ่าน"
+                                    />
+                                  </div>
+                                </v-col>
+                              </v-row>
                             </div>
-                            <v-row justify="center">
-                              <v-col align-self="center">
-                                <div class="input-area mt-5">
-                                  <p>จังหวัด</p>
-                                  <input
-                                    type="text"
-                                    placeholder="กรุณาเลือกจังหวัด"
-                                  />
-                                </div>
-                              </v-col>
-
-                              <v-col align-self="center">
-                                <div class="input-area mt-5">
-                                  <p>รหัสไปรษณีย์</p>
-                                  <input
-                                    type="text"
-                                    placeholder="กรุณากรอกรหัสไปรษณีย์"
-                                  />
-                                </div>
-                              </v-col>
-                            </v-row>
-                            <v-row justify="center">
-                              <v-col align-self="center">
-                                <div class="input-area">
-                                  <p>รหัสผ่าน</p>
-                                  <input
-                                    type="password"
-                                    placeholder="กรุณากรอกรหัสผ่าน"
-                                  />
-                                </div>
-                              </v-col>
-
-                              <v-col align-self="center">
-                                <div class="input-area">
-                                  <p>ยืนยันรหัสผ่าน</p>
-                                  <input
-                                    type="password"
-                                    placeholder="กรุณายืนยันรหัสผ่าน"
-                                  />
-                                </div>
-                              </v-col>
-                            </v-row>
+                            <base-button
+                              :fillSearch="true"
+                              @click="dialog = true"
+                              type="submit"
+                            >
+                              สมัครสมาชิก
+                            </base-button>
+                            </form>
                           </div>
-                          <base-button
-                            :fillSearch="true"
-                            @click="dialog = true"
-                          >
-                            สมัครสมาชิก
-                          </base-button>
-                        </div>
+                        
                       </v-col>
                     </v-row>
                   </div>
@@ -183,7 +205,9 @@
                     <base-button :fillSearch="true">
                       ยืนยันรหัส OTP
                     </base-button>
-                    <a>ส่งใหม่อีกครั้ง</a>
+                    <div class="set-sent-again">
+                      <a>ส่งใหม่อีกครั้ง</a>
+                    </div>
                   </v-col>
                 </v-row>
               </div>
@@ -209,6 +233,11 @@ export default {
         seconds: 0,
       },
       timeInterval: null,
+      errors: [],
+      firstName: "",
+      lastName: "",
+      invalidFirstName: false,
+      invalidLastName: false,
     };
   },
   mounted() {
@@ -226,7 +255,7 @@ export default {
     countdown() {
       const second = 1000;
       const minute = second * 60;
-            const hour = minute * 60;
+      const hour = minute * 60;
       const countdown = new Date().getTime() + 15 * 60 * 1000;
 
       this.timeInterval = setInterval(() => {
@@ -240,6 +269,18 @@ export default {
         }
       }, 1000);
     },
+  },
+  submitForm() {
+    this.invalidFirstName = this.firstName === "" ? true : false;
+    if (this.firstName !== "" && this.lastName != "") {
+      try {
+        this.editAllPostsData();
+        alert("Edit Success.");
+        this.$router.push("/");
+      } catch (error) {
+        console.log(error);
+      }
+    }
   },
 };
 </script>
@@ -371,8 +412,13 @@ input[id="radio-3"] {
     border-radius: 10px;
   }
 }
+.invalid-form {
+  color: $error;
+  font-size: 14px;
+}
+
 ::v-deep .v-dialog {
-    border-radius: 30px;
+  border-radius: 30px;
 }
 .set-bg-otp {
   background-color: $white;
@@ -398,6 +444,13 @@ input[id="radio-3"] {
   font-size: 16px;
   font-weight: medium;
   color: $orange-dark;
+}
+
+.set-sent-again {
+  text-align: center;
+  padding: 15px 0px 15px 0px;
+  text-decoration: underline;
+  color: $gray !important;
 }
 
 @media (max-width: 700px) {
