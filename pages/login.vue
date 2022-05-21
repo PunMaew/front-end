@@ -1,0 +1,329 @@
+<template>
+  <div class="set-bg-login">
+    <v-container>
+      <v-row justify="center">
+        <v-col cols="12" align-self="center">
+          <v-row justify="center">
+            <v-col cols="8">
+              <div class="py-16">
+                <div class="bg-card">
+                  <v-row justify="center">
+                    <v-col cols="8" align-self="center">
+                      <v-row justify="center">
+                        <v-col cols="6" align-self="center">
+                          <div class="set-img-logo">
+                            <img
+                              src="~/assets/imgs/logo.png"
+                              alt="punmaew"
+                              id="logo"
+                            />
+                          </div>
+                        </v-col>
+                      </v-row>
+
+                      <div class="con">
+                        <div class="tabs">
+                          <input
+                            type="radio"
+                            id="radio-1"
+                            name="tabs"
+                            checked
+                          />
+                          <label class="tab" for="radio-1" @click="toggleTabs()"
+                            >เข้าสู่ระบบ</label
+                          >
+
+                          <input type="radio" id="radio-2" name="tabs" />
+                          <label
+                            class="tab"
+                            for="radio-2"
+                            @click="toggleTabs2()"
+                            >สมัครสมาชิก</label
+                          >
+                          <span class="glider"></span>
+                        </div>
+                      </div>
+                      <!-- Login -->
+                      <div v-if="openTab">
+                        <div class="mt-12 mb-12">
+                          <div class="input-area">
+                            <p>อีเมล</p>
+                            <input type="email" placeholder="กรุณากรอกอีเมล" />
+                          </div>
+                          <div class="input-area mt-5">
+                            <p>รหัสผ่าน</p>
+                            <input
+                              type="password"
+                              placeholder="กรุณากรอกรหัสผ่าน"
+                            />
+                          </div>
+                        </div>
+                        <base-button :fillSearch="true">
+                          เข้าสู่ระบบ
+                        </base-button>
+                      </div>
+                      <!-- Register -->
+                      <div v-else>
+                        <div class="mt-12 mb-12">
+                          <v-row justify="center">
+                            <v-col align-self="center">
+                              <div class="input-area">
+                                <p>ชื่อจริง</p>
+                                <input
+                                  type="text"
+                                  placeholder="กรุณากรอกชื่อจริง"
+                                />
+                              </div>
+                            </v-col>
+
+                            <v-col align-self="center">
+                              <div class="input-area">
+                                <p>นามสกุล</p>
+                                <input
+                                  type="text"
+                                  placeholder="กรุณากรอกนามสกุล"
+                                />
+                              </div>
+                            </v-col>
+                          </v-row>
+
+                          <div class="input-area mt-5">
+                            <p>อีเมล</p>
+                            <input type="email" placeholder="กรุณากรอกอีเมล" />
+                          </div>
+                          <v-row justify="center">
+                            <v-col align-self="center">
+                              <div class="input-area mt-5">
+                                <p>จังหวัด</p>
+                                <input
+                                  type="text"
+                                  placeholder="กรุณาเลือกจังหวัด"
+                                />
+                              </div>
+                            </v-col>
+
+                            <v-col align-self="center">
+                              <div class="input-area mt-5">
+                                <p>รหัสไปรษณีย์</p>
+                                <input
+                                  type="text"
+                                  placeholder="กรุณากรอกรหัสไปรษณีย์"
+                                />
+                              </div>
+                            </v-col>
+                          </v-row>
+                          <v-row justify="center">
+                            <v-col align-self="center">
+                              <div class="input-area">
+                                <p>รหัสผ่าน</p>
+                                <input
+                                  type="text"
+                                  placeholder="กรุณากรอกรหัสผ่าน"
+                                />
+                              </div>
+                            </v-col>
+
+                            <v-col align-self="center">
+                              <div class="input-area">
+                                <p>ยืนยันรหัสผ่าน</p>
+                                <input
+                                  type="text"
+                                  placeholder="กรุณายืนยันรหัสผ่าน"
+                                />
+                              </div>
+                            </v-col>
+                          </v-row>
+                        </div>
+                        <base-button :fillSearch="true">
+                          สมัครสมาชิก
+                        </base-button>
+                      </div>
+                    </v-col>
+                  </v-row>
+                </div>
+              </div>
+            </v-col>
+          </v-row>
+        </v-col>
+      </v-row>
+
+      <!-- OTP -->
+      <v-row justify="center">
+        <v-col cols="12" align-self="center">
+          <v-row justify="center">
+            <v-col cols="8">
+              <div class="py-16">
+                <div class="bg-card"> 
+                  <v-row justify="center">
+                    <v-col cols="8" align-self="center">
+                      <p>OTP</p>
+                      <v-otp-input length="6"></v-otp-input>
+                    </v-col>
+                  </v-row>
+                </div>
+              </div>
+            </v-col>
+          </v-row>
+        </v-col>
+      </v-row>
+    </v-container>
+  </div>
+</template>
+
+<script>
+import BaseButton from "../components/punmaew/components/BaseButton.vue";
+export default {
+  components: { BaseButton },
+  data() {
+    return {
+      openTab: true,
+    };
+  },
+  methods: {
+    toggleTabs() {
+      this.openTab = false;
+      this.openTab = !this.openTab;
+    },
+    toggleTabs2() {
+      this.openTab = true;
+      this.openTab = !this.openTab;
+    },
+  },
+};
+</script>
+
+<style lang="scss" scoped>
+.set-img-logo {
+  img {
+    width: 100%;
+  }
+  margin-bottom: 34px;
+}
+.test {
+  text-align: center;
+}
+
+.bg-card {
+  background-color: $white;
+  border-radius: 30px;
+  box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.2);
+  position: relative;
+  // padding-top: 56px;
+  // padding-bottom: 56px;
+  padding: 56px 0px 56px 0px;
+}
+
+*,
+*:after,
+*:before {
+  box-sizing: border-box;
+}
+
+.con {
+  display: flex;
+  justify-content: center;
+}
+.tabs {
+  display: flex;
+  position: relative;
+  background-color: #fff;
+  border: 2px solid $yellow;
+  border-radius: 99px;
+  * {
+    z-index: 2;
+  }
+}
+
+input[type="radio"] {
+  display: none;
+}
+
+.tab {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 54px;
+  width: 200px;
+  font-size: 1.25rem;
+  font-weight: 500;
+  border-radius: 99px;
+  cursor: pointer;
+  transition: color 0.15s ease-in;
+}
+
+input[type="radio"] {
+  &:checked {
+    & + label {
+      color: $white;
+    }
+  }
+}
+
+input[id="radio-1"] {
+  &:checked {
+    & ~ .glider {
+      transform: translateX(0);
+    }
+  }
+}
+
+input[id="radio-2"] {
+  &:checked {
+    & ~ .glider {
+      transform: translateX(100%);
+    }
+  }
+}
+
+input[id="radio-3"] {
+  &:checked {
+    & ~ .glider {
+      transform: translateX(200%);
+    }
+  }
+}
+
+.glider {
+  position: absolute;
+  display: flex;
+  height: 54px;
+  width: 200px;
+  background-color: $yellow-dark;
+  z-index: 1;
+  border-radius: 99px; // just a high number to create pill effect
+  transition: 0.25s ease-out;
+}
+
+.input-area {
+  p {
+    font-size: 14px;
+    margin-bottom: 10px;
+  }
+  input {
+    width: 100%;
+    background-color: $light;
+    padding: 14px 24px;
+    font-size: 16px;
+    border-radius: 50px;
+  }
+  textarea {
+    width: 100%;
+    min-height: 152px;
+    background-color: $light;
+    padding: 14px 24px;
+    font-size: 16px;
+    border-radius: 10px;
+  }
+}
+
+@media (max-width: 700px) {
+  .tabs {
+    transform: scale(0.6);
+  }
+}
+@media (min-width: 1264px) {
+  .container {
+    max-width: 1185px;
+  }
+}
+</style>

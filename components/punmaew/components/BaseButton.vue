@@ -80,7 +80,7 @@ export default {
     margin-right: 5px;
   }
   @media (min-width: 1440px) {
-    width: 55%;
+    // width: 55%;
     padding-top: 14px;
     padding-bottom: 14px;
     font-size: 18px;
