@@ -92,7 +92,7 @@ export default {
 
 <style lang="scss" scoped>
 .bgColor {
-  background-color: $orange-light;
+  background-color: $orange-light !important;
 }
 .nav-left {
   padding-top: 0px;
