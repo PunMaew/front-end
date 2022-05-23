@@ -375,13 +375,13 @@ export default {
   methods: {
     onSubmit() {
       if (
-        this.emailRegis !== "" ||
-        this.passwordRegis !== "" ||
-        this.firstName !== "" ||
-        this.lastName ||
-        this.province !== "" ||
-        this.zipCode !== "" ||
-        this.confirm !== ""
+        (this.emailRegis.length !== 0 &&
+          this.passwordRegis.length !== 0 &&
+          this.firstName.length !== 0 &&
+          this.lastName.length !== 0) ||
+        (this.province.length !== 0 &&
+          this.zipCode.length !== 0 &&
+          this.confirm.length !== 0)
       ) {
         this.dialog = true;
       } else {
