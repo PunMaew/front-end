@@ -1,10 +1,11 @@
 <template>
-  <div
+  <button
+    :type="type"
     @click="$emit('click')"
     :class="`btn ${_fill} ${_fill_search} ${_outline}`"
   >
     <slot></slot>
-  </div>
+  </button>
 </template>
 
 <script>
@@ -21,6 +22,10 @@ export default {
     outline: {
       type: Boolean,
       default: false,
+    },
+    type: {
+      type: String,
+      default: "button",
     },
   },
   computed: {

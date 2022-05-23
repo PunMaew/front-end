@@ -17,9 +17,12 @@
             lg="4"
             xl="4"
             align-self="center"
-            :class="[i == 3 ? 'backDrop' : '']"
           >
             <div class="card position-relative">
+              <div :class="[i == 3 ? 'backdrop' : '']"></div>
+              <button v-if="i === 3" :class="[i == 3 ? 'more' : '']">
+                ดูทั้งหมด
+              </button>
               <div class="thumbnail">
                 <img src="@/assets/imgs/img-thumbnail.jpg" alt="" />
               </div>
@@ -53,9 +56,12 @@
             lg="4"
             xl="4"
             align-self="center"
-            :class="[i == 3 ? 'backDrop' : '']"
           >
             <div class="card position-relative">
+              <div :class="[i == 3 ? 'backdrop' : '']"></div>
+              <button v-if="i === 3" :class="[i == 3 ? 'more' : '']">
+                ดูทั้งหมด
+              </button>
               <div class="thumbnail">
                 <img src="@/assets/imgs/img-thumbnail.jpg" alt="" />
               </div>
@@ -90,18 +96,45 @@ export default {};
 </script>
 
 <style lang="scss" scoped>
+.backdrop {
+  background: #000000;
+  opacity: 0.5;
+  width: 100%;
+  min-height: 100%;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+.more {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: $white;
+  font-weight: bold;
+  font-size: 22px;
+  border: 2px solid $white;
+  border-radius: 50px;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  padding: 12px 44px 13px 45px;
+  &:hover {
+    background-color: $white;
+    opacity: 0.8;
+    color: $dark;
+  }
+}
 .read-articles {
   color: $orange;
 }
 .pm-articles {
   margin-top: 64px;
-  // margin-bottom: 115px;
-  // margin-top: 139px;
-}
-.backDrop {
-  filter: brightness(0.5);
 }
 .card {
+  position: relative;
   background: #fff;
   border-radius: 10px;
   overflow: hidden;

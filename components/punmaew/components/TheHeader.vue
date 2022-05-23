@@ -27,7 +27,9 @@
         <v-col sm="4" class="nav-right">
           <ul id="menu" class="d-none d-md-flex">
             <li>
-              <base-button :fill="true">เข้าสู่ระบบ</base-button>
+              <n-link to="/login" class="opunmai">
+                <base-button :fill="true">เข้าสู่ระบบ</base-button>
+              </n-link>
             </li>
           </ul>
         </v-col>
