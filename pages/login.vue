@@ -196,22 +196,38 @@
                                 </v-row>
 
                                 <v-row justify="center" class="mt-0">
-                                  <v-col align-self="center">
+                                  <v-col align-self="center" class="pb-0">
                                     <div class="input-area">
                                       <p>จังหวัด</p>
                                       <validation-provider
                                         rules="required"
                                         v-slot="{ errors }"
                                       >
-                                        <input
+                                        <!-- <input
                                           type="text"
                                           placeholder="กรุณาเลือกจังหวัด"
                                           v-model="province"
                                           name="province"
-                                        />
-                                        <span class="valid-form">
+                                        /> -->
+                                        <!-- v-model="province"
+                                          :error-messages="errors"
+                                          data-vv-name="select"
+                                          required -->
+                                        <v-select
+                                          :items="province"
+                                          item-text="province"
+                                          name="province"
+                                          filled
+                                          label="กรุณาเลือกจังหวัด"
+                                          dense
+                                          v-model="select"
+                                          :error-messages="errors"
+                                          data-vv-name="select"
+                                          required
+                                        ></v-select>
+                                        <!-- <span class="valid-form">
                                           {{ errors[0] }}
-                                        </span>
+                                        </span> -->
                                       </validation-provider>
                                     </div>
                                   </v-col>
@@ -219,19 +235,23 @@
                                   <v-col align-self="center">
                                     <div class="input-area">
                                       <p>รหัสไปรษณีย์</p>
+
                                       <validation-provider
                                         rules="required"
                                         v-slot="{ errors }"
                                       >
-                                        <input
-                                          type="text"
-                                          placeholder="กรุณากรอกรหัสไปรษณีย์"
-                                          v-model="zipCode"
+                                        <v-select
+                                          :items="province"
+                                          filled
+                                          label="กรุณาเลือกรหัสไปรษณีย์"
                                           name="zipCode"
-                                        />
-                                        <span class="valid-form">
-                                          {{ errors[0] }}
-                                        </span>
+                                          item-text="zip"
+                                          dense
+                                          v-model="select"
+                                          :error-messages="errors"
+                                          data-vv-name="select"
+                                          required
+                                        ></v-select>
                                       </validation-provider>
                                     </div>
                                   </v-col>
@@ -344,11 +364,14 @@
 import BaseButton from "../components/punmaew/components/BaseButton.vue";
 import { ValidationProvider } from "vee-validate";
 import { ValidationObserver } from "vee-validate";
+import provinceList from "@/assets/data/province.json";
 export default {
   layout: "adoption",
   components: { BaseButton, ValidationProvider, ValidationObserver },
   data() {
     return {
+      province: provinceList,
+      items: ["Foo", "Bar", "Fizz", "Buzz"],
       openTab: true,
       dialog: false,
       total: {
@@ -364,7 +387,7 @@ export default {
       passwordRegis: "",
       firstName: "",
       lastName: "",
-      province: "",
+      // province: "",
       zipCode: "",
       confirm: "",
     };
@@ -432,9 +455,19 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+::v-deep .v-text-field > .v-input__control > .v-input__slot:before {
+  border-style: none;
+}
+::v-deep .v-input__slot {
+  border-radius: 50px;
+}
+::v-deep .v-text-field > .v-input__control > .v-input__slot:after {
+  border-style: none !important;
+}
 .valid-form {
   color: $error;
   font-weight: bold;
+  font-size: 12px;
 }
 section {
   background-color: $orange-light;
@@ -562,10 +595,6 @@ input[id="radio-3"] {
     border-radius: 10px;
   }
 }
-// .invalid-form {
-//   color: $error;
-//   font-size: 14px;
-// }
 
 ::v-deep .v-dialog {
   border-radius: 30px;
