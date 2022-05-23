@@ -374,34 +374,33 @@ export default {
   },
   methods: {
     onSubmit() {
-      this.$refs.form.validate().then((success) => {
-        if (!success) {
-          return;
-        }
+      if (
+        this.emailRegis !== "" ||
+        this.passwordRegis !== "" ||
+        this.firstName !== "" ||
+        this.lastName ||
+        this.province !== "" ||
+        this.zipCode !== "" ||
+        this.confirm !== ""
+      ) {
+        this.dialog = true;
+      } else {
+        this.$refs.form.validate().then((success) => {
+          if (!success) {
+            return;
+          }
 
-        alert("Form has been submitted!");
+          alert("Form has been submitted!");
 
-        // Resetting Values
-        // this.firstName = this.lastName = this.emailRegis = "";
+          // Resetting Values
+          // this.firstName = this.lastName = this.emailRegis = "";
 
-        // Wait until the models are updated in the UI
-        this.$nextTick(() => {
-          this.$refs.form.reset();
+          // Wait until the models are updated in the UI
+          this.$nextTick(() => {
+            this.$refs.form.reset();
+          });
         });
-      });
-      // if (
-      //   this.emailRegis !== "" ||
-      //   this.passwordRegis !== "" ||
-      //   this.firstName !== "" ||
-      //   this.lastName ||
-      //   this.province !== "" ||
-      //   this.zipCode !== "" ||
-      //   this.confirm !== ""
-      // ) {
-      //   this.dialog = true;
-      // } else {
-      //   return;
-      // }
+      }
     },
     toggleTabs() {
       this.openTab = false;
