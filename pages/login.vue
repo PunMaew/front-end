@@ -364,13 +364,93 @@
 
         <!-- Forgot password -->
         <validation-observer ref="form">
-          <form @submit.prevent="onSubmitNewPass">
+          <form @submit.prevent="onSubmitEmailForReset">
             <v-row justify="center">
               <v-dialog v-model="dialog2" max-width="540">
                 <div class="set-bg-otp">
+                  <p class="otp-title">รีเซ็ตรหัสผ่าน</p>
+
+                  <p class="otp-text">
+                    กรุณากรอกอีเมลเพื่อรับรหัส OTP สำหรับรีเซ็ตรหัสผ่าน
+                  </p>
+                  <v-row justify="center">
+                    <v-col cols="10" align-self="center">
+                      <div class="input-area">
+                        <p>อีเมล</p>
+                        <validation-provider
+                          rules="required"
+                          v-slot="{ errors }"
+                        >
+                          <input
+                            v-model="email"
+                            type="text"
+                            placeholder="กรุณากรอกอีเมล"
+                            name="email"
+                          />
+                          <span class="valid-form">
+                            {{ errors[0] }}
+                          </span>
+                        </validation-provider>
+                      </div>
+                    </v-col>
+                  </v-row>
+                  <div>
+                    <v-row justify="center my-5">
+                      <v-col cols="10" align-self="center">
+                        <base-button :fillSearch="true" @click="dialog3 = true">
+                          ส่งรหัส OTP
+                        </base-button>
+                      </v-col>
+                    </v-row>
+                  </div>
+                </div>
+              </v-dialog>
+            </v-row>
+          </form>
+        </validation-observer>
+
+        <!-- OTP for reset password -->
+        <v-row justify="center">
+          <v-dialog v-model="dialog3" max-width="540">
+            <div class="set-bg-otp">
+              <p class="otp-title">ยืนยันรหัส OTP</p>
+
+              <p class="otp-text">
+                กรุณายืนยันรหัส OTP ที่ส่งไปที่อีเมล warisara@gmail.com
+              </p>
+              <p class="otp-countDown">
+                {{ total.minutes }}:{{ total.seconds }}
+              </p>
+              <v-row justify="center">
+                <v-col cols="8" align-self="center">
+                  <v-otp-input length="6"></v-otp-input>
+                </v-col>
+              </v-row>
+              <div>
+                <v-row justify="center">
+                  <v-col cols="10" align-self="center">
+                    <base-button :fillSearch="true" @click="dialog4 = true">
+                      ยืนยันรหัส OTP
+                    </base-button>
+                    <div class="set-sent-again">
+                      <a>ส่งใหม่อีกครั้ง</a>
+                    </div>
+                  </v-col>
+                </v-row>
+              </div>
+            </div>
+          </v-dialog>
+        </v-row>
+
+        <!-- New password -->>
+        <validation-observer ref="form">
+          <form @submit.prevent="onSubmitNewPass">
+            <v-row justify="center">
+              <v-dialog v-model="dialog4" max-width="540">
+                <div class="set-bg-otp">
                   <p class="otp-title">สร้างรหัสผ่านใหม่</p>
                   <v-row justify="center">
-                    <v-col cols="8" align-self="center">
+                    <v-col cols="10" align-self="center">
                       <div class="input-area">
                         <p>รหัสผ่านใหม่</p>
                         <validation-provider
@@ -410,7 +490,7 @@
                   </v-row>
                   <div>
                     <v-row justify="center my-5">
-                      <v-col cols="8" align-self="center">
+                      <v-col cols="10" align-self="center">
                         <base-button :fillSearch="true"> ยืนยัน </base-button>
                       </v-col>
                     </v-row>
@@ -420,6 +500,8 @@
             </v-row>
           </form>
         </validation-observer>
+
+
       </v-container>
     </div>
   </section>
@@ -439,7 +521,9 @@ export default {
       items: ["Foo", "Bar", "Fizz", "Buzz"],
       openTab: true,
       dialog: false,
-      dialog2: true,
+      dialog2: false,
+      dialog3: false,
+      dialog4: false,
       total: {
         minutes: 0,
         seconds: 0,
