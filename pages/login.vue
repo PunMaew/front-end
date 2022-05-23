@@ -196,7 +196,7 @@
                                 </v-row>
 
                                 <v-row justify="center" class="mt-0">
-                                  <v-col align-self="center" class="pb-0">
+                                  <v-col align-self="center">
                                     <div class="input-area">
                                       <p>จังหวัด</p>
                                       <validation-provider
