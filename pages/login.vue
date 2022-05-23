@@ -6,7 +6,7 @@
           <v-col cols="12" align-self="center">
             <v-row justify="center">
               <v-col cols="8">
-                <div class="py-16">
+                <div class="py-12">
                   <div class="bg-card">
                     <v-row justify="center">
                       <v-col cols="9" align-self="center">
@@ -49,7 +49,7 @@
                         </div>
                         <!-- Login -->
                         <div v-if="openTab">
-                          <div class="mt-12">
+                          <div class="mt-6">
                             <validation-observer ref="form">
                               <form @submit.prevent="onSubmit">
                                 <!-- <v-row justify="center">
@@ -108,6 +108,12 @@
                                     </span>
                                   </validation-provider>
                                 </div>
+                                <div
+                                  class="set-forget-pass"
+                                  @click="dialog2 = true"
+                                >
+                                  <a>หากลืมรหัสผ่าน</a>
+                                </div>
 
                                 <div class="mt-5">
                                   <base-button
@@ -128,7 +134,7 @@
                         <!-- Register -->
 
                         <div v-else>
-                          <div class="mt-12">
+                          <div class="mt-6">
                             <validation-observer ref="form">
                               <form @submit.prevent="onSubmit">
                                 <v-row justify="center">
@@ -173,7 +179,7 @@
                                   </v-col>
                                 </v-row>
 
-                                <v-row justify="center" class="mt-0">
+                                <v-row justify="center" class="mt-2">
                                   <v-col align-self="center">
                                     <div class="input-area">
                                       <p>อีเมล</p>
@@ -195,8 +201,8 @@
                                   </v-col>
                                 </v-row>
 
-                                <v-row justify="center" class="mt-0">
-                                  <v-col align-self="center">
+                                <v-row justify="center">
+                                  <v-col align-self="center" class="mt-0 pb-0">
                                     <div class="input-area">
                                       <p>จังหวัด</p>
                                       <validation-provider
@@ -232,7 +238,7 @@
                                     </div>
                                   </v-col>
 
-                                  <v-col align-self="center">
+                                  <v-col align-self="center" class="mt-0 pb-0">
                                     <div class="input-area">
                                       <p>รหัสไปรษณีย์</p>
 
@@ -256,7 +262,7 @@
                                     </div>
                                   </v-col>
                                 </v-row>
-                                <v-row justify="center">
+                                <v-row justify="center" class="mt-2">
                                   <v-col align-self="center">
                                     <div class="input-area">
                                       <p>รหัสผ่าน</p>
@@ -355,6 +361,65 @@
             </div>
           </v-dialog>
         </v-row>
+
+        <!-- Forgot password -->
+        <validation-observer ref="form">
+          <form @submit.prevent="onSubmitNewPass">
+            <v-row justify="center">
+              <v-dialog v-model="dialog2" max-width="540">
+                <div class="set-bg-otp">
+                  <p class="otp-title">สร้างรหัสผ่านใหม่</p>
+                  <v-row justify="center">
+                    <v-col cols="8" align-self="center">
+                      <div class="input-area">
+                        <p>รหัสผ่านใหม่</p>
+                        <validation-provider
+                          rules="required"
+                          v-slot="{ errors }"
+                        >
+                          <input
+                            type="password"
+                            placeholder="กรุณากรอกรหัสผ่านใหม่"
+                            v-model="newPass"
+                            name="newPass"
+                          />
+                          <span class="valid-form">
+                            {{ errors[0] }}
+                          </span>
+                        </validation-provider>
+                      </div>
+
+                      <div class="input-area mt-5">
+                        <p>ยืนยันรหัสผ่าน</p>
+                        <validation-provider
+                          rules="required"
+                          v-slot="{ errors }"
+                        >
+                          <input
+                            type="password"
+                            placeholder="กรุณายืนยันรหัสผ่าน"
+                            v-model="newConfirm"
+                            name="newConfirm"
+                          />
+                          <span class="valid-form">
+                            {{ errors[0] }}
+                          </span>
+                        </validation-provider>
+                      </div>
+                    </v-col>
+                  </v-row>
+                  <div>
+                    <v-row justify="center my-5">
+                      <v-col cols="8" align-self="center">
+                        <base-button :fillSearch="true"> ยืนยัน </base-button>
+                      </v-col>
+                    </v-row>
+                  </div>
+                </div>
+              </v-dialog>
+            </v-row>
+          </form>
+        </validation-observer>
       </v-container>
     </div>
   </section>
@@ -374,6 +439,7 @@ export default {
       items: ["Foo", "Bar", "Fizz", "Buzz"],
       openTab: true,
       dialog: false,
+      dialog2: true,
       total: {
         minutes: 0,
         seconds: 0,
@@ -387,6 +453,8 @@ export default {
       passwordRegis: "",
       firstName: "",
       lastName: "",
+      newPass: "",
+      newConfirm: "",
       // province: "",
       zipCode: "",
       confirm: "",
@@ -477,7 +545,7 @@ section {
   img {
     width: 100%;
   }
-  margin-bottom: 34px;
+  margin-bottom: 20px;
 }
 .test {
   text-align: center;
@@ -577,7 +645,7 @@ input[id="radio-3"] {
 .input-area {
   p {
     font-size: 14px;
-    margin-bottom: 10px !important;
+    margin-bottom: 5px !important;
   }
   input {
     width: 100%;
@@ -632,6 +700,13 @@ input[id="radio-3"] {
   color: $gray !important;
 }
 
+.set-forget-pass {
+  padding: 10px 0px 10px 0px;
+  text-decoration: underline;
+}
+::v-deep .v-text-field.v-text-field--enclosed .v-text-field__details {
+  margin-bottom: 0px;
+}
 @media (max-width: 700px) {
   .tabs {
     transform: scale(0.6);
