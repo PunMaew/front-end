@@ -1,5 +1,5 @@
 import { extend } from "vee-validate";
-import { required, alpha } from "vee-validate/dist/rules";
+import { required, alpha, email } from "vee-validate/dist/rules";
 
 extend("required", {
   ...required,
@@ -9,4 +9,8 @@ extend("required", {
 extend("alpha", {
   ...alpha,
   message: "This field must only contain alphabetic characters",
+});
+extend("email", {
+  ...email,
+  message: "This field must be email only.",
 });

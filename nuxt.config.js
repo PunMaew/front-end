@@ -43,6 +43,7 @@ export default {
   buildModules: [
     // https://go.nuxtjs.dev/vuetify
     "@nuxtjs/vuetify",
+    ["@nuxtjs/dotenv", { filename: ".env." + process.env.ENV }],
   ],
 
   // Modules: https://go.nuxtjs.dev/config-modules
@@ -50,6 +51,7 @@ export default {
     // https://go.nuxtjs.dev/axios
     "@nuxtjs/axios",
     "@nuxtjs/style-resources",
+    "@nuxtjs/dotenv",
   ],
   styleResources: {
     scss: ["~/assets/scss/abstracts/_variables.scss"],
@@ -57,7 +59,8 @@ export default {
   // Axios module configuration: https://go.nuxtjs.dev/config-axios
   axios: {
     // Workaround to avoid enforcing hard-coded localhost:3000: https://github.com/nuxt-community/axios-module/issues/308
-    baseURL: "/",
+    // baseURL: "/",
+    baseURL: process.env.BASE_URL,
   },
 
   // Vuetify module configuration: https://go.nuxtjs.dev/config-vuetify
@@ -87,4 +90,8 @@ export default {
      */
     extend(config, ctx) {},
   },
+  publicRuntimeConfig: {
+    baseURL: process.env.BASE_URL + process.env.API_VERSION,
+  },
+  privateRuntimeConfig: {},
 };
