@@ -91,7 +91,6 @@
                               </p>
 
                               <validation-observer ref="otpForm">
-                                <!-- <form @submit.prevent="nextStep"> -->
                                 <card-dialog
                                   :dialog="dialog2"
                                   v-if="this.currentStep === 1"
@@ -150,20 +149,91 @@
                                     <div>
                                       <v-row justify="center">
                                         <v-col cols="8" align-self="center">
-                                          <v-otp-input length="6"></v-otp-input>
+                                          <validation-provider
+                                            rules="required"
+                                            v-slot="{ errors }"
+                                            class="otp-content"
+                                          >
+                                            <v-otp-input
+                                              length="6"
+                                              v-model="otpCode"
+                                              name="otpCode"
+                                            ></v-otp-input>
+                                            <span class="valid-form">
+                                              {{ errors[0] }}
+                                            </span>
+                                            <base-button
+                                              :fillSearch="true"
+                                              class="mt-6"
+                                              @click="nextStep"
+                                            >
+                                              ยืนยันรหัส OTP
+                                            </base-button>
+                                          </validation-provider>
                                         </v-col>
                                       </v-row>
                                     </div>
-                                    <base-button
-                                      :fillSearch="true"
-                                      class="mt-6"
-                                      @click="dialog2 = false"
-                                    >
-                                      ยืนยันรหัส OTP
-                                    </base-button>
                                   </template>
                                 </card-dialog>
-                                <!-- </form> -->
+
+                                <card-dialog
+                                  :dialog="dialog2"
+                                  v-if="this.currentStep === 3"
+                                >
+                                  <template slot="title">
+                                    <p class="otp-title">สร้างรหัสผ่านใหม่</p>
+                                  </template>
+                                  <template slot="content">
+                                    <div>
+                                      <v-row justify="center">
+                                        <v-col cols="10" align-self="center">
+                                          <div class="input-area">
+                                            <p>รหัสผ่านใหม่</p>
+                                            <validation-provider
+                                              rules="required"
+                                              v-slot="{ errors }"
+                                            >
+                                              <input
+                                                type="password"
+                                                placeholder="กรุณากรอกรหัสผ่านใหม่"
+                                                v-model="newPass"
+                                                name="newPass"
+                                              />
+                                              <span class="valid-form">
+                                                {{ errors[0] }}
+                                              </span>
+                                            </validation-provider>
+                                          </div>
+
+                                          <div class="input-area mt-5">
+                                            <p>ยืนยันรหัสผ่าน</p>
+                                            <validation-provider
+                                              rules="required"
+                                              v-slot="{ errors }"
+                                            >
+                                              <input
+                                                type="password"
+                                                placeholder="กรุณายืนยันรหัสผ่าน"
+                                                v-model="newConfirm"
+                                                name="newConfirm"
+                                              />
+                                              <span class="valid-form">
+                                                {{ errors[0] }}
+                                              </span>
+                                              <base-button
+                                                :fillSearch="true"
+                                                class="mt-6"
+                                                @click="dialog2 = false"
+                                              >
+                                                ยืนยัน
+                                              </base-button>
+                                            </validation-provider>
+                                          </div>
+                                        </v-col>
+                                      </v-row>
+                                    </div>
+                                  </template>
+                                </card-dialog>
                               </validation-observer>
                             </div>
 
@@ -175,8 +245,8 @@
                           </form>
                         </validation-observer>
                       </div>
-                      <!-- Register -->
 
+                      <!-- Register -->
                       <div v-else>
                         <div class="mt-6">
                           <validation-observer ref="registerForm">
@@ -424,6 +494,7 @@
           </form>
         </validation-observer>
       </div> -->
+      <!--  -->
     </v-container>
   </section>
 </template>
@@ -470,6 +541,7 @@ export default {
       zipCode: "",
       confirm: "",
       currentStep: 1,
+      otpCode: "",
     };
   },
   methods: {
