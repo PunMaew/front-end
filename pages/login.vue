@@ -247,179 +247,178 @@
                       </div>
 
                       <!-- Register -->
-                      <div v-else>
-                        <div class="mt-6">
-                          <validation-observer ref="registerForm">
-                            <form @submit.prevent="onSubmit">
-                              <v-row justify="center">
-                                <v-col align-self="center">
-                                  <div class="input-area">
-                                    <p>ชื่อจริง</p>
-                                    <validation-provider
-                                      rules="required"
-                                      v-slot="{ errors }"
-                                    >
-                                      <input
-                                        type="text"
-                                        placeholder="กรุณากรอกชื่อจริง"
-                                        v-model="firstName"
-                                        name="firstname"
-                                      />
-                                      <span class="valid-form">
-                                        {{ errors[0] }}
-                                      </span>
-                                    </validation-provider>
-                                  </div>
-                                </v-col>
+                      <!-- <div v-else> -->
+                      <div class="mt-6" v-else>
+                        <validation-observer ref="registerForm">
+                          <form @submit.prevent="register">
+                            <v-row justify="center">
+                              <v-col align-self="center">
+                                <div class="input-area">
+                                  <p>ชื่อจริง</p>
+                                  <validation-provider
+                                    rules="required"
+                                    v-slot="{ errors }"
+                                  >
+                                    <input
+                                      type="text"
+                                      placeholder="กรุณากรอกชื่อจริง"
+                                      v-model="firstName"
+                                      name="firstname"
+                                    />
+                                    <span class="valid-form">
+                                      {{ errors[0] }}
+                                    </span>
+                                  </validation-provider>
+                                </div>
+                              </v-col>
 
-                                <v-col align-self="center">
-                                  <div class="input-area">
-                                    <p>นามสกุล</p>
-                                    <validation-provider
-                                      rules="required"
-                                      v-slot="{ errors }"
-                                    >
-                                      <input
-                                        type="text"
-                                        placeholder="กรุณากรอกนามสกุล"
-                                        v-model="lastName"
-                                        name="lastname"
-                                      />
-                                      <span class="valid-form">
-                                        {{ errors[0] }}
-                                      </span>
-                                    </validation-provider>
-                                  </div>
-                                </v-col>
-                              </v-row>
+                              <v-col align-self="center">
+                                <div class="input-area">
+                                  <p>นามสกุล</p>
+                                  <validation-provider
+                                    rules="required"
+                                    v-slot="{ errors }"
+                                  >
+                                    <input
+                                      type="text"
+                                      placeholder="กรุณากรอกนามสกุล"
+                                      v-model="lastName"
+                                      name="lastname"
+                                    />
+                                    <span class="valid-form">
+                                      {{ errors[0] }}
+                                    </span>
+                                  </validation-provider>
+                                </div>
+                              </v-col>
+                            </v-row>
 
-                              <v-row justify="center" class="mt-2">
-                                <v-col align-self="center">
-                                  <div class="input-area">
-                                    <p>อีเมล</p>
-                                    <validation-provider
-                                      rules="required"
-                                      v-slot="{ errors }"
-                                    >
-                                      <input
-                                        type="email"
-                                        placeholder="กรุณากรอกอีเมล"
-                                        v-model="emailRegis"
-                                        name="emailRegis"
-                                      />
-                                      <span class="valid-form">
-                                        {{ errors[0] }}
-                                      </span>
-                                    </validation-provider>
-                                  </div>
-                                </v-col>
-                              </v-row>
+                            <v-row justify="center" class="mt-2">
+                              <v-col align-self="center">
+                                <div class="input-area">
+                                  <p>อีเมล</p>
+                                  <validation-provider
+                                    rules="required"
+                                    v-slot="{ errors }"
+                                  >
+                                    <input
+                                      type="email"
+                                      placeholder="กรุณากรอกอีเมล"
+                                      v-model="emailRegis"
+                                      name="emailRegis"
+                                    />
+                                    <span class="valid-form">
+                                      {{ errors[0] }}
+                                    </span>
+                                  </validation-provider>
+                                </div>
+                              </v-col>
+                            </v-row>
 
-                              <v-row justify="center">
-                                <v-col align-self="center" class="mt-0 pb-0">
-                                  <div class="input-area">
-                                    <p>จังหวัด</p>
-                                    <validation-provider
-                                      rules="required"
-                                      v-slot="{ errors }"
-                                    >
-                                      <v-select
-                                        :items="province"
-                                        item-text="province"
-                                        name="province"
-                                        filled
-                                        label="กรุณาเลือกจังหวัด"
-                                        dense
-                                        v-model="select"
-                                        :error-messages="errors"
-                                        data-vv-name="select"
-                                        required
-                                      ></v-select>
-                                    </validation-provider>
-                                  </div>
-                                </v-col>
+                            <v-row justify="center">
+                              <v-col align-self="center" class="mt-0 pb-0">
+                                <div class="input-area">
+                                  <p>จังหวัด</p>
+                                  <validation-provider
+                                    rules="required"
+                                    v-slot="{ errors }"
+                                  >
+                                    <v-select
+                                      :items="province"
+                                      item-text="province"
+                                      name="province"
+                                      filled
+                                      label="กรุณาเลือกจังหวัด"
+                                      dense
+                                      v-model="select"
+                                      :error-messages="errors"
+                                      data-vv-name="select"
+                                      required
+                                    ></v-select>
+                                  </validation-provider>
+                                </div>
+                              </v-col>
 
-                                <v-col align-self="center" class="mt-0 pb-0">
-                                  <div class="input-area">
-                                    <p>รหัสไปรษณีย์</p>
+                              <v-col align-self="center" class="mt-0 pb-0">
+                                <div class="input-area">
+                                  <p>รหัสไปรษณีย์</p>
 
-                                    <validation-provider
-                                      rules="required"
-                                      v-slot="{ errors }"
-                                    >
-                                      <v-select
-                                        :items="province"
-                                        filled
-                                        label="กรุณาเลือกรหัสไปรษณีย์"
-                                        name="zipCode"
-                                        item-text="zip"
-                                        dense
-                                        v-model="select"
-                                        :error-messages="errors"
-                                        data-vv-name="select"
-                                        required
-                                      ></v-select>
-                                    </validation-provider>
-                                  </div>
-                                </v-col>
-                              </v-row>
-                              <v-row justify="center" class="mt-2">
-                                <v-col align-self="center">
-                                  <div class="input-area">
-                                    <p>รหัสผ่าน</p>
-                                    <validation-provider
-                                      rules="required"
-                                      v-slot="{ errors }"
-                                    >
-                                      <input
-                                        type="password"
-                                        placeholder="กรุณากรอกรหัสผ่าน"
-                                        v-model="passwordRegis"
-                                        name="passwordRegis"
-                                      />
-                                      <span class="valid-form">
-                                        {{ errors[0] }}
-                                      </span>
-                                    </validation-provider>
-                                  </div>
-                                </v-col>
+                                  <validation-provider
+                                    rules="required"
+                                    v-slot="{ errors }"
+                                  >
+                                    <v-select
+                                      :items="province"
+                                      filled
+                                      label="กรุณาเลือกรหัสไปรษณีย์"
+                                      name="zipCode"
+                                      item-text="zip"
+                                      dense
+                                      v-model="select"
+                                      :error-messages="errors"
+                                      data-vv-name="select"
+                                      required
+                                    ></v-select>
+                                  </validation-provider>
+                                </div>
+                              </v-col>
+                            </v-row>
+                            <v-row justify="center" class="mt-2">
+                              <v-col align-self="center">
+                                <div class="input-area">
+                                  <p>รหัสผ่าน</p>
+                                  <validation-provider
+                                    rules="required"
+                                    v-slot="{ errors }"
+                                  >
+                                    <input
+                                      type="password"
+                                      placeholder="กรุณากรอกรหัสผ่าน"
+                                      v-model="passwordRegis"
+                                      name="passwordRegis"
+                                    />
+                                    <span class="valid-form">
+                                      {{ errors[0] }}
+                                    </span>
+                                  </validation-provider>
+                                </div>
+                              </v-col>
 
-                                <v-col align-self="center">
-                                  <div class="input-area">
-                                    <p>ยืนยันรหัสผ่าน</p>
-                                    <validation-provider
-                                      rules="required"
-                                      v-slot="{ errors }"
-                                    >
-                                      <input
-                                        type="password"
-                                        placeholder="กรุณายืนยันรหัสผ่าน"
-                                        v-model="confirm"
-                                        name="confirm"
-                                      />
-                                      <span class="valid-form">
-                                        {{ errors[0] }}
-                                      </span>
-                                    </validation-provider>
-                                  </div>
-                                </v-col>
-                              </v-row>
-                              <v-row justify="center">
-                                <v-col align-self="center">
-                                  <div>
-                                    <base-button
-                                      v-if="onSubmit"
-                                      :fillSearch="true"
-                                      :type="'submit'"
-                                    >
-                                      สมัครสมาชิก
-                                    </base-button>
-                                  </div>
-                                </v-col>
-                              </v-row>
-                            </form>
-                          </validation-observer>
-                        </div>
+                              <v-col align-self="center">
+                                <div class="input-area">
+                                  <p>ยืนยันรหัสผ่าน</p>
+                                  <validation-provider
+                                    rules="required"
+                                    v-slot="{ errors }"
+                                  >
+                                    <input
+                                      type="password"
+                                      placeholder="กรุณายืนยันรหัสผ่าน"
+                                      v-model="confirm"
+                                      name="confirm"
+                                    />
+                                    <span class="valid-form">
+                                      {{ errors[0] }}
+                                    </span>
+                                  </validation-provider>
+                                </div>
+                              </v-col>
+                            </v-row>
+                            <v-row justify="center">
+                              <v-col align-self="center">
+                                <div>
+                                  <base-button
+                                    v-if="register"
+                                    :fillSearch="true"
+                                    :type="'submit'"
+                                  >
+                                    สมัครสมาชิก
+                                  </base-button>
+                                </div>
+                              </v-col>
+                            </v-row>
+                          </form>
+                        </validation-observer>
                       </div>
                     </v-col>
                   </v-row>
@@ -429,72 +428,6 @@
           </v-row>
         </v-col>
       </v-row>
-
-      <!--  -->
-      <!-- move code -->
-      <!-- New password -->
-      <!-- <div>
-        <validation-observer ref="form">
-          <form @submit.prevent="onSubmitNewPass">
-            <v-row justify="center">
-              <v-dialog v-model="dialog4" max-width="540">
-                <div class="set-bg-otp">
-                  <p class="otp-title">สร้างรหัสผ่านใหม่</p>
-                  <div>
-                    <v-row justify="center">
-                      <v-col cols="10" align-self="center">
-                        <div class="input-area">
-                          <p>รหัสผ่านใหม่</p>
-                          <validation-provider
-                            rules="required"
-                            v-slot="{ errors }"
-                          >
-                            <input
-                              type="password"
-                              placeholder="กรุณากรอกรหัสผ่านใหม่"
-                              v-model="newPass"
-                              name="newPass"
-                            />
-                            <span class="valid-form">
-                              {{ errors[0] }}
-                            </span>
-                          </validation-provider>
-                        </div>
-
-                        <div class="input-area mt-5">
-                          <p>ยืนยันรหัสผ่าน</p>
-                          <validation-provider
-                            rules="required"
-                            v-slot="{ errors }"
-                          >
-                            <input
-                              type="password"
-                              placeholder="กรุณายืนยันรหัสผ่าน"
-                              v-model="newConfirm"
-                              name="newConfirm"
-                            />
-                            <span class="valid-form">
-                              {{ errors[0] }}
-                            </span>
-                          </validation-provider>
-                        </div>
-                      </v-col>
-                    </v-row>
-                  </div>
-                  <div>
-                    <v-row justify="center my-5">
-                      <v-col cols="10" align-self="center">
-                        <base-button :fillSearch="true"> ยืนยัน </base-button>
-                      </v-col>
-                    </v-row>
-                  </div>
-                </div>
-              </v-dialog>
-            </v-row>
-          </form>
-        </validation-observer>
-      </div> -->
-      <!--  -->
     </v-container>
   </section>
 </template>
@@ -581,33 +514,21 @@ export default {
       }
     },
 
-    onSubmit() {
-      if (
-        (this.emailRegis.length !== 0 &&
-          this.passwordRegis.length !== 0 &&
-          this.firstName.length !== 0 &&
-          this.lastName.length !== 0) ||
-        (this.province.length !== 0 &&
-          this.zipCode.length !== 0 &&
-          this.confirm.length !== 0)
-      ) {
-        this.dialog = true;
-      } else {
+    register() {
+      try {
         this.$refs.registerForm.validate().then((success) => {
           if (!success) {
             return;
           }
 
-          alert("Form has been submitted!");
+          this.dialog = true;
 
-          // Resetting Values
-          // this.firstName = this.lastName = this.emailRegis = "";
-
-          // Wait until the models are updated in the UI
           this.$nextTick(() => {
-            this.$refs.form.reset();
+            this.$refs.registerForm.reset();
           });
         });
+      } catch (error) {
+        console.log(error);
       }
     },
     toggleTabs() {
@@ -674,8 +595,6 @@ export default {
   border-radius: 30px;
   box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.2);
   position: relative;
-  // padding-top: 56px;
-  // padding-bottom: 56px;
   padding: 56px 0px 56px 0px;
 }
 
