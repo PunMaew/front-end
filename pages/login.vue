@@ -177,7 +177,7 @@
                       </div>
                       <!-- Register -->
 
-                      <!-- <div v-else>
+                      <div v-else>
                         <div class="mt-6">
                           <validation-observer ref="registerForm">
                             <form @submit.prevent="onSubmit">
@@ -350,7 +350,7 @@
                             </form>
                           </validation-observer>
                         </div>
-                      </div> -->
+                      </div>
                     </v-col>
                   </v-row>
                 </div>
