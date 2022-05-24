@@ -44,52 +44,54 @@
                         </div>
                       </div>
                       <!-- Login -->
-                      <div v-if="openTab">
-                        <div class="mt-6">
-                          <validation-observer ref="form">
-                            <form @submit.prevent="login">
-                              <div class="input-area">
-                                <p>อีเมล</p>
-                                <validation-provider
-                                  rules="required"
-                                  v-slot="{ errors }"
-                                >
-                                  <input
-                                    v-model="emailLogin"
-                                    type="email"
-                                    placeholder="กรุณากรอกอีเมล"
-                                    name="emailLogin"
-                                  />
-                                  <span class="valid-form">
-                                    {{ errors[0] }}
-                                  </span>
-                                </validation-provider>
-                              </div>
-                              <div class="input-area mt-5">
-                                <p>รหัสผ่าน</p>
-                                <validation-provider
-                                  rules="required"
-                                  v-slot="{ errors }"
-                                >
-                                  <input
-                                    v-model="password"
-                                    type="password"
-                                    placeholder="กรุณากรอกรหัสผ่าน"
-                                    name="password"
-                                  />
-                                  <span class="valid-form">
-                                    {{ errors[0] }}
-                                  </span>
-                                </validation-provider>
-                              </div>
-                            </form>
-                          </validation-observer>
-                          <div class="mt-4">
-                            <p class="set-forget-pass" @click="dialog2 = true">
-                              หากลืมรหัสผ่าน
-                            </p>
-                            <validation-observer ref="otpForm">
-                              <form @submit.prevent="nextStep">
+                      <div v-if="openTab" class="mt-6">
+                        <validation-observer ref="loginForm">
+                          <form @submit.prevent="login">
+                            <div class="input-area">
+                              <p>อีเมล</p>
+                              <validation-provider
+                                rules="required"
+                                v-slot="{ errors }"
+                              >
+                                <input
+                                  v-model="emailLogin"
+                                  type="email"
+                                  placeholder="กรุณากรอกอีเมล"
+                                  name="emailLogin"
+                                />
+                                <span class="valid-form">
+                                  {{ errors[0] }}
+                                </span>
+                              </validation-provider>
+                            </div>
+                            <div class="input-area mt-5">
+                              <p>รหัสผ่าน</p>
+                              <validation-provider
+                                rules="required"
+                                v-slot="{ errors }"
+                              >
+                                <input
+                                  v-model="password"
+                                  type="password"
+                                  placeholder="กรุณากรอกรหัสผ่าน"
+                                  name="password"
+                                />
+                                <span class="valid-form">
+                                  {{ errors[0] }}
+                                </span>
+                              </validation-provider>
+                            </div>
+
+                            <div class="mt-4">
+                              <p
+                                class="set-forget-pass"
+                                @click="dialog2 = true"
+                              >
+                                หากลืมรหัสผ่าน
+                              </p>
+
+                              <validation-observer ref="otpForm">
+                                <!-- <form @submit.prevent="nextStep"> -->
                                 <card-dialog
                                   :dialog="dialog2"
                                   v-if="this.currentStep === 1"
@@ -120,7 +122,6 @@
                                       <base-button
                                         :fillSearch="true"
                                         class="mt-6"
-                                        :type="'submit'"
                                         @click="nextStep"
                                       >
                                         ส่งรหัส OTP
@@ -128,6 +129,7 @@
                                     </validation-provider>
                                   </template>
                                 </card-dialog>
+
                                 <card-dialog
                                   :dialog="dialog2"
                                   v-if="this.currentStep === 2"
@@ -161,22 +163,23 @@
                                     </base-button>
                                   </template>
                                 </card-dialog>
-                              </form>
-                            </validation-observer>
-                          </div>
+                                <!-- </form> -->
+                              </validation-observer>
+                            </div>
 
-                          <div class="mt-5">
-                            <base-button :fillSearch="true" :type="'submit'">
-                              เข้าสู่ระบบ
-                            </base-button>
-                          </div>
-                        </div>
+                            <div class="mt-5">
+                              <base-button :fillSearch="true" :type="'submit'">
+                                เข้าสู่ระบบ
+                              </base-button>
+                            </div>
+                          </form>
+                        </validation-observer>
                       </div>
                       <!-- Register -->
 
-                      <div v-else>
+                      <!-- <div v-else>
                         <div class="mt-6">
-                          <validation-observer ref="form">
+                          <validation-observer ref="registerForm">
                             <form @submit.prevent="onSubmit">
                               <v-row justify="center">
                                 <v-col align-self="center">
@@ -347,7 +350,7 @@
                             </form>
                           </validation-observer>
                         </div>
-                      </div>
+                      </div> -->
                     </v-col>
                   </v-row>
                 </div>
@@ -472,32 +475,38 @@ export default {
   methods: {
     login() {
       try {
-        if (this.emailLogin.length !== 0 && this.password) {
+        this.$refs.loginForm.validate().then((success) => {
+          if (!success) {
+            return;
+          }
+
           console.log("login successfully");
-        } else {
-          return;
-        }
+
+          this.$nextTick(() => {
+            this.$refs.loginForm.reset();
+          });
+        });
       } catch (error) {
         console.log(error);
       }
     },
     nextStep() {
-      this.$refs.otpForm.validate().then((success) => {
-        if (!success) {
-          return;
-        }
+      try {
+        this.$refs.otpForm.validate().then((success) => {
+          if (!success) {
+            return;
+          }
 
-        this.currentStep += 1;
-        this.countdown();
+          this.currentStep += 1;
+          this.countdown();
 
-        // Resetting Values
-        // this.firstName = this.lastName = this.emailRegis = "";
-
-        // Wait until the models are updated in the UI
-        this.$nextTick(() => {
-          this.$refs.form.reset();
+          this.$nextTick(() => {
+            this.$refs.otpForm.reset();
+          });
         });
-      });
+      } catch (error) {
+        console.log(error);
+      }
     },
 
     onSubmit() {
@@ -512,7 +521,7 @@ export default {
       ) {
         this.dialog = true;
       } else {
-        this.$refs.form.validate().then((success) => {
+        this.$refs.registerForm.validate().then((success) => {
           if (!success) {
             return;
           }
