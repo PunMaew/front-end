@@ -1,4 +1,5 @@
 // import colors from "vuetify/es5/util/colors";
+require("dotenv").config();
 
 export default {
   server: {
@@ -43,7 +44,7 @@ export default {
   buildModules: [
     // https://go.nuxtjs.dev/vuetify
     "@nuxtjs/vuetify",
-    ["@nuxtjs/dotenv", { filename: ".env." + process.env.ENV }],
+    "@nuxtjs/dotenv",
   ],
 
   // Modules: https://go.nuxtjs.dev/config-modules
@@ -51,7 +52,7 @@ export default {
     // https://go.nuxtjs.dev/axios
     "@nuxtjs/axios",
     "@nuxtjs/style-resources",
-    "@nuxtjs/dotenv",
+    ["@nuxtjs/dotenv", { filename: ".env" }],
   ],
   styleResources: {
     scss: ["~/assets/scss/abstracts/_variables.scss"],
@@ -60,7 +61,8 @@ export default {
   axios: {
     // Workaround to avoid enforcing hard-coded localhost:3000: https://github.com/nuxt-community/axios-module/issues/308
     // baseURL: "/",
-    baseURL: process.env.BASE_URL,
+    // baseURL: process.env.BASE_URL,
+    // authURL: process.env.AUTH_URL,
   },
 
   // Vuetify module configuration: https://go.nuxtjs.dev/config-vuetify
@@ -91,7 +93,10 @@ export default {
     extend(config, ctx) {},
   },
   publicRuntimeConfig: {
-    baseURL: process.env.BASE_URL + process.env.API_VERSION,
+    // baseURL: process.env.BASE_URL,
+    authURL: process.env.AUTH_URL,
   },
-  privateRuntimeConfig: {},
+  privateRuntimeConfig: {
+    authURL: process.env.AUTH_URL,
+  },
 };

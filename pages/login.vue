@@ -330,7 +330,7 @@
                                       filled
                                       label="กรุณาเลือกจังหวัด"
                                       dense
-                                      v-model="select"
+                                      v-model="selectProvince"
                                       :error-messages="errors"
                                       data-vv-name="select"
                                       required
@@ -354,7 +354,7 @@
                                       name="zipCode"
                                       item-text="zip"
                                       dense
-                                      v-model="select"
+                                      v-model="selectZip"
                                       :error-messages="errors"
                                       data-vv-name="select"
                                       required
@@ -415,6 +415,52 @@
                                     สมัครสมาชิก
                                   </base-button>
                                 </div>
+                                <validation-observer ref="otpRegisForm">
+                                  <card-dialog :dialog="dialog">
+                                    <template slot="title">
+                                      <p class="otp-title">ยืนยันรหัส OTP</p>
+                                    </template>
+                                    <template slot="description">
+                                      <p class="otp-desc">
+                                        กรุณายืนยันรหัส OTP ที่ส่งไปที่อีเมล
+                                        warisara@gmail.com
+                                      </p>
+                                    </template>
+                                    <template slot="content">
+                                      <p class="otp-countDown">
+                                        {{ total.minutes }}:{{ total.seconds }}
+                                      </p>
+                                      <div>
+                                        <v-row justify="center">
+                                          <v-col cols="8" align-self="center">
+                                            <validation-provider
+                                              rules="required"
+                                              v-slot="{ errors }"
+                                              class="otp-content"
+                                            >
+                                              <v-otp-input
+                                                length="6"
+                                                v-model="otpCode"
+                                                name="otpCode"
+                                              ></v-otp-input>
+                                              <span class="valid-form">
+                                                {{ errors[0] }}
+                                              </span>
+                                              <base-button
+                                                :fillSearch="true"
+                                                class="mt-6"
+                                                @click="confirmOtpRegister"
+                                              >
+                                                ยืนยันรหัส OTP
+                                              </base-button>
+                                            </validation-provider>
+                                          </v-col>
+                                        </v-row>
+                                      </div>
+                                    </template>
+                                  </card-dialog>
+                                </validation-observer>
+                                <!--  -->
                               </v-col>
                             </v-row>
                           </form>
@@ -449,13 +495,12 @@ export default {
   data() {
     return {
       province: provinceList,
-      select: null,
+      selectProvince: "",
+      selectZip: "",
       items: ["Foo", "Bar", "Fizz", "Buzz"],
       openTab: true,
       dialog: false,
       dialog2: false,
-      // dialog3: false,
-      // dialog4: false,
       total: {
         minutes: 0,
         seconds: 0,
@@ -471,7 +516,7 @@ export default {
       lastName: "",
       newPass: "",
       newConfirm: "",
-      zipCode: "",
+      // zipCode: "",
       confirm: "",
       currentStep: 1,
       otpCode: "",
@@ -484,7 +529,14 @@ export default {
           if (!success) {
             return;
           }
-
+          this.$axios
+            .post(`${this.$config.authURL}user/login`, {
+              email: this.emailLogin,
+              password: this.password,
+            })
+            .then((res) => {
+              console.log(res);
+            });
           console.log("login successfully");
 
           this.$nextTick(() => {
@@ -501,10 +553,17 @@ export default {
           if (!success) {
             return;
           }
-
+          // this.$axios
+          //   .patch(`${this.$config.authURL}user/forgot`, {
+          //     email: this.emailRegis,
+          //   })
+          //   .then((res) => {
+          //     console.log(res);
+          //     this.currentStep += 1;
+          //     this.countdown();
+          //   });
           this.currentStep += 1;
           this.countdown();
-
           this.$nextTick(() => {
             this.$refs.otpForm.reset();
           });
@@ -520,11 +579,56 @@ export default {
           if (!success) {
             return;
           }
+          this.$axios
+            .post(`${this.$config.authURL}user/signup`, {
+              firstName: this.firstName,
+              lastName: this.lastName,
+              email: this.emailRegis,
+              password: this.passwordRegis,
+              confirmPassword: this.confirmPassword,
+              location: {
+                province: this.selectProvince,
+                zipCode: this.selectZip,
+              },
+            })
+            .then((res) => {
+              console.log(res.data);
 
-          this.dialog = true;
+              this.dialog = true;
+              this.confirmOtpRegister();
+              // location.reload();
+            });
 
           this.$nextTick(() => {
             this.$refs.registerForm.reset();
+          });
+        });
+      } catch (error) {
+        console.log(error);
+      }
+    },
+    confirmOtpRegister() {
+      try {
+        this.$refs.otpRegisForm.validate().then((success) => {
+          if (!success) {
+            return;
+          }
+          if ((this.dialog = true)) {
+            this.countdown();
+            this.$axios
+              .patch(`${this.$config.authURL}user/activate`, {
+                email: this.emailRegis,
+                code: this.otpCode,
+              })
+              .then((res) => {
+                console.log(res);
+              });
+          } else {
+            console.log(error);
+          }
+
+          this.$nextTick(() => {
+            this.$refs.otpRegisForm.reset();
           });
         });
       } catch (error) {
