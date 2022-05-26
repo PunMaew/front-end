@@ -1,19 +1,20 @@
 $dark: #2f3542;
+$gray: #a3a3a3;
+$light: #f4f4f4;
 $white: #ffffff;
-$green: #19ba88;
-$yellow: #fdcb6e;
-$red: #f77272;
+$success: #19ba88;
+$warning: #fdcb6e;
+$error: #f77272;
 
-$orange: #ffb88a;
-$orange2: #ff8053;
-$salmon: #fabaab;
-$salmon2: #ffebe7;
-$blue: #bbd5f7;
-$blue2: #1e58c6;
-$purple: #ccabd5;
-$purple2: #f4def3;
-$grey_placeholder: #a3a3a3;
-$field: #f4f4f4;
+$yellow-light: #fef4d0;
+$yellow: #ffd497;
+$yellow-dark: #f8b55d;
+$orange-light: #fffafa;
+$orange: #ff9474;
+$orange-dark: #f87651;
+$purple-light: #e0d6f9;
+$purple: #a2aef2;
+$purple-dark: #6f73bd;
 $header_height: 54px;
 
 .text-default {
@@ -22,5 +23,15 @@ $header_height: 54px;
 .text-white {
   color: $white;
 }
-
+.v-application a,
+.v-application a:hover {
+  color: $dark;
+  text-decoration: none;
+  &:hover {
+    color: $orange;
+  }
+}
+// .v-application {
+//   background-color: $orange-light !important;
+// }
 @import "mixins";
