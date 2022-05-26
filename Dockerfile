@@ -1,4 +1,4 @@
-FROM node:lts as builder
+FROM node:16.6.1-alpine as builder
 
 WORKDIR /app
 
@@ -18,7 +18,7 @@ RUN rm -rf node_modules && \
   --pure-lockfile \
   --non-interactive 
 
-FROM node:lts
+FROM node:16.6.1-alpine
 
 WORKDIR /app
 
