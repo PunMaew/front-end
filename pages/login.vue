@@ -223,7 +223,7 @@
                                               <base-button
                                                 :fillSearch="true"
                                                 class="mt-6"
-                                                @click="dialog2 = false"
+                                                @click="setNewPassword"
                                               >
                                                 ยืนยัน
                                               </base-button>
@@ -553,17 +553,40 @@ export default {
           if (!success) {
             return;
           }
-          // this.$axios
-          //   .patch(`${this.$config.authURL}user/forgot`, {
-          //     email: this.emailRegis,
-          //   })
-          //   .then((res) => {
-          //     console.log(res);
-          //     this.currentStep += 1;
-          //     this.countdown();
-          //   });
-          this.currentStep += 1;
-          this.countdown();
+          this.$axios
+            .patch(`${this.$config.authURL}user/forgot`, {
+              email: this.emailOtp,
+            })
+            .then((res) => {
+              console.log(res);
+              this.currentStep += 1;
+              this.countdown();
+              // this.setNewPassword();
+            });
+          this.$nextTick(() => {
+            this.$refs.otpForm.reset();
+          });
+        });
+      } catch (error) {
+        console.log(error);
+      }
+    },
+    setNewPassword() {
+      try {
+        this.$refs.otpForm.validate().then((success) => {
+          if (!success) {
+            return;
+          }
+          this.$axios
+            .patch(`${this.$config.authURL}user/newpassword`, {
+              token: this.otpCode,
+              newPassword: this.newPass,
+              confirmPassword: this.newConfirm,
+            })
+            .then((res) => {
+              console.log(res);
+            });
+          //this.dialog2 = false;
           this.$nextTick(() => {
             this.$refs.otpForm.reset();
           });
