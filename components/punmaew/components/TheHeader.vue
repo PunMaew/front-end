@@ -4,7 +4,7 @@
       <v-row justify="center">
         <v-col sm="4" class="nav-left">
           <n-link to="/" class="opunmai">
-            <img src="~/assets/imgs/Logo.png" alt="punmaew" id="logo" />
+            <img src="~/assets/imgs/pmlogo.png" alt="punmaew" id="logo" />
           </n-link>
         </v-col>
         <v-col sm="4" class="nav-center">
