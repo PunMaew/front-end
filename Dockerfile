@@ -1,23 +1,31 @@
-FROM node:16.10.0 as build-stage
+FROM node:lts as builder
 
 WORKDIR /app
 
-COPY ./package*.json ./
-
-RUN npm install
-
 COPY . .
 
-EXPOSE 8080
+RUN npm install \
+  --prefer-offline \
+  --frozen-lockfile \
+  --non-interactive \
+  --production=false
 
 RUN npm run build
 
-FROM nginx as production-stage
+RUN rm -rf node_modules && \
+  NODE_ENV=production npm install \
+  --prefer-offline \
+  --pure-lockfile \
+  --non-interactive \
+  --production=true
 
-RUN mkdir /app
+FROM node:lts
 
-COPY --from=build-stage /app/dist /app
+WORKDIR /app
 
-COPY ./nginx.conf /etc/nginx/nginx.conf
+COPY --from=builder /app  .
 
-CMD ["nginx", "-g", "daemon off;"]
+ENV HOST 0.0.0.0
+EXPOSE 80
+
+CMD [ "npm", "start" ]
