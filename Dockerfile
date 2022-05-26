@@ -10,6 +10,8 @@ RUN npm install \
   --non-interactive \
   --production=false
 
+RUN npm i @nuxtjs/style-resources
+
 RUN npm run build
 
 RUN rm -rf node_modules && \
