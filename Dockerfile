@@ -16,8 +16,7 @@ RUN rm -rf node_modules && \
   NODE_ENV=production npm install \
   --prefer-offline \
   --pure-lockfile \
-  --non-interactive \
-  --production=true
+  --non-interactive 
 
 FROM node:lts
 
