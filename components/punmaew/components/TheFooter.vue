@@ -4,7 +4,7 @@
       <v-row>
         <v-col cols="12" align-self="center">
           <div>
-            <img src="~/assets/imgs/logo.png" alt="punmaew" id="logo" />
+            <img src="@/assets/imgs/Logo.png" alt="punmaew" id="logo" />
             <p>PunMaew | Web Application สำหรับช่วยเหลือน้องแมวไร้บ้าน</p>
           </div>
         </v-col>

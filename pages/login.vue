@@ -13,7 +13,7 @@
                         <v-col cols="6" align-self="center">
                           <div class="set-img-logo">
                             <img
-                              src="~/assets/imgs/logo.png"
+                              src="@/assets/imgs/Logo.png"
                               alt="punmaew"
                               id="logo"
                             />
