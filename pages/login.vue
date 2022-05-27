@@ -165,7 +165,7 @@
                                             <base-button
                                               :fillSearch="true"
                                               class="mt-6"
-                                              @click="nextStep"
+                                              @click="confirmOtpNewPassWord"
                                             >
                                               ยืนยันรหัส OTP
                                             </base-button>
@@ -571,6 +571,21 @@ export default {
         console.log(error);
       }
     },
+    confirmOtpNewPassWord() {
+      try {
+        this.$refs.otpForm.validate().then((success) => {
+          if (!success) {
+            return;
+          }
+          this.currentStep += 1;
+          this.$nextTick(() => {
+            this.$refs.otpForm.reset();
+          });
+        });
+      } catch (error) {
+        console.log(error);
+      }
+    },
     setNewPassword() {
       try {
         this.$refs.otpForm.validate().then((success) => {
@@ -585,6 +600,7 @@ export default {
             })
             .then((res) => {
               console.log(res);
+              location.reload();
             });
           //this.dialog2 = false;
           this.$nextTick(() => {
@@ -618,7 +634,8 @@ export default {
               console.log(res.data);
 
               this.dialog = true;
-              this.confirmOtpRegister();
+              this.countdown();
+              // this.confirmOtpRegister();
               // location.reload();
             });
 
@@ -645,6 +662,7 @@ export default {
               })
               .then((res) => {
                 console.log(res);
+                location.reload();
               });
           } else {
             console.log(error);
