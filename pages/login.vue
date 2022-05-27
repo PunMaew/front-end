@@ -577,7 +577,15 @@ export default {
           if (!success) {
             return;
           }
-          this.currentStep += 1;
+
+          this.$axios
+            .patch(`${this.$config.authURL}user/resetotp`, {
+              token: this.otpCode,
+            })
+            .then((res) => {
+              console.log(res);
+              this.currentStep += 1;
+            });
           this.$nextTick(() => {
             this.$refs.otpForm.reset();
           });
@@ -600,7 +608,7 @@ export default {
             })
             .then((res) => {
               console.log(res);
-              location.reload();
+              // location.reload();
             });
           //this.dialog2 = false;
           this.$nextTick(() => {
