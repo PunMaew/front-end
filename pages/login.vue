@@ -537,7 +537,7 @@ export default {
             .then((res) => {
               console.log(res);
             });
-          console.log("login successfully");
+          // console.log("login successfully");
 
           this.$nextTick(() => {
             this.$refs.loginForm.reset();
