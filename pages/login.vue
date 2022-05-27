@@ -608,7 +608,7 @@ export default {
             })
             .then((res) => {
               console.log(res);
-              // location.reload();
+              location.reload();
             });
           //this.dialog2 = false;
           this.$nextTick(() => {
