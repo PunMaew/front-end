@@ -633,7 +633,7 @@ export default {
               email: this.emailRegis,
               password: this.passwordRegis,
               confirmPassword: this.confirmPassword,
-              location: {
+              address: {
                 province: this.selectProvince,
                 zipCode: this.selectZip,
               },
