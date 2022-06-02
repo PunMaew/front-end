@@ -2,8 +2,7 @@ name: CICD Node frontend
 on:
   push:
     branches:
-      - master
-      
+      - master   
 jobs:
   build:
     runs-on: ubuntu-20.04
