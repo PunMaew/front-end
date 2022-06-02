@@ -1,4 +1,4 @@
-name: CICD Node Js
+name: CICD Node frontend
 on:
   push:
     branches:
