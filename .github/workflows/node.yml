@@ -1,9 +1,8 @@
-name: CICD Node frontend
+name: CICD Node frontend test
 on:
   push:
     branches:
-      - master
-      
+      - master   
 jobs:
   build:
     runs-on: ubuntu-20.04
@@ -37,7 +36,7 @@ jobs:
           script: |
             cd front-end
             git pull origin master
-            sudo docker rm -f front-end_server_1
-            sudo docker rmi ghcr.io/skeletonbear/front-end-punmaew
-            sudo docker pull ghcr.io/skeletonbear/front-end-punmaew:latest
-            sudo docker-compose up -d
+            docker rm -f front-end_server_1
+            docker rmi ghcr.io/skeletonbear/front-end-punmaew
+            docker pull ghcr.io/skeletonbear/front-end-punmaew:latest
+            docker-compose up -d
