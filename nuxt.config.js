@@ -20,6 +20,12 @@ export default {
         name: "description",
         content: "Web Application สำหรับช่วยเหลือน้องแมวไร้บ้าน",
       },
+      {
+        "http-equiv": "Content-Security-Policy",
+        content: "upgrade-insecure-requests",
+      },
+      // <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
+
       // { name: "format-detection", content: "telephone=no" },
     ],
     link: [
