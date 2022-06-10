@@ -27,6 +27,6 @@ WORKDIR /app
 COPY --from=builder /app  .
 
 ENV HOST 0.0.0.0
-EXPOSE 443
+EXPOSE 80
 
 CMD [ "npm", "start" ]
