@@ -1,4 +1,4 @@
-name: CICD Node frontend
+name: CICD Node frontend test
 on:
   push:
     branches:
