@@ -26,14 +26,19 @@
         </v-col>
         <v-col sm="4" class="nav-right">
           <ul id="menu" class="d-none d-md-flex">
-            <li>
+            <li v-if="login">
+              <n-link to="/editProfile" class="opunmai">
+                <base-button :fill="true">Firstname</base-button>
+              </n-link>
+            </li>
+            <li v-else>
               <n-link to="/login" class="opunmai">
                 <base-button :fill="true">เข้าสู่ระบบ</base-button>
               </n-link>
             </li>
           </ul>
         </v-col>
-        <!-- <v-col>
+        <v-col sm="12" class="pt-0 pb-0 text-right d-flex justify-end">
           <div class="d-md-none">
             <v-menu min-width="200" offset-y>
               <template v-slot:activator="{ on: menu, attrs }">
@@ -57,7 +62,7 @@
               </v-list>
             </v-menu>
           </div>
-        </v-col> -->
+        </v-col>
       </v-row>
     </v-container>
   </header>
@@ -87,6 +92,7 @@ export default {
   data() {
     return {
       // item: [],
+      login: true,
     };
   },
 };
@@ -99,7 +105,7 @@ export default {
 .nav-left {
   padding-top: 0px;
   padding-bottom: 0px;
-  padding-left: 0px;
+  // padding-left: 0px;
 }
 .nav-center {
   padding-top: 0px;
@@ -112,7 +118,7 @@ export default {
   display: flex;
   padding-top: 0px;
   padding-bottom: 0px;
-  padding-right: 0px;
+  // padding-right: 0px;
 }
 header {
   padding: 15px 0;

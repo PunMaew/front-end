@@ -1,25 +1,42 @@
 <template>
   <div>
+    <div v-if="this.currentStep === 1 || this.currentStep === 2">
+      <v-row
+        v-if="progress.generalInfo === 1"
+        justify="center"
+        class="btn-area"
+      >
+        <v-col align-self="center">
+          <base-button :fillSearch="true" @click.native="nextStep"
+            >ต่อไป</base-button
+          >
+        </v-col>
+      </v-row>
+      <v-row v-else no-gutters justify="center" class="btn-area">
+        <v-col align-self="center">
+          <base-button :outline="true" @click.native="prevStep"
+            >กลับ</base-button
+          >
+        </v-col>
+        <v-col align-self="center">
+          <base-button :fillSearch="true" @click.native="nextStep"
+            >ต่อไป</base-button
+          >
+        </v-col>
+      </v-row>
+    </div>
+    <!-- currentStep === 3 -->
     <v-row
-      :progress="progress"
-      v-if="progress.generalInfo === 1"
+      v-if="this.currentStep === 3"
+      no-gutters
       justify="center"
       class="btn-area"
     >
       <v-col align-self="center">
-        <base-button :fillSearch="true" @click.native="nextStep"
-          >ต่อไป</base-button
-        >
-      </v-col>
-    </v-row>
-    <v-row v-else no-gutters justify="center" class="btn-area">
-      <v-col align-self="center">
         <base-button :outline="true" @click.native="prevStep">กลับ</base-button>
       </v-col>
       <v-col align-self="center">
-        <base-button :fillSearch="true" @click.native="nextStep"
-          >ต่อไป</base-button
-        >
+        <base-button :fillSearch="true">ลงประกาศ</base-button>
       </v-col>
     </v-row>
   </div>
@@ -32,6 +49,9 @@ export default {
   props: {
     progress: {
       type: Object,
+    },
+    currentStep: {
+      type: Number,
     },
   },
   methods: {
