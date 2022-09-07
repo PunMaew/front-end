@@ -531,7 +531,6 @@ export default {
         const res = await this.$axios.get(
           `${this.$config.findHome}onePost?id=${id}`
         );
-        // console.log(res.data);
         this.onePost = res.data.data;
 
         this.sheet = true;
