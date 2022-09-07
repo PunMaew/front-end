@@ -2,19 +2,19 @@
   <section>
     <div class="input-area">
       <p>ชื่อผู้ติดต่อ<span>*</span></p>
-      <input type="text" placeholder="กรุณากรอกชื่อจริง" />
+      <input type="text" placeholder="กรุณากรอกชื่อผู้ติดต่อ" />
     </div>
     <div class="input-area mt-2">
       <p>เบอร์โทรศัพท์<span>*</span></p>
-      <input type="text" placeholder="กรุณากรอกสี" />
+      <input type="text" placeholder="กรุณากรอกเบอร์โทรศัพท์" />
     </div>
     <div class="input-area mt-2">
       <p>Facebook</p>
-      <input type="text" placeholder="กรุณากรอกสายพันธุ์" />
+      <input type="text" placeholder="กรุณากรอกชื่อ Facebook" />
     </div>
     <div class="input-area mt-2">
       <p>Line</p>
-      <input type="text" placeholder="กรุณากรอกอายุ" />
+      <input type="text" placeholder="กรุณากรอก Line ID" />
     </div>
   </section>
 </template>

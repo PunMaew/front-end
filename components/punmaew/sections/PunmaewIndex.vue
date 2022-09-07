@@ -20,7 +20,11 @@
           >
             <div class="card position-relative">
               <div :class="[i == 3 ? 'backdrop' : '']"></div>
-              <button v-if="i === 3" :class="[i == 3 ? 'more' : '']">
+              <button
+                @click="adoptCat"
+                v-if="i === 3"
+                :class="[i == 3 ? 'more' : '']"
+              >
                 ดูทั้งหมด
               </button>
               <div class="thumbnail">
@@ -92,7 +96,13 @@
 </template>
 
 <script>
-export default {};
+export default {
+  methods: {
+    adoptCat() {
+      this.$router.push(`/adoptCat`);
+    },
+  },
+};
 </script>
 
 <style lang="scss" scoped>

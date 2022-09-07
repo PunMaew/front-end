@@ -60,16 +60,15 @@
             dense
             filled
             :items="province"
-            item-text="province"
-            name="province"
-            v-model="selectProvince"
+            item-text="district"
+            name="district"
+            v-model="selectDistrict"
             :error-messages="errors"
             data-vv-name="select"
             required
           >
           </v-autocomplete>
         </validation-provider>
-        <!-- <input type="text" placeholder="กรุณากรอกชื่อแมว" /> -->
       </div>
       <div class="input-area">
         <p>แขวง/ตำบล<span>*</span></p>
@@ -87,26 +86,25 @@
           >
           </v-autocomplete>
         </validation-provider>
-        <!-- <input type="text" placeholder="กรุณากรอกชื่อแมว" /> -->
       </div>
       <div class="input-area">
         <p>รหัสไปรษณีย์<span>*</span></p>
-        <input type="text" placeholder="กรุณากรอกชื่อแมว" />
+        <input type="text" placeholder="กรุณากรอกรหัสไปรษณีย์" />
       </div>
     </div>
     <div v-else-if="progress.generalInfo === 3">
       <p class="step-text">ข้อมูลทั่วไป 3 จากทั้งหมด 4</p>
       <div class="input-area">
         <p>วัคซีนที่เคยได้รับ (ไม่มีกรอก -)<span>*</span></p>
-        <input type="text" placeholder="กรุณากรอกชื่อแมว" />
+        <input type="text" placeholder="กรุณากรอกวัคซีนที่เคยได้รับ" />
       </div>
       <div class="input-area mt-4">
         <p>วันที่รับวัคซีน</p>
-        <input type="text" placeholder="กรุณากรอกชื่อแมว" />
+        <input type="text" placeholder="กรุณากรอกวันที่รับวัคซีน" />
       </div>
       <div class="input-area mt-4">
         <p>โรคประจำตัว (ไม่มีกรอก - )<span>*</span></p>
-        <input type="text" placeholder="กรุณากรอกชื่อแมว" />
+        <input type="text" placeholder="กรุณากรอกโรคประจำตัว" />
       </div>
       <div>
         <div class="input-area mt-4">
@@ -163,6 +161,7 @@ export default {
     return {
       province: provinceList,
       selectProvince: "",
+      selectDistrict: "",
     };
   },
 };

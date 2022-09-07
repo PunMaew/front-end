@@ -37,7 +37,6 @@
       <v-container>
         <v-row justify="center">
           <v-col cols="12" align-self="center">
-            <!--  -->
             <v-row class="d-md-none d-lg-none d-xl-none">
               <v-col cols="12" align-self="center">
                 <h2>รับเลี้ยงแมว</h2>
@@ -68,8 +67,8 @@
                 <div>
                   <v-row>
                     <v-col
-                      v-for="i in 10"
-                      :key="i"
+                      v-for="post in posts"
+                      :key="post._id"
                       cols="12"
                       sm="4"
                       md="4"
@@ -77,7 +76,11 @@
                       xl="4"
                       align-self="center"
                     >
-                      <div class="card position-relative">
+                      <!-- @click="sheet = true" -->
+                      <div
+                        @click="getOnePost(post._id)"
+                        class="card position-relative"
+                      >
                         <div class="thumbnail">
                           <img src="@/assets/imgs/img-thumbnail.jpg" alt="" />
                         </div>
@@ -85,8 +88,17 @@
                           <v-row justify="center">
                             <v-col cols="12" class="pb-lg-3 pb-sm-3">
                               <div>
-                                <h2 class="h4">Name</h2>
-                                <p class="mb-0">Location</p>
+                                <h2 class="h4">
+                                  {{ post.generalInfo.catName }}
+                                </h2>
+                                <p class="mb-0 location">
+                                  <i class="fi fi-rr-marker"></i>
+                                  {{
+                                    post.generalInfo.location.province +
+                                    " " +
+                                    post.generalInfo.location.district
+                                  }}
+                                </p>
                               </div>
                             </v-col>
                           </v-row>
@@ -96,9 +108,7 @@
                   </v-row>
                 </div>
               </v-col>
-              <!--  -->
             </v-row>
-            <!--  -->
             <v-row justify="center" class="d-none d-md-flex">
               <v-col cols="3">
                 <div>
@@ -158,8 +168,8 @@
                 </div>
                 <v-row>
                   <v-col
-                    v-for="i in 10"
-                    :key="i"
+                    v-for="post in posts"
+                    :key="post._id"
                     cols="12"
                     sm="4"
                     md="4"
@@ -168,7 +178,11 @@
                     align-self="center"
                   >
                     <!-- card -->
-                    <div @click="sheet = true" class="card position-relative">
+                    <!-- @click="sheet = true" -->
+                    <div
+                      @click="getOnePost(post._id)"
+                      class="card position-relative"
+                    >
                       <div class="thumbnail">
                         <img src="@/assets/imgs/img-thumbnail.jpg" alt="" />
                       </div>
@@ -176,8 +190,15 @@
                         <v-row justify="center">
                           <v-col cols="12" class="pb-lg-3 pb-sm-3">
                             <div>
-                              <h2 class="h4">Name</h2>
-                              <p class="mb-0">Location</p>
+                              <h2 class="h4">{{ post.generalInfo.catName }}</h2>
+                              <p class="mb-0 location">
+                                <i class="fi fi-rr-marker"></i>
+                                {{
+                                  post.generalInfo.location.province +
+                                  " " +
+                                  post.generalInfo.location.district
+                                }}
+                              </p>
                             </div>
                           </v-col>
                         </v-row>
@@ -185,100 +206,215 @@
                     </div>
                   </v-col>
                 </v-row>
-                <!--  -->
-
                 <div class="text-center">
                   <v-bottom-sheet v-model="sheet" persistent>
-                    <v-sheet class="text-center" height="200px">
+                    <v-sheet v-if="onePost" class="text-center">
                       <v-container class="set-sheet">
                         <div @click="sheet = !sheet" class="cross-circle">
                           <i class="fi fi-rr-cross-circle"></i>
                         </div>
 
                         <div class="adopt-sheet">
-                          <v-row>
-                            <v-col cols="12" md="6">
-                              <div class="cat-img">
-                                <img
-                                  src="~/assets/imgs/img-thumbnail.jpg"
-                                  alt=""
-                                />
-                              </div>
-                              <!-- <div class="d-flex">
-                                <div class=""></div>
-                                <div></div>
-                                <div></div>
-                              </div> -->
-                            </v-col>
-                            <!-- <v-col cols="12" md="6">
-                              <div class="text-left">
-                                <h2>แมวเหลี่ยม</h2> -->
-                            <!-- <div class="d-flex details-icon">
-                                  <i class="fi fi-rr-marker"></i>
-                                  <p>กรุงเทพฯ, ดาวแมว</p>
-                                </div> -->
-                            <!-- <p>โพสต์โดย Warisara Khruajinli | dd/mm/yyyy</p> -->
-                            <!-- <div class="adopt-details"> -->
-                            <!-- ช่องทางการติดต่อ -->
-                            <!-- <div>
-                                    <v-row>
-                                      <v-col cols="12">
-                                        <div class="details-icon d-flex">
-                                          <i class="fi fi-rr-portrait"></i>
-                                          <h5>ช่องทางการติดต่อ</h5>
-                                        </div>
-                                      </v-col>
-                                    </v-row>
+                          <v-row justify="center">
+                            <v-col cols="12">
+                              <v-row justify="center">
+                                <v-col cols="12" md="8" lg="8">
+                                  <div class="text-left">
+                                    <h2>แมวเหลี่ยม</h2>
+                                    <p class="post-by">
+                                      โพสต์โดย Warisara Khruajinli | dd/mm/yyyy
+                                    </p>
+                                  </div>
+                                  <div class="cat-img">
+                                    <img
+                                      src="~/assets/imgs/img-thumbnail.jpg"
+                                      alt=""
+                                    />
+                                  </div>
+                                  <div class="mt-4 mt-lg-9">
+                                    <div class="charac-show">
+                                      <div
+                                        v-for="i in 5"
+                                        :key="i"
+                                        class="charac-details"
+                                      >
+                                        <p class="mb-0">Hello</p>
+                                      </div>
+                                    </div>
+                                  </div>
+                                  <div class="mt-4 mt-lg-9">
+                                    <!-- general info -->
                                     <div>
-                                      <v-row>
-                                        <v-col cols="6" class="pb-0">
-                                          <p class="mb-0">
-                                            ชื่อผู้ติดต่อ: หวานหวาน
-                                          </p>
-                                        </v-col>
-                                        <v-col cols="6" class="pb-0">
-                                          <p class="mb-0">
-                                            โทรศัพท์: 081234567
-                                          </p>
-                                        </v-col>
-                                      </v-row>
-                                      <v-row>
-                                        <v-col cols="6">
-                                          <p class="mb-0">
-                                            Facebook: Waaaaa khrua
-                                          </p>
-                                        </v-col>
-                                        <v-col cols="6">
-                                          <p class="mb-0">Line ID: -</p>
-                                        </v-col>
-                                      </v-row>
+                                      <div class="d-flex post-title">
+                                        <i class="fi fi-rr-info"></i>
+                                        <p class="mb-0">ข้อมูลทั่วไป</p>
+                                      </div>
+                                      <div class="text-left mt-3">
+                                        <v-row no-gutters>
+                                          <v-col cols="12" md="6">
+                                            <div>
+                                              <p>
+                                                สายพันธุ์:
+                                                {{ onePost.generalInfo.breeds }}
+                                              </p>
+                                              <p>
+                                                อายุ:
+                                                {{ onePost.generalInfo.age }}
+                                                เดือน
+                                              </p>
+                                              <p>
+                                                การทำหมัน:
+                                                {{
+                                                  (onePost.generalInfo.neutered =
+                                                    "yes"
+                                                      ? "เคยทำหมัน"
+                                                      : "ไม่เคยทำหมัน")
+                                                }}
+                                              </p>
+                                              <p>
+                                                ที่อยู่:
+                                                {{
+                                                  onePost.generalInfo.location
+                                                    .province +
+                                                  " " +
+                                                  onePost.generalInfo.location
+                                                    .district
+                                                }}
+                                              </p>
+                                            </div>
+                                          </v-col>
+                                          <v-col cols="12" md="6">
+                                            <div>
+                                              <p>
+                                                วัคซีนที่เคยได้รับ:
+                                                {{
+                                                  onePost.generalInfo
+                                                    .receiveVaccine
+                                                }}
+                                              </p>
+                                              <p>
+                                                วันที่รับวัคซีน:
+                                                {{
+                                                  onePost.generalInfo
+                                                    .receiveDate
+                                                }}
+                                              </p>
+                                              <p>
+                                                โรคประจำตัว:
+                                                {{
+                                                  onePost.generalInfo.disease
+                                                }}
+                                              </p>
+                                              <p>
+                                                รายละเอียดเพิ่มเติม:
+                                                {{ onePost.generalInfo.others }}
+                                              </p>
+                                            </div>
+                                          </v-col>
+                                        </v-row>
+                                      </div>
                                     </div>
-                                  </div> -->
-                            <!-- ข้อมูลทั่วไป -->
-                            <!-- <div>
-                                    <v-row>
-                                      <v-col cols="12">
-                                        <div class="details-icon d-flex">
-                                          <i class="fi fi-rr-info"></i>
-                                          <h5>ข้อมูลทั่วไป</h5>
-                                        </div>
-                                      </v-col>
-                                    </v-row>
-                                    <div class="mt-4">
-                                      <p>วัคซีนที่เคยได้รับ:</p>
-                                      <p>วันที่รับวัคซีน:</p>
-                                      <p>โรคประจำตัว:</p>
-                                      <p>การทำหมัน:</p>
-                                      <p>รายละเอียดเพิ่มเติม:</p>
+                                    <!-- contact -->
+                                    <div class="mt-6">
+                                      <div class="d-flex post-title">
+                                        <i class="fi fi-rr-portrait"></i>
+                                        <p class="mb-0">ช่องทางการติดต่อ</p>
+                                      </div>
+                                      <div class="text-left mt-3">
+                                        <v-row no-gutters>
+                                          <v-col cols="12" md="6">
+                                            <div>
+                                              <p>
+                                                ชื่อผู้ติดต่อ:
+                                                {{
+                                                  onePost.contact.contactName
+                                                }}
+                                              </p>
+                                              <p>
+                                                Facebook:
+                                                {{ onePost.contact.facebook }}
+                                              </p>
+                                            </div>
+                                          </v-col>
+                                          <v-col cols="12" md="6">
+                                            <div>
+                                              <p>
+                                                โทรศัพท์:
+                                                {{ onePost.contact.tel }}
+                                              </p>
+                                              <p>
+                                                Line ID:
+                                                {{ onePost.contact.line }}
+                                              </p>
+                                            </div>
+                                          </v-col>
+                                        </v-row>
+                                      </div>
                                     </div>
-                                  </div> -->
-                            <!-- </div> -->
-                            <!-- </div>
-                            </v-col> -->
+                                  </div>
+                                </v-col>
+                              </v-row>
+                            </v-col>
                           </v-row>
                         </div>
-                        <div></div>
                       </v-container>
+                      <div class="footer-more">
+                        <div>
+                          <v-container>
+                            <div class="mt-10">
+                              <h2 class="text-left">น้องแมวที่คุณอาจสนใจ</h2>
+                            </div>
+                            <div class="my-6">
+                              <v-row justify="center">
+                                <v-col
+                                  v-for="i in 3"
+                                  :key="i"
+                                  cols="12"
+                                  sm="4"
+                                  md="4"
+                                  lg="4"
+                                  xl="4"
+                                  align-self="center"
+                                >
+                                  <div class="card">
+                                    <div
+                                      :class="[i == 3 ? 'backdrop' : '']"
+                                    ></div>
+                                    <button
+                                      v-if="i === 3"
+                                      :class="[i == 3 ? 'more' : '']"
+                                    >
+                                      ดูทั้งหมด
+                                    </button>
+                                    <div class="thumbnail">
+                                      <img
+                                        src="@/assets/imgs/img-thumbnail.jpg"
+                                        alt=""
+                                      />
+                                    </div>
+                                    <div class="card-title">
+                                      <v-row justify="center">
+                                        <v-col
+                                          cols="12"
+                                          class="pb-lg-3 pb-sm-3"
+                                        >
+                                          <div class="text-left">
+                                            <h2 class="h4">Name</h2>
+                                            <p class="mb-0 location">
+                                              <i class="fi fi-rr-marker"></i
+                                              >Location
+                                            </p>
+                                          </div>
+                                        </v-col>
+                                      </v-row>
+                                    </div>
+                                  </div>
+                                </v-col>
+                              </v-row>
+                            </div>
+                          </v-container>
+                        </div>
+                      </div>
                     </v-sheet>
                   </v-bottom-sheet>
                 </div>
@@ -299,7 +435,6 @@
               <adopt-btn-group>
                 <template slot="finderHome">
                   <button @click="finderHome" class="adoption-btn">
-                    <!-- <img src="@/assets/imgs/icon-cat.svg" alt="finderHome" /> -->
                     <svg
                       width="54"
                       height="41"
@@ -319,7 +454,6 @@
                 </template>
                 <template slot="adoptCat">
                   <button @click="adoptCat" class="adoption-btn">
-                    <!-- <img src="@/assets/imgs/icon-cat2.svg" alt="adoptCat" /> -->
                     <svg
                       width="54"
                       height="41"
@@ -352,14 +486,26 @@ import BaseButton from "../components/punmaew/components/BaseButton.vue";
 import PunmaewBanner from "../components/punmaew/elements/PunmaewBanner.vue";
 import PunmaewAllAdoption from "../components/punmaew/sections/PunmaewAllAdoption.vue";
 export default {
+  components: { PunmaewAllAdoption, PunmaewBanner, BaseButton, AdoptBtnGroup },
   data() {
     return {
       items: ["Foo", "Bar", "Fizz", "Buzz"],
       sheet: false,
+      onePost: null,
+      // isLoading: true,
     };
   },
-
-  components: { PunmaewAllAdoption, PunmaewBanner, BaseButton, AdoptBtnGroup },
+  async asyncData({ $axios, $config }) {
+    try {
+      const res = await $axios.get(`${$config.findHome}allPost`);
+      // console.log(res);
+      return {
+        posts: res.data,
+      };
+    } catch (error) {
+      console.log(error);
+    }
+  },
   methods: {
     finderHome() {
       this.$router.push(`/finderHome`);
@@ -367,11 +513,115 @@ export default {
     adoptCat() {
       this.$router.push(`/adoptCat`);
     },
+    async getOnePost(id) {
+      try {
+        const res = await this.$axios.get(
+          `${this.$config.findHome}onePost?id=${id}`
+        );
+        console.log(res.data);
+        this.onePost = res.data.data;
+        // this.isLoading = false;
+        this.sheet = true;
+      } catch (error) {
+        console.log(error);
+      }
+    },
   },
 };
 </script>
 
 <style lang="scss" scoped>
+.backdrop {
+  background: #000000;
+  opacity: 0.5;
+  width: 100%;
+  min-height: 100%;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+.more {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: $white;
+  font-weight: bold;
+  font-size: 16px;
+  border: 2px solid $white;
+  border-radius: 50px;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  padding: 8px 32px 8px 32px;
+  &:hover {
+    background-color: $white;
+    opacity: 0.8;
+    color: $dark;
+  }
+  @media (min-width: 1440px) {
+    font-size: 22px;
+    padding: 12px 44px 13px 45px;
+  }
+}
+.footer-more {
+  background-color: $light;
+}
+::v-deep .v-bottom-sheet.v-dialog {
+  overflow: scroll;
+  border-radius: 24px 24px 0px 0px;
+  @media (min-width: 1440px) {
+    border-radius: 50px 50px 0px 0px;
+  }
+}
+.post-title {
+  p {
+    font-weight: bold;
+    font-size: 16px;
+    @media (min-width: 1440px) {
+      font-size: 20px;
+    }
+    i {
+      font-size: 15px;
+      @media (min-width: 1440px) {
+        font-size: 20px;
+      }
+    }
+  }
+
+  gap: 4px;
+}
+
+.charac-show {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+
+  .charac-details {
+    background-color: $orange;
+    font-size: 14px;
+    display: flex;
+    justify-content: center;
+    padding: 6px 15px;
+
+    border-radius: 50px;
+    align-self: center;
+    p {
+      color: $white;
+    }
+  }
+}
+.location {
+  i {
+    color: $orange;
+    font-size: 12px;
+    @media (min-width: 768px) {
+      font-size: 20px;
+    }
+  }
+}
 .adopt-details {
   row-gap: 35px;
   display: grid;
@@ -382,14 +632,25 @@ export default {
     font-size: 20px;
   }
 }
-// .adopt-sheet {
-//   overflow: scroll;
-// }
+.adopt-sheet {
+  h2 {
+    font-size: 24px;
+    @media (min-width: 1440px) {
+      font-size: 36px;
+    }
+  }
+  .post-by {
+    font-size: 12px;
+    color: $gray;
+    @media (min-width: 1440px) {
+      font-size: 14px;
+    }
+  }
+}
 .cat-img {
   img {
     border-radius: 10px;
     width: 100%;
-    // height: 440px;
     object-fit: cover;
     align-items: center;
   }
@@ -399,11 +660,13 @@ export default {
   @media (min-width: 1440px) {
     border-radius: 50px 50px 0px 0px;
   }
-  height: 1406px !important;
 }
 .set-sheet {
-  row-gap: 32px;
+  row-gap: 16px;
   display: grid;
+  @media (min-width: 1440px) {
+    row-gap: 32px;
+  }
   .cross-circle {
     display: flex;
     justify-content: right;
@@ -461,6 +724,7 @@ export default {
   background-color: #000000;
 }
 .card {
+  position: relative;
   background: #fff;
   border-radius: 10px;
   overflow: hidden;

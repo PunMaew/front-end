@@ -509,7 +509,9 @@ export default {
               password: this.password,
             })
             .then((res) => {
-              console.log(res);
+              // console.log(res);
+              this.$store.commit("SET_USER", res.data.bodyUser);
+              this.$store.commit("SET_LOGIN");
             });
           // console.log("login successfully");
 

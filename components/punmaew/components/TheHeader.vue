@@ -26,10 +26,24 @@
         </v-col>
         <v-col sm="4" class="nav-right">
           <ul id="menu" class="d-none d-md-flex">
-            <li v-if="login">
-              <n-link to="/editProfile" class="opunmai">
-                <base-button :fill="true">Firstname</base-button>
-              </n-link>
+            <li v-if="loggedIn">
+              <v-menu offset-y>
+                <template v-slot:activator="{ on, attrs }">
+                  <div v-bind="attrs" v-on="on">
+                    <base-button :fill="true" class="d-flex justify-center">
+                      <div class="user-icon mr-2">
+                        <i class="fi fi-rr-user"></i>
+                      </div>
+                      {{ user.firstName }}</base-button
+                    >
+                  </div>
+                </template>
+                <v-list>
+                  <v-list-item v-for="(item, index) in items" :key="index">
+                    <v-list-item-title>{{ item.title }}</v-list-item-title>
+                  </v-list-item>
+                </v-list>
+              </v-menu>
             </li>
             <li v-else>
               <n-link to="/login" class="opunmai">
@@ -82,6 +96,13 @@ export default {
     _bg_color() {
       return this.bgColor ? "bgColor" : "";
     },
+
+    loggedIn() {
+      return this.$store.state.auth.loggedIn;
+    },
+    user() {
+      return this.$store.state.user;
+    },
   },
   methods: {
     // logout() {
@@ -92,13 +113,20 @@ export default {
   data() {
     return {
       // item: [],
-      login: true,
+      items: [{ title: "โปรไฟล์ของฉัน" }, { title: "ออกจากระบบ" }],
+      login: false,
     };
   },
 };
 </script>
 
 <style lang="scss" scoped>
+.user-icon {
+  i {
+    font-size: 20px;
+    color: $white;
+  }
+}
 .bgColor {
   background-color: $orange-light !important;
 }

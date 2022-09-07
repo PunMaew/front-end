@@ -87,6 +87,7 @@
 import CardFormAdopt from "../components/punmaew/components/CardFormAdopt.vue";
 import PmFromContainer from "../components/punmaew/components/PmFromContainer.vue";
 export default {
+  middleware: "auth",
   layout: "adoption",
   components: { CardFormAdopt, PmFromContainer },
   data() {
