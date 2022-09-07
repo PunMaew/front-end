@@ -109,7 +109,7 @@
                 </div>
               </v-col>
               <v-col v-if="!posts">
-                <div>ยังไม่มีโพสหาบ้าน</div>
+                <div class="text-center">ยังไม่มีโพสหาบ้าน</div>
               </v-col>
             </v-row>
             <v-row justify="center" class="d-none d-md-flex">
@@ -211,7 +211,7 @@
                 </v-row>
                 <v-row v-if="!posts">
                   <v-col>
-                    <div>ยังไม่มีโพสหาบ้าน</div>
+                    <div class="text-center">ยังไม่มีโพสหาบ้าน</div>
                   </v-col>
                 </v-row>
                 <div class="text-center">
@@ -512,7 +512,6 @@ export default {
   async asyncData({ $axios, $config }) {
     try {
       const res = await $axios.get(`${$config.findHome}allPost`);
-
       return {
         posts: res.data,
       };
