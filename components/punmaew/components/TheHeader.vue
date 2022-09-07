@@ -26,14 +26,33 @@
         </v-col>
         <v-col sm="4" class="nav-right">
           <ul id="menu" class="d-none d-md-flex">
-            <li>
+            <li v-if="loggedIn">
+              <v-menu offset-y>
+                <template v-slot:activator="{ on, attrs }">
+                  <div v-bind="attrs" v-on="on">
+                    <base-button :fill="true" class="d-flex justify-center">
+                      <div class="user-icon mr-2">
+                        <i class="fi fi-rr-user"></i>
+                      </div>
+                      {{ user.firstName }}</base-button
+                    >
+                  </div>
+                </template>
+                <v-list>
+                  <v-list-item v-for="(item, index) in items" :key="index">
+                    <v-list-item-title>{{ item.title }}</v-list-item-title>
+                  </v-list-item>
+                </v-list>
+              </v-menu>
+            </li>
+            <li v-else>
               <n-link to="/login" class="opunmai">
                 <base-button :fill="true">เข้าสู่ระบบ</base-button>
               </n-link>
             </li>
           </ul>
         </v-col>
-        <!-- <v-col>
+        <v-col sm="12" class="pt-0 pb-0 text-right d-flex justify-end">
           <div class="d-md-none">
             <v-menu min-width="200" offset-y>
               <template v-slot:activator="{ on: menu, attrs }">
@@ -57,7 +76,7 @@
               </v-list>
             </v-menu>
           </div>
-        </v-col> -->
+        </v-col>
       </v-row>
     </v-container>
   </header>
@@ -77,6 +96,13 @@ export default {
     _bg_color() {
       return this.bgColor ? "bgColor" : "";
     },
+
+    loggedIn() {
+      return this.$store.state.auth.loggedIn;
+    },
+    user() {
+      return this.$store.state.user;
+    },
   },
   methods: {
     // logout() {
@@ -87,19 +113,27 @@ export default {
   data() {
     return {
       // item: [],
+      items: [{ title: "โปรไฟล์ของฉัน" }, { title: "ออกจากระบบ" }],
+      login: false,
     };
   },
 };
 </script>
 
 <style lang="scss" scoped>
+.user-icon {
+  i {
+    font-size: 20px;
+    color: $white;
+  }
+}
 .bgColor {
   background-color: $orange-light !important;
 }
 .nav-left {
   padding-top: 0px;
   padding-bottom: 0px;
-  padding-left: 0px;
+  // padding-left: 0px;
 }
 .nav-center {
   padding-top: 0px;
@@ -112,7 +146,7 @@ export default {
   display: flex;
   padding-top: 0px;
   padding-bottom: 0px;
-  padding-right: 0px;
+  // padding-right: 0px;
 }
 header {
   padding: 15px 0;

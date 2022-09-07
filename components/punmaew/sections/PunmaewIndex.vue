@@ -20,7 +20,11 @@
           >
             <div class="card position-relative">
               <div :class="[i == 3 ? 'backdrop' : '']"></div>
-              <button v-if="i === 3" :class="[i == 3 ? 'more' : '']">
+              <button
+                @click="adoptCat"
+                v-if="i === 3"
+                :class="[i == 3 ? 'more' : '']"
+              >
                 ดูทั้งหมด
               </button>
               <div class="thumbnail">
@@ -92,7 +96,13 @@
 </template>
 
 <script>
-export default {};
+export default {
+  methods: {
+    adoptCat() {
+      this.$router.push(`/adoptCat`);
+    },
+  },
+};
 </script>
 
 <style lang="scss" scoped>
@@ -113,18 +123,22 @@ export default {};
   transform: translate(-50%, -50%);
   color: $white;
   font-weight: bold;
-  font-size: 22px;
+  font-size: 16px;
   border: 2px solid $white;
   border-radius: 50px;
   display: flex;
   flex-direction: row;
   justify-content: center;
   align-items: center;
-  padding: 12px 44px 13px 45px;
+  padding: 8px 32px 8px 32px;
   &:hover {
     background-color: $white;
     opacity: 0.8;
     color: $dark;
+  }
+  @media (min-width: 1440px) {
+    font-size: 22px;
+    padding: 12px 44px 13px 45px;
   }
 }
 .read-articles {

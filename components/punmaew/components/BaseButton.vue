@@ -64,6 +64,12 @@ export default {
     linear-gradient(to right, rgba(253, 196, 84, 1), rgba(255, 148, 116, 1));
   background-clip: padding-box, border-box;
   background-origin: padding-box, border-box;
+  @media (min-width: 1440px) {
+    // width: 55%;
+    padding-top: 14px;
+    padding-bottom: 14px;
+    font-size: 18px;
+  }
 }
 .fill {
   // border-radius: 50px;

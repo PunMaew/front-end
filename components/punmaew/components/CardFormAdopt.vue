@@ -8,8 +8,8 @@
             cols="12"
             sm="8"
             md="7"
-            lg="5"
-            xl="6"
+            lg="6"
+            xl="4"
             class="content-wrapper pt-2"
           >
             <section class="content">
@@ -45,7 +45,7 @@ export default {
   }
 }
 .content {
-  min-height: 515px !important;
+  // min-height: 515px;
   width: 100%;
   background-color: $white;
   padding: 16px;
@@ -57,9 +57,9 @@ export default {
 
   @media (min-width: 768px) {
     min-height: 620px;
+    padding: 32px;
   }
-  @media (min-width: 1024px) {
-  }
+
   @media (min-width: 1440px) {
   }
 }

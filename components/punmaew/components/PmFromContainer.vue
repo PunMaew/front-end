@@ -1,17 +1,21 @@
 <template>
   <div>
-    <v-row justify="center">
+    <v-row justify="center" class="set-container">
       <v-col cols="12" align-self="center">
         <pm-general-form
           :progress="progress"
           v-if="currentStep === 1"
           class="form-area"
         ></pm-general-form>
-        <!-- <pm-contact></pm-contact> -->
+        <pm-characteristics
+          v-if="currentStep === 2"
+          class="form-area"
+        ></pm-characteristics>
+        <pm-contact v-if="currentStep === 3" class="form-area"></pm-contact>
+        <!-- class="d-md-none d-lg-none d-xl-none" -->
         <btn-form-footer
-          class="d-md-none d-lg-none d-xl-none"
+          :currentStep="currentStep"
           :progress="progress"
-          v-if="currentStep === 1"
           @next="nextStep"
           @prev="prevStep"
         ></btn-form-footer>
@@ -22,50 +26,43 @@
 
 <script>
 import BtnFormFooter from "./BtnFormFooter.vue";
+import PmCharacteristics from "./PmCharacteristics.vue";
+import PmContact from "./PmContact.vue";
 import PmGeneralForm from "./PmGeneralForm.vue";
 
 export default {
-  components: { BtnFormFooter, PmGeneralForm },
+  components: { BtnFormFooter, PmGeneralForm, PmContact, PmCharacteristics },
   props: {
-    progressed: {
+    progress: {
       type: Object,
     },
+    currentStep: {
+      type: Number,
+    },
   },
-  data() {
-    return {
-      currentStep: 1,
-      progress: {
-        // generalInfo: 1,
-        generalInfo: 1,
-        contact: 0,
-      },
-    };
-  },
+
   methods: {
     nextStep() {
-      if (this.currentStep === 1) {
-        this.progress.generalInfo += 1;
-      } else {
-        this.currentStep += 1;
-      }
+      this.$emit("nextStep");
     },
     prevStep() {
-      if (this.currentStep === 1) {
-        if (this.progress.generalInfo <= 0) {
-          return;
-        } else {
-          this.progress.generalInfo -= 1;
-        }
-      } else {
-        this.currentStep -= 1;
-      }
+      this.$emit("prevStep");
     },
   },
 };
 </script>
 
 <style lang="scss" scoped>
+.set-container {
+  min-height: 460px;
+  @media (min-width: 1440px) {
+    max-height: 536px;
+  }
+}
 .form-area {
-  min-height: 340px;
+  min-height: 372px;
+  @media (min-width: 1440px) {
+    min-height: 446px;
+  }
 }
 </style>

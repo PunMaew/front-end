@@ -101,8 +101,10 @@ export default {
   publicRuntimeConfig: {
     // baseURL: process.env.BASE_URL,
     authURL: process.env.AUTH_URL,
+    findHome: process.env.FIND_HOME,
   },
   privateRuntimeConfig: {
     authURL: process.env.AUTH_URL,
+    findHome: process.env.FIND_HOME,
   },
 };
