@@ -63,7 +63,7 @@
                   </template>
                 </div>
               </v-col>
-              <v-col cols="12" align-self="center">
+              <v-col v-if="posts" cols="12" align-self="center">
                 <div>
                   <v-row>
                     <v-col
@@ -107,6 +107,9 @@
                     </v-col>
                   </v-row>
                 </div>
+              </v-col>
+              <v-col v-if="!posts">
+                <div>ยังไม่มีโพสหาบ้าน</div>
               </v-col>
             </v-row>
             <v-row justify="center" class="d-none d-md-flex">
@@ -166,7 +169,7 @@
                     </v-col>
                   </v-row>
                 </div>
-                <v-row>
+                <v-row v-if="posts">
                   <v-col
                     v-for="post in posts"
                     :key="post._id"
@@ -204,6 +207,11 @@
                         </v-row>
                       </div>
                     </div>
+                  </v-col>
+                </v-row>
+                <v-row v-if="!posts">
+                  <v-col>
+                    <div>ยังไม่มีโพสหาบ้าน</div>
                   </v-col>
                 </v-row>
                 <div class="text-center">
@@ -498,6 +506,7 @@ export default {
       items: ["Foo", "Bar", "Fizz", "Buzz"],
       sheet: false,
       onePost: null,
+      posts: null,
     };
   },
   async asyncData({ $axios, $config }) {
@@ -523,7 +532,7 @@ export default {
         const res = await this.$axios.get(
           `${this.$config.findHome}onePost?id=${id}`
         );
-        console.log(res.data);
+        // console.log(res.data);
         this.onePost = res.data.data;
 
         this.sheet = true;
