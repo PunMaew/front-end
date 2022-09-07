@@ -222,7 +222,13 @@
                                   <div class="text-left">
                                     <h2>แมวเหลี่ยม</h2>
                                     <p class="post-by">
-                                      โพสต์โดย Warisara Khruajinli | dd/mm/yyyy
+                                      โพสต์โดย
+                                      {{
+                                        onePost.author.firstName +
+                                        " " +
+                                        onePost.author.lastName
+                                      }}
+                                      | {{ convertDateTime(onePost.updatedAt) }}
                                     </p>
                                   </div>
                                   <div class="cat-img">
@@ -492,13 +498,12 @@ export default {
       items: ["Foo", "Bar", "Fizz", "Buzz"],
       sheet: false,
       onePost: null,
-      // isLoading: true,
     };
   },
   async asyncData({ $axios, $config }) {
     try {
       const res = await $axios.get(`${$config.findHome}allPost`);
-      // console.log(res);
+
       return {
         posts: res.data,
       };
@@ -520,11 +525,25 @@ export default {
         );
         console.log(res.data);
         this.onePost = res.data.data;
-        // this.isLoading = false;
+
         this.sheet = true;
       } catch (error) {
         console.log(error);
       }
+    },
+    convertDateTime(d) {
+      let newDate = new Date(d);
+      let year = newDate.getFullYear();
+      let month = newDate.getMonth() + 1;
+      let dt = newDate.getDate();
+      if (dt < 10) {
+        dt = "0" + dt;
+      }
+      if (month < 10) {
+        month = "0" + month;
+      }
+      const newFormat = dt + "-" + month + "-" + year;
+      return newFormat;
     },
   },
 };
