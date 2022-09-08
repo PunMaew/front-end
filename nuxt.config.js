@@ -13,8 +13,13 @@ export default {
       lang: "th",
     },
     meta: [
-      { charset: "utf-8" },
-      { name: "viewport", content: "width=device-width, initial-scale=1" },
+      {
+        charset: "utf-8",
+      },
+      {
+        name: "viewport",
+        content: "width=device-width, initial-scale=1",
+      },
       {
         hid: "description",
         name: "description",
@@ -29,7 +34,11 @@ export default {
       // { name: "format-detection", content: "telephone=no" },
     ],
     link: [
-      { rel: "icon", type: "image/x-icon", href: "/favicon.ico" },
+      {
+        rel: "icon",
+        type: "image/x-icon",
+        href: "/favicon.ico",
+      },
       {
         rel: "stylesheet",
         href: "https://cdn-uicons.flaticon.com/uicons-regular-rounded/css/uicons-regular-rounded.css",
@@ -58,7 +67,13 @@ export default {
   modules: [
     // https://go.nuxtjs.dev/axios
     "@nuxtjs/axios",
-    ["@nuxtjs/dotenv", { filename: ".env" }],
+    "@nuxtjs/auth",
+    [
+      "@nuxtjs/dotenv",
+      {
+        filename: ".env",
+      },
+    ],
   ],
   styleResources: {
     scss: ["~/assets/scss/abstracts/_variables.scss"],
@@ -69,6 +84,38 @@ export default {
     // baseURL: "/",
     // baseURL: process.env.BASE_URL,
     // authURL: process.env.AUTH_URL,
+  },
+  auth: {
+    strategies: {
+      local: {
+        endpoints: {
+          login: {
+            url: process.env.AUTH_URL + "user/login",
+            method: "post",
+            propertyName: "accessToken",
+          },
+          logout: {
+            url: process.env.AUTH_URL + "user/logout",
+            method: "post",
+          },
+          user: {
+            url: process.env.AUTH_URL + "user/getUser",
+            method: "get",
+            propertyName: "user",
+          },
+          tokenName: "token",
+        },
+        token: {
+          property: "token",
+          global: true,
+          // required: true,
+          type: "Bearer",
+        },
+      },
+    },
+    redirect: {
+      login: "/login",
+    },
   },
 
   // Vuetify module configuration: https://go.nuxtjs.dev/config-vuetify
