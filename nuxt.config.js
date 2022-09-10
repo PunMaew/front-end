@@ -96,7 +96,7 @@ export default {
           },
           logout: {
             url: process.env.AUTH_URL + "user/logout",
-            method: "post",
+            method: "get",
           },
           user: {
             url: process.env.AUTH_URL + "user/getUser",

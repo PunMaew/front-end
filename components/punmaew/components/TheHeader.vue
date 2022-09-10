@@ -39,7 +39,11 @@
                   </div>
                 </template>
                 <v-list>
-                  <v-list-item v-for="(item, index) in items" :key="index">
+                  <v-list-item
+                    @click="menuAction(item.action)"
+                    v-for="(item, index) in items"
+                    :key="index"
+                  >
                     <v-list-item-title>{{ item.title }}</v-list-item-title>
                   </v-list-item>
                 </v-list>
@@ -104,18 +108,31 @@ export default {
       return this.$store.state.auth.user;
     },
   },
-  methods: {
-    // logout() {
-    //   this.$auth.logout();
-    //   this.$router.push("/");
-    // }
-  },
   data() {
     return {
-      // item: [],
-      items: [{ title: "โปรไฟล์ของฉัน" }, { title: "ออกจากระบบ" }],
+      items: [
+        { title: "โปรไฟล์ของฉัน", action: "my-profile" },
+        { title: "ออกจากระบบ", action: "logout" },
+      ],
       login: false,
     };
+  },
+
+  methods: {
+    menuAction(action) {
+      if (action === "my-profile") {
+        this.$router.push("/editProfile");
+        // console.log(action);
+      }
+      if (action === "logout") {
+        try {
+          this.$auth.logout();
+          this.$router.push("/");
+        } catch (error) {
+          console.log(error);
+        }
+      }
+    },
   },
 };
 </script>

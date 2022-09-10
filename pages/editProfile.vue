@@ -1,5 +1,7 @@
 <template>
   <section>
+    <!-- <validation-observer ref="editProfileForm">
+      <form @submit.prevent="editProfile"> -->
     <v-container>
       <div>
         <h2>โปรไฟล์ของฉัน</h2>
@@ -17,7 +19,7 @@
           >
           </v-select>
         </div>
-        <!-- @click="selectTabs" -->
+
         <div
           class="text-center menu-tabs mt-7 d-none d-sm-flex d-md-flex d-lg-flex"
         >
@@ -37,122 +39,198 @@
         <div class="mt-sm-11">
           <!-- personal info -->
           <div v-if="selectProfileId == 1">
-            <div class="profile-details">
-              <div class="title-profile d-flex">
-                <i class="fi fi-rr-info"></i>
-                <h5>ข้อมูลส่วนตัว</h5>
-              </div>
-              <div>
-                <v-row no-gutters>
-                  <v-col cols="12" sm="6">
-                    <div class="input-area">
-                      <p>ชื่อจริง</p>
-                      <input type="text" />
-                    </div>
-                  </v-col>
-                  <v-col cols="12" sm="6" class="mt-4 mt-sm-0">
-                    <div class="input-area">
-                      <p>นามสกุล</p>
-                      <input type="text" />
-                    </div>
-                  </v-col>
-                  <v-col cols="12" sm="6" class="mt-4 mt-sm-0">
-                    <div class="input-area">
-                      <p>เบอร์โทรศัพท์</p>
-                      <input type="text" />
-                    </div>
-                  </v-col>
-                </v-row>
-              </div>
-            </div>
+            <validation-observer ref="editProfileForm">
+              <form @submit.prevent="editProfile">
+                <div class="profile-details">
+                  <div class="title-profile d-flex">
+                    <i class="fi fi-rr-info"></i>
+                    <h5>ข้อมูลส่วนตัว</h5>
+                  </div>
+                  <div>
+                    <v-row>
+                      <v-col cols="12" sm="6">
+                        <div class="input-area">
+                          <p>ชื่อจริง</p>
+                          <validation-provider
+                            name="firstName"
+                            rules="required"
+                            v-slot="{ errors }"
+                          >
+                            <input
+                              v-model="userProfile.firstName"
+                              type="text"
+                            />
+                            <span class="valid-form">
+                              {{ errors[0] }}
+                            </span>
+                          </validation-provider>
+                        </div>
+                      </v-col>
 
-            <div class="profile-details mt-7">
-              <div class="title-profile d-flex">
-                <i class="fi fi-rr-user"></i>
-                <h5>ข้อมูลบัญชี</h5>
-              </div>
-              <div>
-                <v-row no-gutters>
-                  <v-col cols="12" sm="6">
-                    <div class="input-area">
-                      <p>อีเมล</p>
-                      <input type="text" />
-                    </div>
-                  </v-col>
-                </v-row>
-              </div>
-            </div>
+                      <v-col cols="12" sm="6">
+                        <div class="input-area">
+                          <p>นามสกุล</p>
+                          <validation-provider
+                            name="lastName"
+                            rules="required"
+                            v-slot="{ errors }"
+                          >
+                            <input v-model="userProfile.lastName" type="text" />
+                            <span class="valid-form">
+                              {{ errors[0] }}
+                            </span>
+                          </validation-provider>
+                        </div>
+                      </v-col>
+                      <v-col cols="12" sm="6">
+                        <div class="input-area">
+                          <p>เบอร์โทรศัพท์</p>
+                          <input v-model="userProfile.tel" type="text" />
+                        </div>
+                      </v-col>
+                    </v-row>
+                  </div>
+                </div>
 
-            <div class="profile-details mt-7">
-              <div class="title-profile d-flex">
-                <i class="fi fi-rr-portrait"></i>
-                <h5>ข้อมูลติดต่อ</h5>
-              </div>
-              <div>
-                <v-row no-gutters>
-                  <v-col cols="12" sm="6">
-                    <div class="input-area">
-                      <p>จังหวัด</p>
-                      <validation-provider rules="required" v-slot="{ errors }">
-                        <v-autocomplete
-                          dense
-                          filled
-                          :items="province"
-                          item-text="province"
-                          name="province"
-                          v-model="selectProvince"
-                          :error-messages="errors"
-                          data-vv-name="select"
-                          required
-                        >
-                        </v-autocomplete>
-                      </validation-provider>
-                    </div>
-                    <div class="input-area">
-                      <p>แขวง/ตำบล></p>
-                      <validation-provider rules="required" v-slot="{ errors }">
-                        <v-autocomplete
-                          dense
-                          filled
-                          :items="province"
-                          item-text="province"
-                          name="province"
-                          v-model="selectProvince"
-                          :error-messages="errors"
-                          data-vv-name="select"
-                          required
-                        >
-                        </v-autocomplete>
-                      </validation-provider>
-                    </div>
-                  </v-col>
-                  <v-col cols="12" sm="6">
-                    <div class="input-area">
-                      <p>เขต/อำเภอ</p>
-                      <validation-provider rules="required" v-slot="{ errors }">
-                        <v-autocomplete
-                          dense
-                          filled
-                          :items="province"
-                          item-text="province"
-                          name="province"
-                          v-model="selectProvince"
-                          :error-messages="errors"
-                          data-vv-name="select"
-                          required
-                        >
-                        </v-autocomplete>
-                      </validation-provider>
-                    </div>
+                <!-- account info -->
+                <div class="profile-details mt-7">
+                  <div class="title-profile d-flex">
+                    <i class="fi fi-rr-user"></i>
+                    <h5>ข้อมูลบัญชี</h5>
+                  </div>
+                  <div>
+                    <v-row>
+                      <v-col cols="12" sm="6">
+                        <div class="input-area">
+                          <p>อีเมล</p>
+                          <validation-provider
+                            name="email"
+                            rules="required"
+                            v-slot="{ errors }"
+                          >
+                            <input v-model="userProfile.email" type="text" />
+                            <span class="valid-form">
+                              {{ errors[0] }}
+                            </span>
+                          </validation-provider>
+                        </div>
+                      </v-col>
+                    </v-row>
+                  </div>
+                </div>
 
-                    <div class="input-area">
-                      <p>รหัสไปรษณีย์</p>
-                      <input type="text" placeholder="กรุณากรอกรหัสไปรษณีย์" />
-                    </div>
-                  </v-col>
-                </v-row>
-              </div>
-            </div>
+                <!-- contact info -->
+                <div class="profile-details mt-7">
+                  <div class="title-profile d-flex">
+                    <i class="fi fi-rr-portrait"></i>
+                    <h5>ข้อมูลติดต่อ</h5>
+                  </div>
+                  <div>
+                    <v-row>
+                      <v-col cols="12" sm="6">
+                        <div class="input-area">
+                          <p>จังหวัด</p>
+                          <validation-provider
+                            rules="required"
+                            v-slot="{ errors }"
+                          >
+                            <v-autocomplete
+                              dense
+                              filled
+                              :items="province"
+                              item-text="province"
+                              name="province"
+                              v-model="userProfile.address.province"
+                              :error-messages="errors"
+                              data-vv-name="select"
+                              placeholder="กรุณาเลือกจังหวัด"
+                              required
+                            >
+                            </v-autocomplete>
+                          </validation-provider>
+                        </div>
+                      </v-col>
+
+                      <v-col cols="12" sm="6">
+                        <div class="input-area">
+                          <p>เขต/อำเภอ</p>
+                          <!-- <validation-provider rules="required" v-slot="{ errors }"> -->
+                          <v-autocomplete
+                            dense
+                            filled
+                            :items="province"
+                            item-text="district"
+                            name="district"
+                            v-model="userProfile.address.district"
+                            data-vv-name="select"
+                            placeholder="กรุณาเลือกเขต/อำเภอ"
+                          >
+                          </v-autocomplete>
+                          <!-- </validation-provider> -->
+                        </div>
+                      </v-col>
+                      <v-col cols="12" sm="6">
+                        <div class="input-area">
+                          <p>แขวง/ตำบล</p>
+                          <!-- <validation-provider
+                        name="tambon"
+                        rules="required"
+                        v-slot="{ errors }"
+                      > -->
+                          <v-autocomplete
+                            dense
+                            filled
+                            :items="tambon"
+                            item-text="name_th"
+                            name="tambon"
+                            v-model="userProfile.address.subDistrict"
+                            data-vv-name="select"
+                            placeholder="กรุณาเลือกแขวง/ตำบล"
+                          >
+                          </v-autocomplete>
+                          <!-- </validation-provider> -->
+                        </div>
+                      </v-col>
+
+                      <v-col cols="12" sm="6">
+                        <div class="input-area">
+                          <p>รหัสไปรษณีย์</p>
+                          <validation-provider
+                            name="zipCode"
+                            rules="required"
+                            v-slot="{ errors }"
+                          >
+                            <v-autocomplete
+                              :items="province"
+                              filled
+                              name="zipCode"
+                              item-text="zip"
+                              dense
+                              v-model="userProfile.address.zipCode"
+                              :error-messages="errors"
+                              data-vv-name="select"
+                              placeholder="กรุณาเลือกรหัสไปรษณีย์"
+                              required
+                            ></v-autocomplete>
+                          </validation-provider>
+                        </div>
+                      </v-col>
+                    </v-row>
+                  </div>
+                </div>
+
+                <!-- button submit edit profile -->
+                <div class="mt-12">
+                  <v-row justify="center">
+                    <v-col cols="12" sm="6">
+                      <base-button :fillSearch="true" :type="'submit'"
+                        >บันทึกข้อมูล</base-button
+                      >
+                    </v-col>
+                  </v-row>
+                </div>
+              </form>
+            </validation-observer>
           </div>
 
           <!-- myPost -->
@@ -177,8 +255,8 @@
                   </div>
                 </v-col>
                 <v-col
-                  v-for="i in 2"
-                  :key="i"
+                  v-for="post in posts"
+                  :key="post._id"
                   cols="12"
                   sm="4"
                   md="4"
@@ -193,13 +271,22 @@
                       <v-row justify="center">
                         <v-col cols="12" class="pb-lg-3 pb-sm-3">
                           <div>
-                            <h2 class="h4">Name</h2>
-                            <p class="mb-0 mt-2">โพสต์เมื่อ dd/mm/yyyy</p>
+                            <h2 class="h4">{{ post.generalInfo.catName }}</h2>
+                            <p class="mb-0 mt-2">
+                              โพสต์เมื่อ {{ convertDateTime(post.createdAt) }}
+                            </p>
                             <div class="footer-card">
-                              <div class="action-btn">
+                              <nuxt-link
+                                :to="`/finderHome?isEdit=true&id=` + post._id"
+                                class="action-btn"
+                              >
                                 <i class="fi fi-rr-pencil"></i>แก้ไข
-                              </div>
-                              <div class="action-btn del">
+                              </nuxt-link>
+
+                              <div
+                                @click="deletePost(post._id)"
+                                class="action-btn del"
+                              >
                                 <i class="fi fi-rr-trash"></i>ลบ
                               </div>
                             </div>
@@ -288,19 +375,43 @@
         </div>
       </div>
     </v-container>
+    <!-- </form>
+    </validation-observer> -->
   </section>
 </template>
 
 <script>
+import tambonList from "@/assets/data/tambon.json";
 import provinceList from "@/assets/data/province.json";
 import { ValidationProvider } from "vee-validate";
 import { ValidationObserver } from "vee-validate";
+import BaseButton from "../components/punmaew/components/BaseButton.vue";
 export default {
+  middleware: "auth",
   components: {
     ValidationProvider,
     ValidationObserver,
     provinceList,
+    BaseButton,
+    tambonList,
   },
+  created() {
+    this.userProfile = JSON.parse(JSON.stringify(this.$store.state.auth.user));
+  },
+  async asyncData({ $axios, $config, store }) {
+    try {
+      const res = await $axios.get(
+        `${$config.findHome}getMyPost?id=${store.state.auth.user._id}`
+      );
+
+      return {
+        posts: res.data.mypost,
+      };
+    } catch (error) {
+      console.log(error);
+    }
+  },
+
   data() {
     return {
       profiles: [
@@ -309,14 +420,77 @@ export default {
         { id: 3, name: "แมวในอุดมคติ" },
       ],
       province: provinceList,
+      tambon: tambonList,
       selectProvince: "",
+      selectTambon: "",
+      selectDistrict: "",
+      selectZipCode: "",
       selectProfile: "ข้อมูลส่วนตัว",
       selectProfileId: 1,
       radioGroup: 1,
+      userProfile: {},
     };
   },
 
   methods: {
+    deletePost(id) {
+      try {
+        this.$axios
+          .delete(`${this.$config.findHome}deletePost?id=${id}`)
+          .then((res) => {
+            let newArray = this.posts.filter((item) => item._id != id);
+            this.posts = newArray;
+            console.log(res.data);
+            console.log("delete successfully");
+          });
+      } catch (error) {
+        console.log(error);
+      }
+    },
+    editProfile() {
+      try {
+        this.$refs.editProfileForm.validate().then((success) => {
+          if (!success) {
+            return;
+          }
+          this.$axios
+            .put(
+              `${this.$config.authURL}user/editProfile?id=${this.userProfile._id}`,
+              {
+                firstName: this.userProfile.firstName,
+                lastName: this.userProfile.lastName,
+                email: this.userProfile.email,
+                tel: this.userProfile.tel,
+                address: {
+                  province: this.userProfile.address.province,
+                  district: this.userProfile.address.district,
+                  subDistrict: this.userProfile.address.subDistrict,
+                  zipCode: this.userProfile.address.zipCode,
+                },
+              }
+            )
+            .then((res) => {
+              console.log(res.data);
+            });
+        });
+      } catch (error) {
+        console.log(error);
+      }
+    },
+    convertDateTime(d) {
+      let newDate = new Date(d);
+      let year = newDate.getFullYear();
+      let month = newDate.getMonth() + 1;
+      let dt = newDate.getDate();
+      if (dt < 10) {
+        dt = "0" + dt;
+      }
+      if (month < 10) {
+        month = "0" + month;
+      }
+      const newFormat = dt + "-" + month + "-" + year;
+      return newFormat;
+    },
     filteredData(x) {
       let id = this.profiles.filter(
         (profile) => this.selectProfile == profile.name
@@ -332,6 +506,11 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.valid-form {
+  color: $error;
+  font-weight: bold;
+  font-size: 12px;
+}
 .menu-tabs {
   background-color: $purple-light;
   border-radius: 10px;

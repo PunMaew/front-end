@@ -309,6 +309,7 @@
                               v-model="selectProvince"
                               :error-messages="errors"
                               data-vv-name="select"
+                              placeholder="กรุณาเลือกจังหวัด"
                               required
                             >
                             </v-autocomplete>
@@ -333,6 +334,7 @@
                               v-model="selectZip"
                               :error-messages="errors"
                               data-vv-name="select"
+                              placeholder="กรุณาเลือกรหัสไปรษณีย์"
                               required
                             ></v-autocomplete>
                           </validation-provider>

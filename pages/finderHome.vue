@@ -72,10 +72,17 @@
           </div>
           <div class=""></div>
           <pm-from-container
+            @update3="updateForm3"
+            @update2="updateForm2"
+            @update="updateForm"
             @nextStep="nextStep"
             @prevStep="prevStep"
+            @submit="submitFindHome"
+            @edit="updateFindHome"
             :currentStep="currentStep"
             :progress="progress"
+            :isEdit="isEdit"
+            :forms="forms"
           ></pm-from-container>
         </v-col>
       </v-row>
@@ -90,6 +97,7 @@ export default {
   middleware: "auth",
   layout: "adoption",
   components: { CardFormAdopt, PmFromContainer },
+
   data() {
     return {
       currentStep: 1,
@@ -98,13 +106,169 @@ export default {
         characteristic: 0,
         contact: 0,
       },
+      forms: {
+        step1: null,
+        step2: null,
+        step3: null,
+      },
+      isEdit: false,
     };
   },
+  // http://localhost:5443/findHome/updatePost?id=
+  async asyncData({ query, $axios, $config }) {
+    console.log(query);
+    try {
+      if (query.id && query.isEdit) {
+        const res = await $axios.get(
+          `${$config.findHome}onePost?id=${query.id}`
+        );
+        console.log(res.data.data);
+        return {
+          forms: {
+            step1: {
+              catName: res.data.data.generalInfo.catName,
+              color: res.data.data.generalInfo.color,
+              breeds: res.data.data.generalInfo.breeds,
+              age: res.data.data.generalInfo.age,
+              gender: res.data.data.generalInfo.gender,
+              province: res.data.data.generalInfo.location.province,
+              district: res.data.data.generalInfo.location.district,
+              subDistrict: res.data.data.generalInfo.location.subDistrict,
+              zipCode: res.data.data.generalInfo.location.zipCode,
+              receiveVaccine: res.data.data.generalInfo.receiveVaccine,
+              receiveDate: res.data.data.generalInfo.receiveDate,
+              disease: res.data.data.generalInfo.disease,
+              neutered: res.data.data.generalInfo.neutered,
+              others: res.data.data.generalInfo.others,
+            },
+            step2: {
+              characteristic: res.data.data.generalInfo.characteristic,
+            },
+            step3: {
+              contactName: res.data.data.contact.contactName,
+              tel: res.data.data.contact.tel,
+              facebook: res.data.data.contact.facebook,
+              line: res.data.data.contact.line,
+            },
+          },
+          isEdit: true,
+        };
+      } else {
+        return {
+          isEdit: false,
+        };
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  },
   methods: {
+    async updateFindHome() {
+      try {
+        // http://localhost:5443/findHome/updatePost?id=
+        this.$axios
+          .put(
+            `${this.$config.findHome}updatePost?id=${this.$route.query.id}`,
+            {
+              generalInfo: {
+                catName: this.forms.step1.catName,
+                color: this.forms.step1.color,
+                breeds: this.forms.step1.breeds,
+                age: this.forms.step1.age,
+                location: {
+                  province: this.forms.step1.province,
+                  subDistrict: this.forms.step1.subDistrict,
+                  district: this.forms.step1.district,
+                  zipCode: this.forms.step1.zipCode,
+                },
+                receiveVaccine: this.forms.step1.receiveVaccine,
+                receiveDate: this.forms.step1.receiveDate,
+                disease: this.forms.step1.disease,
+                neutered: this.forms.step1.neutered,
+                gender: this.forms.step1.gender,
+                characteristic: this.forms.step2.characteristic,
+                others: this.forms.step1.others,
+              },
+              contact: {
+                contactName: this.forms.step3.contactName,
+                tel: this.forms.step3.tel,
+                facebook: this.forms.step3.facebook,
+                Line: this.forms.step3.line,
+              },
+            }
+          )
+          .then((res) => {
+            console.log(res.data);
+            console.log("edit successfully");
+            this.$router.push("/adoptCat");
+          });
+      } catch (error) {
+        console.log(error);
+      }
+    },
+    async submitFindHome() {
+      // console.log(this.forms);
+      try {
+        this.$axios
+          .post(`${this.$config.findHome}create`, {
+            generalInfo: {
+              catName: this.forms.step1.catName,
+              color: this.forms.step1.color,
+              breeds: this.forms.step1.breeds,
+              age: this.forms.step1.age,
+              location: {
+                province: this.forms.step1.province,
+                subDistrict: this.forms.step1.subDistrict,
+                district: this.forms.step1.district,
+                zipCode: this.forms.step1.zipCode,
+              },
+              receiveVaccine: this.forms.step1.receiveVaccine,
+              receiveDate: this.forms.step1.receiveDate,
+              disease: this.forms.step1.disease,
+              neutered: this.forms.step1.neutered,
+              gender: this.forms.step1.gender,
+              characteristic: this.forms.step2.characteristic,
+              others: this.forms.step1.others,
+            },
+            contact: {
+              contactName: this.forms.step3.contactName,
+              tel: this.forms.step3.tel,
+              facebook: this.forms.step3.facebook,
+              Line: this.forms.step3.line,
+            },
+          })
+          .then((res) => {
+            console.log(res.data);
+            console.log("submit successfully");
+            this.$router.push("/adoptCat");
+          });
+      } catch (error) {
+        console.log(error);
+      }
+    },
+    updateForm(data) {
+      this.forms.step1 = {
+        ...this.forms.step1,
+        ...data,
+      };
+    },
+    updateForm2(data) {
+      this.forms.step2 = {
+        ...this.forms.step2,
+        ...data,
+      };
+    },
+    updateForm3(data) {
+      this.forms.step3 = {
+        ...this.forms.step3,
+        ...data,
+      };
+    },
     nextStep() {
       if (this.currentStep === 1) {
         if (this.progress.generalInfo <= 3) {
           this.progress.generalInfo += 1;
+          //this.$forceUpdate();
         } else {
           this.currentStep += 1;
         }

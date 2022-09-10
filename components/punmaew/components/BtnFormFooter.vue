@@ -35,8 +35,15 @@
       <v-col align-self="center">
         <base-button :outline="true" @click.native="prevStep">กลับ</base-button>
       </v-col>
-      <v-col align-self="center">
-        <base-button :fillSearch="true">ลงประกาศ</base-button>
+      <v-col v-if="isEdit === false" align-self="center">
+        <base-button :fillSearch="true" @click.native="submitFindHome"
+          >ลงประกาศ</base-button
+        >
+      </v-col>
+      <v-col v-if="isEdit === true" align-self="center">
+        <base-button :fillSearch="true" @click.native="updateFindHome"
+          >ตกลง</base-button
+        >
       </v-col>
     </v-row>
   </div>
@@ -53,6 +60,10 @@ export default {
     currentStep: {
       type: Number,
     },
+    isEdit: {
+      type: Boolean,
+      default: false,
+    },
   },
   methods: {
     nextStep() {
@@ -60,6 +71,12 @@ export default {
     },
     prevStep() {
       this.$emit("prev");
+    },
+    submitFindHome() {
+      this.$emit("submit");
+    },
+    updateFindHome() {
+      this.$emit("update");
     },
   },
 };
