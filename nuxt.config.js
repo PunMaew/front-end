@@ -81,7 +81,7 @@ export default {
   // Axios module configuration: https://go.nuxtjs.dev/config-axios
   axios: {
     // Workaround to avoid enforcing hard-coded localhost:3000: https://github.com/nuxt-community/axios-module/issues/308
-    baseURL: process.env.LOGIN_URL,
+    baseURL: process.env.AUTH_URL,
     // baseURL: process.env.BASE_URL,
     // authURL: process.env.AUTH_URL,
   },
@@ -90,7 +90,7 @@ export default {
       local: {
         endpoints: {
           login: {
-            url: "login",
+            url: "user/login",
             method: "post",
             propertyName: "accessToken",
           },
@@ -100,11 +100,11 @@ export default {
           //   propertyName: "accessToken",
           // },
           logout: {
-            url: "logout",
+            url: "user/logout",
             method: "get",
           },
           user: {
-            url: "getUser",
+            url: "user/getUser",
             method: "get",
             propertyName: "user",
           },
@@ -154,11 +154,9 @@ export default {
     // baseURL: process.env.BASE_URL,
     authURL: process.env.AUTH_URL,
     findHome: process.env.FIND_HOME,
-    loginURL: process.env.LOGIN_URL,
   },
   privateRuntimeConfig: {
     authURL: process.env.AUTH_URL,
     findHome: process.env.FIND_HOME,
-    loginURL: process.env.LOGIN_URL,
   },
 };
