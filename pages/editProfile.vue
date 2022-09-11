@@ -1,7 +1,5 @@
 <template>
   <section>
-    <!-- <validation-observer ref="editProfileForm">
-      <form @submit.prevent="editProfile"> -->
     <v-container>
       <div>
         <h2>โปรไฟล์ของฉัน</h2>
@@ -154,7 +152,6 @@
                       <v-col cols="12" sm="6">
                         <div class="input-area">
                           <p>เขต/อำเภอ</p>
-                          <!-- <validation-provider rules="required" v-slot="{ errors }"> -->
                           <v-autocomplete
                             dense
                             filled
@@ -166,17 +163,12 @@
                             placeholder="กรุณาเลือกเขต/อำเภอ"
                           >
                           </v-autocomplete>
-                          <!-- </validation-provider> -->
                         </div>
                       </v-col>
                       <v-col cols="12" sm="6">
                         <div class="input-area">
                           <p>แขวง/ตำบล</p>
-                          <!-- <validation-provider
-                        name="tambon"
-                        rules="required"
-                        v-slot="{ errors }"
-                      > -->
+
                           <v-autocomplete
                             dense
                             filled
@@ -188,7 +180,6 @@
                             placeholder="กรุณาเลือกแขวง/ตำบล"
                           >
                           </v-autocomplete>
-                          <!-- </validation-provider> -->
                         </div>
                       </v-col>
 
@@ -235,10 +226,10 @@
 
           <!-- myPost -->
           <div v-if="selectProfileId == 2" class="mt-6">
-            <div class="create-btn d-sm-none">
+            <nuxt-link to="/finderHome" class="create-btn d-sm-none">
               <img src="@/assets/imgs/catFindHome.png" alt="" />
               สร้างโพสหาบ้าน
-            </div>
+            </nuxt-link>
             <div class="mt-6">
               <v-row>
                 <v-col
@@ -249,10 +240,10 @@
                   lg="4"
                   xl="4"
                 >
-                  <div class="create-btn-desktop">
+                  <nuxt-link to="/finderHome" class="create-btn-desktop">
                     <img src="@/assets/imgs/catFindHome.png" alt="" />
                     <p class="mb-0">สร้างโพสหาบ้าน</p>
-                  </div>
+                  </nuxt-link>
                 </v-col>
                 <v-col
                   v-for="post in posts"
