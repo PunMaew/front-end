@@ -228,7 +228,7 @@
                               <v-row justify="center">
                                 <v-col cols="12" md="8" lg="8">
                                   <div class="text-left">
-                                    <h2>แมวเหลี่ยม</h2>
+                                    <h2>{{ onePost.generalInfo.catName }}</h2>
                                     <p class="post-by">
                                       โพสต์โดย
                                       {{
@@ -248,11 +248,14 @@
                                   <div class="mt-4 mt-lg-9">
                                     <div class="charac-show">
                                       <div
-                                        v-for="i in 5"
-                                        :key="i"
+                                        v-for="(character, index) in onePost
+                                          .generalInfo.characteristic"
+                                        :key="index"
                                         class="charac-details"
                                       >
-                                        <p class="mb-0">Hello</p>
+                                        <p class="mb-0">
+                                          {{ character }}
+                                        </p>
                                       </div>
                                     </div>
                                   </div>
@@ -495,18 +498,31 @@
 </template>
 
 <script>
+import { ValidationProvider } from "vee-validate";
+import { ValidationObserver } from "vee-validate";
+import provinceList from "@/assets/data/province.json";
 import AdoptBtnGroup from "../components/punmaew/components/AdoptBtnGroup.vue";
 import BaseButton from "../components/punmaew/components/BaseButton.vue";
 import PunmaewBanner from "../components/punmaew/elements/PunmaewBanner.vue";
 import PunmaewAllAdoption from "../components/punmaew/sections/PunmaewAllAdoption.vue";
 export default {
-  components: { PunmaewAllAdoption, PunmaewBanner, BaseButton, AdoptBtnGroup },
+  components: {
+    provinceList,
+    ValidationObserver,
+    ValidationProvider,
+    PunmaewAllAdoption,
+    PunmaewBanner,
+    BaseButton,
+    AdoptBtnGroup,
+  },
+
   data() {
     return {
       items: ["Foo", "Bar", "Fizz", "Buzz"],
       sheet: false,
       onePost: null,
       posts: null,
+      province: provinceList,
     };
   },
   async asyncData({ $axios, $config }) {
@@ -520,6 +536,20 @@ export default {
     }
   },
   methods: {
+    // duplicatedRemove() {
+    //   let newProvince = [];
+    //   let unique = this.province.filter((p) => {
+    //     let isDuplicate = newProvince.includes(p.province);
+    //     if (!isDuplicate) {
+    //       newProvince.push(p.province);
+    //       return true;
+    //     }
+    //     return false;
+    //   });
+
+    //   return unique;
+    // },
+
     finderHome() {
       this.$router.push(`/finderHome`);
     },

@@ -309,6 +309,7 @@
                               v-model="selectProvince"
                               :error-messages="errors"
                               data-vv-name="select"
+                              placeholder="กรุณาเลือกจังหวัด"
                               required
                             >
                             </v-autocomplete>
@@ -333,6 +334,7 @@
                               v-model="selectZip"
                               :error-messages="errors"
                               data-vv-name="select"
+                              placeholder="กรุณาเลือกรหัสไปรษณีย์"
                               required
                             ></v-autocomplete>
                           </validation-provider>
@@ -503,15 +505,20 @@ export default {
           if (!success) {
             return;
           }
-          this.$axios
-            .post(`${this.$config.authURL}user/login`, {
-              email: this.emailLogin,
-              password: this.password,
+          // this.$axios
+          //   .post(`${this.$config.authURL}user/login`, {
+          //     email: this.emailLogin,
+          //     password: this.password,
+          //   })
+          this.$auth
+            .loginWith("local", {
+              data: {
+                email: this.emailLogin,
+                password: this.password,
+              },
             })
             .then((res) => {
-              // console.log(res);
-              this.$store.commit("SET_USER", res.data.bodyUser);
-              this.$store.commit("SET_LOGIN");
+              console.log(res.data);
             });
           // console.log("login successfully");
 
@@ -595,7 +602,6 @@ export default {
         console.log(error);
       }
     },
-
     register() {
       try {
         this.$refs.registerForm.validate().then((success) => {

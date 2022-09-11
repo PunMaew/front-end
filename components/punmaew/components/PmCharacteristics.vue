@@ -1,57 +1,59 @@
 <template>
   <section>
-    <div>
-      <div class="input-area">
-        <p>ลักษณะ<span>*</span></p>
-        <validation-provider rules="required" v-slot="{ errors }">
-          <v-autocomplete
-            dense
-            filled
-            multiple
-            :error-messages="errors"
-            data-vv-name="select"
-            required
-            :items="characteristic"
-            item-text="name"
-            name="characteristic"
-            v-model="selectCharacteristic"
-            @change="updateValues"
-          >
-          </v-autocomplete>
-        </validation-provider>
-      </div>
-    </div>
-    <div>
-      <div class="charac-area">
-        <!-- choose -->
-        <div v-if="selectCharacteristic">
-          <div class="charac-show mb-6">
-            <div
-              v-for="(selectCharac, index) in selectCharacteristic"
-              :key="index"
-              class="charac-details color-choose"
+    <validation-observer ref="characterForm">
+      <div>
+        <div class="input-area">
+          <p>ลักษณะ<span>*</span></p>
+          <validation-provider rules="required" v-slot="{ errors }">
+            <v-autocomplete
+              dense
+              filled
+              multiple
+              :error-messages="errors"
+              data-vv-name="select"
+              required
+              :items="characteristic"
+              item-text="name"
+              name="characteristic"
+              v-model="selectCharacteristic"
+              @change="updateValues"
             >
-              <p class="mb-0">{{ selectCharac }}</p>
-              <i
-                @click="removeCharac(selectCharac, index)"
-                class="fi fi-rr-cross-circle"
-              ></i>
+            </v-autocomplete>
+          </validation-provider>
+        </div>
+      </div>
+      <div>
+        <div class="charac-area">
+          <!-- choose -->
+          <div v-if="selectCharacteristic">
+            <div class="charac-show mb-6">
+              <div
+                v-for="(selectCharac, index) in selectCharacteristic"
+                :key="index"
+                class="charac-details color-choose"
+              >
+                <p class="mb-0">{{ selectCharac }}</p>
+                <i
+                  @click="removeCharac(selectCharac, index)"
+                  class="fi fi-rr-cross-circle"
+                ></i>
+              </div>
+            </div>
+          </div>
+
+          <!--  -->
+          <div class="charac-show">
+            <div
+              v-for="(charac, index) in characteristicDisplay"
+              :key="index"
+              class="charac-details color"
+            >
+              <p class="mb-0">{{ charac.name }}</p>
             </div>
           </div>
         </div>
-
-        <!--  -->
-        <div class="charac-show">
-          <div
-            v-for="(charac, index) in characteristicDisplay"
-            :key="index"
-            class="charac-details color"
-          >
-            <p class="mb-0">{{ charac.name }}</p>
-          </div>
-        </div>
       </div>
-    </div>
+    </validation-observer>
   </section>
 </template>
 
@@ -62,6 +64,15 @@ export default {
   components: {
     ValidationProvider,
     ValidationObserver,
+  },
+  props: {
+    isEdit: {
+      type: Boolean,
+      default: false,
+    },
+    fetchForm: {
+      type: Object,
+    },
   },
   data() {
     return {
@@ -109,11 +120,25 @@ export default {
         { id: 19, name: "ไม่มีบ้าน2" },
         { id: 20, name: "scottish fold2" },
       ],
-      selectCharacteristic: "",
+      selectCharacteristic: this.isEdit
+        ? this.fetchForm.step2.characteristic
+        : "",
     };
   },
 
   methods: {
+    async validCharacter() {
+      const success = await this.$refs.characterForm.validate();
+      console.log(success);
+      if (!success) {
+        return false;
+      } else {
+        this.$emit("form2", {
+          characteristic: this.selectCharacteristic,
+        });
+        return true;
+      }
+    },
     removeCharac(item, index) {
       const id = this.characteristic.find((x) => x.name === item).id;
       this.selectCharacteristic.splice(index, 1);

@@ -1,31 +1,111 @@
 <template>
   <section>
-    <div class="input-area">
-      <p>ชื่อผู้ติดต่อ<span>*</span></p>
-      <input type="text" placeholder="กรุณากรอกชื่อผู้ติดต่อ" />
-    </div>
-    <div class="input-area mt-2">
-      <p>เบอร์โทรศัพท์<span>*</span></p>
-      <input type="text" placeholder="กรุณากรอกเบอร์โทรศัพท์" />
-    </div>
-    <div class="input-area mt-2">
-      <p>Facebook</p>
-      <input type="text" placeholder="กรุณากรอกชื่อ Facebook" />
-    </div>
-    <div class="input-area mt-2">
-      <p>Line</p>
-      <input type="text" placeholder="กรุณากรอก Line ID" />
-    </div>
+    <validation-observer ref="contactForm">
+      <div class="input-area">
+        <p>ชื่อผู้ติดต่อ<span>*</span></p>
+        <validation-provider
+          name="contactName"
+          rules="required"
+          v-slot="{ errors }"
+        >
+          <input
+            v-model="contactName"
+            name="contactName"
+            type="text"
+            placeholder="กรุณากรอกชื่อผู้ติดต่อ"
+          />
+          <span class="valid-form">
+            {{ errors[0] }}
+          </span>
+        </validation-provider>
+      </div>
+      <div class="input-area mt-2">
+        <p>เบอร์โทรศัพท์<span>*</span></p>
+        <validation-provider name="tel" rules="required" v-slot="{ errors }">
+          <input
+            v-model="tel"
+            name="tel"
+            type="text"
+            placeholder="กรุณากรอกเบอร์โทรศัพท์"
+          />
+          <span class="valid-form">
+            {{ errors[0] }}
+          </span>
+        </validation-provider>
+      </div>
+      <div class="input-area mt-2">
+        <p>Facebook</p>
+        <input
+          v-model="facebook"
+          name="facebook"
+          type="text"
+          placeholder="กรุณากรอกชื่อ Facebook"
+        />
+      </div>
+      <div class="input-area mt-2">
+        <p>Line</p>
+        <input
+          v-model="line"
+          name="line"
+          type="text"
+          placeholder="กรุณากรอก Line ID"
+        />
+      </div>
+    </validation-observer>
   </section>
 </template>
 
 <script>
+import { ValidationProvider } from "vee-validate";
+import { ValidationObserver } from "vee-validate";
 export default {
-  props: {},
+  props: {
+    isEdit: {
+      type: Boolean,
+      default: false,
+    },
+    fetchForm: {
+      type: Object,
+    },
+  },
+  components: {
+    ValidationProvider,
+    ValidationObserver,
+  },
+  data() {
+    return {
+      contactName: this.isEdit ? this.fetchForm.step3.contactName : "",
+      tel: this.isEdit ? this.fetchForm.step3.tel : "",
+      facebook: this.isEdit ? this.fetchForm.step3.facebook : "",
+      line: this.isEdit ? this.fetchForm.step3.line : "",
+    };
+  },
+  methods: {
+    async validContact() {
+      const success = await this.$refs.contactForm.validate();
+      console.log(success);
+      if (!success) {
+        return false;
+      } else {
+        this.$emit("form3", {
+          contactName: this.contactName,
+          tel: this.tel,
+          facebook: this.facebook,
+          line: this.line,
+        });
+        return true;
+      }
+    },
+  },
 };
 </script>
 
 <style lang="scss" scoped>
+.valid-form {
+  color: $error;
+  font-weight: bold;
+  font-size: 12px;
+}
 .step-text {
   font-size: 12px;
   font-weight: bold;
