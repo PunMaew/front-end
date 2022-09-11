@@ -95,11 +95,6 @@ export default {
             propertyName: "accessToken",
           },
           // login: {
-          //   url: process.env.AUTH_URL + "user/login",
-          //   method: "post",
-          //   propertyName: "accessToken",
-          // },
-          // login: {
           //   url: "user/login",
           //   method: "post",
           //   propertyName: "accessToken",
