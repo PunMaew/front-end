@@ -90,16 +90,16 @@ export default {
       local: {
         endpoints: {
           login: {
-            url: "user/login",
+            url: process.env.AUTH_URL + "user/login",
             method: "post",
             propertyName: "accessToken",
           },
           logout: {
-            url: "user/logout",
+            url: process.env.AUTH_URL + "user/logout",
             method: "get",
           },
           user: {
-            url: "user/getUser",
+            url: process.env.AUTH_URL + "user/getUser",
             method: "get",
             propertyName: "user",
           },
