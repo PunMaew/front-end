@@ -91,16 +91,16 @@ export default {
       local: {
         endpoints: {
           login: {
-            url: "user/login",
+            url: "https://punmaew.sit.kmutt.ac.th/api/user/login",
             method: "post",
             propertyName: "accessToken",
           },
           logout: {
-            url: "user/logout",
+            url: "https://punmaew.sit.kmutt.ac.th/api/user/logout",
             method: "get",
           },
           user: {
-            url: "user/getUser",
+            url: "https://punmaew.sit.kmutt.ac.th/api/user/getUser",
             method: "get",
             propertyName: "user",
             // autoFetch: true,
