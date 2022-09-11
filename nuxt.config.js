@@ -99,6 +99,11 @@ export default {
           //   method: "post",
           //   propertyName: "accessToken",
           // },
+          // login: {
+          //   url: "user/login",
+          //   method: "post",
+          //   propertyName: "accessToken",
+          // },
           logout: {
             url: "logout",
             method: "get",
