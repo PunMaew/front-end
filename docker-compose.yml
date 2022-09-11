@@ -3,11 +3,13 @@ services:
   server:
     env_file:
       - .env
+    volumes:
+      - .env:/app/.env
     build:
       context: .
     image: ghcr.io/skeletonbear/front-end-punmaew:latest
     ports:
-      - "8080:443"
+      - "8080:8080"
 
 networks:
   default:
