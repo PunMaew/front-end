@@ -67,6 +67,7 @@ export default {
   modules: [
     // https://go.nuxtjs.dev/axios
     "@nuxtjs/axios",
+    // "@nuxtjs/auth-next",
     "@nuxtjs/auth",
     [
       "@nuxtjs/dotenv",
@@ -82,8 +83,8 @@ export default {
   axios: {
     // Workaround to avoid enforcing hard-coded localhost:3000: https://github.com/nuxt-community/axios-module/issues/308
     baseURL: process.env.AUTH_URL,
-    // baseURL: process.env.BASE_URL,
-    // authURL: process.env.AUTH_URL,
+    browserBaseURL: process.env.AUTH_URL,
+    // credentials: true,
   },
   auth: {
     strategies: {
@@ -94,11 +95,6 @@ export default {
             method: "post",
             propertyName: "accessToken",
           },
-          // login: {
-          //   url: "user/login",
-          //   method: "post",
-          //   propertyName: "accessToken",
-          // },
           logout: {
             url: "user/logout",
             method: "get",
@@ -107,6 +103,7 @@ export default {
             url: "user/getUser",
             method: "get",
             propertyName: "user",
+            // autoFetch: true,
           },
           tokenName: "token",
         },
