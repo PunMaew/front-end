@@ -22,7 +22,7 @@ RUN rm -rf node_modules && \
 
 FROM nginx as production-stage
 RUN mkdir /app
-COPY --from=builder /app .
+COPY --from=builder /app /app
 COPY ./nginx.conf /etc/nginx/nginx.conf
 CMD ["nginx", "-g", "daemon off;"]
 
