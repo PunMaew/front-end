@@ -28,6 +28,6 @@ COPY --from=builder /app  .
 
 ENV HOST 0.0.0.0
 
-EXPOSE 443
+#EXPOSE 443
 
 CMD [ "npm", "start" ]
