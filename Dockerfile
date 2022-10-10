@@ -20,20 +20,14 @@ RUN rm -rf node_modules && \
   --pure-lockfile \
   --non-interactive 
 
-FROM nginx as production-stage
-RUN mkdir /app
-COPY --from=builder /app/dist /app
-COPY ./nginx.conf /etc/nginx/nginx.conf
-CMD ["nginx", "-g", "daemon off;"]
+FROM node:16.6.1-alpine
 
-# FROM node:16.6.1-alpine
+WORKDIR /app
 
-# WORKDIR /app
+COPY --from=builder /app  .
 
-# COPY --from=builder /app  .
+ENV HOST 0.0.0.0
 
-# ENV HOST 0.0.0.0
+EXPOSE 8080
 
-# #EXPOSE 443
-
-# CMD [ "npm", "start" ]
+CMD [ "npm", "start" ]
