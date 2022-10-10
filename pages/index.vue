@@ -111,7 +111,7 @@
         </v-col>
       </template>
     </punmaew-banner>
-    <PunmaewIndex class="mt-6" />
+    <PunmaewIndex :posts="posts" class="mt-6" />
     <punmaew-banner :color="false" :ordersm="true">
       <template slot="img-banner">
         <img src="@/assets/imgs/banner2.png" alt="" />
@@ -178,6 +178,22 @@ import AdoptBtnGroup from "../components/punmaew/components/AdoptBtnGroup.vue";
 // import PunmaewBanner2 from "../components/punmaew/elements/PunmaewBanner2.vue";
 export default {
   components: { PunmaewBanner, PunmaewIndex, BaseButton, AdoptBtnGroup },
+  data() {
+    return {
+      posts: [],
+    };
+  },
+  async asyncData({ $axios, $config }) {
+    try {
+      const res = await $axios.get(`${$config.findHome}RandomPost`);
+      // console.log(res.data);
+      return {
+        posts: res.data,
+      };
+    } catch (error) {
+      console.log(error);
+    }
+  },
   methods: {
     finderHome() {
       this.$router.push(`/finderHome`);
