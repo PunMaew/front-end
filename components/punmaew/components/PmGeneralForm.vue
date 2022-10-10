@@ -41,15 +41,28 @@
         </div>
         <div class="input-area mt-2">
           <p>สายพันธุ์</p>
-          <input
+          <v-autocomplete
+            dense
+            filled
+            :items="filterList.breed"
+            item-text="name"
+            name="breeds"
+            v-model="breeds"
+            data-vv-name="select"
+            required
+            placeholder="กรุณากรอกสายพันธุ์"
+          >
+          </v-autocomplete>
+
+          <!-- <input
             v-model="breeds"
             name="breeds"
             type="text"
             placeholder="กรุณากรอกสายพันธุ์"
-          />
+          /> -->
         </div>
         <div class="input-area mt-2">
-          <p>อายุ(ระบุเป็นเดือน)<span>*</span></p>
+          <p>อายุ (ระบุจำนวนเป็นเดือน เช่น 12)<span>*</span></p>
           <validation-provider name="age" rules="required" v-slot="{ errors }">
             <input
               v-model="age"
@@ -75,7 +88,7 @@
                 <v-radio
                   v-for="g in genders"
                   :key="g.id"
-                  :label="g.id === 1 ? 'หญิง' : 'ชาย'"
+                  :label="g.id === 1 ? 'เพศเมีย' : 'เพศผู้'"
                   :value="g.name"
                 ></v-radio>
               </v-radio-group>
@@ -107,6 +120,7 @@
               :error-messages="errors"
               data-vv-name="select"
               required
+              placeholder="กรุณาเลือกจังหวัด"
             >
             </v-autocomplete>
           </validation-provider>
@@ -128,6 +142,7 @@
               :error-messages="errors"
               data-vv-name="select"
               required
+              placeholder="กรุณาเลือกเขต/อำเภอ"
             >
             </v-autocomplete>
           </validation-provider>
@@ -254,6 +269,7 @@
 </template>
 
 <script>
+import filterList from "@/assets/data/filterList.json";
 import { ValidationProvider } from "vee-validate";
 import { ValidationObserver } from "vee-validate";
 import provinceList from "@/assets/data/province.json";
@@ -264,6 +280,7 @@ export default {
     ValidationObserver,
     provinceList,
     tambonList,
+    filterList,
   },
   props: {
     progress: {
@@ -280,8 +297,8 @@ export default {
   data() {
     return {
       genders: [
-        { id: 1, name: "หญิง" },
-        { id: 2, name: "ชาย" },
+        { id: 1, name: "เพศเมีย" },
+        { id: 2, name: "เพศผู้" },
       ],
       neuteres: [
         { id: 1, name: "เคยทำหมัน" },
@@ -289,6 +306,7 @@ export default {
       ],
       province: provinceList,
       tambon: tambonList,
+      filterList: filterList,
       // v-model data
       selectProvince: this.isEdit ? this.fetchForm.step1.province : "",
       selectDistrict: this.isEdit ? this.fetchForm.step1.district : "",
