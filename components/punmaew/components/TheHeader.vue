@@ -59,13 +59,29 @@
                 </v-list>
               </v-menu>
             </li> -->
+            <!--  -->
             <li v-if="loggedIn">
-              <base-button :fill="true" class="d-flex justify-center">
-                <div class="user-icon mr-2">
-                  <i class="fi fi-rr-user"></i>
-                </div>
-                {{ user.firstName }}</base-button
-              >
+              <v-menu offset-y>
+                <template v-slot:activator="{ on, attrs }">
+                  <div v-bind="attrs" v-on="on">
+                    <base-button :fill="true" class="d-flex justify-center">
+                      <div class="user-icon mr-2">
+                        <i class="fi fi-rr-user"></i>
+                      </div>
+                      {{ user.firstName }}</base-button
+                    >
+                  </div>
+                </template>
+                <v-list>
+                  <v-list-item
+                    @click="menuAction(item.action)"
+                    v-for="(item, index) in items"
+                    :key="index"
+                  >
+                    <v-list-item-title>{{ item.title }}</v-list-item-title>
+                  </v-list-item>
+                </v-list>
+              </v-menu>
             </li>
             <li v-else>
               <n-link to="/login" class="opunmai">
