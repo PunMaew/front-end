@@ -1,7 +1,17 @@
 <template>
   <header class="d-flex align-center position-relative" :class="`${_bg_color}`">
     <v-container class="justify-center d-flex">
-      <v-row justify="center">
+      <v-row v-if="admin">
+        <v-col sm="4" class="nav-left">
+          <n-link to="/" class="opunmai">
+            <img src="~/assets/imgs/pmlogo.png" alt="punmaew" id="logo" />
+          </n-link>
+        </v-col>
+        <!-- <v-col sm="4">
+          <base-button :fill="true">เข้าสู่ระบบ</base-button>
+        </v-col> -->
+      </v-row>
+      <v-row v-else justify="center">
         <v-col sm="4" class="nav-left">
           <n-link to="/" class="opunmai">
             <img src="~/assets/imgs/pmlogo.png" alt="punmaew" id="logo" />
@@ -66,16 +76,22 @@
               </template>
               <v-list>
                 <v-list-item link to="/">
+                  <v-list-item-title>หน้าแรก</v-list-item-title>
+                </v-list-item>
+                <v-list-item link to="/">
                   <v-list-item-title>บทความ</v-list-item-title>
                 </v-list-item>
-                <v-list-item link to="/">
+                <v-list-item link to="/finderHome">
                   <v-list-item-title>หาบ้านให้แมว</v-list-item-title>
                 </v-list-item>
-                <v-list-item link to="/">
+                <v-list-item link to="/adoptCat">
                   <v-list-item-title>รับเลี้ยงแมว</v-list-item-title>
                 </v-list-item>
-                <v-list-item link to="/">
-                  <v-list-item-title>สมัครสมาชิก</v-list-item-title>
+                <v-list-item v-if="loggedIn" @click="menuAction('logout')">
+                  <v-list-item-title>ออกจากระบบ</v-list-item-title>
+                </v-list-item>
+                <v-list-item v-else link to="/login">
+                  <v-list-item-title>เข้าสู่ระบบ</v-list-item-title>
                 </v-list-item>
               </v-list>
             </v-menu>
@@ -92,6 +108,10 @@ export default {
   components: { BaseButton },
   props: {
     bgColor: {
+      type: Boolean,
+      default: false,
+    },
+    admin: {
       type: Boolean,
       default: false,
     },
@@ -119,6 +139,33 @@ export default {
   },
 
   methods: {
+    // sweet() {
+    //   this.$swal
+    //     .fire({
+    //       // title: "ยืนยันที่จะลบโพสต์หรือไม่ ?",
+    //       text: "ยืนยันที่จะลบโพสต์หรือไม่ ?",
+    //       icon: "warning",
+    //       confirmButtonColor: "#F77272",
+    //       showCancelButton: true,
+    //       confirmButtonText: "ลบ",
+    //       cancelButtonText: "ยกเลิก",
+    //     })
+    //     .then((result) => {
+    //       if (result.isConfirmed) {
+    //         // this.$swal.fire(
+    //         //   "Deleted!",
+    //         //   "Your file has been deleted.",
+    //         //   "success"
+    //         // );
+    //         this.$swal.fire({
+    //           confirmButtonColor: "#19ba88",
+    //           confirmButtonText: "ตกลง",
+    //           text: "โพสต์ของคุณถูกลบแล้ว",
+    //           icon: "success",
+    //         });
+    //       }
+    //     });
+    // },
     menuAction(action) {
       if (action === "my-profile") {
         this.$router.push("/editProfile");
