@@ -29,9 +29,6 @@ export default {
         "http-equiv": "Content-Security-Policy",
         content: "upgrade-insecure-requests",
       },
-      // <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
-
-      // { name: "format-detection", content: "telephone=no" },
     ],
     link: [
       {
@@ -69,6 +66,7 @@ export default {
     "@nuxtjs/axios",
     // "@nuxtjs/auth-next",
     "@nuxtjs/auth",
+    "vue-sweetalert2/nuxt",
     [
       "@nuxtjs/dotenv",
       {
