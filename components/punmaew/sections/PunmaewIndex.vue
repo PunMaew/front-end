@@ -9,8 +9,8 @@
         </v-row>
         <v-row justify="center">
           <v-col
-            v-for="(post, index) in posts"
-            :key="post._id"
+            v-for="(i, index) in 3"
+            :key="i"
             cols="12"
             sm="4"
             md="4"
@@ -118,21 +118,21 @@
 
 <script>
 export default {
-  data() {
-    return {
-      posts: [],
-    };
-  },
-  async fetch() {
-    console.log("fetch...");
-    try {
-      const res = await this.$axios.get(`${this.$config.findHome}RandomPost`);
-      console.log(res.data);
-      this.posts = res.data;
-    } catch (error) {
-      console.log(error);
-    }
-  },
+  // data() {
+  //   return {
+  //     posts: [],
+  //   };
+  // },
+  // async fetch() {
+  //   console.log("fetch...");
+  //   try {
+  //     const res = await this.$axios.get(`${this.$config.findHome}RandomPost`);
+  //     console.log(res.data);
+  //     this.posts = res.data;
+  //   } catch (error) {
+  //     console.log(error);
+  //   }
+  // },
   methods: {
     adoptCat() {
       this.$router.push(`/adoptCat`);
