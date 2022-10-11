@@ -59,7 +59,15 @@
                 </v-list>
               </v-menu>
             </li> -->
-            <li>
+            <li v-if="loggedIn">
+              <base-button :fill="true" class="d-flex justify-center">
+                <div class="user-icon mr-2">
+                  <i class="fi fi-rr-user"></i>
+                </div>
+                {{ user.firstName }}</base-button
+              >
+            </li>
+            <li v-else>
               <n-link to="/login" class="opunmai">
                 <base-button :fill="true">เข้าสู่ระบบ</base-button>
               </n-link>
