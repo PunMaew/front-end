@@ -1,3 +1,4 @@
+@@ -0,0 +1,124 @@
 <template>
   <v-col cols="12" md="3" id="dashbard-menu">
     <div id="dashbard-menu-container">
