@@ -208,19 +208,6 @@ export default {
     },
     async submitFindHome() {
       // console.log(this.forms);
-      const ageRange =
-        parseInt(this.forms.step1.age, 10) <= 3
-          ? "1-3 เดือน"
-            ? parseInt(this.forms.step1.age, 10) <= 6 &&
-              parseInt(this.forms.step1.age, 10) >= 4
-            : "4-6 เดือน"
-            ? parseInt(this.forms.step1.age, 10) <= 9 &&
-              parseInt(this.forms.step1.age, 10) >= 7
-            : "7-9 เดือน"
-            ? parseInt(this.forms.step1.age, 10) <= 12 &&
-              parseInt(this.forms.step1.age, 10) >= 9
-            : "9-12 เดือน"
-          : "1 ปีขึ้นไป";
       try {
         this.$axios
           .post(`${this.$config.findHome}create`, {
@@ -229,7 +216,6 @@ export default {
               color: this.forms.step1.color,
               breeds: this.forms.step1.breeds,
               age: this.forms.step1.age,
-              ageRange: ageRange,
               location: {
                 province: this.forms.step1.province,
                 subDistrict: this.forms.step1.subDistrict,

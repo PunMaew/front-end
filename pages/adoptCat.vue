@@ -11,7 +11,6 @@
           </p>
 
           <base-button
-            @click="goToMatching"
             :fillSearch="true"
             class="d-none d-sm-flex mt-4 btn-banner"
           >
@@ -26,7 +25,7 @@
           align-self="center"
           class="pt-0 d-sm-none d-md-none d-lg-none d-xl-none"
         >
-          <base-button @click="goToMatching" :fillSearch="true">
+          <base-button :fillSearch="true">
             <img src="@/assets/imgs/icon-search.svg" alt="" />
             เริ่มค้นหาแมวในอุดมคติ
           </base-button>
@@ -64,7 +63,6 @@
                   </template>
                 </div>
               </v-col>
-
               <v-col v-if="posts" cols="12" align-self="center">
                 <div>
                   <v-row>
@@ -117,267 +115,34 @@
             <v-row justify="center" class="d-none d-md-flex">
               <v-col cols="3">
                 <div>
-                  <div class="justify-space-between d-flex">
-                    <p class="mb-2 ml-3"><b>ค้นหาจากพิกัด</b></p>
-                    <div @click="showDataFilter">
-                      <i v-if="openTab" class="fi fi-rr-angle-small-up"></i>
-                      <i v-else class="fi fi-rr-angle-small-down"></i>
-                    </div>
-                  </div>
+                  <p><b>ค้นหาจากพิกัด</b></p>
                   <div>
-                    <div v-if="openTab" class="iput-search d-flex">
+                    <div class="iput-search d-flex">
                       <i class="fi fi-rr-search mr-2"></i>
-                      <input
-                        v-model="search"
-                        placeholder="กรุณากรอกจังหวัด"
-                        type="text"
-                      />
+                      <input placeholder="กรุณากรอกจังหวัด" type="text" />
                     </div>
-                    <div>
+                    <template>
                       <v-container>
-                        <div v-if="openTab" class="scroll-bar">
+                        <div class="scroll-bar">
                           <v-checkbox
-                            v-for="p in duplicatedRemove"
-                            v-model="isSelected"
-                            :value="p.province"
-                            :key="p.id"
-                            :label="'จังหวัด' + p.province"
+                            v-for="i in 10"
+                            :key="i"
+                            label="Lorem ipsum"
                             hide-details
-                          >
-                          </v-checkbox>
+                          ></v-checkbox>
                         </div>
                         <div class="line"></div>
-                        <div class="filter-side-bar">
-                          <div class="justify-space-between d-flex">
-                            <p class="mb-0">อายุ</p>
-                            <div @click="showDataFilter2">
-                              <i
-                                v-if="openTab2"
-                                class="fi fi-rr-angle-small-up"
-                              ></i>
-                              <i v-else class="fi fi-rr-angle-small-down"></i>
-                            </div>
-                          </div>
-                          <div v-if="openTab2">
-                            <v-checkbox
-                              v-for="i in filterList.age"
-                              v-model="isAge"
-                              :value="i.name"
-                              :key="i.id"
-                              :label="i.name"
-                              hide-details
-                            ></v-checkbox>
-                          </div>
-                        </div>
-                        <div class="line"></div>
-                        <div class="filter-side-bar">
-                          <div class="justify-space-between d-flex">
-                            <p class="mb-0">เพศ</p>
-                            <div @click="showDataFilter3">
-                              <i
-                                v-if="openTab3"
-                                class="fi fi-rr-angle-small-up"
-                              ></i>
-                              <i v-else class="fi fi-rr-angle-small-down"></i>
-                            </div>
-                          </div>
-                          <div v-if="openTab3">
-                            <v-checkbox
-                              v-for="i in filterList.gender"
-                              v-model="isGender"
-                              :value="i.name"
-                              :key="i.id"
-                              :label="i.name"
-                              hide-details
-                            ></v-checkbox>
-                          </div>
-                        </div>
-                        <div class="line"></div>
-                        <div class="filter-side-bar">
-                          <div class="justify-space-between d-flex">
-                            <p class="mb-0">ขนาด</p>
-                            <div @click="showDataFilter4">
-                              <i
-                                v-if="openTab4"
-                                class="fi fi-rr-angle-small-up"
-                              ></i>
-                              <i v-else class="fi fi-rr-angle-small-down"></i>
-                            </div>
-                          </div>
-                          <div v-if="openTab4">
-                            <v-checkbox
-                              v-for="i in filterList.bodySize"
-                              v-model="isBodySize"
-                              :value="i.name"
-                              :key="i.id"
-                              :label="i.name"
-                              hide-details
-                            ></v-checkbox>
-                          </div>
-                        </div>
-                        <div class="line"></div>
-                        <div class="filter-side-bar">
-                          <div class="justify-space-between d-flex">
-                            <p class="mb-0">สี</p>
-                            <div @click="showDataFilter5">
-                              <i
-                                v-if="openTab5"
-                                class="fi fi-rr-angle-small-up"
-                              ></i>
-                              <i v-else class="fi fi-rr-angle-small-down"></i>
-                            </div>
-                          </div>
-                          <div v-if="openTab5">
-                            <v-checkbox
-                              v-for="i in filterList.color"
-                              v-model="isColor"
-                              :value="i.name"
-                              :key="i.id"
-                              :label="i.name"
-                              hide-details
-                            ></v-checkbox>
-                          </div>
-                        </div>
-                        <div class="line"></div>
-                        <div class="filter-side-bar">
-                          <div class="justify-space-between d-flex">
-                            <p class="mb-0">ลักษณะขน</p>
-                            <div @click="showDataFilter6">
-                              <i
-                                v-if="openTab6"
-                                class="fi fi-rr-angle-small-up"
-                              ></i>
-                              <i v-else class="fi fi-rr-angle-small-down"></i>
-                            </div>
-                          </div>
-                          <div v-if="openTab6">
-                            <v-checkbox
-                              v-for="i in filterList.hairStyle"
-                              v-model="isHairStyle"
-                              :value="i.name"
-                              :key="i.id"
-                              :label="i.name"
-                              hide-details
-                            ></v-checkbox>
-                          </div>
-                        </div>
-                        <div class="line"></div>
-                        <div class="filter-side-bar">
-                          <div class="justify-space-between d-flex">
-                            <p class="mb-0">การใช้กระบะทราย</p>
-                            <div @click="showDataFilter7">
-                              <i
-                                v-if="openTab7"
-                                class="fi fi-rr-angle-small-up"
-                              ></i>
-                              <i v-else class="fi fi-rr-angle-small-down"></i>
-                            </div>
-                          </div>
-                          <div v-if="openTab7">
-                            <v-checkbox
-                              v-for="i in filterList.sandBox"
-                              v-model="isSandBox"
-                              :value="i.name"
-                              :key="i.id"
-                              :label="i.name"
-                              hide-details
-                            ></v-checkbox>
-                          </div>
-                        </div>
-                        <div class="line"></div>
-                        <div class="filter-side-bar">
-                          <div class="justify-space-between d-flex">
-                            <p class="mb-0">สายพันธุ์</p>
-                            <div @click="showDataFilter8">
-                              <i
-                                v-if="openTab8"
-                                class="fi fi-rr-angle-small-up"
-                              ></i>
-                              <i v-else class="fi fi-rr-angle-small-down"></i>
-                            </div>
-                          </div>
-                          <div v-if="openTab8" class="scroll-bar">
-                            <v-checkbox
-                              v-for="i in filterList.breed"
-                              v-model="isBreed"
-                              :value="i.name"
-                              :key="i.id"
-                              :label="i.name"
-                              hide-details
-                            ></v-checkbox>
-                          </div>
-                        </div>
-                        <div class="line"></div>
-                        <div class="filter-side-bar">
-                          <div class="justify-space-between d-flex">
-                            <p class="mb-0">ลักษณะนิสัย</p>
-                            <div @click="showDataFilter9">
-                              <i
-                                v-if="openTab9"
-                                class="fi fi-rr-angle-small-up"
-                              ></i>
-                              <i v-else class="fi fi-rr-angle-small-down"></i>
-                            </div>
-                          </div>
-                          <div v-if="openTab9" class="scroll-bar">
-                            <v-checkbox
-                              v-for="i in filterList.characteristic"
-                              v-model="isCharacteristic"
-                              :value="i.name"
-                              :key="i.id"
-                              :label="i.name"
-                              hide-details
-                            ></v-checkbox>
-                          </div>
-                        </div>
-                        <div class="line"></div>
-                        <div class="filter-side-bar">
-                          <div class="justify-space-between d-flex">
-                            <p class="mb-0">การได้รับวัคซีน</p>
-                            <div @click="showDataFilter10">
-                              <i
-                                v-if="openTab10"
-                                class="fi fi-rr-angle-small-up"
-                              ></i>
-                              <i v-else class="fi fi-rr-angle-small-down"></i>
-                            </div>
-                          </div>
-                          <div v-if="openTab10">
-                            <v-checkbox
-                              v-for="i in filterList.receiveVaccine"
-                              v-model="isVaccine"
-                              :value="i.name"
-                              :key="i.id"
-                              :label="i.name"
-                              hide-details
-                            ></v-checkbox>
-                          </div>
-                        </div>
-                        <div class="line"></div>
-                        <div class="filter-side-bar">
-                          <div class="justify-space-between d-flex">
-                            <p class="mb-0">การทำหมัน</p>
-                            <div @click="showDataFilter11">
-                              <i
-                                v-if="openTab11"
-                                class="fi fi-rr-angle-small-up"
-                              ></i>
-                              <i v-else class="fi fi-rr-angle-small-down"></i>
-                            </div>
-                          </div>
-                          <div v-if="openTab11">
-                            <v-checkbox
-                              v-for="i in filterList.neutered"
-                              v-model="isNeutered"
-                              :value="i.name"
-                              :key="i.id"
-                              :label="i.name"
-                              hide-details
-                            ></v-checkbox>
-                          </div>
+                        <div class="lorem">
+                          <p>Lorem ipsum</p>
+                          <v-checkbox
+                            v-for="i in 5"
+                            :key="i"
+                            label="Lorem ipsum"
+                            hide-details
+                          ></v-checkbox>
                         </div>
                       </v-container>
-                    </div>
+                    </template>
                   </div>
                 </div>
               </v-col>
@@ -385,9 +150,7 @@
                 <div>
                   <v-row no-gutters justify="center">
                     <v-col cols="10">
-                      <div>
-                        <h2>รับเลี้ยงแมว</h2>
-                      </div>
+                      <div><h2>รับเลี้ยงแมว</h2></div>
                     </v-col>
                     <v-col cols="2">
                       <template>
@@ -408,7 +171,7 @@
                 </div>
                 <v-row v-if="posts">
                   <v-col
-                    v-for="post in filterByProvince"
+                    v-for="post in posts"
                     :key="post._id"
                     cols="12"
                     sm="4"
@@ -418,20 +181,11 @@
                     align-self="center"
                   >
                     <!-- card -->
+                    <!-- @click="sheet = true" -->
                     <div
                       @click="getOnePost(post._id)"
                       class="card position-relative"
                     >
-                      <div
-                        v-if="post.generalInfo.gender === 'เพศเมีย'"
-                        class="gender-icon"
-                      >
-                        <i class="fi fi-rr-venus"></i>
-                      </div>
-                      <div v-else class="gender-icon-male">
-                        <i class="fi fi-rr-mars"></i>
-                      </div>
-
                       <div class="thumbnail">
                         <img src="@/assets/imgs/img-thumbnail.jpg" alt="" />
                       </div>
@@ -747,7 +501,6 @@
 import { ValidationProvider } from "vee-validate";
 import { ValidationObserver } from "vee-validate";
 import provinceList from "@/assets/data/province.json";
-import filterList from "@/assets/data/filterList.json";
 import AdoptBtnGroup from "../components/punmaew/components/AdoptBtnGroup.vue";
 import BaseButton from "../components/punmaew/components/BaseButton.vue";
 import PunmaewBanner from "../components/punmaew/elements/PunmaewBanner.vue";
@@ -761,40 +514,15 @@ export default {
     PunmaewBanner,
     BaseButton,
     AdoptBtnGroup,
-    filterList,
   },
 
   data() {
     return {
-      items: ["เก่า", "ล่าสุด", "Best match"],
+      items: ["Foo", "Bar", "Fizz", "Buzz"],
       sheet: false,
       onePost: null,
       posts: null,
       province: provinceList,
-      filterList: filterList,
-      openTab: true,
-      openTab2: false,
-      openTab3: false,
-      openTab4: false,
-      openTab5: false,
-      openTab6: false,
-      openTab7: false,
-      openTab8: false,
-      openTab9: false,
-      openTab10: false,
-      openTab11: false,
-      search: "",
-      isSelected: [],
-      isGender: [],
-      isAge: [],
-      isBodySize: [],
-      isColor: [],
-      isHairStyle: [],
-      isSandBox: [],
-      isCharacteristic: [],
-      isVaccine: [],
-      isNeutered: [],
-      isBreed: [],
     };
   },
   async asyncData({ $axios, $config }) {
@@ -807,152 +535,21 @@ export default {
       console.log(error);
     }
   },
-  computed: {
-    duplicatedRemove() {
-      let newProvince = [];
-      let unique = this.province.filter((e) => {
-        let isDuplicate = newProvince.includes(e.province);
-        if (!isDuplicate) {
-          newProvince.push(e.province);
-          return true;
-        }
-        return false;
-      });
-
-      return this.search
-        ? unique.filter((post) => {
-            return post.province.includes(this.search);
-          })
-        : unique;
-    },
-    filterByProvince() {
-      if (
-        this.isSelected.length !== 0 ||
-        this.isGender.length !== 0 ||
-        this.isBodySize.length !== 0 ||
-        this.isColor.length !== 0 ||
-        this.isHairStyle.length !== 0 ||
-        this.isSandBox.length !== 0 ||
-        this.isCharacteristic.length !== 0 ||
-        this.isVaccine.length !== 0 ||
-        this.isNeutered.length !== 0 ||
-        this.isBreed.length !== 0 ||
-        this.isAge.length !== 0
-      ) {
-        return this.posts
-          .filter((post) =>
-            this.isSelected.length !== 0
-              ? this.isSelected.indexOf(post.generalInfo.location.province) !==
-                -1
-              : post
-          )
-          .filter((post) =>
-            this.isGender.length !== 0
-              ? this.isGender.indexOf(post.generalInfo.gender) !== -1
-              : post
-          )
-          .filter((post) =>
-            this.isBodySize.length !== 0
-              ? this.isBodySize.some((habit) =>
-                  post.generalInfo.characteristic.includes(habit)
-                )
-              : post
-          )
-          .filter((post) =>
-            this.isColor.length !== 0
-              ? this.isColor.some((color) =>
-                  post.generalInfo.characteristic.includes(color)
-                )
-              : post
-          )
-          .filter((post) =>
-            this.isHairStyle.length !== 0
-              ? this.isHairStyle.some((hair) =>
-                  post.generalInfo.characteristic.includes(hair)
-                )
-              : post
-          )
-          .filter((post) =>
-            this.isBreed.length !== 0
-              ? this.isBreed.indexOf(post.generalInfo.breeds) != -1
-              : post
-          )
-          .filter((post) =>
-            this.isSandBox.length !== 0
-              ? this.isSandBox.some((sandBox) =>
-                  post.generalInfo.characteristic.includes(sandBox)
-                )
-              : post
-          )
-          .filter((post) =>
-            this.isCharacteristic.length !== 0
-              ? this.isCharacteristic.some((charac) =>
-                  post.generalInfo.characteristic.includes(charac)
-                )
-              : post
-          )
-          .filter((post) =>
-            this.isVaccine.length !== 0
-              ? this.isVaccine.some((vaccine) =>
-                  post.generalInfo.characteristic.includes(vaccine)
-                )
-              : post
-          )
-          .filter((post) =>
-            this.isNeutered.length !== 0
-              ? this.isNeutered.some((neutered) =>
-                  post.generalInfo.characteristic.includes(neutered)
-                )
-              : post
-          )
-          .filter((post) =>
-            this.isAge.length !== 0
-              ? this.isAge.indexOf(post.generalInfo.ageRange) != -1
-              : post
-          );
-      } else {
-        return this.posts;
-      }
-    },
-  },
   methods: {
-    goToMatching() {
-      this.$router.push(`/matching`);
-    },
-    showDataFilter11() {
-      this.openTab11 = !this.openTab11;
-    },
-    showDataFilter10() {
-      this.openTab10 = !this.openTab10;
-    },
-    showDataFilter9() {
-      this.openTab9 = !this.openTab9;
-    },
-    showDataFilter8() {
-      this.openTab8 = !this.openTab8;
-    },
-    showDataFilter7() {
-      this.openTab7 = !this.openTab7;
-    },
-    showDataFilter6() {
-      this.openTab6 = !this.openTab6;
-    },
-    showDataFilter5() {
-      this.openTab5 = !this.openTab5;
-    },
-    showDataFilter4() {
-      this.openTab4 = !this.openTab4;
-    },
-    showDataFilter3() {
-      this.openTab3 = !this.openTab3;
-    },
-    showDataFilter2() {
-      this.openTab2 = !this.openTab2;
-    },
-    showDataFilter() {
-      this.openTab = !this.openTab;
-      // console.log(this.openTab);
-    },
+    // duplicatedRemove() {
+    //   let newProvince = [];
+    //   let unique = this.province.filter((p) => {
+    //     let isDuplicate = newProvince.includes(p.province);
+    //     if (!isDuplicate) {
+    //       newProvince.push(p.province);
+    //       return true;
+    //     }
+    //     return false;
+    //   });
+
+    //   return unique;
+    // },
+
     finderHome() {
       this.$router.push(`/finderHome`);
     },
@@ -990,40 +587,6 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.gender-icon-male {
-  position: absolute;
-  top: 5%;
-  right: 5%;
-  background-color: $white;
-  border-radius: 50%;
-  padding: 6px;
-  i {
-    display: flex;
-    justify-content: center;
-    font-size: 16px;
-    color: #13b8ff;
-  }
-}
-.gender-icon {
-  position: absolute;
-  top: 5%;
-  right: 5%;
-  background-color: $white;
-  border-radius: 50%;
-  padding: 6px;
-  i {
-    display: flex;
-    justify-content: center;
-    font-size: 16px;
-    color: #ff90e0;
-  }
-}
-::v-deep
-  .v-text-field.v-text-field--solo:not(.v-text-field--solo-flat)
-  > .v-input__control
-  > .v-input__slot {
-  box-shadow: none;
-}
 .backdrop {
   background: #000000;
   opacity: 0.5;
@@ -1253,13 +816,11 @@ export default {
 ::v-deep .v-select > .v-input__control > .v-input__slot {
   padding: 0 30px !important;
 }
-.filter-side-bar {
-  // margin-top: 30px;
-  margin-top: 14px;
+.lorem {
+  margin-top: 30px;
 }
 .line {
-  margin-top: 14px;
-  // margin-top: 30px;
+  margin-top: 30px;
   width: 100%;
   border: 1px solid $light;
 }
@@ -1274,7 +835,6 @@ export default {
 .iput-search {
   background-color: $light;
   border-radius: 50px;
-  margin-left: 8px;
   padding: 11px 14px;
   input {
     width: 100%;
@@ -1287,6 +847,9 @@ export default {
 .gap-drop-down {
   gap: 10px;
 }
+// .pm-set-top {
+//   margin-top: 48px;
+// }
 .btn-search {
   background: linear-gradient(180deg, #fdc454 0%, #ff9474 100%);
   box-shadow: 0px 4px 15px #ffcab4;
