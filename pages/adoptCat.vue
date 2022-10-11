@@ -917,7 +917,7 @@ export default {
   },
   methods: {
     goToMatching() {
-      this.$router.push(`/matching`);
+      this.$router.push(`/`);
     },
     showDataFilter11() {
       this.openTab11 = !this.openTab11;
