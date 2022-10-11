@@ -27,15 +27,15 @@
               >
                 ดูทั้งหมด
               </button>
-              <div
+              <!-- <div
                 v-if="post.generalInfo.gender === 'เพศเมีย'"
                 class="gender-icon"
               >
                 <i class="fi fi-rr-venus"></i>
-              </div>
-              <div v-else class="gender-icon-male">
+              </div> -->
+              <!-- <div v-else class="gender-icon-male">
                 <i class="fi fi-rr-mars"></i>
-              </div>
+              </div> -->
               <div class="thumbnail">
                 <img src="@/assets/imgs/img-thumbnail.jpg" alt="" />
               </div>
@@ -43,15 +43,20 @@
                 <v-row justify="center">
                   <v-col cols="12" class="pb-lg-3 pb-sm-3">
                     <div>
-                      <h2 class="h4">{{ post.generalInfo.catName }}</h2>
+                      <h2 class="h4">Name</h2>
                       <p class="mb-0 location">
+                        <i class="fi fi-rr-marker"></i>
+                        Bangkok
+                      </p>
+                      <!-- <h2 class="h4">{{ post.generalInfo.catName }}</h2> -->
+                      <!-- <p class="mb-0 location">
                         <i class="fi fi-rr-marker"></i>
                         {{
                           post.generalInfo.location.province +
                           " " +
                           post.generalInfo.location.district
                         }}
-                      </p>
+                      </p> -->
                     </div>
                   </v-col>
                 </v-row>
@@ -60,7 +65,7 @@
           </v-col>
         </v-row>
       </div>
-      <div class="pm-articles">
+      <!-- <div class="pm-articles">
         <v-row justify="center">
           <v-col cols="12" align-self="center">
             <h2 class="pm-title">บทความเกี่ยวกับแมว</h2>
@@ -106,7 +111,7 @@
             </div>
           </v-col>
         </v-row>
-      </div>
+      </div> -->
     </v-container>
   </section>
 </template>
