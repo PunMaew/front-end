@@ -76,6 +76,15 @@
                           :dialog="dialog2"
                           v-if="this.currentStep === 1"
                         >
+                          <template slot="icon">
+                            <div
+                              @click="dialog2 = !dialog2"
+                              class="ui-icon-cross"
+                            >
+                              <i class="fi fi-rr-cross-circle"></i>
+                            </div>
+                          </template>
+
                           <template slot="title">
                             <p class="otp-title">รีเซ็ตรหัสผ่าน</p>
                           </template>
@@ -117,10 +126,18 @@
                           <template slot="title">
                             <p class="otp-title">ยืนยันรหัส OTP</p>
                           </template>
+                          <template slot="icon">
+                            <div
+                              @click="dialog2 = !dialog2"
+                              class="ui-icon-cross"
+                            >
+                              <i class="fi fi-rr-cross-circle"></i>
+                            </div>
+                          </template>
                           <template slot="description">
                             <p class="otp-desc">
                               กรุณายืนยันรหัส OTP ที่ส่งไปที่อีเมล
-                              warisara@gmail.com
+                              {{ this.emailOtp }}
                             </p>
                           </template>
                           <template slot="content">
@@ -129,7 +146,12 @@
                             </p>
                             <div>
                               <v-row justify="center">
-                                <v-col cols="8" align-self="center">
+                                <v-col
+                                  cols="12"
+                                  sm="7"
+                                  lg="8"
+                                  align-self="center"
+                                >
                                   <validation-provider
                                     rules="required"
                                     v-slot="{ errors }"
@@ -150,6 +172,12 @@
                                     >
                                       ยืนยันรหัส OTP
                                     </base-button>
+                                    <div
+                                      @click="resendOtp"
+                                      class="mt-5 text-center text-decoration-underline"
+                                    >
+                                      ส่งรหัสใหม่อีกครั้ง
+                                    </div>
                                   </validation-provider>
                                 </v-col>
                               </v-row>
@@ -401,7 +429,7 @@
                             <template slot="description">
                               <p class="otp-desc">
                                 กรุณายืนยันรหัส OTP ที่ส่งไปที่อีเมล
-                                warisara@gmail.com
+                                {{ this.emailRegis }}
                               </p>
                             </template>
                             <template slot="content">
@@ -410,7 +438,12 @@
                               </p>
                               <div>
                                 <v-row justify="center">
-                                  <v-col cols="8" align-self="center">
+                                  <v-col
+                                    cols="12"
+                                    sm="7"
+                                    lg="8"
+                                    align-self="center"
+                                  >
                                     <validation-provider
                                       rules="required"
                                       v-slot="{ errors }"
@@ -431,6 +464,12 @@
                                       >
                                         ยืนยันรหัส OTP
                                       </base-button>
+                                      <!-- @click="resendOtpRegister(._id)" -->
+                                      <div
+                                        class="mt-5 text-center text-decoration-underline"
+                                      >
+                                        ส่งรหัสใหม่อีกครั้ง
+                                      </div>
                                     </validation-provider>
                                   </v-col>
                                 </v-row>
@@ -519,8 +558,18 @@ export default {
             })
             .then((res) => {
               console.log(res.data);
+              console.log("login successfully");
+            })
+            .catch((error) => {
+              console.log(error);
+              this.$swal.fire({
+                confirmButtonColor: "#19ba88",
+                confirmButtonText: "ตกลง",
+                title: "เกิดข้อผิดพลาด",
+                text: error.message,
+                icon: "warning",
+              });
             });
-          // console.log("login successfully");
 
           this.$nextTick(() => {
             this.$refs.loginForm.reset();
@@ -528,6 +577,13 @@ export default {
         });
       } catch (error) {
         console.log(error);
+        this.$swal.fire({
+          confirmButtonColor: "#19ba88",
+          confirmButtonText: "ตกลง",
+          title: "เกิดข้อผิดพลาด",
+          text: error.message,
+          icon: "warning",
+        });
       }
     },
     nextStep() {
@@ -622,11 +678,21 @@ export default {
             })
             .then((res) => {
               console.log(res.data);
-
               this.dialog = true;
               this.countdown();
+              console.log("register successfully");
               // this.confirmOtpRegister();
               // location.reload();
+            })
+            .catch((error) => {
+              console.log(error);
+              this.$swal.fire({
+                confirmButtonColor: "#19ba88",
+                confirmButtonText: "ตกลง",
+                title: "เกิดข้อผิดพลาด",
+                text: error.message,
+                icon: "warning",
+              });
             });
 
           this.$nextTick(() => {
@@ -635,6 +701,13 @@ export default {
         });
       } catch (error) {
         console.log(error);
+        this.$swal.fire({
+          confirmButtonColor: "#19ba88",
+          confirmButtonText: "ตกลง",
+          title: "เกิดข้อผิดพลาด",
+          text: error.message,
+          icon: "warning",
+        });
       }
     },
     confirmOtpRegister() {
@@ -691,11 +764,27 @@ export default {
         }
       }, 1000);
     },
+    resendOtpRegister(id) {
+      console.log("resend");
+      // PUT: http://localhost:5443/user/againOTP?id=
+      try {
+        this.$axios.post(`${this.$config.authURL}user/againOTP?id=${id}`, {});
+      } catch (error) {
+        console.log(error);
+      }
+    },
   },
 };
 </script>
 
 <style lang="scss" scoped>
+.ui-icon-cross {
+  display: flex;
+  justify-content: right;
+  i {
+    font-size: 20px;
+  }
+}
 *,
 *:after,
 *:before {
@@ -886,21 +975,29 @@ input[id="radio-3"] {
 
 .otp-title {
   text-align: center;
-
-  font-size: 24px;
+  font-size: 18px;
   font-weight: bold;
+  @media (min-width: 1440px) {
+    font-size: 24px;
+  }
 }
 .otp-desc {
   text-align: center;
-  font-size: 16px;
+  font-size: 14px;
+  @media (min-width: 1440px) {
+    font-size: 16px;
+  }
 }
 .otp-content {
   input {
     width: 100%;
     background-color: $light;
-    padding: 14px 24px;
+    padding: 8px 16px;
     font-size: 16px;
     border-radius: 50px;
+    @media (min-width: 1440px) {
+      padding: 14px 24px;
+    }
   }
 }
 

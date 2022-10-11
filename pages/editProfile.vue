@@ -425,18 +425,39 @@ export default {
 
   methods: {
     deletePost(id) {
-      try {
-        this.$axios
-          .delete(`${this.$config.findHome}deletePost?id=${id}`)
-          .then((res) => {
-            let newArray = this.posts.filter((item) => item._id != id);
-            this.posts = newArray;
-            console.log(res.data);
-            console.log("delete successfully");
-          });
-      } catch (error) {
-        console.log(error);
-      }
+      this.$swal
+        .fire({
+          text: "ยืนยันที่จะลบโพสต์หรือไม่ ?",
+          icon: "warning",
+          confirmButtonColor: "#F77272",
+          showCancelButton: true,
+          confirmButtonText: "ลบ",
+          cancelButtonText: "ยกเลิก",
+        })
+        .then((result) => {
+          if (result.isConfirmed) {
+            try {
+              this.$axios.delete(`${this.$config.findHome}deletePost?id=${id}`);
+              this.$swal.fire({
+                confirmButtonColor: "#19ba88",
+                confirmButtonText: "ตกลง",
+                text: "โพสต์ของคุณถูกลบแล้ว",
+                icon: "success",
+              });
+              let newArray = this.posts.filter((item) => item._id != id);
+              this.posts = newArray;
+            } catch (error) {
+              this.$swal.fire({
+                confirmButtonColor: "#19ba88",
+                confirmButtonText: "ตกลง",
+                title: "เกิดข้อผิดพลาด",
+                text: error.message,
+                icon: "warning",
+              });
+              console.log(error);
+            }
+          }
+        });
     },
     editProfile() {
       try {
@@ -461,6 +482,12 @@ export default {
               }
             )
             .then((res) => {
+              this.$swal.fire({
+                confirmButtonColor: "#19ba88",
+                confirmButtonText: "ตกลง",
+                text: "บันทึกข้อมูลเรียบร้อยแล้ว",
+                icon: "success",
+              });
               console.log(res.data);
             });
         });
