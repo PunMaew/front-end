@@ -111,7 +111,7 @@
         </v-col>
       </template>
     </punmaew-banner>
-    <PunmaewIndex :posts="posts" class="mt-6" />
+    <!-- <PunmaewIndex :posts="posts" class="mt-6" /> -->
     <punmaew-banner :color="false" :ordersm="true">
       <template slot="img-banner">
         <img src="@/assets/imgs/banner2.png" alt="" />
