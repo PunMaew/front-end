@@ -9,8 +9,8 @@
         </v-row>
         <v-row justify="center">
           <v-col
-            v-for="(i, index) in 3"
-            :key="i"
+            v-for="(post, index) in posts"
+            :key="post._id"
             cols="12"
             sm="4"
             md="4"
@@ -43,20 +43,20 @@
                 <v-row justify="center">
                   <v-col cols="12" class="pb-lg-3 pb-sm-3">
                     <div>
-                      <h2 class="h4">Name</h2>
+                      <!-- <h2 class="h4">Name</h2>
                       <p class="mb-0 location">
                         <i class="fi fi-rr-marker"></i>
                         Bangkok
-                      </p>
-                      <!-- <h2 class="h4">{{ post.generalInfo.catName }}</h2> -->
-                      <!-- <p class="mb-0 location">
+                      </p> -->
+                      <h2 class="h4">{{ post.generalInfo.catName }}</h2>
+                      <p class="mb-0 location">
                         <i class="fi fi-rr-marker"></i>
                         {{
                           post.generalInfo.location.province +
                           " " +
                           post.generalInfo.location.district
                         }}
-                      </p> -->
+                      </p>
                     </div>
                   </v-col>
                 </v-row>
@@ -118,11 +118,14 @@
 
 <script>
 export default {
-  // data() {
-  //   return {
-  //     posts: [],
-  //   };
-  // },
+  data() {
+    return {
+      posts: [],
+    };
+  },
+  async created() {
+    await this.fetchData();
+  },
   // async fetch() {
   //   console.log("fetch...");
   //   try {
@@ -134,6 +137,15 @@ export default {
   //   }
   // },
   methods: {
+    async fetchData() {
+      try {
+        const res = await this.$axios.get(`${this.$config.findHome}RandomPost`);
+        console.log(res.data);
+        this.posts = res.data;
+      } catch (error) {
+        console.log(error);
+      }
+    },
     adoptCat() {
       this.$router.push(`/adoptCat`);
     },
