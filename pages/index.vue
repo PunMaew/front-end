@@ -111,7 +111,7 @@
         </v-col>
       </template>
     </punmaew-banner>
-    <!-- <PunmaewIndex :posts="posts" class="mt-6" /> -->
+    <PunmaewIndex class="mt-6" />
     <punmaew-banner :color="false" :ordersm="true">
       <template slot="img-banner">
         <img src="@/assets/imgs/banner2.png" alt="" />
@@ -171,14 +171,13 @@
 </template>
 
 <script>
-// import PunmaewIndex from "../components/punmaew/sections/PunmaewIndex.vue";
+import PunmaewIndex from "../components/punmaew/sections/PunmaewIndex.vue";
 import PunmaewBanner from "../components/punmaew/elements/PunmaewBanner.vue";
 import BaseButton from "../components/punmaew/components/BaseButton.vue";
 import AdoptBtnGroup from "../components/punmaew/components/AdoptBtnGroup.vue";
 // import PunmaewBanner2 from "../components/punmaew/elements/PunmaewBanner2.vue";
 export default {
-  // PunmaewIndex
-  components: { PunmaewBanner, BaseButton, AdoptBtnGroup },
+  components: { PunmaewBanner, BaseButton, PunmaewIndex, AdoptBtnGroup },
   // data() {
   //   return {
   //     posts: [],
