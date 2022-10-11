@@ -36,7 +36,7 @@
         </v-col>
         <v-col sm="4" class="nav-right">
           <ul id="menu" class="d-none d-md-flex">
-            <!-- <li v-if="loggedIn">
+            <li v-if="loggedIn">
               <v-menu offset-y>
                 <template v-slot:activator="{ on, attrs }">
                   <div v-bind="attrs" v-on="on">
@@ -58,30 +58,6 @@
                   </v-list-item>
                 </v-list>
               </v-menu>
-            </li> -->
-            <!--  -->
-            <li v-if="loggedIn">
-              <!-- <v-menu offset-y>
-                <template v-slot:activator="{ on, attrs }">
-                  <v-btn icon v-bind="attrs" v-on="{ ...on }"> -->
-              <base-button :fill="true" class="d-flex justify-center">
-                <div class="user-icon mr-2">
-                  <i class="fi fi-rr-user"></i>
-                </div>
-                {{ user.firstName }}
-              </base-button>
-              <!-- </v-btn>
-                </template>
-                <v-list>
-                  <v-list-item
-                    @click="menuAction(item.action)"
-                    v-for="(item, index) in items"
-                    :key="index"
-                  >
-                    <v-list-item-title>{{ item.title }}</v-list-item-title>
-                  </v-list-item>
-                </v-list>
-              </v-menu> -->
             </li>
             <li v-else>
               <n-link to="/login" class="opunmai">
