@@ -87,10 +87,10 @@
                 <v-list-item link to="/adoptCat">
                   <v-list-item-title>รับเลี้ยงแมว</v-list-item-title>
                 </v-list-item>
-                <v-list-item v-if="loggedIn" @click="menuAction('logout')">
+                <v-list-item v-show="loggedIn" @click="menuAction('logout')">
                   <v-list-item-title>ออกจากระบบ</v-list-item-title>
                 </v-list-item>
-                <v-list-item v-else link to="/login">
+                <v-list-item v-show="!loggedIn" link to="/login">
                   <v-list-item-title>เข้าสู่ระบบ</v-list-item-title>
                 </v-list-item>
               </v-list>
