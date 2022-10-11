@@ -36,7 +36,7 @@
         </v-col>
         <v-col sm="4" class="nav-right">
           <ul id="menu" class="d-none d-md-flex">
-            <li v-if="loggedIn">
+            <!-- <li v-if="loggedIn">
               <v-menu offset-y>
                 <template v-slot:activator="{ on, attrs }">
                   <div v-bind="attrs" v-on="on">
@@ -58,8 +58,8 @@
                   </v-list-item>
                 </v-list>
               </v-menu>
-            </li>
-            <li v-else>
+            </li> -->
+            <li>
               <n-link to="/login" class="opunmai">
                 <base-button :fill="true">เข้าสู่ระบบ</base-button>
               </n-link>
@@ -87,12 +87,15 @@
                 <v-list-item link to="/adoptCat">
                   <v-list-item-title>รับเลี้ยงแมว</v-list-item-title>
                 </v-list-item>
-                <v-list-item v-show="loggedIn" @click="menuAction('logout')">
+                <v-list-item link to="/login">
+                  <v-list-item-title>เข้าสู่ระบบ</v-list-item-title>
+                </v-list-item>
+                <!-- <v-list-item v-show="loggedIn" @click="menuAction('logout')">
                   <v-list-item-title>ออกจากระบบ</v-list-item-title>
                 </v-list-item>
                 <v-list-item v-show="!loggedIn" link to="/login">
                   <v-list-item-title>เข้าสู่ระบบ</v-list-item-title>
-                </v-list-item>
+                </v-list-item> -->
               </v-list>
             </v-menu>
           </div>
