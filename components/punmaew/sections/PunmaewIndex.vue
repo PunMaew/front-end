@@ -126,7 +126,7 @@ export default {
     async fetchData() {
       try {
         const res = await this.$axios.get(`${this.$config.findHome}RandomPost`);
-        console.log(res.data);
+        // console.log(res.data);
         this.posts = res.data;
       } catch (error) {
         console.log(error);
