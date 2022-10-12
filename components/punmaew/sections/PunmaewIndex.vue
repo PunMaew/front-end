@@ -113,13 +113,25 @@
 
 <script>
 export default {
-  props: {
-    posts: {
-      type: Array,
-    },
+  data() {
+    return {
+      posts: [],
+    };
+  },
+  async created() {
+    await this.fetchData();
   },
 
   methods: {
+    async fetchData() {
+      try {
+        const res = await this.$axios.get(`${this.$config.findHome}RandomPost`);
+        console.log(res.data);
+        this.posts = res.data;
+      } catch (error) {
+        console.log(error);
+      }
+    },
     adoptCat() {
       this.$router.push(`/adoptCat`);
     },
