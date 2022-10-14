@@ -45,6 +45,10 @@
             <i class="fi fi-rr-user"></i>
             Users
           </div>
+          <div id="menu-fix-footer" class="mt-1 tabs-menu">
+            <i class="fi fi-rr-exit"></i>
+            ออกจากระบบ
+          </div>
         </div>
       </div>
     </div>
@@ -108,6 +112,7 @@ export default {
   padding: 0;
   #dashbard-menu-container {
     margin-left: -12px;
+    position: fixed;
   }
 }
 
