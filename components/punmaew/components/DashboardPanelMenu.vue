@@ -14,11 +14,14 @@
           </div>
         </div>
         <div class="admin-content">
-          <div class="mt-12 tabs-menu">
+          <div @click="menuDashboard('dashboard')" class="mt-12 tabs-menu">
             <i class="fi fi-rr-home"></i>
             Dashboard
           </div>
-          <div class="mt-1 tabs-menu noti-area">
+          <div
+            @click="menuDashboard('notification')"
+            class="mt-1 tabs-menu noti-area"
+          >
             <i class="fi fi-rr-book-alt"></i>
             Notification
             <div class="no-ti">1</div>
@@ -30,15 +33,15 @@
             </div>
             <div class="no-ti">1</div>
           </div> -->
-          <div class="mt-1 tabs-menu">
+          <div @click="menuDashboard('article')" class="mt-1 tabs-menu">
             <i class="fi fi-rr-book-alt"></i>
             Article Posts
           </div>
-          <div class="mt-1 tabs-menu">
+          <div @click="menuDashboard('findhome')" class="mt-1 tabs-menu">
             <img src="@/assets/imgs/icon-find-home.svg" alt="" />
             Finder Home Posts
           </div>
-          <div class="mt-1 tabs-menu">
+          <div @click="menuDashboard('users')" class="mt-1 tabs-menu">
             <i class="fi fi-rr-user"></i>
             Users
           </div>
@@ -49,7 +52,53 @@
 </template>
 
 <script>
-export default {};
+export default {
+  computed: {
+    currentMenu() {
+      return this.$store.state.currentMenu;
+    },
+  },
+  methods: {
+    menuDashboard(menu) {
+      if (menu === "dashboard") {
+        try {
+          this.$store.commit("SET_MENU", "dashboard");
+        } catch (error) {
+          console.log(error);
+        }
+      }
+      if (menu === "notification") {
+        try {
+          this.$store.commit("SET_MENU", "notification");
+        } catch (error) {
+          console.log(error);
+        }
+      }
+
+      if (menu === "article") {
+        try {
+          this.$store.commit("SET_MENU", "article");
+        } catch (error) {
+          console.log(error);
+        }
+      }
+      if (menu === "findhome") {
+        try {
+          this.$store.commit("SET_MENU", "findhome");
+        } catch (error) {
+          console.log(error);
+        }
+      }
+      if (menu === "users") {
+        try {
+          this.$store.commit("SET_MENU", "users");
+        } catch (error) {
+          console.log(error);
+        }
+      }
+    },
+  },
+};
 </script>
 
 <style lang="scss" scoped>

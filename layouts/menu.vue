@@ -20,8 +20,9 @@
 <script>
 import DashboardHeader from "../components/punmaew/components/DashboardHeader.vue";
 import DashboardPanelMenu from "../components/punmaew/components/DashboardPanelMenu.vue";
+import DashboardPanelMain from "../components/punmaew/elements/DashboardPanelMain.vue";
 export default {
-  components: { DashboardPanelMenu, DashboardHeader },
+  components: { DashboardPanelMenu, DashboardHeader, DashboardPanelMain },
 };
 </script>
 <style lang="scss" scoped>
