@@ -41,14 +41,12 @@
                 <v-menu offset-y>
                   <template v-slot:activator="{ on, attrs }">
                     <div v-bind="attrs" v-on="on">
-                      <!--  -->
                       <base-button :fill="true" class="d-flex justify-center">
                         <div class="user-icon mr-2">
                           <i class="fi fi-rr-user"></i>
                         </div>
-                        {{ user.firstName }}
-                      </base-button>
-                      <!--  -->
+                        {{ user.firstName }}</base-button
+                      >
                     </div>
                   </template>
                   <v-list>

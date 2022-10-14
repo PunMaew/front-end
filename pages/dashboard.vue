@@ -3,7 +3,7 @@
     <v-container>
       <v-row justify="center">
         <v-col cols="12" align-self="center">
-          <!-- <div>
+          <div v-if="currentMenu === 'dashboard'">
             <div class="head-title font-weight-bold">Dashboard</div>
             <div class="dashboard-bar mt-4">
               <v-container>
@@ -48,10 +48,10 @@
                   </div>
                 </div>
                 <div class="mt-4">
-                  <v-row justify="center">
+                  <v-row>
                     <v-col
-                      v-for="i in 3"
-                      :key="i"
+                      v-for="i in allPostsArticles"
+                      :key="i.id"
                       cols="12"
                       sm="4"
                       md="4"
@@ -67,7 +67,7 @@
                           <v-row justify="center">
                             <v-col cols="12" class="pb-lg-3 pb-sm-3">
                               <div>
-                                <h2 class="h4">Name</h2>
+                                <h2 class="h4">{{ i.name }}</h2>
                                 <p class="mb-0">
                                   Lorem ipsum dolor sit amet, consectetur
                                   adipiscing elit. Velit enim id hendrerit velit
@@ -86,8 +86,21 @@
                         </div>
                       </div>
                     </v-col>
+                  </v-row>
+                  <v-row justify="center">
                     <v-col>
-                      <div class="see-more font-weight-bold">
+                      <div
+                        v-if="showMore"
+                        @click="showMoreArticle"
+                        class="see-more font-weight-bold"
+                      >
+                        ดูน้อยลง <i class="fi fi-rr-angle-small-up"></i>
+                      </div>
+                      <div
+                        v-else
+                        @click="showMoreArticle"
+                        class="see-more font-weight-bold"
+                      >
                         ดูทั้งหมด <i class="fi fi-rr-angle-small-down"></i>
                       </div>
                     </v-col>
@@ -107,10 +120,10 @@
                   </div>
                 </div>
                 <div class="mt-4">
-                  <v-row justify="center">
+                  <v-row>
                     <v-col
-                      v-for="i in 3"
-                      :key="i"
+                      v-for="i in allPostFindHome"
+                      :key="i.id"
                       cols="12"
                       sm="4"
                       md="4"
@@ -126,7 +139,7 @@
                           <v-row justify="center">
                             <v-col cols="12" class="pb-lg-3 pb-sm-3">
                               <div>
-                                <h2 class="h4">Name</h2>
+                                <h2 class="h4">{{ i.name }}</h2>
                                 <p class="mb-0 location">
                                   <i class="fi fi-rr-marker"></i>
                                   Location
@@ -137,8 +150,21 @@
                         </div>
                       </div>
                     </v-col>
+                  </v-row>
+                  <v-row justify="center">
                     <v-col>
-                      <div class="see-more font-weight-bold">
+                      <div
+                        v-if="showMore"
+                        @click="showMorePost"
+                        class="see-more font-weight-bold"
+                      >
+                        ดูน้อยลง <i class="fi fi-rr-angle-small-up"></i>
+                      </div>
+                      <div
+                        v-else
+                        @click="showMorePost"
+                        class="see-more font-weight-bold"
+                      >
                         ดูทั้งหมด <i class="fi fi-rr-angle-small-down"></i>
                       </div>
                     </v-col>
@@ -158,10 +184,10 @@
                   </div>
                 </div>
                 <div class="mt-4">
-                  <v-row justify="center">
+                  <v-row>
                     <v-col
-                      v-for="i in 3"
-                      :key="i"
+                      v-for="i in allUsersAccount"
+                      :key="i.id"
                       cols="12"
                       sm="4"
                       md="4"
@@ -172,13 +198,26 @@
                       <div class="d-flex card-block-account">
                         <i class="fi fi-rr-portrait"></i>
                         <div>
-                          <p class="full-name mb-0">Firstname Lastname</p>
+                          <p class="full-name mb-0">{{ i.name }}</p>
                           <p class="email mb-0">example@gmail.com</p>
                         </div>
                       </div>
                     </v-col>
+                  </v-row>
+                  <v-row justify="center">
                     <v-col>
-                      <div class="see-more font-weight-bold">
+                      <div
+                        v-if="showMore"
+                        @click="showMoreUser"
+                        class="see-more font-weight-bold"
+                      >
+                        ดูน้อยลง <i class="fi fi-rr-angle-small-up"></i>
+                      </div>
+                      <div
+                        v-else
+                        @click="showMoreUser"
+                        class="see-more font-weight-bold"
+                      >
                         ดูทั้งหมด <i class="fi fi-rr-angle-small-down"></i>
                       </div>
                     </v-col>
@@ -186,9 +225,9 @@
                 </div>
               </div>
             </div>
-          </div> -->
+          </div>
 
-          <div>
+          <div v-if="currentMenu === 'article'">
             <div class="head-title font-weight-bold">Article Posts</div>
             <div class="mt-4">
               <v-row justify="center">
@@ -199,7 +238,7 @@
                   </div>
                 </v-col>
                 <v-col cols="3">
-                  <base-button @click="newArticle" :fillSearch="true">
+                  <base-button @click="dialog = true" :fillSearch="true">
                     สร้างบทความใหม่
                   </base-button>
                 </v-col>
@@ -226,15 +265,89 @@
                   </v-col>
                   <!-- <card-dialog :dialog="dialog">
                     <template slot="content">
-                      <p>ชื่อบทความ*</p>
+                      <div class="upload-image mb-10">
+                        <div class="icon-upload text-center">
+                          <i class="fi fi-rr-picture"></i>
+                          <p>เพิ่มรูป <span>ที่นี่</span></p>
+                        </div>
+                      </div>
+                      <div class="input-area mb-4">
+                        <p>ชื่อบทความ<span>*</span></p>
+                        
+                        <input
+                          v-model="articleName"
+                          name="articleName"
+                          type="text"
+                          placeholder="กรุณากรอกชื่อบทความ"
+                        />
+                        
+                      </div>
+                      <div class="input-area mb-4">
+                        <p>ย่อหน้าที่ 1<span>*</span></p>
+                        <textarea
+                          v-model="paragraph"
+                          name="paragraph"
+                          type="text"
+                          placeholder="กรุณากรอกเนื้อหาย่อหน้าที่ 1"
+                        />
+                      </div>
+                      <div class="font-weight-bold font-orange">
+                        + เพิ่มย่อหน้า
+                      </div>
                     </template>
                   </card-dialog> -->
                 </v-row>
               </div>
             </div>
+            <div>
+              <v-dialog persistent v-model="dialog" max-width="725">
+                <div class="set-bg-otp">
+                  <div class="upload-image mb-10">
+                    <div class="icon-upload text-center">
+                      <i class="fi fi-rr-picture"></i>
+                      <p>เพิ่มรูป <span>ที่นี่</span></p>
+                    </div>
+                  </div>
+                  <div class="input-area mb-4">
+                    <p>ชื่อบทความ<span>*</span></p>
+
+                    <input
+                      v-model="articleName"
+                      name="articleName"
+                      type="text"
+                      placeholder="กรุณากรอกชื่อบทความ"
+                    />
+                  </div>
+                  <div class="input-area mb-4">
+                    <p>ย่อหน้าที่ 1<span>*</span></p>
+                    <textarea
+                      v-model="paragraph"
+                      name="paragraph"
+                      type="text"
+                      placeholder="กรุณากรอกเนื้อหาย่อหน้าที่ 1"
+                    />
+                  </div>
+                  <div class="font-weight-bold font-orange">+ เพิ่มย่อหน้า</div>
+                  <div class="mt-12">
+                    <v-row no-gutters justify="center" class="btn-area">
+                      <v-col align-self="center">
+                        <base-button @click="dialog = false" :outline="true"
+                          >ยกเลิก</base-button
+                        >
+                      </v-col>
+                      <v-col align-self="center">
+                        <base-button :fillSearch="true"
+                          >สร้างบทความ</base-button
+                        >
+                      </v-col>
+                    </v-row>
+                  </div>
+                </div>
+              </v-dialog>
+            </div>
           </div>
 
-          <!-- <div>
+          <div v-if="currentMenu === 'findhome'">
             <div class="head-title font-weight-bold">Finder Home Posts</div>
             <div class="mt-4">
               <v-row>
@@ -273,9 +386,9 @@
                 </v-row>
               </div>
             </div>
-          </div> -->
+          </div>
 
-          <!-- <div>
+          <div v-if="currentMenu === 'users'">
             <div class="head-title font-weight-bold">Users</div>
             <div class="mt-4">
               <v-row>
@@ -322,7 +435,7 @@
                 </v-row>
               </div>
             </div>
-          </div> -->
+          </div>
         </v-col>
       </v-row>
     </v-container>
@@ -335,6 +448,20 @@ import CardDialog from "../components/punmaew/components/CardDialog.vue";
 export default {
   components: { BaseButton, CardDialog },
   layout: "menu",
+  computed: {
+    currentMenu() {
+      return this.$store.state.currentMenu;
+    },
+    allPostsArticles() {
+      return this.articles.slice(0, this.articleCount);
+    },
+    allPostFindHome() {
+      return this.posts.slice(0, this.postCount);
+    },
+    allUsersAccount() {
+      return this.users.slice(0, this.userCount);
+    },
+  },
   data() {
     return {
       tabs: [
@@ -344,22 +471,179 @@ export default {
       ],
       selectTabId: 1,
       dialog: false,
+      articleName: "",
+      paragraph: "",
+      isLoading: false,
+
+      articles: [
+        { id: 1, name: "Article A" },
+        { id: 2, name: "Article B" },
+        { id: 3, name: "Article C" },
+        { id: 4, name: "Article D" },
+        { id: 5, name: "Article E" },
+        { id: 6, name: "Article F" },
+        { id: 7, name: "Article G" },
+        { id: 8, name: "Article H" },
+        { id: 9, name: "Article I" },
+        { id: 10, name: "Article J" },
+      ],
+      articleCount: 3,
+      showMore: false,
+      posts: [
+        { id: 1, name: "FindHome A" },
+        { id: 2, name: "FindHome B" },
+        { id: 3, name: "FindHome C" },
+        { id: 4, name: "FindHome D" },
+        { id: 5, name: "FindHome E" },
+        { id: 6, name: "FindHome F" },
+        { id: 7, name: "FindHome G" },
+        { id: 8, name: "FindHome H" },
+        { id: 9, name: "FindHome I" },
+        { id: 10, name: "FindHome J" },
+      ],
+      postCount: 3,
+      users: [
+        { id: 1, name: "Firstname A" },
+        { id: 2, name: "Firstname B" },
+        { id: 3, name: "Firstname C" },
+        { id: 4, name: "Firstname D" },
+        { id: 5, name: "Firstname E" },
+        { id: 6, name: "Firstname F" },
+        { id: 7, name: "Firstname G" },
+        { id: 8, name: "Firstname H" },
+        { id: 9, name: "Firstname I" },
+        { id: 10, name: "Firstname J" },
+      ],
+      userCount: 3,
     };
   },
   methods: {
     selectTabs(refName) {
       this.$refs[refName].scrollIntoView({ behavior: "smooth" });
-
       // this.selectTabId = item.id;
     },
-    newArticle() {
-      this.dialog = true;
+    showMoreArticle() {
+      this.showMore = !this.showMore;
+      console.log(this.showMore);
+      if (this.articleCount === this.articles.length) {
+        this.articleCount = 3;
+        return;
+      }
+      if (this.articleCount > this.articles.length) return;
+      this.articleCount = this.articles.length;
+    },
+    showMorePost() {
+      this.showMore = !this.showMore;
+      console.log(this.showMore);
+      if (this.postCount === this.posts.length) {
+        this.postCount = 3;
+        return;
+      }
+      if (this.postCount > this.posts.length) return;
+      this.postCount = this.posts.length;
+    },
+    showMoreUser() {
+      this.showMore = !this.showMore;
+      console.log(this.showMore);
+      if (this.userCount === this.users.length) {
+        this.userCount = 3;
+        return;
+      }
+      if (this.userCount > this.users.length) return;
+      this.userCount = this.users.length;
     },
   },
 };
 </script>
 
 <style lang="scss" scoped>
+::v-deep .v-overlay {
+  .v-overlay__scrim {
+    width: 75%;
+    left: auto;
+  }
+}
+.btn-area {
+  gap: 10px;
+}
+.set-bg-otp {
+  background-color: $white;
+  box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.2);
+  padding: 20px;
+  border-radius: 30px;
+  @media (min-width: 1440px) {
+    padding: 40px;
+  }
+}
+.font-orange {
+  color: $orange-dark;
+}
+.input-area {
+  p {
+    font-size: 14px;
+    margin-bottom: 4px;
+    span {
+      color: $error;
+      font-size: 14px;
+      @media (min-width: 1440px) {
+        font-size: 16px;
+      }
+    }
+    @media (min-width: 1440px) {
+      font-size: 16px;
+    }
+  }
+  input {
+    width: 100%;
+    background-color: $light;
+    padding: 7px 20px;
+    font-size: 14px;
+    border-radius: 50px;
+    @media (min-width: 1440px) {
+      font-size: 16px;
+      padding: 13px 20px;
+    }
+  }
+  textarea {
+    width: 100%;
+    min-height: 152px;
+    background-color: $light;
+    padding: 16px;
+    font-size: 14px;
+    border-radius: 10px;
+    @media (min-width: 1440px) {
+      font-size: 16px;
+    }
+  }
+  textarea::placeholder {
+    font-size: 14px;
+    color: $gray;
+    @media (min-width: 1440px) {
+      font-size: 16px;
+    }
+  }
+}
+.upload-image {
+  position: relative;
+  min-height: 248px;
+  background-image: url("data:image/svg+xml,%3csvg width='100%25' height='100%25' xmlns='http://www.w3.org/2000/svg'%3e%3crect width='100%25' height='100%25' fill='none' rx='8' ry='8' stroke='%23333' stroke-width='1' stroke-dasharray='3' stroke-dashoffset='22' stroke-linecap='square'/%3e%3c/svg%3e");
+  border-radius: 8px;
+  background-size: 99%;
+  .icon-upload {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    p {
+      font-size: 12px;
+      span {
+        text-decoration: underline;
+        color: $orange-dark !important;
+        font-weight: bold;
+      }
+    }
+  }
+}
 .footer-btn {
   font-size: 16px;
   padding: 8px;

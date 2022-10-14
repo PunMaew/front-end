@@ -178,22 +178,6 @@ import AdoptBtnGroup from "../components/punmaew/components/AdoptBtnGroup.vue";
 // import PunmaewBanner2 from "../components/punmaew/elements/PunmaewBanner2.vue";
 export default {
   components: { PunmaewBanner, BaseButton, PunmaewIndex, AdoptBtnGroup },
-  // data() {
-  //   return {
-  //     posts: [],
-  //   };
-  // },
-  // async asyncData({ $axios, $config }) {
-  //   try {
-  //     const res = await $axios.get(`${$config.findHome}RandomPost`);
-  //     // console.log(res.data);
-  //     return {
-  //       posts: res.data,
-  //     };
-  //   } catch (error) {
-  //     console.log(error);
-  //   }
-  // },
   methods: {
     finderHome() {
       this.$router.push(`/finderHome`);
