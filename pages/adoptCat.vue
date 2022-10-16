@@ -1278,6 +1278,7 @@ export default {
   padding: 11px 14px;
   input {
     width: 100%;
+    outline: none;
   }
 }
 ::v-deep .v-input__slot {

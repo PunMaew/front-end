@@ -228,122 +228,200 @@
           </div>
 
           <div v-if="currentMenu === 'article'">
-            <div class="head-title font-weight-bold">Article Posts</div>
-            <div class="mt-4">
-              <v-row justify="center">
-                <v-col cols="9">
-                  <div class="search-area d-flex">
-                    <i class="fi fi-rr-search mr-2"></i>
-                    <input type="text" placeholder="ค้นหาชื่อบทความ..." />
-                  </div>
-                </v-col>
-                <v-col cols="3">
-                  <base-button @click="dialog = true" :fillSearch="true">
-                    สร้างบทความใหม่
-                  </base-button>
-                </v-col>
-              </v-row>
+            <div v-if="isNewArticle === false && isEditArticle === false">
+              <div class="head-title font-weight-bold">Article Posts</div>
+              <div class="mt-4">
+                <v-row justify="center">
+                  <v-col cols="9">
+                    <div class="search-area d-flex">
+                      <i class="fi fi-rr-search mr-2"></i>
+                      <input type="text" placeholder="ค้นหาชื่อบทความ..." />
+                    </div>
+                  </v-col>
+                  <v-col cols="3">
+                    <base-button
+                      @click="isNewArticle = true"
+                      :fillSearch="true"
+                    >
+                      สร้างบทความใหม่
+                    </base-button>
+                  </v-col>
+                </v-row>
+              </div>
+              <div class="mt-11">
+                <h2>บทความทั้งหมด</h2>
+                <div
+                  v-for="a in articles"
+                  :key="a.id"
+                  class="card-article mt-4"
+                >
+                  <v-row>
+                    <v-col cols="4">
+                      <div class="name-article-header">
+                        <img src="@/assets/imgs/img-thumbnail.jpg" alt="" />
+                        {{ a.name }}
+                      </div>
+                    </v-col>
+                    <v-col cols="6" class="name-article-header">
+                      <div>{{ a.date }}</div>
+                    </v-col>
+                    <v-col cols="2" class="name-article-bottom">
+                      <div class="icon-article">
+                        <i
+                          @click="isEditArticle = true"
+                          class="fi fi-rr-pencil"
+                        ></i>
+                        <i
+                          @click="deleteArticle(a.id)"
+                          class="fi fi-rr-trash trash"
+                        ></i>
+                      </div>
+                    </v-col>
+                  </v-row>
+                </div>
+              </div>
             </div>
-            <div class="mt-11">
-              <h2>บทความทั้งหมด</h2>
-              <div v-for="i in 5" :key="i" class="card-article mt-4">
-                <v-row>
-                  <v-col cols="4">
-                    <div class="name-article-header">
-                      <img src="@/assets/imgs/img-thumbnail.jpg" alt="" />
-                      ชื่อบทความ
-                    </div>
-                  </v-col>
-                  <v-col cols="6" class="name-article-header">
-                    <div>dd/mm/yyyy</div>
-                  </v-col>
-                  <v-col cols="2" class="name-article-bottom">
-                    <div class="icon-article">
-                      <i class="fi fi-rr-pencil"></i>
-                      <i class="fi fi-rr-trash trash"></i>
-                    </div>
-                  </v-col>
-                  <!-- <card-dialog :dialog="dialog">
-                    <template slot="content">
-                      <div class="upload-image mb-10">
-                        <div class="icon-upload text-center">
-                          <i class="fi fi-rr-picture"></i>
-                          <p>เพิ่มรูป <span>ที่นี่</span></p>
-                        </div>
+
+            <div v-if="isNewArticle === true">
+              <div class="head-title font-weight-bold">
+                Article Posts > สร้างบทความ
+              </div>
+              <div class="new-article-card mt-4">
+                <v-row justify="center">
+                  <v-col cols="12">
+                    <div class="upload-image mb-10">
+                      <div
+                        @click="onClickImage"
+                        v-if="!imageData"
+                        class="icon-upload text-center"
+                      >
+                        <i class="fi fi-rr-picture"></i>
+                        <p>เพิ่มรูป <span>ที่นี่</span></p>
                       </div>
-                      <div class="input-area mb-4">
-                        <p>ชื่อบทความ<span>*</span></p>
-                        
-                        <input
-                          v-model="articleName"
-                          name="articleName"
-                          type="text"
-                          placeholder="กรุณากรอกชื่อบทความ"
+                      <div class="d-flex" v-else>
+                        <img
+                          @click="onClickImage"
+                          :src="imageData"
+                          class="preview"
+                          alt=""
                         />
-                        
                       </div>
-                      <div class="input-area mb-4">
-                        <p>ย่อหน้าที่ 1<span>*</span></p>
+                      <input
+                        id="edit-article-image"
+                        ref="fileInput"
+                        type="file"
+                        accept="image/*"
+                        @change="uploadImage($event)"
+                      />
+                    </div>
+                    <div class="input-area mb-4">
+                      <p>ชื่อบทความ<span>*</span></p>
+
+                      <input
+                        v-model="articleName"
+                        name="articleName"
+                        type="text"
+                        placeholder="กรุณากรอกชื่อบทความ"
+                      />
+                    </div>
+
+                    <div>
+                      <div
+                        v-for="(p, index) in pars"
+                        :key="index"
+                        class="input-area mb-4"
+                      >
+                        <p>ย่อหน้าที่ {{ p.no }}<span>*</span></p>
                         <textarea
                           v-model="paragraph"
                           name="paragraph"
                           type="text"
-                          placeholder="กรุณากรอกเนื้อหาย่อหน้าที่ 1"
+                          :placeholder="'กรุณากรอกเนื้อหาย่อหน้าที่' + p.no"
                         />
                       </div>
-                      <div class="font-weight-bold font-orange">
+                      <div
+                        @click="addParagraph"
+                        class="font-weight-bold font-orange"
+                      >
                         + เพิ่มย่อหน้า
                       </div>
-                    </template>
-                  </card-dialog> -->
+                    </div>
+                    <div class="mt-12">
+                      <v-row no-gutters justify="center" class="btn-area">
+                        <v-col align-self="center">
+                          <base-button
+                            @click="isNewArticle = false"
+                            :outline="true"
+                            >ยกเลิก</base-button
+                          >
+                        </v-col>
+                        <v-col align-self="center">
+                          <base-button :fillSearch="true"
+                            >สร้างบทความ</base-button
+                          >
+                        </v-col>
+                      </v-row>
+                    </div>
+                  </v-col>
                 </v-row>
               </div>
             </div>
-            <div>
-              <v-dialog persistent v-model="dialog" max-width="725">
-                <div class="set-bg-otp">
-                  <div class="upload-image mb-10">
-                    <div class="icon-upload text-center">
-                      <i class="fi fi-rr-picture"></i>
-                      <p>เพิ่มรูป <span>ที่นี่</span></p>
-                    </div>
-                  </div>
-                  <div class="input-area mb-4">
-                    <p>ชื่อบทความ<span>*</span></p>
 
-                    <input
-                      v-model="articleName"
-                      name="articleName"
-                      type="text"
-                      placeholder="กรุณากรอกชื่อบทความ"
-                    />
-                  </div>
-                  <div class="input-area mb-4">
-                    <p>ย่อหน้าที่ 1<span>*</span></p>
-                    <textarea
-                      v-model="paragraph"
-                      name="paragraph"
-                      type="text"
-                      placeholder="กรุณากรอกเนื้อหาย่อหน้าที่ 1"
-                    />
-                  </div>
-                  <div class="font-weight-bold font-orange">+ เพิ่มย่อหน้า</div>
-                  <div class="mt-12">
-                    <v-row no-gutters justify="center" class="btn-area">
-                      <v-col align-self="center">
-                        <base-button @click="dialog = false" :outline="true"
-                          >ยกเลิก</base-button
-                        >
-                      </v-col>
-                      <v-col align-self="center">
-                        <base-button :fillSearch="true"
-                          >สร้างบทความ</base-button
-                        >
-                      </v-col>
-                    </v-row>
-                  </div>
-                </div>
-              </v-dialog>
+            <div v-if="isEditArticle === true">
+              <div class="head-title font-weight-bold">
+                Article Posts > แก้ไขบทความ
+              </div>
+              <div class="new-article-card mt-4">
+                <v-row justify="center">
+                  <v-col cols="12">
+                    <div class="img-container">
+                      <div class="edit-img-btn">
+                        <i class="fi fi-rr-pencil"></i> แก้ไขรูป
+                      </div>
+                      <div class="mb-10 article-img">
+                        <img src="@/assets/imgs/img-thumbnail.jpg" alt="" />
+                      </div>
+                    </div>
+                    <div class="input-area mb-4">
+                      <p>ชื่อบทความ<span>*</span></p>
+
+                      <input
+                        v-model="articleName"
+                        name="articleName"
+                        type="text"
+                        placeholder="กรุณากรอกชื่อบทความ"
+                      />
+                    </div>
+
+                    <div class="input-area mb-4">
+                      <p>ย่อหน้าที่ 1<span>*</span></p>
+                      <textarea
+                        v-model="paragraph"
+                        name="paragraph"
+                        type="text"
+                        placeholder="กรุณากรอกเนื้อหาย่อหน้าที่ 1"
+                      />
+                    </div>
+                    <div class="font-weight-bold font-orange">
+                      + เพิ่มย่อหน้า
+                    </div>
+                    <div class="mt-12">
+                      <v-row no-gutters justify="center" class="btn-area">
+                        <v-col align-self="center">
+                          <base-button
+                            @click="isEditArticle = false"
+                            :outline="true"
+                            >ยกเลิก</base-button
+                          >
+                        </v-col>
+                        <v-col align-self="center">
+                          <base-button :fillSearch="true">บันทึก</base-button>
+                        </v-col>
+                      </v-row>
+                    </div>
+                  </v-col>
+                </v-row>
+              </div>
             </div>
           </div>
 
@@ -361,25 +439,30 @@
             </div>
             <div class="mt-11">
               <h2>โพสต์หาบ้านทั้งหมด</h2>
-              <div v-for="i in 5" :key="i" class="card-article mt-4">
+              <div v-for="p in posts" :key="p.id" class="card-article mt-4">
                 <v-row>
                   <v-col>
                     <div class="name-article-header">
                       <img src="@/assets/imgs/img-thumbnail.jpg" alt="" />
-                      ชื่อโพสต์
+                      {{ p.name }}
                     </div>
                   </v-col>
                   <v-col class="name-article">
-                    <div>dd/mm/yyyy</div>
+                    <div>{{ p.date }}</div>
                   </v-col>
                   <v-col class="name-article">
-                    <div>ชื่อผู้โพสต์ นามสกุล</div>
+                    <div>{{ p.fullName }}</div>
                   </v-col>
-                  <v-col class="name-article">
-                    <div>รับเลี้ยงแล้ว</div>
+                  <v-col
+                    class="name-article"
+                    :class="[
+                      p.status === 'ยังไม่ถูกรับเลี้ยง' ? 'inactive' : 'active',
+                    ]"
+                  >
+                    <div>{{ p.status }}</div>
                   </v-col>
                   <v-col class="name-article-bottom">
-                    <div class="icon-article">
+                    <div @click="deleteFindHome(p.id)" class="icon-article">
                       <i class="fi fi-rr-trash trash"></i>
                     </div>
                   </v-col>
@@ -405,8 +488,8 @@
               <div class="mt-4">
                 <v-row justify="center">
                   <v-col
-                    v-for="i in 3"
-                    :key="i"
+                    v-for="account in allAccounts"
+                    :key="account.id"
                     cols="12"
                     sm="4"
                     md="4"
@@ -419,15 +502,18 @@
 
                       <div>
                         <p class="mb-0 font-weight-bold full-name">
-                          Firstname Lastname
+                          {{ account.name }}
                         </p>
-                        <p class="mb-0">example@gmail.com</p>
-                        <p class="mb-0">0812345678</p>
+                        <p class="mb-0">{{ account.mail }}</p>
+                        <p class="mb-0">{{ account.tel }}</p>
                         <p class="mb-0">
-                          กรุงเทพมหานคร, บางมด, ประชาอุทิศ, 10140
+                          {{ account.address }}
                         </p>
                       </div>
-                      <div class="mt-4 footer-btn font-weight-bold">
+                      <div
+                        @click="deleteAccount(account.id)"
+                        class="mt-4 footer-btn font-weight-bold"
+                      >
                         ลบบัญชีผู้ใช้
                       </div>
                     </div>
@@ -470,36 +556,97 @@ export default {
         { id: 3, name: "บัญชีผู้ใช้" },
       ],
       selectTabId: 1,
-      dialog: false,
+      isEditArticle: false,
+      isNewArticle: false,
       articleName: "",
       paragraph: "",
       isLoading: false,
 
       articles: [
-        { id: 1, name: "Article A" },
-        { id: 2, name: "Article B" },
-        { id: 3, name: "Article C" },
-        { id: 4, name: "Article D" },
-        { id: 5, name: "Article E" },
-        { id: 6, name: "Article F" },
-        { id: 7, name: "Article G" },
-        { id: 8, name: "Article H" },
-        { id: 9, name: "Article I" },
-        { id: 10, name: "Article J" },
+        { id: 1, name: "Article A", date: "dd/mm/yyyy" },
+        { id: 2, name: "Article B", date: "dd/mm/yyyy" },
+        { id: 3, name: "Article C", date: "dd/mm/yyyy" },
+        { id: 4, name: "Article D", date: "dd/mm/yyyy" },
+        { id: 5, name: "Article E", date: "dd/mm/yyyy" },
+        { id: 6, name: "Article F", date: "dd/mm/yyyy" },
+        { id: 7, name: "Article G", date: "dd/mm/yyyy" },
+        { id: 8, name: "Article H", date: "dd/mm/yyyy" },
+        { id: 9, name: "Article I", date: "dd/mm/yyyy" },
+        { id: 10, name: "Article J", date: "dd/mm/yyyy" },
       ],
       articleCount: 3,
       showMore: false,
       posts: [
-        { id: 1, name: "FindHome A" },
-        { id: 2, name: "FindHome B" },
-        { id: 3, name: "FindHome C" },
-        { id: 4, name: "FindHome D" },
-        { id: 5, name: "FindHome E" },
-        { id: 6, name: "FindHome F" },
-        { id: 7, name: "FindHome G" },
-        { id: 8, name: "FindHome H" },
-        { id: 9, name: "FindHome I" },
-        { id: 10, name: "FindHome J" },
+        {
+          id: 1,
+          name: "FindHome A",
+          date: "dd/mm/yyyy",
+          fullName: "ชื่อผู้โพสต์ นามสกุล",
+          status: "ยังไม่ถูกรับเลี้ยง",
+        },
+        {
+          id: 2,
+          name: "FindHome B",
+          date: "dd/mm/yyyy",
+          fullName: "ชื่อผู้โพสต์ นามสกุล",
+          status: "รับเลี้ยงแล้ว",
+        },
+        {
+          id: 3,
+          name: "FindHome C",
+          date: "dd/mm/yyyy",
+          fullName: "ชื่อผู้โพสต์ นามสกุล",
+          status: "ยังไม่ถูกรับเลี้ยง",
+        },
+        {
+          id: 4,
+          name: "FindHome D",
+          date: "dd/mm/yyyy",
+          fullName: "ชื่อผู้โพสต์ นามสกุล",
+          status: "ยังไม่ถูกรับเลี้ยง",
+        },
+        {
+          id: 5,
+          name: "FindHome E",
+          date: "dd/mm/yyyy",
+          fullName: "ชื่อผู้โพสต์ นามสกุล",
+          status: "รับเลี้ยงแล้ว",
+        },
+        {
+          id: 6,
+          name: "FindHome F",
+          date: "dd/mm/yyyy",
+          fullName: "ชื่อผู้โพสต์ นามสกุล",
+          status: "ยังไม่ถูกรับเลี้ยง",
+        },
+        {
+          id: 7,
+          name: "FindHome G",
+          date: "dd/mm/yyyy",
+          fullName: "ชื่อผู้โพสต์ นามสกุล",
+          status: "ยังไม่ถูกรับเลี้ยง",
+        },
+        {
+          id: 8,
+          name: "FindHome H",
+          date: "dd/mm/yyyy",
+          fullName: "ชื่อผู้โพสต์ นามสกุล",
+          status: "ยังไม่ถูกรับเลี้ยง",
+        },
+        {
+          id: 9,
+          name: "FindHome I",
+          date: "dd/mm/yyyy",
+          fullName: "ชื่อผู้โพสต์ นามสกุล",
+          status: "รับเลี้ยงแล้ว",
+        },
+        {
+          id: 10,
+          name: "FindHome J",
+          date: "dd/mm/yyyy",
+          fullName: "ชื่อผู้โพสต์ นามสกุล",
+          status: "ยังไม่ถูกรับเลี้ยง",
+        },
       ],
       postCount: 3,
       users: [
@@ -515,9 +662,141 @@ export default {
         { id: 10, name: "Firstname J" },
       ],
       userCount: 3,
+      newArticle: false,
+      pars: [{ id: 1, no: 1 }],
+      newParagraph: "",
+      imageData: "",
+      allAccounts: [
+        {
+          id: 1,
+          name: " Firstname Lastname",
+          mail: "example@gmail.com",
+          tel: "0812345678",
+          address: "กรุงเทพมหานคร, บางมด, ประชาอุทิศ, 10140",
+        },
+        {
+          id: 2,
+          name: " Firstname Lastname",
+          mail: "example@gmail.com",
+          tel: "0812345678",
+          address: "กรุงเทพมหานคร, บางมด, ประชาอุทิศ, 10140",
+        },
+        {
+          id: 3,
+          name: " Firstname Lastname",
+          mail: "example@gmail.com",
+          tel: "0812345678",
+          address: "กรุงเทพมหานคร, บางมด, ประชาอุทิศ, 10140",
+        },
+      ],
     };
   },
   methods: {
+    deleteArticle(id) {
+      this.$swal
+        .fire({
+          text: "ยืนยันที่จะลบโพสต์หรือไม่ ?",
+          icon: "warning",
+          confirmButtonColor: "#F77272",
+          showCancelButton: true,
+          confirmButtonText: "ลบ",
+          cancelButtonText: "ยกเลิก",
+        })
+        .then((result) => {
+          if (result.isConfirmed) {
+            try {
+              console.log(id);
+              console.log("success");
+            } catch (error) {
+              this.$swal.fire({
+                confirmButtonColor: "#19ba88",
+                confirmButtonText: "ตกลง",
+                title: "เกิดข้อผิดพลาด",
+                text: error.message,
+                icon: "warning",
+              });
+              console.log(error);
+            }
+          }
+        });
+    },
+    deleteFindHome(id) {
+      this.$swal
+        .fire({
+          text: "ยืนยันที่จะลบโพสต์หรือไม่ ?",
+          icon: "warning",
+          confirmButtonColor: "#F77272",
+          showCancelButton: true,
+          confirmButtonText: "ลบ",
+          cancelButtonText: "ยกเลิก",
+        })
+        .then((result) => {
+          if (result.isConfirmed) {
+            try {
+              console.log(id);
+              console.log("success");
+            } catch (error) {
+              this.$swal.fire({
+                confirmButtonColor: "#19ba88",
+                confirmButtonText: "ตกลง",
+                title: "เกิดข้อผิดพลาด",
+                text: error.message,
+                icon: "warning",
+              });
+              console.log(error);
+            }
+          }
+        });
+    },
+    deleteAccount(id) {
+      this.$swal
+        .fire({
+          text: "ยืนยันที่จะลบโพสต์หรือไม่ ?",
+          icon: "warning",
+          confirmButtonColor: "#F77272",
+          showCancelButton: true,
+          confirmButtonText: "ลบ",
+          cancelButtonText: "ยกเลิก",
+        })
+        .then((result) => {
+          if (result.isConfirmed) {
+            try {
+              console.log(id);
+              console.log("success");
+            } catch (error) {
+              this.$swal.fire({
+                confirmButtonColor: "#19ba88",
+                confirmButtonText: "ตกลง",
+                title: "เกิดข้อผิดพลาด",
+                text: error.message,
+                icon: "warning",
+              });
+              console.log(error);
+            }
+          }
+        });
+    },
+    onClickImage() {
+      this.$refs.fileInput.click();
+    },
+    uploadImage(event) {
+      var input = event.target;
+      if (input.files && input.files[0]) {
+        var reader = new FileReader();
+        reader.onload = (e) => {
+          this.imageData = e.target.result;
+        };
+        reader.readAsDataURL(input.files[0]);
+      }
+    },
+
+    addParagraph() {
+      this.pars.push({
+        id: this.pars.length + 1,
+        no: this.pars.length + 1,
+      });
+      this.newParagraph = "";
+    },
     selectTabs(refName) {
       this.$refs[refName].scrollIntoView({ behavior: "smooth" });
       // this.selectTabId = item.id;
@@ -557,20 +836,64 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-::v-deep .v-overlay {
-  .v-overlay__scrim {
-    width: 75%;
-    left: auto;
+.inactive {
+  color: $error;
+}
+.active {
+  color: $success;
+}
+.preview {
+  width: 100%;
+  max-height: 248px;
+  object-fit: cover;
+  align-items: center;
+  padding: 16px;
+}
+#edit-article-image {
+  display: none;
+}
+.img-container {
+  position: relative;
+  .edit-img-btn {
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    background-color: $white;
+    padding: 10px 14px;
+    border-radius: 50px;
   }
 }
+
+.article-img {
+  img {
+    width: 100%;
+    max-height: 248px;
+    border-radius: 20px;
+    object-fit: cover;
+    align-items: center;
+  }
+}
+.new-article-card {
+  background-color: $white;
+  padding: 56px;
+  border-radius: 20px;
+  box-shadow: 0px 4px 30px rgba(0, 0, 0, 0.15);
+}
+// ::v-deep .v-overlay__scrim {
+//   width: 75%;
+//   left: auto;
+// }
 .btn-area {
   gap: 10px;
+}
+::v-deep .v-dialog {
+  border-radius: 30px;
 }
 .set-bg-otp {
   background-color: $white;
   box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.2);
   padding: 20px;
-  border-radius: 30px;
+
   @media (min-width: 1440px) {
     padding: 40px;
   }
@@ -628,7 +951,7 @@ export default {
   min-height: 248px;
   background-image: url("data:image/svg+xml,%3csvg width='100%25' height='100%25' xmlns='http://www.w3.org/2000/svg'%3e%3crect width='100%25' height='100%25' fill='none' rx='8' ry='8' stroke='%23333' stroke-width='1' stroke-dasharray='3' stroke-dashoffset='22' stroke-linecap='square'/%3e%3c/svg%3e");
   border-radius: 8px;
-  background-size: 99%;
+  background-size: 100%;
   .icon-upload {
     position: absolute;
     top: 50%;
@@ -673,6 +996,7 @@ export default {
   box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.15);
   border-radius: 8px;
   padding: 16px 24px;
+  font-weight: bold;
   .name-article-header {
     display: flex;
     gap: 16px;
@@ -691,6 +1015,7 @@ export default {
     gap: 16px;
     align-items: center;
     justify-content: center;
+
     img {
       width: 50px;
       height: 50px;
@@ -723,6 +1048,10 @@ export default {
   box-shadow: 0px 2px 20px rgba(0, 0, 0, 0.1);
   border-radius: 50px;
   padding: 16px;
+  input {
+    width: 100%;
+    outline: none;
+  }
   i {
     font-size: 16px;
   }
@@ -854,7 +1183,9 @@ export default {
   border-radius: 10px;
   font-size: 24px;
   // .bar-block {
-  //   // border-bottom: 3px solid red;
+  //   // border-bottom: 3px solid $purple-dark;
+  //   // border-bottom-right-radius: 6px 2px;
+  //   // border-bottom-left-radius: 10px 11px
   // }
 }
 

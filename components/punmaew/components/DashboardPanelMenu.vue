@@ -73,7 +73,8 @@ export default {
       }
       if (menu === "notification") {
         try {
-          this.$store.commit("SET_MENU", "notification");
+          return;
+          // this.$store.commit("SET_MENU", "notification");
         } catch (error) {
           console.log(error);
         }
@@ -151,10 +152,12 @@ export default {
   &:hover {
     background-color: $yellow;
   }
-  // &:focus {
-  //   background-color: $yellow;
-  // }
+  &:focus {
+    color: $orange-dark !important;
+    background-color: $yellow !important;
+  }
 }
+
 .header-panel {
   display: flex;
   gap: 12px;
