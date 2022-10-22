@@ -99,7 +99,7 @@
                 </div>
               </div>
 
-              <!-- <div ref="findHome" class="mt-7">
+              <div ref="findHome" class="mt-7">
                 <div class="d-flex justify-space-between align-center">
                   <div class="font-weight-bold title">
                     <img src="@/assets/imgs/icon-find-home.svg" alt="" />
@@ -124,7 +124,6 @@
                     >
                       <div class="card-block">
                         <div class="thumbnail">
-                          
                           <img src="@/assets/imgs/img-thumbnail.jpg" alt="" />
                         </div>
                         <div class="card-title">
@@ -166,9 +165,9 @@
                     </v-col>
                   </v-row>
                 </div>
-              </div> -->
+              </div>
 
-              <!-- <div ref="allAccount" class="mt-7">
+              <div ref="allAccount" class="mt-7">
                 <div class="d-flex justify-space-between align-center">
                   <div class="font-weight-bold title">
                     <i class="fi fi-rr-user"></i>
@@ -197,7 +196,7 @@
                           <p class="full-name mb-0">
                             {{ i.firstName + " " + i.lastName }}
                           </p>
-                         
+
                           <p class="email mb-0">{{ i.email }}</p>
                         </div>
                       </div>
@@ -222,7 +221,7 @@
                     </v-col>
                   </v-row>
                 </div>
-              </div> -->
+              </div>
             </div>
           </div>
 
@@ -583,12 +582,12 @@ export default {
     allPostsArticles() {
       return this.articles.slice(0, this.articleCount);
     },
-    // allPostFindHome() {
-    //   return this.posts.slice(0, this.postCount);
-    // },
-    // allUsersAccount() {
-    //   return this.users.slice(0, this.userCount);
-    // },
+    allPostFindHome() {
+      return this.posts.slice(0, this.postCount);
+    },
+    allUsersAccount() {
+      return this.users.slice(0, this.userCount);
+    },
     // filterByArticle() {
     //   return this.searchArticle
     //     ? this.articles.filter((article) => {
@@ -782,6 +781,14 @@ export default {
           `${this.$config.articleURL}allArticle`
         );
         this.articles = article.data;
+
+        const res = await this.$axios.get(`${this.$config.findHome}allPost`);
+        this.posts = res.data;
+
+        const user = await this.$axios.get(
+          `${this.$config.authURL}user/getallusers`
+        );
+        this.users = user.data;
       } catch (error) {
         console.log(error);
       }
@@ -977,26 +984,26 @@ export default {
       if (this.articleCount > this.articles.length) return;
       this.articleCount = this.articles.length;
     },
-    // showMorePost() {
-    //   this.morePost = !this.morePost;
-    //   console.log(this.morePost);
-    //   if (this.postCount === this.posts.length) {
-    //     this.postCount = 3;
-    //     return;
-    //   }
-    //   if (this.postCount > this.posts.length) return;
-    //   this.postCount = this.posts.length;
-    // },
-    // showMoreUser() {
-    //   this.moreUser = !this.moreUser;
-    //   console.log(this.moreUser);
-    //   if (this.userCount === this.users.length) {
-    //     this.userCount = 3;
-    //     return;
-    //   }
-    //   if (this.userCount > this.users.length) return;
-    //   this.userCount = this.users.length;
-    // },
+    showMorePost() {
+      this.morePost = !this.morePost;
+      console.log(this.morePost);
+      if (this.postCount === this.posts.length) {
+        this.postCount = 3;
+        return;
+      }
+      if (this.postCount > this.posts.length) return;
+      this.postCount = this.posts.length;
+    },
+    showMoreUser() {
+      this.moreUser = !this.moreUser;
+      console.log(this.moreUser);
+      if (this.userCount === this.users.length) {
+        this.userCount = 3;
+        return;
+      }
+      if (this.userCount > this.users.length) return;
+      this.userCount = this.users.length;
+    },
   },
 };
 </script>
