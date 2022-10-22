@@ -225,7 +225,7 @@
             </div>
           </div>
 
-          <!-- <div v-if="currentMenu === 'article'">
+          <div v-if="currentMenu === 'article'">
             <div v-if="isNewArticle === false && isEditArticle === false">
               <div class="head-title font-weight-bold">Article Posts</div>
               <div class="mt-4">
@@ -260,7 +260,6 @@
                   <v-row>
                     <v-col cols="4">
                       <div class="name-article-header">
-                        
                         <img src="@/assets/imgs/img-thumbnail.jpg" alt="" />
                         {{ a.title }}
                       </div>
@@ -439,9 +438,9 @@
                 </v-row>
               </div>
             </div>
-          </div> -->
+          </div>
 
-          <!-- <div v-if="currentMenu === 'findhome'">
+          <div v-if="currentMenu === 'findhome'">
             <div class="head-title font-weight-bold">Finder Home Posts</div>
             <div class="mt-4">
               <v-row>
@@ -463,7 +462,6 @@
                 <v-row>
                   <v-col>
                     <div class="name-article-header">
-                    
                       <img src="@/assets/imgs/img-thumbnail.jpg" alt="" />
                       {{ p.generalInfo.catName }}
                     </div>
@@ -494,9 +492,9 @@
                 </v-row>
               </div>
             </div>
-          </div> -->
+          </div>
 
-          <!-- <div v-if="currentMenu === 'users'">
+          <div v-if="currentMenu === 'users'">
             <div class="head-title font-weight-bold">Users</div>
             <div class="mt-4">
               <v-row>
@@ -561,7 +559,7 @@
                 </v-row>
               </div>
             </div>
-          </div> -->
+          </div>
         </v-col>
       </v-row>
     </v-container>
@@ -588,24 +586,24 @@ export default {
     allUsersAccount() {
       return this.users.slice(0, this.userCount);
     },
-    // filterByArticle() {
-    //   return this.searchArticle
-    //     ? this.articles.filter((article) => {
-    //         return article.title
-    //           .toLowerCase()
-    //           .includes(this.searchArticle.toLowerCase());
-    //       })
-    //     : this.articles;
-    // },
-    // filterByAccount() {
-    //   return this.searchAccount
-    //     ? this.users.filter((account) => {
-    //         return account.firstName
-    //           .toLowerCase()
-    //           .includes(this.searchAccount.toLowerCase());
-    //       })
-    //     : this.users;
-    // },
+    filterByArticle() {
+      return this.searchArticle
+        ? this.articles.filter((article) => {
+            return article.title
+              .toLowerCase()
+              .includes(this.searchArticle.toLowerCase());
+          })
+        : this.articles;
+    },
+    filterByAccount() {
+      return this.searchAccount
+        ? this.users.filter((account) => {
+            return account.firstName
+              .toLowerCase()
+              .includes(this.searchAccount.toLowerCase());
+          })
+        : this.users;
+    },
   },
   data() {
     return {
@@ -793,27 +791,27 @@ export default {
         console.log(error);
       }
     },
-    // convertDateTime(d) {
-    //   let newDate = new Date(d);
-    //   let year = newDate.getFullYear();
-    //   let month = newDate.getMonth() + 1;
-    //   let dt = newDate.getDate();
-    //   if (dt < 10) {
-    //     dt = "0" + dt;
-    //   }
-    //   if (month < 10) {
-    //     month = "0" + month;
-    //   }
-    //   const newFormat = dt + "-" + month + "-" + year;
-    //   return newFormat;
-    // },
-    // cancleArticle() {
-    //   this.isNewArticle = false;
-    //   this.isEditArticle = false;
-    //   this.imageData = "";
-    //   this.articleName = "";
-    //   this.pars = [{ id: 1, no: 1, text: "" }];
-    // },
+    convertDateTime(d) {
+      let newDate = new Date(d);
+      let year = newDate.getFullYear();
+      let month = newDate.getMonth() + 1;
+      let dt = newDate.getDate();
+      if (dt < 10) {
+        dt = "0" + dt;
+      }
+      if (month < 10) {
+        month = "0" + month;
+      }
+      const newFormat = dt + "-" + month + "-" + year;
+      return newFormat;
+    },
+    cancleArticle() {
+      this.isNewArticle = false;
+      this.isEditArticle = false;
+      this.imageData = "";
+      this.articleName = "";
+      this.pars = [{ id: 1, no: 1, text: "" }];
+    },
     menuDashboard(menu) {
       if (menu === "article") {
         try {
@@ -837,139 +835,138 @@ export default {
         }
       }
     },
-    // deleteArticle(id) {
-    //   this.$swal
-    //     .fire({
-    //       text: "ยืนยันที่จะลบโพสต์หรือไม่ ?",
-    //       icon: "warning",
-    //       confirmButtonColor: "#F77272",
-    //       showCancelButton: true,
-    //       confirmButtonText: "ลบ",
-    //       cancelButtonText: "ยกเลิก",
-    //     })
-    //     .then((result) => {
-    //       if (result.isConfirmed) {
-    //         try {
+    deleteArticle(id) {
+      this.$swal
+        .fire({
+          text: "ยืนยันที่จะลบโพสต์หรือไม่ ?",
+          icon: "warning",
+          confirmButtonColor: "#F77272",
+          showCancelButton: true,
+          confirmButtonText: "ลบ",
+          cancelButtonText: "ยกเลิก",
+        })
+        .then((result) => {
+          if (result.isConfirmed) {
+            try {
+              this.$axios.delete(
+                `${this.$config.articleURL}delArticle?id=${id}`
+              );
+              this.$swal.fire({
+                confirmButtonColor: "#19ba88",
+                confirmButtonText: "ตกลง",
+                text: "โพสต์ของคุณถูกลบแล้ว",
+                icon: "success",
+              });
+              let newArray = this.posts.filter((item) => item._id != id);
+              this.posts = newArray;
+            } catch (error) {
+              this.$swal.fire({
+                confirmButtonColor: "#19ba88",
+                confirmButtonText: "ตกลง",
+                title: "เกิดข้อผิดพลาด",
+                text: error.message,
+                icon: "warning",
+              });
+              console.log(error);
+            }
+          }
+        });
+    },
+    deleteFindHome(id) {
+      this.$swal
+        .fire({
+          text: "ยืนยันที่จะลบโพสต์หรือไม่ ?",
+          icon: "warning",
+          confirmButtonColor: "#F77272",
+          showCancelButton: true,
+          confirmButtonText: "ลบ",
+          cancelButtonText: "ยกเลิก",
+        })
+        .then((result) => {
+          if (result.isConfirmed) {
+            try {
+              console.log(id);
+              this.$axios.delete(`${this.$config.findHome}deletePost?id=${id}`);
+              this.$swal.fire({
+                confirmButtonColor: "#19ba88",
+                confirmButtonText: "ตกลง",
+                text: "โพสต์ของคุณถูกลบแล้ว",
+                icon: "success",
+              });
+              let newArray = this.posts.filter((item) => item._id != id);
+              this.posts = newArray;
+            } catch (error) {
+              this.$swal.fire({
+                confirmButtonColor: "#19ba88",
+                confirmButtonText: "ตกลง",
+                title: "เกิดข้อผิดพลาด",
+                text: error.message,
+                icon: "warning",
+              });
+              console.log(error);
+            }
+          }
+        });
+    },
+    deleteAccount(id) {
+      this.$swal
+        .fire({
+          text: "ยืนยันที่จะลบโพสต์หรือไม่ ?",
+          icon: "warning",
+          confirmButtonColor: "#F77272",
+          showCancelButton: true,
+          confirmButtonText: "ลบ",
+          cancelButtonText: "ยกเลิก",
+        })
+        .then((result) => {
+          if (result.isConfirmed) {
+            try {
+              // console.log(id);
 
-    //           this.$axios.delete(
-    //             `${this.$config.articleURL}delArticle?id=${id}`
-    //           );
-    //           this.$swal.fire({
-    //             confirmButtonColor: "#19ba88",
-    //             confirmButtonText: "ตกลง",
-    //             text: "โพสต์ของคุณถูกลบแล้ว",
-    //             icon: "success",
-    //           });
-    //           let newArray = this.posts.filter((item) => item._id != id);
-    //           this.posts = newArray;
-    //         } catch (error) {
-    //           this.$swal.fire({
-    //             confirmButtonColor: "#19ba88",
-    //             confirmButtonText: "ตกลง",
-    //             title: "เกิดข้อผิดพลาด",
-    //             text: error.message,
-    //             icon: "warning",
-    //           });
-    //           console.log(error);
-    //         }
-    //       }
-    //     });
-    // },
-    // deleteFindHome(id) {
-    //   this.$swal
-    //     .fire({
-    //       text: "ยืนยันที่จะลบโพสต์หรือไม่ ?",
-    //       icon: "warning",
-    //       confirmButtonColor: "#F77272",
-    //       showCancelButton: true,
-    //       confirmButtonText: "ลบ",
-    //       cancelButtonText: "ยกเลิก",
-    //     })
-    //     .then((result) => {
-    //       if (result.isConfirmed) {
-    //         try {
-    //           console.log(id);
-    //           this.$axios.delete(`${this.$config.findHome}deletePost?id=${id}`);
-    //           this.$swal.fire({
-    //             confirmButtonColor: "#19ba88",
-    //             confirmButtonText: "ตกลง",
-    //             text: "โพสต์ของคุณถูกลบแล้ว",
-    //             icon: "success",
-    //           });
-    //           let newArray = this.posts.filter((item) => item._id != id);
-    //           this.posts = newArray;
-    //         } catch (error) {
-    //           this.$swal.fire({
-    //             confirmButtonColor: "#19ba88",
-    //             confirmButtonText: "ตกลง",
-    //             title: "เกิดข้อผิดพลาด",
-    //             text: error.message,
-    //             icon: "warning",
-    //           });
-    //           console.log(error);
-    //         }
-    //       }
-    //     });
-    // },
-    // deleteAccount(id) {
-    //   this.$swal
-    //     .fire({
-    //       text: "ยืนยันที่จะลบโพสต์หรือไม่ ?",
-    //       icon: "warning",
-    //       confirmButtonColor: "#F77272",
-    //       showCancelButton: true,
-    //       confirmButtonText: "ลบ",
-    //       cancelButtonText: "ยกเลิก",
-    //     })
-    //     .then((result) => {
-    //       if (result.isConfirmed) {
-    //         try {
-    //           // console.log(id);
-    //           // user/deleteUser?id=
-    //           this.$axios.delete(
-    //             `${this.$config.authURL}user/deleteUser?id=${id}`
-    //           );
-    //           this.$swal.fire({
-    //             confirmButtonColor: "#19ba88",
-    //             confirmButtonText: "ตกลง",
-    //             text: "โพสต์ของคุณถูกลบแล้ว",
-    //             icon: "success",
-    //           });
-    //           let newArray = this.users.filter((item) => item._id != id);
-    //           this.users = newArray;
-    //         } catch (error) {
-    //           this.$swal.fire({
-    //             confirmButtonColor: "#19ba88",
-    //             confirmButtonText: "ตกลง",
-    //             title: "เกิดข้อผิดพลาด",
-    //             text: error.message,
-    //             icon: "warning",
-    //           });
-    //           console.log(error);
-    //         }
-    //       }
-    //     });
-    // },
-    // onClickImage() {
-    //   this.$refs.fileInput.click();
-    // },
-    // uploadImage(event) {
-    //   var input = event.target;
-    //   if (input.files && input.files[0]) {
-    //     var reader = new FileReader();
-    //     reader.onload = (e) => {
-    //       this.imageData = e.target.result;
-    //     };
-    //     reader.readAsDataURL(input.files[0]);
-    //   }
-    // },
-    // addParagraph() {
-    //   this.pars.push({
-    //     id: this.pars.length + 1,
-    //     no: this.pars.length + 1,
-    //   });
-    //   this.newParagraph = "";
-    // },
+              this.$axios.delete(
+                `${this.$config.authURL}user/deleteUser?id=${id}`
+              );
+              this.$swal.fire({
+                confirmButtonColor: "#19ba88",
+                confirmButtonText: "ตกลง",
+                text: "โพสต์ของคุณถูกลบแล้ว",
+                icon: "success",
+              });
+              let newArray = this.users.filter((item) => item._id != id);
+              this.users = newArray;
+            } catch (error) {
+              this.$swal.fire({
+                confirmButtonColor: "#19ba88",
+                confirmButtonText: "ตกลง",
+                title: "เกิดข้อผิดพลาด",
+                text: error.message,
+                icon: "warning",
+              });
+              console.log(error);
+            }
+          }
+        });
+    },
+    onClickImage() {
+      this.$refs.fileInput.click();
+    },
+    uploadImage(event) {
+      var input = event.target;
+      if (input.files && input.files[0]) {
+        var reader = new FileReader();
+        reader.onload = (e) => {
+          this.imageData = e.target.result;
+        };
+        reader.readAsDataURL(input.files[0]);
+      }
+    },
+    addParagraph() {
+      this.pars.push({
+        id: this.pars.length + 1,
+        no: this.pars.length + 1,
+      });
+      this.newParagraph = "";
+    },
     selectTabs(refName) {
       this.$refs[refName].scrollIntoView({ behavior: "smooth" });
       // this.selectTabId = item.id;
