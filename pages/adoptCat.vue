@@ -84,7 +84,10 @@
                         class="card position-relative"
                       >
                         <div class="thumbnail">
-                          <img src="@/assets/imgs/img-thumbnail.jpg" alt="" />
+                          <img
+                            :src="`${$config.findHome}readFileIdFindHome?id=${post._id}`"
+                            alt=""
+                          />
                         </div>
                         <div class="card-title">
                           <v-row justify="center">
@@ -433,7 +436,10 @@
                       </div>
 
                       <div class="thumbnail">
-                        <img src="@/assets/imgs/img-thumbnail.jpg" alt="" />
+                        <img
+                          :src="`${$config.findHome}readFileIdFindHome?id=${post._id}`"
+                          alt=""
+                        />
                       </div>
                       <div class="card-title">
                         <v-row justify="center">
@@ -487,7 +493,7 @@
                                   </div>
                                   <div class="cat-img">
                                     <img
-                                      src="~/assets/imgs/img-thumbnail.jpg"
+                                      :src="`${$config.findHome}readFileIdFindHome?id=${onePost._id}`"
                                       alt=""
                                     />
                                   </div>
