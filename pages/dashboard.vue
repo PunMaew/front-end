@@ -758,21 +758,34 @@ export default {
       searchAccount: "",
     };
   },
-  async asyncData({ $axios, $config }) {
-    try {
-      // const res = await $axios.get(`${$config.findHome}allPost`);
-      // const user = await $axios.get(`${$config.authURL}user/getallusers`);
-      const article = await $axios.get(`${$config.articleURL}allArticle`);
-      return {
-        // posts: res.data,
-        // users: user.data,
-        articles: article.data,
-      };
-    } catch (error) {
-      console.log(error);
-    }
+  // async asyncData({ $axios, $config }) {
+  //   try {
+  //     // const res = await $axios.get(`${$config.findHome}allPost`);
+  //     // const user = await $axios.get(`${$config.authURL}user/getallusers`);
+  //     const article = await $axios.get(`${$config.articleURL}allArticle`);
+  //     return {
+  //       // posts: res.data,
+  //       // users: user.data,
+  //       articles: article.data,
+  //     };
+  //   } catch (error) {
+  //     console.log(error);
+  //   }
+  // },
+  async created() {
+    await this.fetchData();
   },
   methods: {
+    async fetchData() {
+      try {
+        const article = await this.$axios.get(
+          `${this.$config.articleURL}allArticle`
+        );
+        this.articles = article.data;
+      } catch (error) {
+        console.log(error);
+      }
+    },
     // convertDateTime(d) {
     //   let newDate = new Date(d);
     //   let year = newDate.getFullYear();
