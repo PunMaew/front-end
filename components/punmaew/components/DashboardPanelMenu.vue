@@ -45,6 +45,10 @@
             <i class="fi fi-rr-user"></i>
             Users
           </div>
+          <div id="menu-fix-footer" class="mt-1 tabs-menu">
+            <i class="fi fi-rr-exit"></i>
+            ออกจากระบบ
+          </div>
         </div>
       </div>
     </div>
@@ -69,7 +73,8 @@ export default {
       }
       if (menu === "notification") {
         try {
-          this.$store.commit("SET_MENU", "notification");
+          return;
+          // this.$store.commit("SET_MENU", "notification");
         } catch (error) {
           console.log(error);
         }
@@ -108,6 +113,7 @@ export default {
   padding: 0;
   #dashbard-menu-container {
     margin-left: -12px;
+    position: fixed;
   }
 }
 
@@ -146,10 +152,12 @@ export default {
   &:hover {
     background-color: $yellow;
   }
-  // &:focus {
-  //   background-color: $yellow;
-  // }
+  &:focus {
+    color: $orange-dark !important;
+    background-color: $yellow !important;
+  }
 }
+
 .header-panel {
   display: flex;
   gap: 12px;

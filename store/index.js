@@ -2,6 +2,9 @@ export const state = () => ({
   auth: {
     loggedIn: false,
   },
+  authAdmin: {
+    loggedInAdmin: false,
+  },
   user: {},
   currentMenu: "dashboard",
 });
@@ -26,5 +29,8 @@ export const mutations = {
   },
   SET_MENU(state, data) {
     state.currentMenu = data;
+  },
+  SET_LOGIN_ADMIN(state) {
+    state.auth.loggedIn = true;
   },
 };
