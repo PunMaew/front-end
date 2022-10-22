@@ -61,10 +61,6 @@
                     >
                       <div class="card-block">
                         <div class="thumbnail">
-                          <!-- <img
-                            :src="`${$config.articleURL}readFileId?id=${i._id}`"
-                            alt=""
-                          /> -->
                           <img src="@/assets/imgs/img-thumbnail.jpg" alt="" />
                         </div>
                         <div class="card-title">
@@ -103,7 +99,7 @@
                 </div>
               </div>
 
-              <div ref="findHome" class="mt-7">
+              <!-- <div ref="findHome" class="mt-7">
                 <div class="d-flex justify-space-between align-center">
                   <div class="font-weight-bold title">
                     <img src="@/assets/imgs/icon-find-home.svg" alt="" />
@@ -128,10 +124,7 @@
                     >
                       <div class="card-block">
                         <div class="thumbnail">
-                          <!-- <img
-                            :src="`${$config.findHome}readFileIdFindHome?id=${p._id}`"
-                            alt=""
-                          /> -->
+                          
                           <img src="@/assets/imgs/img-thumbnail.jpg" alt="" />
                         </div>
                         <div class="card-title">
@@ -173,9 +166,9 @@
                     </v-col>
                   </v-row>
                 </div>
-              </div>
+              </div> -->
 
-              <div ref="allAccount" class="mt-7">
+              <!-- <div ref="allAccount" class="mt-7">
                 <div class="d-flex justify-space-between align-center">
                   <div class="font-weight-bold title">
                     <i class="fi fi-rr-user"></i>
@@ -204,7 +197,7 @@
                           <p class="full-name mb-0">
                             {{ i.firstName + " " + i.lastName }}
                           </p>
-                          <!-- <p class="email mb-0">example@gmail.com</p> -->
+                         
                           <p class="email mb-0">{{ i.email }}</p>
                         </div>
                       </div>
@@ -229,11 +222,11 @@
                     </v-col>
                   </v-row>
                 </div>
-              </div>
+              </div> -->
             </div>
           </div>
 
-          <div v-if="currentMenu === 'article'">
+          <!-- <div v-if="currentMenu === 'article'">
             <div v-if="isNewArticle === false && isEditArticle === false">
               <div class="head-title font-weight-bold">Article Posts</div>
               <div class="mt-4">
@@ -268,10 +261,7 @@
                   <v-row>
                     <v-col cols="4">
                       <div class="name-article-header">
-                        <!-- <img
-                          :src="`${$config.articleURL}readFileId?id=${a._id}`"
-                          alt=""
-                        /> -->
+                        
                         <img src="@/assets/imgs/img-thumbnail.jpg" alt="" />
                         {{ a.title }}
                       </div>
@@ -450,9 +440,9 @@
                 </v-row>
               </div>
             </div>
-          </div>
+          </div> -->
 
-          <div v-if="currentMenu === 'findhome'">
+          <!-- <div v-if="currentMenu === 'findhome'">
             <div class="head-title font-weight-bold">Finder Home Posts</div>
             <div class="mt-4">
               <v-row>
@@ -474,10 +464,7 @@
                 <v-row>
                   <v-col>
                     <div class="name-article-header">
-                      <!-- <img
-                        :src="`${$config.findHome}readFileIdFindHome?id=${p._id}`"
-                        alt=""
-                      /> -->
+                    
                       <img src="@/assets/imgs/img-thumbnail.jpg" alt="" />
                       {{ p.generalInfo.catName }}
                     </div>
@@ -508,9 +495,9 @@
                 </v-row>
               </div>
             </div>
-          </div>
+          </div> -->
 
-          <div v-if="currentMenu === 'users'">
+          <!-- <div v-if="currentMenu === 'users'">
             <div class="head-title font-weight-bold">Users</div>
             <div class="mt-4">
               <v-row>
@@ -575,7 +562,7 @@
                 </v-row>
               </div>
             </div>
-          </div>
+          </div> -->
         </v-col>
       </v-row>
     </v-container>
@@ -596,31 +583,30 @@ export default {
     allPostsArticles() {
       return this.articles.slice(0, this.articleCount);
     },
-    allPostFindHome() {
-      return this.posts.slice(0, this.postCount);
-    },
-    allUsersAccount() {
-      return this.users.slice(0, this.userCount);
-    },
-    filterByArticle() {
-      // console.log(this.searchArticle);
-      return this.searchArticle
-        ? this.articles.filter((article) => {
-            return article.title
-              .toLowerCase()
-              .includes(this.searchArticle.toLowerCase());
-          })
-        : this.articles;
-    },
-    filterByAccount() {
-      return this.searchAccount
-        ? this.users.filter((account) => {
-            return account.firstName
-              .toLowerCase()
-              .includes(this.searchAccount.toLowerCase());
-          })
-        : this.users;
-    },
+    // allPostFindHome() {
+    //   return this.posts.slice(0, this.postCount);
+    // },
+    // allUsersAccount() {
+    //   return this.users.slice(0, this.userCount);
+    // },
+    // filterByArticle() {
+    //   return this.searchArticle
+    //     ? this.articles.filter((article) => {
+    //         return article.title
+    //           .toLowerCase()
+    //           .includes(this.searchArticle.toLowerCase());
+    //       })
+    //     : this.articles;
+    // },
+    // filterByAccount() {
+    //   return this.searchAccount
+    //     ? this.users.filter((account) => {
+    //         return account.firstName
+    //           .toLowerCase()
+    //           .includes(this.searchAccount.toLowerCase());
+    //       })
+    //     : this.users;
+    // },
   },
   data() {
     return {
@@ -774,14 +760,12 @@ export default {
   },
   async asyncData({ $axios, $config }) {
     try {
-      const res = await $axios.get(`${$config.findHome}allPost`);
-      const user = await $axios.get(`${$config.authURL}user/getallusers`);
+      // const res = await $axios.get(`${$config.findHome}allPost`);
+      // const user = await $axios.get(`${$config.authURL}user/getallusers`);
       const article = await $axios.get(`${$config.articleURL}allArticle`);
-      console.log(article.data);
-      // console.log(user.data);
       return {
-        posts: res.data,
-        users: user.data,
+        // posts: res.data,
+        // users: user.data,
         articles: article.data,
       };
     } catch (error) {
@@ -789,27 +773,27 @@ export default {
     }
   },
   methods: {
-    convertDateTime(d) {
-      let newDate = new Date(d);
-      let year = newDate.getFullYear();
-      let month = newDate.getMonth() + 1;
-      let dt = newDate.getDate();
-      if (dt < 10) {
-        dt = "0" + dt;
-      }
-      if (month < 10) {
-        month = "0" + month;
-      }
-      const newFormat = dt + "-" + month + "-" + year;
-      return newFormat;
-    },
-    cancleArticle() {
-      this.isNewArticle = false;
-      this.isEditArticle = false;
-      this.imageData = "";
-      this.articleName = "";
-      this.pars = [{ id: 1, no: 1, text: "" }];
-    },
+    // convertDateTime(d) {
+    //   let newDate = new Date(d);
+    //   let year = newDate.getFullYear();
+    //   let month = newDate.getMonth() + 1;
+    //   let dt = newDate.getDate();
+    //   if (dt < 10) {
+    //     dt = "0" + dt;
+    //   }
+    //   if (month < 10) {
+    //     month = "0" + month;
+    //   }
+    //   const newFormat = dt + "-" + month + "-" + year;
+    //   return newFormat;
+    // },
+    // cancleArticle() {
+    //   this.isNewArticle = false;
+    //   this.isEditArticle = false;
+    //   this.imageData = "";
+    //   this.articleName = "";
+    //   this.pars = [{ id: 1, no: 1, text: "" }];
+    // },
     menuDashboard(menu) {
       if (menu === "article") {
         try {
@@ -833,140 +817,139 @@ export default {
         }
       }
     },
-    deleteArticle(id) {
-      this.$swal
-        .fire({
-          text: "ยืนยันที่จะลบโพสต์หรือไม่ ?",
-          icon: "warning",
-          confirmButtonColor: "#F77272",
-          showCancelButton: true,
-          confirmButtonText: "ลบ",
-          cancelButtonText: "ยกเลิก",
-        })
-        .then((result) => {
-          if (result.isConfirmed) {
-            try {
-              // console.log(id);
-              this.$axios.delete(
-                `${this.$config.articleURL}delArticle?id=${id}`
-              );
-              this.$swal.fire({
-                confirmButtonColor: "#19ba88",
-                confirmButtonText: "ตกลง",
-                text: "โพสต์ของคุณถูกลบแล้ว",
-                icon: "success",
-              });
-              let newArray = this.posts.filter((item) => item._id != id);
-              this.posts = newArray;
-            } catch (error) {
-              this.$swal.fire({
-                confirmButtonColor: "#19ba88",
-                confirmButtonText: "ตกลง",
-                title: "เกิดข้อผิดพลาด",
-                text: error.message,
-                icon: "warning",
-              });
-              console.log(error);
-            }
-          }
-        });
-    },
-    deleteFindHome(id) {
-      this.$swal
-        .fire({
-          text: "ยืนยันที่จะลบโพสต์หรือไม่ ?",
-          icon: "warning",
-          confirmButtonColor: "#F77272",
-          showCancelButton: true,
-          confirmButtonText: "ลบ",
-          cancelButtonText: "ยกเลิก",
-        })
-        .then((result) => {
-          if (result.isConfirmed) {
-            try {
-              console.log(id);
-              this.$axios.delete(`${this.$config.findHome}deletePost?id=${id}`);
-              this.$swal.fire({
-                confirmButtonColor: "#19ba88",
-                confirmButtonText: "ตกลง",
-                text: "โพสต์ของคุณถูกลบแล้ว",
-                icon: "success",
-              });
-              let newArray = this.posts.filter((item) => item._id != id);
-              this.posts = newArray;
-            } catch (error) {
-              this.$swal.fire({
-                confirmButtonColor: "#19ba88",
-                confirmButtonText: "ตกลง",
-                title: "เกิดข้อผิดพลาด",
-                text: error.message,
-                icon: "warning",
-              });
-              console.log(error);
-            }
-          }
-        });
-    },
-    deleteAccount(id) {
-      this.$swal
-        .fire({
-          text: "ยืนยันที่จะลบโพสต์หรือไม่ ?",
-          icon: "warning",
-          confirmButtonColor: "#F77272",
-          showCancelButton: true,
-          confirmButtonText: "ลบ",
-          cancelButtonText: "ยกเลิก",
-        })
-        .then((result) => {
-          if (result.isConfirmed) {
-            try {
-              // console.log(id);
-              // user/deleteUser?id=
-              this.$axios.delete(
-                `${this.$config.authURL}user/deleteUser?id=${id}`
-              );
-              this.$swal.fire({
-                confirmButtonColor: "#19ba88",
-                confirmButtonText: "ตกลง",
-                text: "โพสต์ของคุณถูกลบแล้ว",
-                icon: "success",
-              });
-              let newArray = this.users.filter((item) => item._id != id);
-              this.users = newArray;
-            } catch (error) {
-              this.$swal.fire({
-                confirmButtonColor: "#19ba88",
-                confirmButtonText: "ตกลง",
-                title: "เกิดข้อผิดพลาด",
-                text: error.message,
-                icon: "warning",
-              });
-              console.log(error);
-            }
-          }
-        });
-    },
-    onClickImage() {
-      this.$refs.fileInput.click();
-    },
-    uploadImage(event) {
-      var input = event.target;
-      if (input.files && input.files[0]) {
-        var reader = new FileReader();
-        reader.onload = (e) => {
-          this.imageData = e.target.result;
-        };
-        reader.readAsDataURL(input.files[0]);
-      }
-    },
+    // deleteArticle(id) {
+    //   this.$swal
+    //     .fire({
+    //       text: "ยืนยันที่จะลบโพสต์หรือไม่ ?",
+    //       icon: "warning",
+    //       confirmButtonColor: "#F77272",
+    //       showCancelButton: true,
+    //       confirmButtonText: "ลบ",
+    //       cancelButtonText: "ยกเลิก",
+    //     })
+    //     .then((result) => {
+    //       if (result.isConfirmed) {
+    //         try {
 
-    addParagraph() {
-      this.pars.push({
-        id: this.pars.length + 1,
-        no: this.pars.length + 1,
-      });
-      this.newParagraph = "";
-    },
+    //           this.$axios.delete(
+    //             `${this.$config.articleURL}delArticle?id=${id}`
+    //           );
+    //           this.$swal.fire({
+    //             confirmButtonColor: "#19ba88",
+    //             confirmButtonText: "ตกลง",
+    //             text: "โพสต์ของคุณถูกลบแล้ว",
+    //             icon: "success",
+    //           });
+    //           let newArray = this.posts.filter((item) => item._id != id);
+    //           this.posts = newArray;
+    //         } catch (error) {
+    //           this.$swal.fire({
+    //             confirmButtonColor: "#19ba88",
+    //             confirmButtonText: "ตกลง",
+    //             title: "เกิดข้อผิดพลาด",
+    //             text: error.message,
+    //             icon: "warning",
+    //           });
+    //           console.log(error);
+    //         }
+    //       }
+    //     });
+    // },
+    // deleteFindHome(id) {
+    //   this.$swal
+    //     .fire({
+    //       text: "ยืนยันที่จะลบโพสต์หรือไม่ ?",
+    //       icon: "warning",
+    //       confirmButtonColor: "#F77272",
+    //       showCancelButton: true,
+    //       confirmButtonText: "ลบ",
+    //       cancelButtonText: "ยกเลิก",
+    //     })
+    //     .then((result) => {
+    //       if (result.isConfirmed) {
+    //         try {
+    //           console.log(id);
+    //           this.$axios.delete(`${this.$config.findHome}deletePost?id=${id}`);
+    //           this.$swal.fire({
+    //             confirmButtonColor: "#19ba88",
+    //             confirmButtonText: "ตกลง",
+    //             text: "โพสต์ของคุณถูกลบแล้ว",
+    //             icon: "success",
+    //           });
+    //           let newArray = this.posts.filter((item) => item._id != id);
+    //           this.posts = newArray;
+    //         } catch (error) {
+    //           this.$swal.fire({
+    //             confirmButtonColor: "#19ba88",
+    //             confirmButtonText: "ตกลง",
+    //             title: "เกิดข้อผิดพลาด",
+    //             text: error.message,
+    //             icon: "warning",
+    //           });
+    //           console.log(error);
+    //         }
+    //       }
+    //     });
+    // },
+    // deleteAccount(id) {
+    //   this.$swal
+    //     .fire({
+    //       text: "ยืนยันที่จะลบโพสต์หรือไม่ ?",
+    //       icon: "warning",
+    //       confirmButtonColor: "#F77272",
+    //       showCancelButton: true,
+    //       confirmButtonText: "ลบ",
+    //       cancelButtonText: "ยกเลิก",
+    //     })
+    //     .then((result) => {
+    //       if (result.isConfirmed) {
+    //         try {
+    //           // console.log(id);
+    //           // user/deleteUser?id=
+    //           this.$axios.delete(
+    //             `${this.$config.authURL}user/deleteUser?id=${id}`
+    //           );
+    //           this.$swal.fire({
+    //             confirmButtonColor: "#19ba88",
+    //             confirmButtonText: "ตกลง",
+    //             text: "โพสต์ของคุณถูกลบแล้ว",
+    //             icon: "success",
+    //           });
+    //           let newArray = this.users.filter((item) => item._id != id);
+    //           this.users = newArray;
+    //         } catch (error) {
+    //           this.$swal.fire({
+    //             confirmButtonColor: "#19ba88",
+    //             confirmButtonText: "ตกลง",
+    //             title: "เกิดข้อผิดพลาด",
+    //             text: error.message,
+    //             icon: "warning",
+    //           });
+    //           console.log(error);
+    //         }
+    //       }
+    //     });
+    // },
+    // onClickImage() {
+    //   this.$refs.fileInput.click();
+    // },
+    // uploadImage(event) {
+    //   var input = event.target;
+    //   if (input.files && input.files[0]) {
+    //     var reader = new FileReader();
+    //     reader.onload = (e) => {
+    //       this.imageData = e.target.result;
+    //     };
+    //     reader.readAsDataURL(input.files[0]);
+    //   }
+    // },
+    // addParagraph() {
+    //   this.pars.push({
+    //     id: this.pars.length + 1,
+    //     no: this.pars.length + 1,
+    //   });
+    //   this.newParagraph = "";
+    // },
     selectTabs(refName) {
       this.$refs[refName].scrollIntoView({ behavior: "smooth" });
       // this.selectTabId = item.id;
@@ -981,26 +964,26 @@ export default {
       if (this.articleCount > this.articles.length) return;
       this.articleCount = this.articles.length;
     },
-    showMorePost() {
-      this.morePost = !this.morePost;
-      console.log(this.morePost);
-      if (this.postCount === this.posts.length) {
-        this.postCount = 3;
-        return;
-      }
-      if (this.postCount > this.posts.length) return;
-      this.postCount = this.posts.length;
-    },
-    showMoreUser() {
-      this.moreUser = !this.moreUser;
-      console.log(this.moreUser);
-      if (this.userCount === this.users.length) {
-        this.userCount = 3;
-        return;
-      }
-      if (this.userCount > this.users.length) return;
-      this.userCount = this.users.length;
-    },
+    // showMorePost() {
+    //   this.morePost = !this.morePost;
+    //   console.log(this.morePost);
+    //   if (this.postCount === this.posts.length) {
+    //     this.postCount = 3;
+    //     return;
+    //   }
+    //   if (this.postCount > this.posts.length) return;
+    //   this.postCount = this.posts.length;
+    // },
+    // showMoreUser() {
+    //   this.moreUser = !this.moreUser;
+    //   console.log(this.moreUser);
+    //   if (this.userCount === this.users.length) {
+    //     this.userCount = 3;
+    //     return;
+    //   }
+    //   if (this.userCount > this.users.length) return;
+    //   this.userCount = this.users.length;
+    // },
   },
 };
 </script>
