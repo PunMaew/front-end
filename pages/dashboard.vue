@@ -47,7 +47,7 @@
                     <i class="fi fi-rr-arrow-small-right"></i>
                   </div>
                 </div>
-                <!-- <div class="mt-4">
+                <div class="mt-4">
                   <v-row>
                     <v-col
                       v-for="i in allPostsArticles"
@@ -96,10 +96,10 @@
                       </div>
                     </v-col>
                   </v-row>
-                </div> -->
+                </div>
               </div>
 
-              <!-- <div ref="findHome" class="mt-7">
+              <div ref="findHome" class="mt-7">
                 <div class="d-flex justify-space-between align-center">
                   <div class="font-weight-bold title">
                     <img src="@/assets/imgs/icon-find-home.svg" alt="" />
@@ -124,7 +124,6 @@
                     >
                       <div class="card-block">
                         <div class="thumbnail">
-                          
                           <img src="@/assets/imgs/img-thumbnail.jpg" alt="" />
                         </div>
                         <div class="card-title">
@@ -166,9 +165,9 @@
                     </v-col>
                   </v-row>
                 </div>
-              </div> -->
+              </div>
 
-              <!-- <div ref="allAccount" class="mt-7">
+              <div ref="allAccount" class="mt-7">
                 <div class="d-flex justify-space-between align-center">
                   <div class="font-weight-bold title">
                     <i class="fi fi-rr-user"></i>
@@ -197,7 +196,7 @@
                           <p class="full-name mb-0">
                             {{ i.firstName + " " + i.lastName }}
                           </p>
-                         
+
                           <p class="email mb-0">{{ i.email }}</p>
                         </div>
                       </div>
@@ -222,7 +221,7 @@
                     </v-col>
                   </v-row>
                 </div>
-              </div> -->
+              </div>
             </div>
           </div>
 
@@ -580,15 +579,15 @@ export default {
     currentMenu() {
       return this.$store.state.currentMenu;
     },
-    // allPostsArticles() {
-    //   return this.articles.slice(0, this.articleCount);
-    // },
-    // allPostFindHome() {
-    //   return this.posts.slice(0, this.postCount);
-    // },
-    // allUsersAccount() {
-    //   return this.users.slice(0, this.userCount);
-    // },
+    allPostsArticles() {
+      return this.articles.slice(0, this.articleCount);
+    },
+    allPostFindHome() {
+      return this.posts.slice(0, this.postCount);
+    },
+    allUsersAccount() {
+      return this.users.slice(0, this.userCount);
+    },
     // filterByArticle() {
     //   return this.searchArticle
     //     ? this.articles.filter((article) => {
@@ -772,20 +771,28 @@ export default {
   //     console.log(error);
   //   }
   // },
-  // async created() {
-  //   await this.fetchData();
-  // },
+  async created() {
+    await this.fetchData();
+  },
   methods: {
-    // async fetchData() {
-    //   try {
-    //     const article = await this.$axios.get(
-    //       `${this.$config.articleURL}allArticle`
-    //     );
-    //     this.articles = article.data;
-    //   } catch (error) {
-    //     console.log(error);
-    //   }
-    // },
+    async fetchData() {
+      try {
+        const article = await this.$axios.get(
+          `${this.$config.articleURL}allArticle`
+        );
+        this.articles = article.data;
+
+        const res = await this.$axios.get(`${this.$config.findHome}allPost`);
+        this.posts = res.data;
+
+        const user = await this.$axios.get(
+          `${this.$config.authURL}user/getallusers`
+        );
+        this.users = user.data;
+      } catch (error) {
+        console.log(error);
+      }
+    },
     // convertDateTime(d) {
     //   let newDate = new Date(d);
     //   let year = newDate.getFullYear();
@@ -967,36 +974,36 @@ export default {
       this.$refs[refName].scrollIntoView({ behavior: "smooth" });
       // this.selectTabId = item.id;
     },
-    // showMoreArticle() {
-    //   this.moreArticle = !this.moreArticle;
-    //   console.log(this.moreArticle);
-    //   if (this.articleCount === this.articles.length) {
-    //     this.articleCount = 3;
-    //     return;
-    //   }
-    //   if (this.articleCount > this.articles.length) return;
-    //   this.articleCount = this.articles.length;
-    // },
-    // showMorePost() {
-    //   this.morePost = !this.morePost;
-    //   console.log(this.morePost);
-    //   if (this.postCount === this.posts.length) {
-    //     this.postCount = 3;
-    //     return;
-    //   }
-    //   if (this.postCount > this.posts.length) return;
-    //   this.postCount = this.posts.length;
-    // },
-    // showMoreUser() {
-    //   this.moreUser = !this.moreUser;
-    //   console.log(this.moreUser);
-    //   if (this.userCount === this.users.length) {
-    //     this.userCount = 3;
-    //     return;
-    //   }
-    //   if (this.userCount > this.users.length) return;
-    //   this.userCount = this.users.length;
-    // },
+    showMoreArticle() {
+      this.moreArticle = !this.moreArticle;
+      console.log(this.moreArticle);
+      if (this.articleCount === this.articles.length) {
+        this.articleCount = 3;
+        return;
+      }
+      if (this.articleCount > this.articles.length) return;
+      this.articleCount = this.articles.length;
+    },
+    showMorePost() {
+      this.morePost = !this.morePost;
+      console.log(this.morePost);
+      if (this.postCount === this.posts.length) {
+        this.postCount = 3;
+        return;
+      }
+      if (this.postCount > this.posts.length) return;
+      this.postCount = this.posts.length;
+    },
+    showMoreUser() {
+      this.moreUser = !this.moreUser;
+      console.log(this.moreUser);
+      if (this.userCount === this.users.length) {
+        this.userCount = 3;
+        return;
+      }
+      if (this.userCount > this.users.length) return;
+      this.userCount = this.users.length;
+    },
   },
 };
 </script>
