@@ -149,9 +149,11 @@ export default {
     // baseURL: process.env.BASE_URL,
     authURL: process.env.AUTH_URL,
     findHome: process.env.FIND_HOME,
+    articleURL: process.env.ARTICLE_API,
   },
   privateRuntimeConfig: {
     authURL: process.env.AUTH_URL,
     findHome: process.env.FIND_HOME,
+    articleURL: process.env.ARTICLE_API,
   },
 };
