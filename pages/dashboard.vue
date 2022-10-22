@@ -36,7 +36,7 @@
               </v-container>
             </div>
             <div class="mt-7 mb-16">
-              <!-- <div ref="article">
+              <div ref="article">
                 <div class="d-flex justify-space-between align-center">
                   <div class="font-weight-bold title">
                     <i class="fi fi-rr-book-alt"></i>
@@ -47,7 +47,7 @@
                     <i class="fi fi-rr-arrow-small-right"></i>
                   </div>
                 </div>
-                <div class="mt-4">
+                <!-- <div class="mt-4">
                   <v-row>
                     <v-col
                       v-for="i in allPostsArticles"
@@ -96,8 +96,8 @@
                       </div>
                     </v-col>
                   </v-row>
-                </div>
-              </div> -->
+                </div> -->
+              </div>
 
               <!-- <div ref="findHome" class="mt-7">
                 <div class="d-flex justify-space-between align-center">
