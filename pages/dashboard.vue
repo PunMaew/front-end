@@ -61,10 +61,11 @@
                     >
                       <div class="card-block">
                         <div class="thumbnail">
-                          <img
+                          <!-- <img
                             :src="`${$config.articleURL}readFileId?id=${i._id}`"
                             alt=""
-                          />
+                          /> -->
+                          <img src="@/assets/imgs/img-thumbnail.jpg" alt="" />
                         </div>
                         <div class="card-title">
                           <v-row justify="center">
@@ -127,10 +128,11 @@
                     >
                       <div class="card-block">
                         <div class="thumbnail">
-                          <img
+                          <!-- <img
                             :src="`${$config.findHome}readFileIdFindHome?id=${p._id}`"
                             alt=""
-                          />
+                          /> -->
+                          <img src="@/assets/imgs/img-thumbnail.jpg" alt="" />
                         </div>
                         <div class="card-title">
                           <v-row justify="center">
@@ -266,10 +268,11 @@
                   <v-row>
                     <v-col cols="4">
                       <div class="name-article-header">
-                        <img
+                        <!-- <img
                           :src="`${$config.articleURL}readFileId?id=${a._id}`"
                           alt=""
-                        />
+                        /> -->
+                        <img src="@/assets/imgs/img-thumbnail.jpg" alt="" />
                         {{ a.title }}
                       </div>
                     </v-col>
@@ -471,10 +474,11 @@
                 <v-row>
                   <v-col>
                     <div class="name-article-header">
-                      <img
+                      <!-- <img
                         :src="`${$config.findHome}readFileIdFindHome?id=${p._id}`"
                         alt=""
-                      />
+                      /> -->
+                      <img src="@/assets/imgs/img-thumbnail.jpg" alt="" />
                       {{ p.generalInfo.catName }}
                     </div>
                   </v-col>
