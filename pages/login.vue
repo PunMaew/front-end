@@ -550,7 +550,7 @@ export default {
           //     password: this.password,
           //   })
           this.$auth
-            .loginWith("local", {
+            .loginWith("user", {
               data: {
                 email: this.emailLogin,
                 password: this.password,

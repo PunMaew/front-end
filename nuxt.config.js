@@ -86,7 +86,8 @@ export default {
   },
   auth: {
     strategies: {
-      local: {
+      user: {
+        _scheme: "local",
         endpoints: {
           login: {
             url: "user/login",
@@ -105,6 +106,26 @@ export default {
           },
           tokenName: "token",
         },
+        token: {
+          property: "token",
+          global: true,
+          // required: true,
+          type: "Bearer",
+        },
+      },
+      // user/loginAdmin
+      admin: {
+        _scheme: "local",
+        endpoints: {
+          login: {
+            url: "user/loginAdmin",
+            method: "post",
+            propertyName: "accessToken",
+          },
+          logout: { url: "user/logoutAdmin", method: "post" },
+          tokenName: "token",
+        },
+        // user: { url: '/api/auth/admin/user', method: 'get', propertyName: 'user' },
         token: {
           property: "token",
           global: true,
