@@ -43,42 +43,44 @@
               <h2>บทความ</h2>
             </v-col>
           </v-row>
-          <v-row>
-            <v-col
-              cols="12"
-              v-for="a in allArticle"
-              :key="a._id"
-              sm="4"
-              md="4"
-              lg="4"
-              xl="4"
-              align-self="center"
-            >
-              <div @click="singleArticle(a)" class="card-article">
-                <div class="thumbnail">
-                  <img src="@/assets/imgs/img-thumbnail.jpg" alt="" />
-                </div>
-                <div class="card-title">
-                  <v-row justify="center">
-                    <v-col cols="12" class="pb-lg-3 pb-sm-3">
-                      <div>
-                        <h2 class="h4">{{ a.title }}</h2>
-                        <p class="mb-0">
-                          {{ a.details[0].text }}
-                        </p>
-                        <div class="d-flex mt-2">
-                          <h6 class="read-articles">
-                            อ่านบทความ
-                            <i class="d-flex fi fi-rr-arrow-right"></i>
-                          </h6>
+          <div v-if="allArticle.length > 0">
+            <v-row>
+              <v-col
+                cols="12"
+                v-for="a in allArticle"
+                :key="a._id"
+                sm="4"
+                md="4"
+                lg="4"
+                xl="4"
+                align-self="center"
+              >
+                <div @click="singleArticle(a)" class="card-article">
+                  <div class="thumbnail">
+                    <img src="@/assets/imgs/img-thumbnail.jpg" alt="" />
+                  </div>
+                  <div class="card-title">
+                    <v-row justify="center">
+                      <v-col cols="12" class="pb-lg-3 pb-sm-3">
+                        <div>
+                          <h2 class="h4">{{ a.title }}</h2>
+                          <p v-if="a.details.length > 0" class="mb-0">
+                            {{ a.details[0].text }}
+                          </p>
+                          <div class="d-flex mt-2">
+                            <h6 class="read-articles">
+                              อ่านบทความ
+                              <i class="d-flex fi fi-rr-arrow-right"></i>
+                            </h6>
+                          </div>
                         </div>
-                      </div>
-                    </v-col>
-                  </v-row>
+                      </v-col>
+                    </v-row>
+                  </div>
                 </div>
-              </div>
-            </v-col>
-          </v-row>
+              </v-col>
+            </v-row>
+          </div>
         </div>
       </v-container>
     </div>
