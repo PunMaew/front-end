@@ -61,16 +61,20 @@
                     >
                       <div class="card-block">
                         <div class="thumbnail">
-                          <img src="@/assets/imgs/img-thumbnail.jpg" alt="" />
+                          <!-- <img src="@/assets/imgs/img-thumbnail.jpg" alt="" /> -->
+                          <img
+                            :src="`${$config.articleURL}readFileId?id=${i._id}`"
+                            alt=""
+                          />
                         </div>
                         <div class="card-title">
                           <v-row justify="center">
                             <v-col cols="12" class="pb-lg-3 pb-sm-3">
                               <div>
                                 <h2 class="h4">{{ i.title }}</h2>
-                                <p class="mb-0">
-                                  {{ i.details }}
-                                </p>
+                                <!-- <p class="mb-0">
+                                  {{ i.details.text }}
+                                </p> -->
                               </div>
                             </v-col>
                           </v-row>
@@ -124,7 +128,11 @@
                     >
                       <div class="card-block">
                         <div class="thumbnail">
-                          <img src="@/assets/imgs/img-thumbnail.jpg" alt="" />
+                          <!-- <img src="@/assets/imgs/img-thumbnail.jpg" alt="" /> -->
+                          <img
+                            :src="`${$config.findHome}readFileIdFindHome?id=${p._id}`"
+                            alt=""
+                          />
                         </div>
                         <div class="card-title">
                           <v-row justify="center">
@@ -258,21 +266,22 @@
                   class="card-article mt-4"
                 >
                   <v-row>
-                    <v-col cols="4">
+                    <v-col cols="6">
                       <div class="name-article-header">
                         <img src="@/assets/imgs/img-thumbnail.jpg" alt="" />
                         {{ a.title }}
                       </div>
                     </v-col>
-                    <v-col cols="6" class="name-article-header">
+                    <v-col cols="4" class="name-article-header">
                       <div>{{ convertDateTime(a.createdAt) }}</div>
                     </v-col>
                     <v-col cols="2" class="name-article-bottom">
                       <div class="icon-article">
                         <i
-                          @click="isEditArticle = true"
+                          @click="getDataArticle(a)"
                           class="fi fi-rr-pencil"
                         ></i>
+
                         <i
                           @click="deleteArticle(a._id)"
                           class="fi fi-rr-trash trash"
@@ -289,77 +298,119 @@
                 Article Posts > สร้างบทความ
               </div>
               <div class="new-article-card mt-4">
-                <v-row justify="center">
-                  <v-col cols="12">
-                    <div @click="onClickImage" class="upload-image mb-10">
-                      <div v-if="!imageData" class="icon-upload text-center">
-                        <i class="fi fi-rr-picture"></i>
-                        <p>เพิ่มรูป <span>ที่นี่</span></p>
-                      </div>
-                      <div class="img-container" v-else>
-                        <div class="edit-img-btn">
-                          <i class="fi fi-rr-pencil"></i> แก้ไขรูป
-                        </div>
-                        <div class="mb-10 article-img">
-                          <img :src="imageData" class="preview" alt="" />
-                        </div>
-                      </div>
-                      <input
-                        id="edit-article-image"
-                        ref="fileInput"
-                        type="file"
-                        accept="image/*"
-                        @change="uploadImage($event)"
-                      />
-                    </div>
-                    <div class="input-area mb-4">
-                      <p>ชื่อบทความ<span>*</span></p>
-
-                      <input
-                        v-model="articleName"
-                        name="articleName"
-                        type="text"
-                        placeholder="กรุณากรอกชื่อบทความ"
-                      />
-                    </div>
-
-                    <div>
-                      <div
-                        v-for="(p, index) in pars"
-                        :key="index"
-                        class="input-area mb-4"
-                      >
-                        <p>ย่อหน้าที่ {{ p.no }}<span>*</span></p>
-                        <textarea
-                          v-model="p.text"
-                          name="paragraph"
-                          type="text"
-                          :placeholder="'กรุณากรอกเนื้อหาย่อหน้าที่' + p.no"
-                        />
-                      </div>
-                      <div
-                        @click="addParagraph"
-                        class="font-weight-bold font-orange"
-                      >
-                        + เพิ่มย่อหน้า
-                      </div>
-                    </div>
-                    <div class="mt-12">
-                      <v-row no-gutters justify="center" class="btn-area">
-                        <v-col align-self="center">
-                          <base-button @click="cancleArticle" :outline="true"
-                            >ยกเลิก</base-button
+                <validation-observer ref="createArticleForm">
+                  <form @submit.prevent="newCreateArticle">
+                    <v-row justify="center">
+                      <v-col cols="12">
+                        <div class="mb-10">
+                          <validation-provider
+                            rules="required|image"
+                            v-slot="{ errors }"
+                            ref="provider"
                           >
-                        </v-col>
-                        <v-col align-self="center">
-                          <base-button :fillSearch="true"
-                            >สร้างบทความ</base-button
+                            <div @click="onClickImage" class="upload-image">
+                              <div
+                                v-if="!imageData"
+                                class="icon-upload text-center"
+                              >
+                                <i class="fi fi-rr-picture"></i>
+                                <p>เพิ่มรูป <span>ที่นี่</span></p>
+                              </div>
+                              <div class="img-container" v-else>
+                                <div class="edit-img-btn">
+                                  <i class="fi fi-rr-pencil"></i> แก้ไขรูป
+                                </div>
+                                <div class="mb-10 article-img">
+                                  <img
+                                    :src="imageData"
+                                    class="preview"
+                                    alt=""
+                                  />
+                                </div>
+                              </div>
+                              <input
+                                id="edit-article-image"
+                                ref="fileInput"
+                                type="file"
+                                accept="image/*"
+                                @change="uploadImage($event)"
+                                name="imageData"
+                              />
+                            </div>
+                            <span class="valid-form">
+                              {{ errors[0] }}
+                            </span>
+                          </validation-provider>
+                        </div>
+                        <div class="input-area mb-4">
+                          <p>ชื่อบทความ<span>*</span></p>
+                          <validation-provider
+                            rules="required"
+                            v-slot="{ errors }"
                           >
-                        </v-col>
-                      </v-row>
-                    </div>
-                  </v-col>
-                </v-row>
+                            <input
+                              v-model="articleName"
+                              name="articleName"
+                              type="text"
+                              placeholder="กรุณากรอกชื่อบทความ"
+                            />
+                            <span class="valid-form">
+                              {{ errors[0] }}
+                            </span>
+                          </validation-provider>
+                        </div>
+
+                        <div>
+                          <div
+                            v-for="(p, index) in pars"
+                            :key="index"
+                            class="input-area mb-4"
+                          >
+                            <p>ย่อหน้าที่ {{ p.no }}<span>*</span></p>
+                            <validation-provider
+                              rules="required"
+                              v-slot="{ errors }"
+                            >
+                              <textarea
+                                v-model="p.text"
+                                name="paragraph"
+                                type="text"
+                                :placeholder="
+                                  'กรุณากรอกเนื้อหาย่อหน้าที่' + p.no
+                                "
+                              />
+                              <span class="valid-form">
+                                {{ errors[0] }}
+                              </span>
+                            </validation-provider>
+                          </div>
+                          <div
+                            @click="addParagraph"
+                            class="font-weight-bold font-orange"
+                          >
+                            + เพิ่มย่อหน้า
+                          </div>
+                        </div>
+                        <div class="mt-12">
+                          <v-row no-gutters justify="center" class="btn-area">
+                            <v-col align-self="center">
+                              <base-button
+                                @click="cancleArticle"
+                                :outline="true"
+                                >ยกเลิก</base-button
+                              >
+                            </v-col>
+                            <v-col align-self="center">
+                              <base-button :fillSearch="true" :type="'submit'"
+                                >สร้างบทความ</base-button
+                              >
+                            </v-col>
+                          </v-row>
+                        </div>
+                      </v-col>
+                    </v-row>
+                  </form>
+                </validation-observer>
               </div>
             </div>
 
@@ -368,74 +419,119 @@
                 Article Posts > แก้ไขบทความ
               </div>
               <div class="new-article-card mt-4">
-                <v-row justify="center">
-                  <v-col cols="12">
-                    <div @click="onClickImage" class="upload-image mb-10">
-                      <div v-if="!imageData" class="icon-upload text-center">
-                        <i class="fi fi-rr-picture"></i>
-                        <p>เพิ่มรูป <span>ที่นี่</span></p>
-                      </div>
-                      <div class="img-container" v-else>
-                        <div class="edit-img-btn">
-                          <i class="fi fi-rr-pencil"></i> แก้ไขรูป
-                        </div>
-                        <div class="mb-10 article-img">
-                          <img
-                            @click="onClickImage"
-                            :src="imageData"
-                            class="preview"
-                            alt=""
-                          />
-                        </div>
-                      </div>
-                      <input
-                        id="edit-article-image"
-                        ref="fileInput"
-                        type="file"
-                        accept="image/*"
-                        @change="uploadImage($event)"
-                      />
-                    </div>
-
-                    <div class="input-area mb-4">
-                      <p>ชื่อบทความ<span>*</span></p>
-                      <input
-                        v-model="articleName"
-                        name="articleName"
-                        type="text"
-                        placeholder="กรุณากรอกชื่อบทความ"
-                      />
-                    </div>
-
-                    <div class="input-area mb-4">
-                      <p>ย่อหน้าที่ 1<span>*</span></p>
-                      <textarea
-                        v-model="paragraph"
-                        name="paragraph"
-                        type="text"
-                        placeholder="กรุณากรอกเนื้อหาย่อหน้าที่ 1"
-                      />
-                    </div>
-                    <div
-                      @click="addParagraph"
-                      class="font-weight-bold font-orange"
-                    >
-                      + เพิ่มย่อหน้า
-                    </div>
-                    <div class="mt-12">
-                      <v-row no-gutters justify="center" class="btn-area">
-                        <v-col align-self="center">
-                          <base-button @click="cancleArticle" :outline="true"
-                            >ยกเลิก</base-button
+                <validation-observer ref="updateArticleForm">
+                  <form @submit.prevent="updateArticle">
+                    <v-row justify="center">
+                      <v-col cols="12">
+                        <div class="mb-10">
+                          <validation-provider
+                            rules="required|image"
+                            v-slot="{ errors }"
+                            ref="provider"
                           >
-                        </v-col>
-                        <v-col align-self="center">
-                          <base-button :fillSearch="true">บันทึก</base-button>
-                        </v-col>
-                      </v-row>
-                    </div>
-                  </v-col>
-                </v-row>
+                            <div @click="onClickImage" class="upload-image">
+                              <div
+                                v-if="!imageData"
+                                class="icon-upload text-center"
+                              >
+                                <i class="fi fi-rr-picture"></i>
+                                <p>เพิ่มรูป <span>ที่นี่</span></p>
+                              </div>
+                              <div class="img-container" v-else>
+                                <div class="edit-img-btn">
+                                  <i class="fi fi-rr-pencil"></i> แก้ไขรูป
+                                </div>
+                                <div class="mb-10 article-img">
+                                  <img
+                                    :src="imageData"
+                                    class="preview"
+                                    alt=""
+                                  />
+                                </div>
+                              </div>
+                              <input
+                                id="edit-article-image"
+                                ref="fileInput"
+                                type="file"
+                                accept="image/*"
+                                @change="uploadImage($event)"
+                                name="imageData"
+                              />
+                            </div>
+                            <span class="valid-form">
+                              {{ errors[0] }}
+                            </span>
+                          </validation-provider>
+                        </div>
+                        <div class="input-area mb-4">
+                          <p>ชื่อบทความ<span>*</span></p>
+                          <validation-provider
+                            rules="required"
+                            v-slot="{ errors }"
+                          >
+                            <input
+                              v-model="articleName"
+                              name="articleName"
+                              type="text"
+                              placeholder="กรุณากรอกชื่อบทความ"
+                            />
+                            <span class="valid-form">
+                              {{ errors[0] }}
+                            </span>
+                          </validation-provider>
+                        </div>
+
+                        <div>
+                          <div
+                            v-for="(p, index) in pars"
+                            :key="index"
+                            class="input-area mb-4"
+                          >
+                            <p>ย่อหน้าที่ {{ p.no }}<span>*</span></p>
+                            <validation-provider
+                              rules="required"
+                              v-slot="{ errors }"
+                            >
+                              <textarea
+                                v-model="p.text"
+                                name="paragraph"
+                                type="text"
+                                :placeholder="
+                                  'กรุณากรอกเนื้อหาย่อหน้าที่' + p.no
+                                "
+                              />
+                              <span class="valid-form">
+                                {{ errors[0] }}
+                              </span>
+                            </validation-provider>
+                          </div>
+                          <div
+                            @click="addParagraph"
+                            class="font-weight-bold font-orange"
+                          >
+                            + เพิ่มย่อหน้า
+                          </div>
+                        </div>
+                        <div class="mt-12">
+                          <v-row no-gutters justify="center" class="btn-area">
+                            <v-col align-self="center">
+                              <base-button
+                                @click="cancleArticle"
+                                :outline="true"
+                                >ยกเลิก</base-button
+                              >
+                            </v-col>
+                            <v-col align-self="center">
+                              <base-button :fillSearch="true" :type="'submit'"
+                                >บันทึก</base-button
+                              >
+                            </v-col>
+                          </v-row>
+                        </div>
+                      </v-col>
+                    </v-row>
+                  </form>
+                </validation-observer>
               </div>
             </div>
           </div>
@@ -567,11 +663,18 @@
 </template>
 
 <script>
+import { ValidationProvider } from "vee-validate";
+import { ValidationObserver } from "vee-validate";
 import BaseButton from "../components/punmaew/components/BaseButton.vue";
 import CardDialog from "../components/punmaew/components/CardDialog.vue";
 export default {
-  //  middleware: "authAdmin",
-  components: { BaseButton, CardDialog },
+  middleware: "authAdmin",
+  components: {
+    BaseButton,
+    CardDialog,
+    ValidationProvider,
+    ValidationObserver,
+  },
   layout: "menu",
   computed: {
     currentMenu() {
@@ -727,6 +830,7 @@ export default {
       pars: [{ id: 1, no: 1, text: "" }],
       newParagraph: "",
       imageData: "",
+      imageFile: "",
       // allAccounts: [],
       // allAccounts: [
       //   {
@@ -753,6 +857,7 @@ export default {
       // ],
       searchArticle: "",
       searchAccount: "",
+      editArticleId: "",
     };
   },
   // async asyncData({ $axios, $config }) {
@@ -773,12 +878,117 @@ export default {
     await this.fetchData();
   },
   methods: {
+    async updateArticle() {
+      try {
+        const success = await this.$refs.updateArticleForm.validate();
+        console.log(success);
+        if (!success) {
+          return;
+        }
+        const details = [];
+
+        for (let index = 0; index < this.pars.length; index++) {
+          details.push({
+            paraNumber: this.pars[index].no,
+            text: this.pars[index].text,
+          });
+        }
+         this.$axios.put(
+          `${this.$config.articleURL}updateArticle?id=${this.editArticleId}`,
+          {
+            title: this.articleName,
+            details,
+          }
+        );
+
+        // updateImageArticle?id=
+        let formData = new FormData();
+        formData.append("image", this.imageFile);
+        const uploadImageArticle = await this.$axios.post(
+          `${this.$config.articleURL}updateImageArticle?id=${this.editArticleId}`,
+          formData
+        );
+        console.log(uploadImageArticle);
+
+        this.$nextTick(() => {
+          this.$refs.updateArticleForm.reset();
+        });
+      } catch (error) {
+        this.$swal.fire({
+          confirmButtonColor: "#19ba88",
+          confirmButtonText: "ตกลง",
+          title: "เกิดข้อผิดพลาด",
+          text: error.message,
+          icon: "warning",
+        });
+        console.log(error);
+      }
+    },
+    getDataArticle(article) {
+      this.isEditArticle = true;
+      this.editArticleId = article._id;
+      console.log(article);
+      this.articleName = article.title;
+      const pars = [];
+      for (let index = 0; index < article.details.length; index++) {
+        pars.push({
+          id: article.details[index]._id,
+          no: article.details[index].paraNumber,
+          text: article.details[index].text,
+        });
+      }
+      this.pars = pars;
+      this.imageData = `${this.$config.articleURL}readFileId?id=${article._id}`;
+    },
+    async newCreateArticle() {
+      try {
+        const success = await this.$refs.createArticleForm.validate();
+        console.log(success);
+        if (!success) {
+          return;
+        }
+
+        const details = [];
+        // pars: [{ id: 1, no: 1, text: "" }],
+        for (let index = 0; index < this.pars.length; index++) {
+          // index < this.pars.length ใช่ ทำข้างล่าง
+          details.push({
+            paraNumber: this.pars[index].no,
+            text: this.pars[index].text,
+          });
+          // index++
+        }
+
+        const articleDetails = await this.$axios.post(
+          `${this.$config.articleURL}createArticle`,
+          {
+            title: this.articleName,
+            details,
+          }
+        );
+
+        let formData = new FormData();
+        formData.append("image", this.imageFile);
+        const uploadImageArticle = await this.$axios.post(
+          `${this.$config.articleURL}uploadArticle/${articleDetails.data.postIdArticle}`,
+          formData
+        );
+        console.log(uploadImageArticle);
+
+        this.$nextTick(() => {
+          this.$refs.createArticleForm.reset();
+        });
+      } catch (error) {
+        console.log(error);
+      }
+    },
     async fetchData() {
       try {
         const article = await this.$axios.get(
           `${this.$config.articleURL}allArticle`
         );
         this.articles = article.data;
+        console.log(article.data);
 
         const res = await this.$axios.get(`${this.$config.findHome}allPost`);
         this.posts = res.data;
@@ -835,129 +1045,124 @@ export default {
         }
       }
     },
-    deleteArticle(id) {
-      this.$swal
-        .fire({
+    async deleteArticle(id) {
+      try {
+        const result = await this.$swal.fire({
           text: "ยืนยันที่จะลบโพสต์หรือไม่ ?",
           icon: "warning",
           confirmButtonColor: "#F77272",
           showCancelButton: true,
           confirmButtonText: "ลบ",
           cancelButtonText: "ยกเลิก",
-        })
-        .then((result) => {
-          if (result.isConfirmed) {
-            try {
-              this.$axios.delete(
-                `${this.$config.articleURL}delArticle?id=${id}`
-              );
-              this.$swal.fire({
-                confirmButtonColor: "#19ba88",
-                confirmButtonText: "ตกลง",
-                text: "โพสต์ของคุณถูกลบแล้ว",
-                icon: "success",
-              });
-              let newArray = this.posts.filter((item) => item._id != id);
-              this.posts = newArray;
-            } catch (error) {
-              this.$swal.fire({
-                confirmButtonColor: "#19ba88",
-                confirmButtonText: "ตกลง",
-                title: "เกิดข้อผิดพลาด",
-                text: error.message,
-                icon: "warning",
-              });
-              console.log(error);
-            }
-          }
         });
+        if (result.isConfirmed) {
+          await this.$axios.delete(
+            `${this.$config.articleURL}delArticle?id=${id}`
+          );
+          this.$swal.fire({
+            confirmButtonColor: "#19ba88",
+            confirmButtonText: "ตกลง",
+            text: "โพสต์ของคุณถูกลบแล้ว",
+            icon: "success",
+          });
+          let newArray = this.posts.filter((item) => item._id != id);
+          this.posts = newArray;
+        }
+      } catch (error) {
+        this.$swal.fire({
+          confirmButtonColor: "#19ba88",
+          confirmButtonText: "ตกลง",
+          title: "เกิดข้อผิดพลาด",
+          text: error.message,
+          icon: "warning",
+        });
+        console.log(error);
+      }
     },
-    deleteFindHome(id) {
-      this.$swal
-        .fire({
+    async deleteFindHome(id) {
+      try {
+        const result = await this.$swal.fire({
           text: "ยืนยันที่จะลบโพสต์หรือไม่ ?",
           icon: "warning",
           confirmButtonColor: "#F77272",
           showCancelButton: true,
           confirmButtonText: "ลบ",
           cancelButtonText: "ยกเลิก",
-        })
-        .then((result) => {
-          if (result.isConfirmed) {
-            try {
-              console.log(id);
-              this.$axios.delete(`${this.$config.findHome}deletePost?id=${id}`);
-              this.$swal.fire({
-                confirmButtonColor: "#19ba88",
-                confirmButtonText: "ตกลง",
-                text: "โพสต์ของคุณถูกลบแล้ว",
-                icon: "success",
-              });
-              let newArray = this.posts.filter((item) => item._id != id);
-              this.posts = newArray;
-            } catch (error) {
-              this.$swal.fire({
-                confirmButtonColor: "#19ba88",
-                confirmButtonText: "ตกลง",
-                title: "เกิดข้อผิดพลาด",
-                text: error.message,
-                icon: "warning",
-              });
-              console.log(error);
-            }
-          }
         });
+        if (result.isConfirmed) {
+          await this.$axios.delete(
+            `${this.$config.findHome}deletePost?id=${id}`
+          );
+          this.$swal.fire({
+            confirmButtonColor: "#19ba88",
+            confirmButtonText: "ตกลง",
+            text: "โพสต์ของคุณถูกลบแล้ว",
+            icon: "success",
+          });
+          let newArray = this.posts.filter((item) => item._id != id);
+          this.posts = newArray;
+        }
+      } catch (error) {
+        this.$swal.fire({
+          confirmButtonColor: "#19ba88",
+          confirmButtonText: "ตกลง",
+          title: "เกิดข้อผิดพลาด",
+          text: error.message,
+          icon: "warning",
+        });
+        console.log(error);
+      }
     },
-    deleteAccount(id) {
-      this.$swal
-        .fire({
-          text: "ยืนยันที่จะลบโพสต์หรือไม่ ?",
+    async deleteAccount(id) {
+      try {
+        const result = await this.$swal.fire({
+          text: "ยืนยันที่จะลบบัญชีนี้หรือไม่ ?",
           icon: "warning",
           confirmButtonColor: "#F77272",
           showCancelButton: true,
           confirmButtonText: "ลบ",
           cancelButtonText: "ยกเลิก",
-        })
-        .then((result) => {
-          if (result.isConfirmed) {
-            try {
-              // console.log(id);
-
-              this.$axios.delete(
-                `${this.$config.authURL}user/deleteUser?id=${id}`
-              );
-              this.$swal.fire({
-                confirmButtonColor: "#19ba88",
-                confirmButtonText: "ตกลง",
-                text: "โพสต์ของคุณถูกลบแล้ว",
-                icon: "success",
-              });
-              let newArray = this.users.filter((item) => item._id != id);
-              this.users = newArray;
-            } catch (error) {
-              this.$swal.fire({
-                confirmButtonColor: "#19ba88",
-                confirmButtonText: "ตกลง",
-                title: "เกิดข้อผิดพลาด",
-                text: error.message,
-                icon: "warning",
-              });
-              console.log(error);
-            }
-          }
         });
+        if (result.isConfirmed) {
+          await this.$axios.delete(
+            `${this.$config.authURL}user/deleteUser?id=${id}`
+          );
+          this.$swal.fire({
+            confirmButtonColor: "#19ba88",
+            confirmButtonText: "ตกลง",
+            text: "โพสต์ของคุณถูกลบแล้ว",
+            icon: "success",
+          });
+          let newArray = this.users.filter((item) => item._id != id);
+          this.users = newArray;
+        }
+      } catch (error) {
+        this.$swal.fire({
+          confirmButtonColor: "#19ba88",
+          confirmButtonText: "ตกลง",
+          title: "เกิดข้อผิดพลาด",
+          text: error.message,
+          icon: "warning",
+        });
+        console.log(error);
+      }
     },
     onClickImage() {
       this.$refs.fileInput.click();
     },
-    uploadImage(event) {
-      var input = event.target;
-      if (input.files && input.files[0]) {
-        var reader = new FileReader();
-        reader.onload = (e) => {
-          this.imageData = e.target.result;
-        };
-        reader.readAsDataURL(input.files[0]);
+    async uploadImage(event) {
+      const { valid } = await this.$refs.provider.validate(event);
+      if (valid) {
+        // console.log("Uploaded the file...");
+        var input = event.target;
+        if (input.files && input.files[0]) {
+          this.imageFile = event.target.files[0];
+          var reader = new FileReader();
+          reader.onload = (e) => {
+            this.imageData = e.target.result;
+          };
+          reader.readAsDataURL(input.files[0]);
+        }
       }
     },
     addParagraph() {
@@ -1006,6 +1211,11 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.valid-form {
+  color: $error;
+  font-weight: bold;
+  font-size: 12px;
+}
 .inactive {
   color: $error;
 }
@@ -1330,6 +1540,7 @@ export default {
     line-height: 0;
     img {
       width: 100%;
+      height: 200px;
       transition: 0.3s all;
       &:hover {
         transform: scale(1.1);

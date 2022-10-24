@@ -234,7 +234,9 @@
                         </card-dialog>
                       </validation-observer>
                     </div>
-                    <base-button :fillSearch="true">เข้าสู่ระบบ</base-button>
+                    <base-button :fillSearch="true" :type="'submit'"
+                      >เข้าสู่ระบบ</base-button
+                    >
                   </form>
                 </validation-observer>
               </div>
@@ -277,10 +279,53 @@ export default {
       newConfirm: "",
     };
   },
-  nextStep() {},
-  confirmOtpNewPassWord() {},
-  resendOtp() {},
-  setNewPassword() {},
+  methods: {
+    loginAdmin() {
+      try {
+        this.$refs.loginAdminForm.validate().then((success) => {
+          if (!success) {
+            return;
+          }
+          //
+          this.$auth
+            .loginWith("admin", {
+              data: {
+                email: this.emailLogin,
+                password: this.password,
+              },
+            })
+            .then((res) => {
+              console.log(res.data);
+              console.log("login admin successfully");
+              this.$router.push("/dashboard");
+            })
+            .catch((error) => {
+              console.log(error);
+              this.$swal.fire({
+                confirmButtonColor: "#19ba88",
+                confirmButtonText: "ตกลง",
+                title: "เกิดข้อผิดพลาด",
+                text: error.message,
+                icon: "warning",
+              });
+            });
+        });
+      } catch (error) {
+        console.log(error);
+        this.$swal.fire({
+          confirmButtonColor: "#19ba88",
+          confirmButtonText: "ตกลง",
+          title: "เกิดข้อผิดพลาด",
+          text: error.message,
+          icon: "warning",
+        });
+      }
+    },
+    // nextStep() {},
+    //   confirmOtpNewPassWord() {},
+    //   resendOtp() {},
+    //   setNewPassword() {},
+  },
 };
 </script>
 

@@ -45,7 +45,7 @@
             <i class="fi fi-rr-user"></i>
             Users
           </div>
-          <div id="menu-fix-footer" class="mt-1 tabs-menu">
+          <div id="menu-fix-footer" class="mt-1">
             <i class="fi fi-rr-exit"></i>
             ออกจากระบบ
           </div>
@@ -124,6 +124,9 @@ export default {
     color: $error;
     font-weight: bold;
     font-size: 20px;
+    &:hover {
+      color: $dark;
+    }
   }
 }
 .noti-area {
