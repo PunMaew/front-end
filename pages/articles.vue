@@ -135,33 +135,30 @@ export default {
       allArticle: [],
     };
   },
-  async asyncData({ $axios, $config }) {
-    try {
-      const res = await $axios.get(`${$config.articleURL}allArticle`);
-      return {
-        allArticle: res.data,
-      };
-    } catch (error) {
-      console.log(error);
-    }
-  },
-  // async created() {
-  //   await this.fetchData();
+  // async asyncData({ $axios, $config }) {
+  //   try {
+  //     const res = await $axios.get(`${$config.articleURL}allArticle`);
+  //     return {
+  //       allArticle: res.data,
+  //     };
+  //   } catch (error) {
+  //     console.log(error);
+  //   }
   // },
+  async created() {
+    await this.fetchData();
+  },
   methods: {
-    // async fetchData() {
-    //   try {
-    //     const res = await this.$axios.get(
-    //       `${this.$config.articleURL}allArticle`
-    //     );
-    //     // return {
-    //     //allArticle: res.data,
-    //     // };
-    //     this.allArticle = res.data;
-    //   } catch (error) {
-    //     console.log(error);
-    //   }
-    // },
+    async fetchData() {
+      try {
+        const res = await this.$axios.get(
+          `${this.$config.articleURL}allArticle`
+        );
+        this.allArticle = res.data;
+      } catch (error) {
+        console.log(error);
+      }
+    },
     goToMatching() {
       this.$router.push(`/matching`);
     },
