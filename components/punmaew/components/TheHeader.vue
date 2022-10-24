@@ -20,7 +20,9 @@
         <v-col sm="4" class="nav-center">
           <ul id="menu" class="d-none d-md-flex">
             <li>
-              <p class="mb-0">บทความ</p>
+              <n-link to="/articles" class="opunmai">
+                <p class="mb-0">บทความ</p>
+              </n-link>
             </li>
             <li>
               <n-link to="/finderHome" class="opunmai">
@@ -80,7 +82,7 @@
                 <v-list-item link to="/">
                   <v-list-item-title>หน้าแรก</v-list-item-title>
                 </v-list-item>
-                <v-list-item link to="/">
+                <v-list-item link to="/articles">
                   <v-list-item-title>บทความ</v-list-item-title>
                 </v-list-item>
                 <v-list-item link to="/finderHome">

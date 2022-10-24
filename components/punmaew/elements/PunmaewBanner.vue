@@ -19,7 +19,7 @@
                 <p
                   class="text-center font-weight-bold text-sm-left mb-2 title-banner"
                 >
-                  Lorem ipsum
+                  <slot name="title-banner" />
                 </p>
                 <div>
                   <slot name="content-banner" />

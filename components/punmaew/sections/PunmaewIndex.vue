@@ -94,11 +94,17 @@
                         Lorem ipsum dolor sit amet, consectetur adipiscing elit.
                         Velit enim id hendrerit velit egestas cum quam.
                       </p>
-                      <v-row>
+                      <!-- <v-row>
                         <v-col cols="12" class="d-flex mt-1">
                           <h6 class="read-articles ml-1 mt-1">อ่านบทความ >></h6>
                         </v-col>
-                      </v-row>
+                      </v-row> -->
+                      <div class="d-flex mt-2">
+                        <h6 class="read-articles">
+                          อ่านบทความ
+                          <i class="d-flex fi fi-rr-arrow-right"></i>
+                        </h6>
+                      </div>
                     </div>
                   </v-col>
                 </v-row>
@@ -218,6 +224,11 @@ export default {
 }
 .read-articles {
   color: $orange;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
 }
 .pm-articles {
   margin-top: 64px;

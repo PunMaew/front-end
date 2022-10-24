@@ -4,10 +4,11 @@
       <template slot="img-banner">
         <img src="@/assets/imgs/banner.png" alt="" />
       </template>
+      <template slot="title-banner">จับคู่แมวตัวโปรดของคุณ</template>
       <template slot="content-banner">
         <div>
           <p class="text-center text-sm-left desc-banner mb-0">
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Velit
+            ค้นหาแมวที่ต้องการช่วยเหลือให้ตรงใจคุณ
           </p>
 
           <base-button
