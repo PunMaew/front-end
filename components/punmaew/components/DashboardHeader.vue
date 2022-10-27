@@ -5,9 +5,9 @@
         <v-col cols="5"> </v-col>
         <v-col cols="4"></v-col>
         <v-col cols="3">
-          <n-link to="/" class="opunmai">
-            <img src="~/assets/imgs/pmlogo.png" alt="punmaew" id="logo" />
-          </n-link>
+          <!-- <n-link to="/" class="opunmai"> -->
+          <img src="~/assets/imgs/pmlogo.png" alt="punmaew" id="logo" />
+          <!-- </n-link> -->
           <div class="nav-right font-weight-bold">
             | Admin
             <i class="d-flex align-center fi fi-rr-angle-small-down"></i>
