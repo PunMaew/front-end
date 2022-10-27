@@ -173,7 +173,7 @@ export default {
           : format >= 7 && format <= 9
           ? "7-9 เดือน"
           : format >= 9 && format <= 12
-          ? "9-12 เดือน"
+          ? "10-12 เดือน"
           : "1 ปีขึ้นไป";
       try {
         await this.$axios.put(
@@ -232,7 +232,7 @@ export default {
           : format >= 7 && format <= 9
           ? "7-9 เดือน"
           : format >= 9 && format <= 12
-          ? "9-12 เดือน"
+          ? "10-12 เดือน"
           : "1 ปีขึ้นไป";
       try {
         const createPost = await this.$axios.post(
