@@ -804,15 +804,18 @@ export default {
       isBreed: [],
     };
   },
-  async asyncData({ $axios, $config }) {
-    try {
-      const res = await $axios.get(`${$config.findHome}allPost`);
-      return {
-        posts: res.data,
-      };
-    } catch (error) {
-      console.log(error);
-    }
+  // async asyncData({ $axios, $config }) {
+  //   try {
+  //     const res = await $axios.get(`${$config.findHome}allPost`);
+  //     return {
+  //       posts: res.data,
+  //     };
+  //   } catch (error) {
+  //     console.log(error);
+  //   }
+  // },
+  async created() {
+    await this.fetchData();
   },
   computed: {
     duplicatedRemove() {
@@ -923,6 +926,15 @@ export default {
     },
   },
   methods: {
+    async fetchData() {
+      try {
+        const res = await this.$axios.get(`${this.$config.findHome}allPost`);
+        // console.log(res.data);
+        this.posts = res.data;
+      } catch (error) {
+        console.log(error);
+      }
+    },
     goToMatching() {
       this.$router.push(`/matching`);
     },
