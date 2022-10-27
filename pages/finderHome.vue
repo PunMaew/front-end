@@ -164,6 +164,17 @@ export default {
   },
   methods: {
     async updateFindHome() {
+      const format = parseInt(this.forms.step1.age, 10);
+      const ageRange =
+        format <= 3
+          ? "1-3 เดือน"
+          : format >= 4 && format <= 6
+          ? "4-6 เดือน"
+          : format >= 7 && format <= 9
+          ? "7-9 เดือน"
+          : format >= 9 && format <= 12
+          ? "9-12 เดือน"
+          : "1 ปีขึ้นไป";
       try {
         await this.$axios.put(
           `${this.$config.findHome}updatePost?id=${this.$route.query.id}`,
@@ -173,6 +184,7 @@ export default {
               color: this.forms.step1.color,
               breeds: this.forms.step1.breeds,
               age: this.forms.step1.age,
+              ageRange: ageRange,
               location: {
                 province: this.forms.step1.province,
                 subDistrict: this.forms.step1.subDistrict,
@@ -212,16 +224,6 @@ export default {
     async submitFindHome() {
       // console.log(this.forms);
       const format = parseInt(this.forms.step1.age, 10);
-      // const ageRange =
-      //   format <= 3
-      //     ? "1-3 เดือน"
-      //       ? format <= 6 && format >= 4
-      //       : "4-6 เดือน"
-      //       ? format <= 9 && format >= 7
-      //       : "7-9 เดือน"
-      //       ? format <= 12 && format >= 9
-      //       : "9-12 เดือน"
-      //     : "1 ปีขึ้นไป";
       const ageRange =
         format <= 3
           ? "1-3 เดือน"
