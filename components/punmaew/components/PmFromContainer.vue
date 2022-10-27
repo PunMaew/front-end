@@ -89,7 +89,7 @@ export default {
       }
     },
     updateGeneralForm(data) {
-      console.log(data);
+      console.log("updateGeneralForm() PMFromContainer", data);
       this.$emit("update", data);
     },
     updateCharacterForm(data) {

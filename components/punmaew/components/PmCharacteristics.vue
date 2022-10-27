@@ -147,7 +147,7 @@ export default {
   methods: {
     async validCharacter() {
       const success = await this.$refs.characterForm.validate();
-      console.log(success);
+      // console.log(success);
       if (!success) {
         return false;
       } else {
