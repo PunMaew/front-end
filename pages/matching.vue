@@ -30,18 +30,6 @@
                               <v-col cols="12" sm="8" lg="6">
                                 <div class="mb-7">
                                   <!-- valid -->
-                                  <!-- <v-select
-                                    dense
-                                    filled
-                                    :items="choiceListOne"
-                                    item-text="answer"
-                                    name="answer"
-                                    v-model="answerOne.answer"
-                                    data-vv-name="select"
-                                    required
-                                    placeholder="กรุณาเลือกคำตอบ"
-                                  >
-                                  </v-select> -->
 
                                   <div class="px-0" fluid>
                                     <v-radio-group v-model="answerOne">
@@ -588,38 +576,32 @@ export default {
     };
   },
   methods: {
-    async adealCat() {
-      try {
-        const res = await this.$axios.put(
-          `${this.$config.authURL}user/idealCat?id=${this.$store.state.auth.user._id}`,
-          {
-            idealCat: [
-              { answer: this.answerOne.answer },
-              { answer: this.answerTwo.answer },
-              { answer: this.answerThree.answer },
-              { answer: this.answerFour.answer },
-              { answer: this.answerFive.answer },
-              { answer: this.answerSix.answer },
-              { answer: this.answerSeven.answer },
-              { answer: this.answerEight.answer },
-              { answer: this.answerNine.answer },
-              { answer: this.answerTen.answer },
-            ],
-          }
-        );
-        console.log(res);
-        this.$router.push("/adoptCat");
-      } catch (error) {
-        console.log(error);
-      }
-    },
+    // async adealCat() {
+    //   try {
+    //     const res = await this.$axios.put(
+    //       `${this.$config.authURL}user/idealCat?id=${this.$store.state.auth.user._id}`,
+    //       {
+    //         idealCat: [
+    //           { answer: this.answerOne.answer },
+    //           { answer: this.answerTwo.answer },
+    //           { answer: this.answerThree.answer },
+    //           { answer: this.answerFour.answer },
+    //           { answer: this.answerFive.answer },
+    //           { answer: this.answerSix.answer },
+    //           { answer: this.answerSeven.answer },
+    //           { answer: this.answerEight.answer },
+    //           { answer: this.answerNine.answer },
+    //           { answer: this.answerTen.answer },
+    //         ],
+    //       }
+    //     );
+    //     console.log(res);
+    //     this.$router.push("/adoptCat");
+    //   } catch (error) {
+    //     console.log(error);
+    //   }
+    // },
     nextStep() {
-      // console.log(id);
-      // if (this.questions.id === 1 || this.questions.id < 10) {
-      //   this.questions.id += 1;
-      // } else {
-      //   console.log("Submit Matching Form");
-      // }
       if (this.currentStep === 1 || this.currentStep < 10) {
         this.currentStep += 1;
       } else {
