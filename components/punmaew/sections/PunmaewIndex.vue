@@ -72,8 +72,8 @@
         </v-row>
         <v-row justify="center">
           <v-col
-            v-for="i in 3"
-            :key="i"
+            v-for="(i, index) in articles"
+            :key="i._id"
             cols="12"
             sm="4"
             md="4"
@@ -82,21 +82,28 @@
             align-self="center"
           >
             <div class="card position-relative">
-              <div :class="[i == 3 ? 'backdrop' : '']"></div>
-              <button v-if="i === 3" :class="[i == 3 ? 'more' : '']">
+              <div :class="[index == 2 ? 'backdrop' : '']"></div>
+              <button
+                @click="article"
+                v-if="index === 2"
+                :class="[index == 2 ? 'more' : '']"
+              >
                 ดูทั้งหมด
               </button>
               <div class="thumbnail">
-                <img src="@/assets/imgs/img-thumbnail.jpg" alt="" />
+                <img
+                  :src="`${$config.findHome}readFileId?id=${i._id}`"
+                  alt=""
+                />
+                <!-- <img src="@/assets/imgs/img-thumbnail.jpg" alt="" /> -->
               </div>
               <div class="card-title">
                 <v-row justify="center">
                   <v-col cols="12" class="pb-lg-3 pb-sm-3">
                     <div>
-                      <h2 class="h4">Name</h2>
-                      <p class="mb-0">
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                        Velit enim id hendrerit velit egestas cum quam.
+                      <h2 class="h4">{{ i.title }}</h2>
+                      <p class="mb-0 intro-content-card">
+                        {{ i.details[0].text }}
                       </p>
                       <!-- <v-row>
                         <v-col cols="12" class="d-flex mt-1">
@@ -126,6 +133,7 @@ export default {
   data() {
     return {
       posts: [],
+      articles: [],
     };
   },
   async created() {
@@ -138,12 +146,21 @@ export default {
         const res = await this.$axios.get(`${this.$config.findHome}RandomPost`);
         console.log(res.data);
         this.posts = res.data;
+
+        const article = await this.$axios.get(
+          `${this.$config.articleURL}randomPostArticle`
+        );
+        console.log(res.data);
+        this.articles = article.data;
       } catch (error) {
         console.log(error);
       }
     },
     adoptCat() {
       this.$router.push(`/adoptCat`);
+    },
+    article() {
+      this.$router.push(`/articles`);
     },
   },
 };
@@ -270,6 +287,12 @@ export default {
 
   .card-title {
     padding: 22px;
+    .intro-content-card {
+      display: -webkit-box;
+      -webkit-line-clamp: 3;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
   }
   &:hover {
     .card-title {
