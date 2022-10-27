@@ -261,7 +261,10 @@
                 >
                   <div class="card position-relative">
                     <div class="thumbnail">
-                      <img src="@/assets/imgs/img-thumbnail.jpg" alt="" />
+                      <img
+                        :src="`${$config.findHome}readFileIdFindHome?id=${post._id}`"
+                        alt=""
+                      />
                     </div>
                     <div class="card-title">
                       <v-row justify="center">
