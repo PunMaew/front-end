@@ -109,7 +109,7 @@ export default {
       }
       if (menu === "logoutAdmin") {
         try {
-          this.$auth.logout("admin");
+          this.$auth.logout();
           // this.$router.push("/loginAdmin");
           // this.$store.commit("SET_MENU", "logoutAdmin");
         } catch (error) {
