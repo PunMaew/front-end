@@ -1,4 +1,5 @@
 <template>
+  <!-- <section class="d-none d-md-flex d-lg-flex d-xl-flex"> -->
   <v-col cols="12" md="3" id="dashbard-menu">
     <div id="dashbard-menu-container">
       <div>
@@ -53,6 +54,7 @@
       </div>
     </div>
   </v-col>
+  <!-- </section> -->
 </template>
 
 <script>

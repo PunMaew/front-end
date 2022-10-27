@@ -243,17 +243,43 @@
     </div>
     <div v-else-if="progress.generalInfo === 4">
       <validation-observer ref="generalFourthForm">
-        <p class="step-text">ข้อมูลทั่วไป 4 จากทั้งหมด 4</p>
-        <div class="input-area">
-          <p>กรุณาแนบรูปแมว<span>*</span></p>
-          <div class="upload-image">
-            <div class="icon-upload text-center">
-              <i class="fi fi-rr-picture"></i>
-              <p>เพิ่มรูป <span>ที่นี่</span></p>
+        <validation-provider
+          ref="provider"
+          :rules="this.isEdit ? `image` : `required|image`"
+          v-slot="{ errors }"
+        >
+          <p class="step-text">ข้อมูลทั่วไป 4 จากทั้งหมด 4</p>
+          <div class="input-area">
+            <p>กรุณาแนบรูปแมว<span>*</span></p>
+            <span class="valid-form">
+              {{ errors[0] }}
+            </span>
+            <!--  -->
+            <div @click="onClickImage" class="upload-image">
+              <div v-if="!imageData" class="icon-upload text-center">
+                <i class="fi fi-rr-picture"></i>
+                <p>เพิ่มรูป <span>ที่นี่</span></p>
+              </div>
+              <div class="img-container" v-else>
+                <div class="edit-img-btn">
+                  <i class="fi fi-rr-pencil"></i> แก้ไขรูป
+                </div>
+                <div class="mb-10 article-img">
+                  <img :src="imageData" class="preview" alt="" />
+                </div>
+              </div>
+              <input
+                id="edit-article-image"
+                ref="fileInput"
+                type="file"
+                accept="image/*"
+                @change="uploadImage($event)"
+                name="imageData"
+              />
             </div>
           </div>
-        </div>
-
+        </validation-provider>
+        <!--  -->
         <div class="input-area mt-2">
           <p>รายละเอียดเพิ่มเติม (ถ้ามี)</p>
           <textarea
@@ -263,6 +289,7 @@
             placeholder="กรุณากรอกรายละเอียดเพิ่มเติม"
           />
         </div>
+        <!-- </validation-provider> -->
       </validation-observer>
     </div>
   </section>
@@ -296,6 +323,10 @@ export default {
   },
   data() {
     return {
+      imageData: this.isEdit
+        ? `${this.$config.findHome}readFileIdFindHome?id=${this.$route.query.id}`
+        : null,
+      imageFile: null,
       genders: [
         { id: 1, name: "เพศเมีย" },
         { id: 2, name: "เพศผู้" },
@@ -325,13 +356,31 @@ export default {
     };
   },
   methods: {
+    async uploadImage(event) {
+      const { valid } = await this.$refs.provider.validate(event);
+      if (valid) {
+        console.log("Uploaded the file...");
+        var input = event.target;
+        if (input.files && input.files[0]) {
+          this.imageFile = event.target.files[0];
+          var reader = new FileReader();
+          reader.onload = (e) => {
+            this.imageData = e.target.result;
+          };
+          reader.readAsDataURL(input.files[0]);
+        }
+      }
+    },
+    onClickImage() {
+      this.$refs.fileInput.click();
+    },
     async validInfoFirst() {
       const success = await this.$refs.generalFirstForm.validate();
-      console.log(success);
+      // console.log(success);
       if (!success) {
         return false;
       } else {
-        console.log("emitData");
+        // console.log("emitData");
         this.$emit("form", {
           catName: this.catName,
           color: this.color,
@@ -347,7 +396,7 @@ export default {
     },
     async validInfoSecond() {
       const success = await this.$refs.generalSecondForm.validate();
-      console.log(success);
+      // console.log(success);
       if (!success) {
         return false;
       } else {
@@ -375,11 +424,27 @@ export default {
       }
     },
     async validInfoFourth() {
-      const success = await this.$refs.generalFourthForm.validate();
-      if (!success) {
+      let formData = null;
+      if (this.isEdit) {
+        if (this.imageFile) {
+          formData = new FormData();
+          formData.append("image", this.imageFile);
+        }
+      } else {
+        if (this.imageFile) {
+          formData = new FormData();
+          formData.append("image", this.imageFile);
+        }
+      }
+
+      // const success = await this.$refs.generalFourthForm.validate();
+
+      if (!this.isEdit && !formData) {
+        await this.$refs.generalFourthForm.validate();
         return false;
       } else {
         this.$emit("form", {
+          formData,
           others: this.others,
         });
         return true;
@@ -390,6 +455,37 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.preview {
+  width: 100%;
+  max-height: 248px;
+  object-fit: cover;
+  align-items: center;
+  padding: 16px;
+}
+.article-img {
+  img {
+    display: flex;
+    width: 100%;
+    max-height: 248px;
+    border-radius: 20px;
+    object-fit: cover;
+    align-items: center;
+  }
+}
+#edit-article-image {
+  display: none;
+}
+.img-container {
+  position: relative;
+  .edit-img-btn {
+    position: absolute;
+    top: 24px;
+    right: 24px;
+    background-color: $white;
+    padding: 10px 14px;
+    border-radius: 50px;
+  }
+}
 .valid-form {
   color: $error;
   font-weight: bold;
@@ -424,6 +520,7 @@ export default {
   }
 }
 .upload-image {
+  cursor: pointer;
   position: relative;
   min-height: 109px;
   background-image: url("data:image/svg+xml,%3csvg width='100%25' height='100%25' xmlns='http://www.w3.org/2000/svg'%3e%3crect width='100%25' height='100%25' fill='none' rx='8' ry='8' stroke='%23333' stroke-width='1' stroke-dasharray='3' stroke-dashoffset='22' stroke-linecap='square'/%3e%3c/svg%3e");

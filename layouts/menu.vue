@@ -4,7 +4,9 @@
       <!-- <dashboard-header></dashboard-header> -->
       <v-container fluid>
         <v-row>
-          <dashboard-panel-menu></dashboard-panel-menu>
+          <dashboard-panel-menu
+            class="d-none d-md-flex d-lg-flex d-xl-flex"
+          ></dashboard-panel-menu>
           <v-col cols="12" md="9" id="dashboard-panel-main">
             <dashboard-header></dashboard-header>
             <dashboard-panel-main>

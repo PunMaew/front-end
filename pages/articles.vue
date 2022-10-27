@@ -57,14 +57,21 @@
               >
                 <div @click="singleArticle(a)" class="card-article">
                   <div class="thumbnail">
-                    <img src="@/assets/imgs/img-thumbnail.jpg" alt="" />
+                    <img
+                      :src="`${$config.articleURL}readFileId?id=${a._id}`"
+                      alt=""
+                    />
+                    <!-- <img src="@/assets/imgs/img-thumbnail.jpg" alt="" /> -->
                   </div>
                   <div class="card-title">
                     <v-row justify="center">
                       <v-col cols="12" class="pb-lg-3 pb-sm-3">
                         <div>
                           <h2 class="h4">{{ a.title }}</h2>
-                          <p v-if="a.details.length > 0" class="mb-0">
+                          <p
+                            v-if="a.details.length > 0"
+                            class="mb-0 intro-content-card"
+                          >
                             {{ a.details[0].text }}
                           </p>
                           <div class="d-flex mt-2">
@@ -164,18 +171,8 @@ export default {
     goToMatching() {
       this.$router.push(`/matching`);
     },
-    async singleArticle(article) {
-      try {
-        // article/oneArticle?id=
-        await this.$router.push(
-          `/singleArticle?isSingle=true&id=${article._id}`
-        );
-        const res = await this.$axios.get(
-          `${this.$config.articleURL}oneArticle?id=${article._id}`,
-          article
-        );
-        console.log(res);
-      } catch (error) {}
+    singleArticle(article) {
+      this.$router.push(`/singleArticle?isSingle=true&id=${article._id}`);
     },
   },
 };
@@ -203,9 +200,9 @@ export default {
     overflow: hidden;
     line-height: 0;
     img {
-      // max-width: 100%;
-      width: 100%;
-      height: 200px;
+      max-width: 100%;
+      // width: 100%;
+      // height: 260px;
       transition: 0.3s all;
       &:hover {
         transform: scale(1.1);
@@ -214,11 +211,28 @@ export default {
         object-fit: cover;
         align-items: center;
       }
+      @media (min-width: 1024px) {
+        width: 100%;
+        height: 200px;
+      }
     }
   }
 
   .card-title {
     padding: 22px;
+    .intro-content-card {
+      display: -webkit-box;
+      -webkit-line-clamp: 3;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+    // .title {
+    //   white-space: nowrap;
+    //   overflow: hidden;
+    //   text-overflow: ellipsis;
+    //   font-weight: bold;
+    //   font-size: 24px;
+    // }
   }
   &:hover {
     .card-title {

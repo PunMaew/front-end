@@ -37,7 +37,11 @@
                 <i class="fi fi-rr-mars"></i>
               </div>
               <div class="thumbnail">
-                <img src="@/assets/imgs/img-thumbnail.jpg" alt="" />
+                <img
+                  :src="`${$config.findHome}readFileIdFindHome?id=${post._id}`"
+                  alt=""
+                />
+                <!-- <img src="@/assets/imgs/img-thumbnail.jpg" alt="" /> -->
               </div>
               <div class="card-title">
                 <v-row justify="center">
@@ -132,7 +136,7 @@ export default {
     async fetchData() {
       try {
         const res = await this.$axios.get(`${this.$config.findHome}RandomPost`);
-        // console.log(res.data);
+        console.log(res.data);
         this.posts = res.data;
       } catch (error) {
         console.log(error);
@@ -247,6 +251,8 @@ export default {
     line-height: 0;
     img {
       max-width: 100%;
+      // width: 100%;
+      // height: 260px;
       transition: 0.3s all;
       &:hover {
         transform: scale(1.1);
@@ -254,6 +260,10 @@ export default {
       @media (min-width: 768px) {
         object-fit: cover;
         align-items: center;
+      }
+      @media (min-width: 1024px) {
+        width: 100%;
+        height: 260px;
       }
     }
   }

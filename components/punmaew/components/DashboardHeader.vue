@@ -1,5 +1,5 @@
 <template>
-  <header class="d-flex align-center">
+  <header class="d-none d-md-flex d-lg-flex d-xl-flex align-center">
     <v-container class="justify-center d-flex">
       <v-row>
         <v-col cols="5"> </v-col>

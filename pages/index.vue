@@ -83,13 +83,15 @@
       <template slot="img-banner">
         <img src="@/assets/imgs/banner.png" alt="" />
       </template>
+      <template slot="title-banner">จับคู่แมวตัวโปรดของคุณ</template>
       <template slot="content-banner">
         <div>
           <p class="text-center text-sm-left desc-banner mb-0">
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Velit
+            ค้นหาแมวที่ต้องการช่วยเหลือให้ตรงใจคุณ
           </p>
 
           <base-button
+            @click="goToMatching"
             :fillSearch="true"
             class="d-none d-sm-flex mt-4 btn-banner"
           >
@@ -116,6 +118,7 @@
       <template slot="img-banner">
         <img src="@/assets/imgs/banner2.png" alt="" />
       </template>
+      <template slot="title-banner">ช่วยเหลือน้องแมว</template>
       <template slot="content-banner">
         <div>
           <v-row justify="center" class="banner-set-row">
@@ -184,6 +187,9 @@ export default {
     },
     adoptCat() {
       this.$router.push(`/adoptCat`);
+    },
+    goToMatching() {
+      this.$router.push(`/matching`);
     },
   },
 };

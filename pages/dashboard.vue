@@ -1,291 +1,603 @@
 <template>
-  <section>
-    <v-container>
-      <v-row justify="center">
-        <v-col cols="12" align-self="center">
-          <div v-if="currentMenu === 'dashboard'">
-            <div class="head-title font-weight-bold">Dashboard</div>
-            <div class="dashboard-bar mt-4">
-              <v-container>
-                <v-row justify="center">
-                  <v-col
-                    @click="selectTabs('article')"
-                    cols="4"
-                    align-self="center"
-                    class="bar-block"
-                  >
-                    <div class="text-center">บทความ</div>
-                  </v-col>
-                  <v-col
-                    @click="selectTabs('findHome')"
-                    cols="4"
-                    align-self="center"
-                    class="bar-block"
-                  >
-                    <div class="text-center">โพสต์หาบ้าน</div>
-                  </v-col>
-                  <v-col
-                    @click="selectTabs('allAccount')"
-                    cols="4"
-                    align-self="center"
-                    class="bar-block"
-                  >
-                    <div class="text-center">บัญชีผู้ใช้</div>
-                  </v-col>
-                </v-row>
-              </v-container>
-            </div>
-            <div class="mt-7 mb-16">
-              <div ref="article">
-                <div class="d-flex justify-space-between align-center">
-                  <div class="font-weight-bold title">
-                    <i class="fi fi-rr-book-alt"></i>
-                    บทความทั้งหมด
+  <div>
+    <section class="d-none d-md-flex d-lg-flex d-xl-flex">
+      <v-container>
+        <v-row justify="center">
+          <v-col cols="12" align-self="center">
+            <div v-if="currentMenu === 'dashboard'">
+              <div class="head-title font-weight-bold">Dashboard</div>
+              <div class="dashboard-bar mt-4">
+                <v-container>
+                  <v-row justify="center">
+                    <v-col
+                      @click="selectTabs('article')"
+                      cols="4"
+                      align-self="center"
+                      class="bar-block"
+                    >
+                      <div class="text-center">บทความ</div>
+                    </v-col>
+                    <v-col
+                      @click="selectTabs('findHome')"
+                      cols="4"
+                      align-self="center"
+                      class="bar-block"
+                    >
+                      <div class="text-center">โพสต์หาบ้าน</div>
+                    </v-col>
+                    <v-col
+                      @click="selectTabs('allAccount')"
+                      cols="4"
+                      align-self="center"
+                      class="bar-block"
+                    >
+                      <div class="text-center">บัญชีผู้ใช้</div>
+                    </v-col>
+                  </v-row>
+                </v-container>
+              </div>
+              <div class="mt-7 mb-16">
+                <div ref="article">
+                  <div class="d-flex justify-space-between align-center">
+                    <div class="font-weight-bold title">
+                      <i class="fi fi-rr-book-alt"></i>
+                      บทความทั้งหมด
+                    </div>
+                    <div @click="menuDashboard('article')" class="manage-more">
+                      จัดการบทความ
+                      <i class="fi fi-rr-arrow-small-right"></i>
+                    </div>
                   </div>
-                  <div @click="menuDashboard('article')" class="manage-more">
-                    จัดการบทความ
-                    <i class="fi fi-rr-arrow-small-right"></i>
+                  <div class="mt-4">
+                    <v-row>
+                      <v-col
+                        v-for="i in allPostsArticles"
+                        :key="i._id"
+                        cols="12"
+                        sm="4"
+                        md="4"
+                        lg="4"
+                        xl="4"
+                        align-self="center"
+                      >
+                        <div class="card-block">
+                          <div class="thumbnail">
+                            <!-- <img src="@/assets/imgs/img-thumbnail.jpg" alt="" /> -->
+                            <img
+                              :src="`${$config.articleURL}readFileId?id=${i._id}`"
+                              alt=""
+                            />
+                          </div>
+                          <div class="card-title">
+                            <v-row justify="center">
+                              <v-col cols="12" class="pb-lg-3 pb-sm-3">
+                                <div>
+                                  <h2 class="h4">{{ i.title }}</h2>
+                                  <p class="mb-0 intro-content-card">
+                                    {{ i.details[0].text }}
+                                  </p>
+                                </div>
+                              </v-col>
+                            </v-row>
+                          </div>
+                        </div>
+                      </v-col>
+                    </v-row>
+                    <v-row justify="center">
+                      <v-col>
+                        <div
+                          v-if="moreArticle"
+                          @click="showMoreArticle"
+                          class="see-more font-weight-bold"
+                        >
+                          ดูน้อยลง <i class="fi fi-rr-angle-small-up"></i>
+                        </div>
+                        <div
+                          v-else
+                          @click="showMoreArticle"
+                          class="see-more font-weight-bold"
+                        >
+                          ดูทั้งหมด <i class="fi fi-rr-angle-small-down"></i>
+                        </div>
+                      </v-col>
+                    </v-row>
                   </div>
                 </div>
+
+                <div ref="findHome" class="mt-7">
+                  <div class="d-flex justify-space-between align-center">
+                    <div class="font-weight-bold title">
+                      <img src="@/assets/imgs/icon-find-home.svg" alt="" />
+                      โพสต์หาบ้านทั้งหมด
+                    </div>
+                    <div @click="menuDashboard('findhome')" class="manage-more">
+                      จัดการโพสต์หาบ้าน
+                      <i class="fi fi-rr-arrow-small-right"></i>
+                    </div>
+                  </div>
+                  <div class="mt-4">
+                    <v-row>
+                      <v-col
+                        v-for="p in allPostFindHome"
+                        :key="p._id"
+                        cols="12"
+                        sm="4"
+                        md="4"
+                        lg="4"
+                        xl="4"
+                        align-self="center"
+                      >
+                        <div class="card-block">
+                          <div class="thumbnail">
+                            <!-- <img src="@/assets/imgs/img-thumbnail.jpg" alt="" /> -->
+                            <img
+                              :src="`${$config.findHome}readFileIdFindHome?id=${p._id}`"
+                              alt=""
+                            />
+                          </div>
+                          <div class="card-title">
+                            <v-row justify="center">
+                              <v-col cols="12" class="pb-lg-3 pb-sm-3">
+                                <div>
+                                  <h2 class="h4">
+                                    {{ p.generalInfo.catName }}
+                                  </h2>
+                                  <p class="mb-0 location">
+                                    <i class="fi fi-rr-marker"></i>
+                                    {{
+                                      p.generalInfo.location.province +
+                                      " " +
+                                      p.generalInfo.location.district
+                                    }}
+                                  </p>
+                                </div>
+                              </v-col>
+                            </v-row>
+                          </div>
+                        </div>
+                      </v-col>
+                    </v-row>
+                    <v-row justify="center">
+                      <v-col>
+                        <div
+                          v-if="morePost"
+                          @click="showMorePost"
+                          class="see-more font-weight-bold"
+                        >
+                          ดูน้อยลง <i class="fi fi-rr-angle-small-up"></i>
+                        </div>
+                        <div
+                          v-else
+                          @click="showMorePost"
+                          class="see-more font-weight-bold"
+                        >
+                          ดูทั้งหมด <i class="fi fi-rr-angle-small-down"></i>
+                        </div>
+                      </v-col>
+                    </v-row>
+                  </div>
+                </div>
+
+                <div ref="allAccount" class="mt-7">
+                  <div class="d-flex justify-space-between align-center">
+                    <div class="font-weight-bold title">
+                      <i class="fi fi-rr-user"></i>
+                      บัญชีผู้ใช้ทั้งหมด
+                    </div>
+                    <div @click="menuDashboard('users')" class="manage-more">
+                      จัดการบัญชีผู้ใช้
+                      <i class="fi fi-rr-arrow-small-right"></i>
+                    </div>
+                  </div>
+                  <div class="mt-4">
+                    <v-row>
+                      <v-col
+                        v-for="i in allUsersAccount"
+                        :key="i.id"
+                        cols="12"
+                        sm="4"
+                        md="4"
+                        lg="4"
+                        xl="4"
+                        align-self="center"
+                      >
+                        <div class="d-flex card-block-account">
+                          <i class="fi fi-rr-portrait"></i>
+                          <div>
+                            <p class="full-name mb-0">
+                              {{ i.firstName + " " + i.lastName }}
+                            </p>
+
+                            <p class="email mb-0">{{ i.email }}</p>
+                          </div>
+                        </div>
+                      </v-col>
+                    </v-row>
+                    <v-row justify="center">
+                      <v-col>
+                        <div
+                          v-if="moreUser"
+                          @click="showMoreUser"
+                          class="see-more font-weight-bold"
+                        >
+                          ดูน้อยลง <i class="fi fi-rr-angle-small-up"></i>
+                        </div>
+                        <div
+                          v-else
+                          @click="showMoreUser"
+                          class="see-more font-weight-bold"
+                        >
+                          ดูทั้งหมด <i class="fi fi-rr-angle-small-down"></i>
+                        </div>
+                      </v-col>
+                    </v-row>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div v-if="currentMenu === 'article'">
+              <div v-if="isNewArticle === false && isEditArticle === false">
+                <div class="head-title font-weight-bold">Article Posts</div>
                 <div class="mt-4">
-                  <v-row>
-                    <v-col
-                      v-for="i in allPostsArticles"
-                      :key="i._id"
-                      cols="12"
-                      sm="4"
-                      md="4"
-                      lg="4"
-                      xl="4"
-                      align-self="center"
-                    >
-                      <div class="card-block">
-                        <div class="thumbnail">
-                          <!-- <img src="@/assets/imgs/img-thumbnail.jpg" alt="" /> -->
+                  <v-row justify="center">
+                    <v-col cols="9">
+                      <div class="search-area d-flex">
+                        <i class="fi fi-rr-search mr-2"></i>
+                        <input
+                          v-model="searchArticle"
+                          type="text"
+                          placeholder="ค้นหาชื่อบทความ..."
+                        />
+                      </div>
+                    </v-col>
+                    <v-col cols="3">
+                      <base-button
+                        @click="isNewArticle = true"
+                        :fillSearch="true"
+                      >
+                        สร้างบทความใหม่
+                      </base-button>
+                    </v-col>
+                  </v-row>
+                </div>
+                <div class="mt-11">
+                  <h2>บทความทั้งหมด</h2>
+                  <div
+                    v-for="a in filterByArticle"
+                    :key="a._id"
+                    class="card-article mt-4"
+                  >
+                    <v-row>
+                      <v-col cols="6">
+                        <div class="name-article-header">
                           <img
-                            :src="`${$config.articleURL}readFileId?id=${i._id}`"
+                            :src="`${$config.articleURL}readFileId?id=${a._id}`"
                             alt=""
                           />
-                        </div>
-                        <div class="card-title">
-                          <v-row justify="center">
-                            <v-col cols="12" class="pb-lg-3 pb-sm-3">
-                              <div>
-                                <h2 class="h4">{{ i.title }}</h2>
-                                <!-- <p class="mb-0">
-                                  {{ i.details.text }}
-                                </p> -->
-                              </div>
-                            </v-col>
-                          </v-row>
-                        </div>
-                      </div>
-                    </v-col>
-                  </v-row>
-                  <v-row justify="center">
-                    <v-col>
-                      <div
-                        v-if="moreArticle"
-                        @click="showMoreArticle"
-                        class="see-more font-weight-bold"
-                      >
-                        ดูน้อยลง <i class="fi fi-rr-angle-small-up"></i>
-                      </div>
-                      <div
-                        v-else
-                        @click="showMoreArticle"
-                        class="see-more font-weight-bold"
-                      >
-                        ดูทั้งหมด <i class="fi fi-rr-angle-small-down"></i>
-                      </div>
-                    </v-col>
-                  </v-row>
-                </div>
-              </div>
-
-              <div ref="findHome" class="mt-7">
-                <div class="d-flex justify-space-between align-center">
-                  <div class="font-weight-bold title">
-                    <img src="@/assets/imgs/icon-find-home.svg" alt="" />
-                    โพสต์หาบ้านทั้งหมด
-                  </div>
-                  <div @click="menuDashboard('findhome')" class="manage-more">
-                    จัดการโพสต์หาบ้าน
-                    <i class="fi fi-rr-arrow-small-right"></i>
-                  </div>
-                </div>
-                <div class="mt-4">
-                  <v-row>
-                    <v-col
-                      v-for="p in allPostFindHome"
-                      :key="p._id"
-                      cols="12"
-                      sm="4"
-                      md="4"
-                      lg="4"
-                      xl="4"
-                      align-self="center"
-                    >
-                      <div class="card-block">
-                        <div class="thumbnail">
                           <!-- <img src="@/assets/imgs/img-thumbnail.jpg" alt="" /> -->
-                          <img
-                            :src="`${$config.findHome}readFileIdFindHome?id=${p._id}`"
-                            alt=""
-                          />
+                          {{ a.title }}
                         </div>
-                        <div class="card-title">
-                          <v-row justify="center">
-                            <v-col cols="12" class="pb-lg-3 pb-sm-3">
-                              <div>
-                                <h2 class="h4">{{ p.generalInfo.catName }}</h2>
-                                <p class="mb-0 location">
-                                  <i class="fi fi-rr-marker"></i>
-                                  {{
-                                    p.generalInfo.location.province +
-                                    " " +
-                                    p.generalInfo.location.district
-                                  }}
-                                </p>
-                              </div>
-                            </v-col>
-                          </v-row>
+                      </v-col>
+                      <v-col cols="4" class="name-article-header">
+                        <div>{{ convertDateTime(a.createdAt) }}</div>
+                      </v-col>
+                      <v-col cols="2" class="name-article-bottom">
+                        <div class="icon-article">
+                          <i
+                            @click="getDataArticle(a)"
+                            class="fi fi-rr-pencil"
+                          ></i>
+
+                          <i
+                            @click="deleteArticle(a._id)"
+                            class="fi fi-rr-trash trash"
+                          ></i>
                         </div>
-                      </div>
-                    </v-col>
-                  </v-row>
-                  <v-row justify="center">
-                    <v-col>
-                      <div
-                        v-if="morePost"
-                        @click="showMorePost"
-                        class="see-more font-weight-bold"
-                      >
-                        ดูน้อยลง <i class="fi fi-rr-angle-small-up"></i>
-                      </div>
-                      <div
-                        v-else
-                        @click="showMorePost"
-                        class="see-more font-weight-bold"
-                      >
-                        ดูทั้งหมด <i class="fi fi-rr-angle-small-down"></i>
-                      </div>
-                    </v-col>
-                  </v-row>
+                      </v-col>
+                    </v-row>
+                  </div>
                 </div>
               </div>
 
-              <div ref="allAccount" class="mt-7">
-                <div class="d-flex justify-space-between align-center">
-                  <div class="font-weight-bold title">
-                    <i class="fi fi-rr-user"></i>
-                    บัญชีผู้ใช้ทั้งหมด
-                  </div>
-                  <div @click="menuDashboard('users')" class="manage-more">
-                    จัดการบัญชีผู้ใช้
-                    <i class="fi fi-rr-arrow-small-right"></i>
-                  </div>
+              <div v-if="isNewArticle === true">
+                <div class="head-title font-weight-bold">
+                  Article Posts > สร้างบทความ
                 </div>
-                <div class="mt-4">
-                  <v-row>
-                    <v-col
-                      v-for="i in allUsersAccount"
-                      :key="i.id"
-                      cols="12"
-                      sm="4"
-                      md="4"
-                      lg="4"
-                      xl="4"
-                      align-self="center"
-                    >
-                      <div class="d-flex card-block-account">
-                        <i class="fi fi-rr-portrait"></i>
-                        <div>
-                          <p class="full-name mb-0">
-                            {{ i.firstName + " " + i.lastName }}
-                          </p>
+                <div class="new-article-card mt-4">
+                  <validation-observer ref="createArticleForm">
+                    <form @submit.prevent="newCreateArticle">
+                      <v-row justify="center">
+                        <v-col cols="12">
+                          <div class="mb-10">
+                            <validation-provider
+                              rules="required|image"
+                              v-slot="{ errors }"
+                              ref="provider"
+                            >
+                              <div @click="onClickImage" class="upload-image">
+                                <div
+                                  v-if="!imageData"
+                                  class="icon-upload text-center"
+                                >
+                                  <i class="fi fi-rr-picture"></i>
+                                  <p>เพิ่มรูป <span>ที่นี่</span></p>
+                                </div>
+                                <div class="img-container" v-else>
+                                  <div class="edit-img-btn">
+                                    <i class="fi fi-rr-pencil"></i> แก้ไขรูป
+                                  </div>
+                                  <div class="mb-10 article-img">
+                                    <img
+                                      :src="imageData"
+                                      class="preview"
+                                      alt=""
+                                    />
+                                  </div>
+                                </div>
+                                <input
+                                  id="edit-article-image"
+                                  ref="fileInput"
+                                  type="file"
+                                  accept="image/*"
+                                  @change="uploadImage($event)"
+                                  name="imageData"
+                                />
+                              </div>
+                              <span class="valid-form">
+                                {{ errors[0] }}
+                              </span>
+                            </validation-provider>
+                          </div>
+                          <div class="input-area mb-4">
+                            <p>ชื่อบทความ<span>*</span></p>
+                            <validation-provider
+                              rules="required"
+                              v-slot="{ errors }"
+                            >
+                              <input
+                                v-model="articleName"
+                                name="articleName"
+                                type="text"
+                                placeholder="กรุณากรอกชื่อบทความ"
+                              />
+                              <span class="valid-form">
+                                {{ errors[0] }}
+                              </span>
+                            </validation-provider>
+                          </div>
 
-                          <p class="email mb-0">{{ i.email }}</p>
-                        </div>
-                      </div>
-                    </v-col>
-                  </v-row>
-                  <v-row justify="center">
-                    <v-col>
-                      <div
-                        v-if="moreUser"
-                        @click="showMoreUser"
-                        class="see-more font-weight-bold"
-                      >
-                        ดูน้อยลง <i class="fi fi-rr-angle-small-up"></i>
-                      </div>
-                      <div
-                        v-else
-                        @click="showMoreUser"
-                        class="see-more font-weight-bold"
-                      >
-                        ดูทั้งหมด <i class="fi fi-rr-angle-small-down"></i>
-                      </div>
-                    </v-col>
-                  </v-row>
+                          <div>
+                            <div
+                              v-for="(p, index) in pars"
+                              :key="index"
+                              class="input-area mb-4"
+                            >
+                              <p>ย่อหน้าที่ {{ p.no }}<span>*</span></p>
+                              <validation-provider
+                                rules="required"
+                                v-slot="{ errors }"
+                              >
+                                <textarea
+                                  v-model="p.text"
+                                  name="paragraph"
+                                  type="text"
+                                  :placeholder="
+                                    'กรุณากรอกเนื้อหาย่อหน้าที่' + p.no
+                                  "
+                                />
+                                <span class="valid-form">
+                                  {{ errors[0] }}
+                                </span>
+                              </validation-provider>
+                            </div>
+                            <div
+                              @click="addParagraph"
+                              class="font-weight-bold font-orange"
+                            >
+                              + เพิ่มย่อหน้า
+                            </div>
+                          </div>
+                          <div class="mt-12">
+                            <v-row no-gutters justify="center" class="btn-area">
+                              <v-col align-self="center">
+                                <base-button
+                                  @click="cancleArticle"
+                                  :outline="true"
+                                  >ยกเลิก</base-button
+                                >
+                              </v-col>
+                              <v-col align-self="center">
+                                <base-button :fillSearch="true" :type="'submit'"
+                                  >สร้างบทความ</base-button
+                                >
+                              </v-col>
+                            </v-row>
+                          </div>
+                        </v-col>
+                      </v-row>
+                    </form>
+                  </validation-observer>
+                </div>
+              </div>
+
+              <div v-if="isEditArticle === true">
+                <div class="head-title font-weight-bold">
+                  Article Posts > แก้ไขบทความ
+                </div>
+                <div class="new-article-card mt-4">
+                  <validation-observer ref="updateArticleForm">
+                    <form @submit.prevent="updateArticle">
+                      <v-row justify="center">
+                        <v-col cols="12">
+                          <div class="mb-10">
+                            <validation-provider
+                              rules="required|image"
+                              v-slot="{ errors }"
+                              ref="provider"
+                            >
+                              <div @click="onClickImage" class="upload-image">
+                                <div
+                                  v-if="!imageData"
+                                  class="icon-upload text-center"
+                                >
+                                  <i class="fi fi-rr-picture"></i>
+                                  <p>เพิ่มรูป <span>ที่นี่</span></p>
+                                </div>
+                                <div class="img-container" v-else>
+                                  <div class="edit-img-btn">
+                                    <i class="fi fi-rr-pencil"></i> แก้ไขรูป
+                                  </div>
+                                  <div class="mb-10 article-img">
+                                    <img
+                                      :src="imageData"
+                                      class="preview"
+                                      alt=""
+                                    />
+                                  </div>
+                                </div>
+                                <input
+                                  id="edit-article-image"
+                                  ref="fileInput"
+                                  type="file"
+                                  accept="image/*"
+                                  @change="uploadImage($event)"
+                                  name="imageData"
+                                />
+                              </div>
+                              <span class="valid-form">
+                                {{ errors[0] }}
+                              </span>
+                            </validation-provider>
+                          </div>
+                          <div class="input-area mb-4">
+                            <p>ชื่อบทความ<span>*</span></p>
+                            <validation-provider
+                              rules="required"
+                              v-slot="{ errors }"
+                            >
+                              <input
+                                v-model="articleName"
+                                name="articleName"
+                                type="text"
+                                placeholder="กรุณากรอกชื่อบทความ"
+                              />
+                              <span class="valid-form">
+                                {{ errors[0] }}
+                              </span>
+                            </validation-provider>
+                          </div>
+
+                          <div>
+                            <div
+                              v-for="(p, index) in pars"
+                              :key="index"
+                              class="input-area mb-4"
+                            >
+                              <p>ย่อหน้าที่ {{ p.no }}<span>*</span></p>
+                              <validation-provider
+                                rules="required"
+                                v-slot="{ errors }"
+                              >
+                                <textarea
+                                  v-model="p.text"
+                                  name="paragraph"
+                                  type="text"
+                                  :placeholder="
+                                    'กรุณากรอกเนื้อหาย่อหน้าที่' + p.no
+                                  "
+                                />
+                                <span class="valid-form">
+                                  {{ errors[0] }}
+                                </span>
+                              </validation-provider>
+                            </div>
+                            <div
+                              @click="addParagraph"
+                              class="font-weight-bold font-orange"
+                            >
+                              + เพิ่มย่อหน้า
+                            </div>
+                          </div>
+                          <div class="mt-12">
+                            <v-row no-gutters justify="center" class="btn-area">
+                              <v-col align-self="center">
+                                <base-button
+                                  @click="cancleArticle"
+                                  :outline="true"
+                                  >ยกเลิก</base-button
+                                >
+                              </v-col>
+                              <v-col align-self="center">
+                                <base-button :fillSearch="true" :type="'submit'"
+                                  >บันทึก</base-button
+                                >
+                              </v-col>
+                            </v-row>
+                          </div>
+                        </v-col>
+                      </v-row>
+                    </form>
+                  </validation-observer>
                 </div>
               </div>
             </div>
-          </div>
 
-          <div v-if="currentMenu === 'article'">
-            <div v-if="isNewArticle === false && isEditArticle === false">
-              <div class="head-title font-weight-bold">Article Posts</div>
+            <div v-if="currentMenu === 'findhome'">
+              <div class="head-title font-weight-bold">Finder Home Posts</div>
               <div class="mt-4">
-                <v-row justify="center">
-                  <v-col cols="9">
+                <v-row>
+                  <v-col cols="12">
                     <div class="search-area d-flex">
                       <i class="fi fi-rr-search mr-2"></i>
-                      <input
-                        v-model="searchArticle"
-                        type="text"
-                        placeholder="ค้นหาชื่อบทความ..."
-                      />
+                      <input type="text" placeholder="ค้นหาชื่อโพสต์..." />
                     </div>
-                  </v-col>
-                  <v-col cols="3">
-                    <base-button
-                      @click="isNewArticle = true"
-                      :fillSearch="true"
-                    >
-                      สร้างบทความใหม่
-                    </base-button>
                   </v-col>
                 </v-row>
               </div>
               <div class="mt-11">
-                <h2>บทความทั้งหมด</h2>
+                <h2>โพสต์หาบ้านทั้งหมด</h2>
                 <div
-                  v-for="a in filterByArticle"
-                  :key="a._id"
+                  v-for="p in allPostFindHome"
+                  :key="p.id"
                   class="card-article mt-4"
                 >
                   <v-row>
-                    <v-col cols="6">
+                    <v-col>
                       <div class="name-article-header">
-                        <img src="@/assets/imgs/img-thumbnail.jpg" alt="" />
-                        {{ a.title }}
+                        <img
+                          :src="`${$config.findHome}readFileIdFindHome?id=${p._id}`"
+                          alt=""
+                        />
+                        <!-- <img src="@/assets/imgs/img-thumbnail.jpg" alt="" /> -->
+                        {{ p.generalInfo.catName }}
                       </div>
                     </v-col>
-                    <v-col cols="4" class="name-article-header">
-                      <div>{{ convertDateTime(a.createdAt) }}</div>
+                    <v-col class="name-article">
+                      <div>{{ convertDateTime(p.updatedAt) }}</div>
                     </v-col>
-                    <v-col cols="2" class="name-article-bottom">
-                      <div class="icon-article">
-                        <i
-                          @click="getDataArticle(a)"
-                          class="fi fi-rr-pencil"
-                        ></i>
 
-                        <i
-                          @click="deleteArticle(a._id)"
-                          class="fi fi-rr-trash trash"
-                        ></i>
+                    <v-col class="name-article">
+                      <div>
+                        {{
+                          p.authorInfo.firstName + " " + p.authorInfo.lastName
+                        }}
+                      </div>
+                    </v-col>
+                    <v-col
+                      class="name-article"
+                      :class="[
+                        p.status === 'ยังไม่ถูกรับเลี้ยง'
+                          ? 'inactive'
+                          : 'active',
+                      ]"
+                    >
+                      <div>{{ p.status }}</div>
+                    </v-col>
+
+                    <v-col class="name-article-bottom">
+                      <div @click="deleteFindHome(p._id)" class="icon-article">
+                        <i class="fi fi-rr-trash trash"></i>
                       </div>
                     </v-col>
                   </v-row>
@@ -293,373 +605,88 @@
               </div>
             </div>
 
-            <div v-if="isNewArticle === true">
-              <div class="head-title font-weight-bold">
-                Article Posts > สร้างบทความ
-              </div>
-              <div class="new-article-card mt-4">
-                <validation-observer ref="createArticleForm">
-                  <form @submit.prevent="newCreateArticle">
-                    <v-row justify="center">
-                      <v-col cols="12">
-                        <div class="mb-10">
-                          <validation-provider
-                            rules="required|image"
-                            v-slot="{ errors }"
-                            ref="provider"
-                          >
-                            <div @click="onClickImage" class="upload-image">
-                              <div
-                                v-if="!imageData"
-                                class="icon-upload text-center"
-                              >
-                                <i class="fi fi-rr-picture"></i>
-                                <p>เพิ่มรูป <span>ที่นี่</span></p>
-                              </div>
-                              <div class="img-container" v-else>
-                                <div class="edit-img-btn">
-                                  <i class="fi fi-rr-pencil"></i> แก้ไขรูป
-                                </div>
-                                <div class="mb-10 article-img">
-                                  <img
-                                    :src="imageData"
-                                    class="preview"
-                                    alt=""
-                                  />
-                                </div>
-                              </div>
-                              <input
-                                id="edit-article-image"
-                                ref="fileInput"
-                                type="file"
-                                accept="image/*"
-                                @change="uploadImage($event)"
-                                name="imageData"
-                              />
-                            </div>
-                            <span class="valid-form">
-                              {{ errors[0] }}
-                            </span>
-                          </validation-provider>
-                        </div>
-                        <div class="input-area mb-4">
-                          <p>ชื่อบทความ<span>*</span></p>
-                          <validation-provider
-                            rules="required"
-                            v-slot="{ errors }"
-                          >
-                            <input
-                              v-model="articleName"
-                              name="articleName"
-                              type="text"
-                              placeholder="กรุณากรอกชื่อบทความ"
-                            />
-                            <span class="valid-form">
-                              {{ errors[0] }}
-                            </span>
-                          </validation-provider>
-                        </div>
-
-                        <div>
-                          <div
-                            v-for="(p, index) in pars"
-                            :key="index"
-                            class="input-area mb-4"
-                          >
-                            <p>ย่อหน้าที่ {{ p.no }}<span>*</span></p>
-                            <validation-provider
-                              rules="required"
-                              v-slot="{ errors }"
-                            >
-                              <textarea
-                                v-model="p.text"
-                                name="paragraph"
-                                type="text"
-                                :placeholder="
-                                  'กรุณากรอกเนื้อหาย่อหน้าที่' + p.no
-                                "
-                              />
-                              <span class="valid-form">
-                                {{ errors[0] }}
-                              </span>
-                            </validation-provider>
-                          </div>
-                          <div
-                            @click="addParagraph"
-                            class="font-weight-bold font-orange"
-                          >
-                            + เพิ่มย่อหน้า
-                          </div>
-                        </div>
-                        <div class="mt-12">
-                          <v-row no-gutters justify="center" class="btn-area">
-                            <v-col align-self="center">
-                              <base-button
-                                @click="cancleArticle"
-                                :outline="true"
-                                >ยกเลิก</base-button
-                              >
-                            </v-col>
-                            <v-col align-self="center">
-                              <base-button :fillSearch="true" :type="'submit'"
-                                >สร้างบทความ</base-button
-                              >
-                            </v-col>
-                          </v-row>
-                        </div>
-                      </v-col>
-                    </v-row>
-                  </form>
-                </validation-observer>
-              </div>
-            </div>
-
-            <div v-if="isEditArticle === true">
-              <div class="head-title font-weight-bold">
-                Article Posts > แก้ไขบทความ
-              </div>
-              <div class="new-article-card mt-4">
-                <validation-observer ref="updateArticleForm">
-                  <form @submit.prevent="updateArticle">
-                    <v-row justify="center">
-                      <v-col cols="12">
-                        <div class="mb-10">
-                          <validation-provider
-                            rules="required|image"
-                            v-slot="{ errors }"
-                            ref="provider"
-                          >
-                            <div @click="onClickImage" class="upload-image">
-                              <div
-                                v-if="!imageData"
-                                class="icon-upload text-center"
-                              >
-                                <i class="fi fi-rr-picture"></i>
-                                <p>เพิ่มรูป <span>ที่นี่</span></p>
-                              </div>
-                              <div class="img-container" v-else>
-                                <div class="edit-img-btn">
-                                  <i class="fi fi-rr-pencil"></i> แก้ไขรูป
-                                </div>
-                                <div class="mb-10 article-img">
-                                  <img
-                                    :src="imageData"
-                                    class="preview"
-                                    alt=""
-                                  />
-                                </div>
-                              </div>
-                              <input
-                                id="edit-article-image"
-                                ref="fileInput"
-                                type="file"
-                                accept="image/*"
-                                @change="uploadImage($event)"
-                                name="imageData"
-                              />
-                            </div>
-                            <span class="valid-form">
-                              {{ errors[0] }}
-                            </span>
-                          </validation-provider>
-                        </div>
-                        <div class="input-area mb-4">
-                          <p>ชื่อบทความ<span>*</span></p>
-                          <validation-provider
-                            rules="required"
-                            v-slot="{ errors }"
-                          >
-                            <input
-                              v-model="articleName"
-                              name="articleName"
-                              type="text"
-                              placeholder="กรุณากรอกชื่อบทความ"
-                            />
-                            <span class="valid-form">
-                              {{ errors[0] }}
-                            </span>
-                          </validation-provider>
-                        </div>
-
-                        <div>
-                          <div
-                            v-for="(p, index) in pars"
-                            :key="index"
-                            class="input-area mb-4"
-                          >
-                            <p>ย่อหน้าที่ {{ p.no }}<span>*</span></p>
-                            <validation-provider
-                              rules="required"
-                              v-slot="{ errors }"
-                            >
-                              <textarea
-                                v-model="p.text"
-                                name="paragraph"
-                                type="text"
-                                :placeholder="
-                                  'กรุณากรอกเนื้อหาย่อหน้าที่' + p.no
-                                "
-                              />
-                              <span class="valid-form">
-                                {{ errors[0] }}
-                              </span>
-                            </validation-provider>
-                          </div>
-                          <div
-                            @click="addParagraph"
-                            class="font-weight-bold font-orange"
-                          >
-                            + เพิ่มย่อหน้า
-                          </div>
-                        </div>
-                        <div class="mt-12">
-                          <v-row no-gutters justify="center" class="btn-area">
-                            <v-col align-self="center">
-                              <base-button
-                                @click="cancleArticle"
-                                :outline="true"
-                                >ยกเลิก</base-button
-                              >
-                            </v-col>
-                            <v-col align-self="center">
-                              <base-button :fillSearch="true" :type="'submit'"
-                                >บันทึก</base-button
-                              >
-                            </v-col>
-                          </v-row>
-                        </div>
-                      </v-col>
-                    </v-row>
-                  </form>
-                </validation-observer>
-              </div>
-            </div>
-          </div>
-
-          <div v-if="currentMenu === 'findhome'">
-            <div class="head-title font-weight-bold">Finder Home Posts</div>
-            <div class="mt-4">
-              <v-row>
-                <v-col cols="12">
-                  <div class="search-area d-flex">
-                    <i class="fi fi-rr-search mr-2"></i>
-                    <input type="text" placeholder="ค้นหาชื่อโพสต์..." />
-                  </div>
-                </v-col>
-              </v-row>
-            </div>
-            <div class="mt-11">
-              <h2>โพสต์หาบ้านทั้งหมด</h2>
-              <div
-                v-for="p in allPostFindHome"
-                :key="p.id"
-                class="card-article mt-4"
-              >
-                <v-row>
-                  <v-col>
-                    <div class="name-article-header">
-                      <img src="@/assets/imgs/img-thumbnail.jpg" alt="" />
-                      {{ p.generalInfo.catName }}
-                    </div>
-                  </v-col>
-                  <v-col class="name-article">
-                    <div>{{ convertDateTime(p.updatedAt) }}</div>
-                  </v-col>
-
-                  <v-col class="name-article">
-                    <div>
-                      {{ p.authorInfo.firstName + " " + p.authorInfo.lastName }}
-                    </div>
-                  </v-col>
-                  <v-col
-                    class="name-article"
-                    :class="[
-                      p.status === 'ยังไม่ถูกรับเลี้ยง' ? 'inactive' : 'active',
-                    ]"
-                  >
-                    <div>{{ p.status }}</div>
-                  </v-col>
-
-                  <v-col class="name-article-bottom">
-                    <div @click="deleteFindHome(p._id)" class="icon-article">
-                      <i class="fi fi-rr-trash trash"></i>
-                    </div>
-                  </v-col>
-                </v-row>
-              </div>
-            </div>
-          </div>
-
-          <div v-if="currentMenu === 'users'">
-            <div class="head-title font-weight-bold">Users</div>
-            <div class="mt-4">
-              <v-row>
-                <v-col cols="12">
-                  <div class="search-area d-flex">
-                    <i class="fi fi-rr-search mr-2"></i>
-                    <input
-                      v-model="searchAccount"
-                      type="text"
-                      placeholder="ค้นหาชื่อบัญชี..."
-                    />
-                  </div>
-                </v-col>
-              </v-row>
-            </div>
-            <div class="mt-11">
-              <h2>บัญชีผู้ใช้ทั้งหมด</h2>
+            <div v-if="currentMenu === 'users'">
+              <div class="head-title font-weight-bold">Users</div>
               <div class="mt-4">
                 <v-row>
-                  <v-col
-                    v-for="account in filterByAccount"
-                    :key="account._id"
-                    cols="12"
-                    sm="4"
-                    md="4"
-                    lg="4"
-                    xl="4"
-                    align-self="center"
-                  >
-                    <div class="card-block-user">
-                      <i class="fi fi-rr-portrait"></i>
-
-                      <div>
-                        <p class="mb-0 font-weight-bold full-name">
-                          {{ account.firstName + " " + account.lastName }}
-                        </p>
-                        <p class="mb-0">{{ account.email }}</p>
-                        <p class="mb-0">{{ account.tel }}</p>
-                        <p class="mb-0">
-                          {{
-                            account.address.province +
-                            "," +
-                            " " +
-                            account.address.subDistrict +
-                            "," +
-                            " " +
-                            account.address.district +
-                            "," +
-                            " " +
-                            account.address.zipCode
-                          }}
-                        </p>
-                      </div>
-                      <div
-                        @click="deleteAccount(account._id)"
-                        class="mt-4 footer-btn font-weight-bold"
-                      >
-                        ลบบัญชีผู้ใช้
-                      </div>
+                  <v-col cols="12">
+                    <div class="search-area d-flex">
+                      <i class="fi fi-rr-search mr-2"></i>
+                      <input
+                        v-model="searchAccount"
+                        type="text"
+                        placeholder="ค้นหาชื่อบัญชี..."
+                      />
                     </div>
                   </v-col>
                 </v-row>
               </div>
+              <div class="mt-11">
+                <h2>บัญชีผู้ใช้ทั้งหมด</h2>
+                <div class="mt-4">
+                  <v-row>
+                    <v-col
+                      v-for="account in filterByAccount"
+                      :key="account._id"
+                      cols="12"
+                      sm="4"
+                      md="4"
+                      lg="4"
+                      xl="4"
+                      align-self="center"
+                    >
+                      <div class="card-block-user">
+                        <i class="fi fi-rr-portrait"></i>
+
+                        <div>
+                          <p class="mb-0 font-weight-bold full-name">
+                            {{ account.firstName + " " + account.lastName }}
+                          </p>
+                          <p class="mb-0">{{ account.email }}</p>
+                          <p class="mb-0">{{ account.tel }}</p>
+                          <p class="mb-0">
+                            {{
+                              account.address.province +
+                              "," +
+                              " " +
+                              account.address.subDistrict +
+                              "," +
+                              " " +
+                              account.address.district +
+                              "," +
+                              " " +
+                              account.address.zipCode
+                            }}
+                          </p>
+                        </div>
+                        <div
+                          @click="deleteAccount(account._id)"
+                          class="mt-4 footer-btn font-weight-bold"
+                        >
+                          ลบบัญชีผู้ใช้
+                        </div>
+                      </div>
+                    </v-col>
+                  </v-row>
+                </div>
+              </div>
             </div>
-          </div>
-        </v-col>
-      </v-row>
-    </v-container>
-  </section>
+          </v-col>
+        </v-row>
+      </v-container>
+    </section>
+    <section class="d-md-none d-lg-none d-xl-none">
+      <div class="text-center">
+        <v-container>
+          <v-row justify="center">
+            <v-col align-self="center" cols="12">
+              This website is supported on desktop only.
+            </v-col>
+          </v-row>
+        </v-container>
+      </div>
+    </section>
+  </div>
 </template>
 
 <script>
@@ -893,7 +920,7 @@ export default {
             text: this.pars[index].text,
           });
         }
-         this.$axios.put(
+        this.$axios.put(
           `${this.$config.articleURL}updateArticle?id=${this.editArticleId}`,
           {
             title: this.articleName,
@@ -1539,8 +1566,9 @@ export default {
     overflow: hidden;
     line-height: 0;
     img {
-      width: 100%;
-      height: 200px;
+      max-width: 100%;
+      // width: 100%;
+      // height: 260px;
       transition: 0.3s all;
       &:hover {
         transform: scale(1.1);
@@ -1549,11 +1577,21 @@ export default {
         object-fit: cover;
         align-items: center;
       }
+      @media (min-width: 1024px) {
+        width: 100%;
+        height: 200px;
+      }
     }
   }
 
   .card-title {
     padding: 22px;
+    .intro-content-card {
+      display: -webkit-box;
+      -webkit-line-clamp: 3;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
   }
   &:hover {
     .card-title {

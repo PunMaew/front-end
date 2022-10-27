@@ -226,6 +226,11 @@
 
           <!-- myPost -->
           <div v-if="selectProfileId == 2" class="mt-6">
+            <!-- <div class="d-flex justify-space-between my-post items-center">
+              <div>โพสต์ทั้งหมด</div>
+              <div class="new-post-btn">สร้างโพสต์ใหม่</div>
+            </div>
+            <div></div> -->
             <nuxt-link to="/finderHome" class="create-btn d-sm-none">
               <img src="@/assets/imgs/catFindHome.png" alt="" />
               สร้างโพสหาบ้าน
@@ -524,6 +529,19 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.my-post {
+  font-size: 16px;
+  font-weight: bold;
+  align-items: center;
+}
+.new-post-btn {
+  border-radius: 50px;
+  border: 2px solid $purple-dark;
+  box-shadow: 0px 4px 15px #e0d6f9;
+  font-size: 14px;
+  padding: 8px 20px;
+  color: $purple-dark;
+}
 .valid-form {
   color: $error;
   font-weight: bold;
@@ -617,6 +635,8 @@ export default {
     line-height: 0;
     img {
       max-width: 100%;
+      // width: 100%;
+      // height: 260px;
       transition: 0.3s all;
       &:hover {
         transform: scale(1.1);
@@ -624,6 +644,10 @@ export default {
       @media (min-width: 768px) {
         object-fit: cover;
         align-items: center;
+      }
+      @media (min-width: 1024px) {
+        width: 100%;
+        height: 200px;
       }
     }
   }

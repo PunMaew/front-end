@@ -114,7 +114,7 @@ export default {
       isEdit: false,
     };
   },
-  // http://localhost:5443/findHome/updatePost?id=
+
   async asyncData({ query, $axios, $config }) {
     console.log(query);
     try {
@@ -165,43 +165,46 @@ export default {
   methods: {
     async updateFindHome() {
       try {
-        // http://localhost:5443/findHome/updatePost?id=
-        this.$axios
-          .put(
-            `${this.$config.findHome}updatePost?id=${this.$route.query.id}`,
-            {
-              generalInfo: {
-                catName: this.forms.step1.catName,
-                color: this.forms.step1.color,
-                breeds: this.forms.step1.breeds,
-                age: this.forms.step1.age,
-                location: {
-                  province: this.forms.step1.province,
-                  subDistrict: this.forms.step1.subDistrict,
-                  district: this.forms.step1.district,
-                  zipCode: this.forms.step1.zipCode,
-                },
-                receiveVaccine: this.forms.step1.receiveVaccine,
-                receiveDate: this.forms.step1.receiveDate,
-                disease: this.forms.step1.disease,
-                neutered: this.forms.step1.neutered,
-                gender: this.forms.step1.gender,
-                characteristic: this.forms.step2.characteristic,
-                others: this.forms.step1.others,
+        await this.$axios.put(
+          `${this.$config.findHome}updatePost?id=${this.$route.query.id}`,
+          {
+            generalInfo: {
+              catName: this.forms.step1.catName,
+              color: this.forms.step1.color,
+              breeds: this.forms.step1.breeds,
+              age: this.forms.step1.age,
+              location: {
+                province: this.forms.step1.province,
+                subDistrict: this.forms.step1.subDistrict,
+                district: this.forms.step1.district,
+                zipCode: this.forms.step1.zipCode,
               },
-              contact: {
-                contactName: this.forms.step3.contactName,
-                tel: this.forms.step3.tel,
-                facebook: this.forms.step3.facebook,
-                Line: this.forms.step3.line,
-              },
-            }
-          )
-          .then((res) => {
-            console.log(res.data);
-            console.log("edit successfully");
-            this.$router.push("/adoptCat");
-          });
+              receiveVaccine: this.forms.step1.receiveVaccine,
+              receiveDate: this.forms.step1.receiveDate,
+              disease: this.forms.step1.disease,
+              neutered: this.forms.step1.neutered,
+              gender: this.forms.step1.gender,
+              characteristic: this.forms.step2.characteristic,
+              others: this.forms.step1.others,
+            },
+            contact: {
+              contactName: this.forms.step3.contactName,
+              tel: this.forms.step3.tel,
+              facebook: this.forms.step3.facebook,
+              Line: this.forms.step3.line,
+            },
+          }
+        );
+        if (this.forms.step1.formData) {
+          const updateImageFindHome = await this.$axios.post(
+            `${this.$config.findHome}updateImage?id=${this.$route.query.id}`,
+            this.forms.step1.formData
+          );
+          console.log(updateImageFindHome);
+        }
+
+        console.log("update successfully");
+        this.$router.push("/adoptCat");
       } catch (error) {
         console.log(error);
       }
@@ -222,8 +225,9 @@ export default {
             : "9-12 เดือน"
           : "1 ปีขึ้นไป";
       try {
-        this.$axios
-          .post(`${this.$config.findHome}create`, {
+        const createPost = await this.$axios.post(
+          `${this.$config.findHome}create`,
+          {
             generalInfo: {
               catName: this.forms.step1.catName,
               color: this.forms.step1.color,
@@ -250,12 +254,21 @@ export default {
               facebook: this.forms.step3.facebook,
               Line: this.forms.step3.line,
             },
-          })
-          .then((res) => {
-            console.log(res.data);
-            console.log("submit successfully");
-            this.$router.push("/adoptCat");
-          });
+          }
+        );
+
+        const uploadFindHome = await this.$axios.post(
+          `${this.$config.findHome}singleUpload/${createPost.data.postId}`,
+          this.forms.step1.formData
+        );
+        console.log(uploadFindHome);
+        console.log("submit successfully");
+        this.$router.push("/adoptCat");
+        // .then((res) => {
+        //   console.log(res.data);
+        //   console.log("submit successfully");
+        //   this.$router.push("/adoptCat");
+        // });
       } catch (error) {
         console.log(error);
       }

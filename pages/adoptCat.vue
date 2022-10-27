@@ -1151,8 +1151,12 @@ export default {
   img {
     border-radius: 10px;
     width: 100%;
-    object-fit: cover;
+    height: 200px;
+    object-fit: contain;
     align-items: center;
+    @media (min-width: 1440px) {
+      height: 520px;
+    }
   }
 }
 ::v-deep .theme--light.v-sheet {
@@ -1236,9 +1240,9 @@ export default {
     overflow: hidden;
     line-height: 0;
     img {
-      // max-width: 100%;
-      width: 100%;
-      height: 200px;
+      max-width: 100%;
+      // width: 100%;
+      // height: 260px;
       transition: 0.3s all;
       &:hover {
         transform: scale(1.1);
@@ -1246,6 +1250,10 @@ export default {
       @media (min-width: 768px) {
         object-fit: cover;
         align-items: center;
+      }
+      @media (min-width: 1024px) {
+        width: 100%;
+        height: 200px;
       }
     }
   }
