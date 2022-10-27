@@ -46,7 +46,11 @@
             <i class="fi fi-rr-user"></i>
             Users
           </div>
-          <div id="menu-fix-footer" class="mt-1">
+          <div
+            @click="menuDashboard('logoutAdmin')"
+            id="menu-fix-footer"
+            class="mt-1"
+          >
             <i class="fi fi-rr-exit"></i>
             ออกจากระบบ
           </div>
@@ -99,6 +103,15 @@ export default {
       if (menu === "users") {
         try {
           this.$store.commit("SET_MENU", "users");
+        } catch (error) {
+          console.log(error);
+        }
+      }
+      if (menu === "logoutAdmin") {
+        try {
+          this.$auth.logout("admin");
+          // this.$router.push("/loginAdmin");
+          // this.$store.commit("SET_MENU", "logoutAdmin");
         } catch (error) {
           console.log(error);
         }

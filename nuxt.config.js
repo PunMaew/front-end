@@ -122,7 +122,7 @@ export default {
             method: "post",
             propertyName: "accessToken",
           },
-          logout: { url: "user/logoutAdmin", method: "post" },
+          logout: { url: "user/logoutAdmin", method: "get" },
           tokenName: "token",
         },
         // user: { url: '/api/auth/admin/user', method: 'get', propertyName: 'user' },
