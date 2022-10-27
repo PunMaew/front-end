@@ -92,7 +92,7 @@
               </button>
               <div class="thumbnail">
                 <img
-                  :src="`${$config.findHome}readFileId?id=${i._id}`"
+                  :src="`${$config.articleURL}readFileId?id=${i._id}`"
                   alt=""
                 />
                 <!-- <img src="@/assets/imgs/img-thumbnail.jpg" alt="" /> -->
