@@ -47,18 +47,20 @@
         <v-col sm="3" class="nav-right">
           <ul id="menu" class="d-none d-md-flex">
             <li v-if="loggedIn">
-              <div class="d-flex account-info">
-                <div class="user-icon mr-2 font-weight-bold">
-                  <i class="fi fi-rr-user"></i>
-                  {{ user.firstName }} |
+              <client-only>
+                <div class="d-flex account-info">
+                  <div class="user-icon mr-2 font-weight-bold">
+                    <i class="fi fi-rr-user"></i>
+                    {{ user.firstName }} |
+                  </div>
+                  <div
+                    @click="menuAction('logout')"
+                    class="d-flex font-weight-bold exit-system"
+                  >
+                    ออกจากระบบ
+                  </div>
                 </div>
-                <div
-                  @click="menuAction('logout')"
-                  class="d-flex font-weight-bold exit-system"
-                >
-                  ออกจากระบบ
-                </div>
-              </div>
+              </client-only>
               <!-- <client-only>
                 <v-menu offset-y>
                   <template v-slot:activator="{ on, attrs }">
