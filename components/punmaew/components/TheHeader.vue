@@ -37,7 +37,7 @@
                 <p class="mb-0">รับเลี้ยงแมว</p>
               </n-link>
             </li>
-            <li v-if="loggedIn">
+            <li v-show="loggedIn">
               <n-link to="/editProfile" class="opunmai">
                 <p class="mb-0">โปรไฟล์ของฉัน</p>
               </n-link>
@@ -46,7 +46,7 @@
         </v-col>
         <v-col sm="3" class="nav-right">
           <ul id="menu" class="d-none d-md-flex">
-            <li v-if="loggedIn">
+            <li v-show="loggedIn">
               <client-only>
                 <div class="d-flex account-info">
                   <div class="user-icon mr-2 font-weight-bold">
@@ -91,7 +91,7 @@
                 </v-menu>
               </client-only> -->
             </li>
-            <li v-else>
+            <li v-show="!loggedIn">
               <n-link to="/login" class="opunmai">
                 <base-button :fill="true">เข้าสู่ระบบ</base-button>
               </n-link>
