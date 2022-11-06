@@ -282,16 +282,16 @@ export default {
       newConfirm: "",
     };
   },
-  // mounted() {
-  //   if (this.$store.state.auth.loggedIn === true) {
-  //     this.$router.push("/dashboard");
-  //   }
-  // },
-  asyncData({ store, redirect }) {
-    if (store.state.auth.loggedIn === true) {
-      redirect("/dashboard");
+  mounted() {
+    if (this.$store.state.auth.loggedIn === true) {
+      this.$router.push("/dashboard");
     }
   },
+  // asyncData({ store, redirect }) {
+  //   if (store.state.auth.loggedIn === true) {
+  //     redirect("/dashboard");
+  //   }
+  // },
   methods: {
     loginAdmin() {
       try {

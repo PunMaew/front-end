@@ -553,16 +553,16 @@ export default {
       otpCode: "",
     };
   },
-  // mounted() {
-  //   if (this.$store.state.auth.loggedIn === true) {
-  //     this.$router.push("/");
-  //   }
-  // },
-  asyncData({ store, redirect }) {
-    if (store.state.auth.loggedIn === true) {
-      redirect("/");
+  mounted() {
+    if (this.$store.state.auth.loggedIn === true) {
+      this.$router.push("/");
     }
   },
+  // asyncData({ store, redirect }) {
+  //   if (store.state.auth.loggedIn === true) {
+  //     redirect("/");
+  //   }
+  // },
   methods: {
     login() {
       try {
