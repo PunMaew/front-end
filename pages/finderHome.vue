@@ -96,11 +96,11 @@ import PmFromContainer from "../components/punmaew/components/PmFromContainer.vu
 export default {
   // middleware: "auth",
   layout: "adoption",
-  mounted() {
-    if (this.$store.state.auth.loggedIn === false) {
-      this.$router.push("/login");
-    }
-  },
+  // mounted() {
+  //   if (this.$store.state.auth.loggedIn === false) {
+  //     this.$router.push("/login");
+  //   }
+  // },
   components: { CardFormAdopt, PmFromContainer },
 
   data() {
@@ -118,6 +118,11 @@ export default {
       },
       isEdit: false,
     };
+  },
+  created() {
+    if (this.$store.state.auth.loggedIn === false) {
+      this.$router.push("/login");
+    }
   },
 
   async asyncData({ query, $axios, $config }) {
