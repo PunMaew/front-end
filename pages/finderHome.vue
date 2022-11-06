@@ -119,11 +119,11 @@ export default {
       isEdit: false,
     };
   },
-  created() {
-    if (this.$store.state.auth.loggedIn === false) {
-      this.$router.push("/login");
-    }
-  },
+  // created() {
+  //   if (this.$store.state.auth.loggedIn === false) {
+  //     this.$router.push("/login");
+  //   }
+  // },
 
   async asyncData({ query, $axios, $config }) {
     console.log(query);
