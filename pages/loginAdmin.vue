@@ -55,7 +55,7 @@
                       </validation-provider>
                     </div>
                     <!--  -->
-                    <div class="mt-2">
+                    <!-- <div class="mt-2">
                       <p class="set-forget-pass" @click="dialog2 = true">
                         หากลืมรหัสผ่าน
                       </p>
@@ -233,8 +233,11 @@
                           </template>
                         </card-dialog>
                       </validation-observer>
-                    </div>
-                    <base-button :fillSearch="true" :type="'submit'"
+                    </div> -->
+                    <base-button
+                      class="mt-6"
+                      :fillSearch="true"
+                      :type="'submit'"
                       >เข้าสู่ระบบ</base-button
                     >
                   </form>

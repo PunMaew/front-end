@@ -46,20 +46,372 @@
               <v-col cols="12" align-self="center">
                 <div>
                   <template>
-                    <v-row no-gutters align-self="center" class="gap-drop-down">
-                      <v-col class="d-flex">
-                        <v-select
-                          :items="items"
-                          label="ตัวกรอง"
-                          outlined
-                        ></v-select>
+                    <v-row align-self="center" class="gap-drop-down">
+                      <v-col cols="6">
+                        <!--  -->
+                        <div @click="sheetMobile = true" class="filter-by">
+                          <div>ตัวกรอง</div>
+                          <i class="fi fi-rr-settings-sliders"></i>
+                        </div>
+                        <v-bottom-sheet v-model="sheetMobile" persistent>
+                          <v-sheet>
+                            <v-container class="set-sheet">
+                              <div
+                                @click="sheetMobile = !sheetMobile"
+                                class="cross-circle"
+                              >
+                                <i class="fi fi-rr-cross-circle"></i>
+                              </div>
+                              <div class="filter-sheet">
+                                <div class="justify-space-between d-flex">
+                                  <p class="mb-2 ml-3"><b>ค้นหาจากพิกัด</b></p>
+                                  <div @click="showDataFilter">
+                                    <i
+                                      v-if="openTab"
+                                      class="fi fi-rr-angle-small-up"
+                                    ></i>
+                                    <i
+                                      v-else
+                                      class="fi fi-rr-angle-small-down"
+                                    ></i>
+                                  </div>
+                                </div>
+                                <div>
+                                  <div
+                                    v-if="openTab"
+                                    class="iput-search d-flex"
+                                  >
+                                    <i class="fi fi-rr-search mr-2"></i>
+                                    <input
+                                      v-model="search"
+                                      placeholder="กรุณากรอกจังหวัด"
+                                      type="text"
+                                    />
+                                  </div>
+                                  <div>
+                                    <v-container>
+                                      <div v-if="openTab" class="scroll-bar">
+                                        <v-checkbox
+                                          v-for="p in duplicatedRemove"
+                                          v-model="isSelected"
+                                          :value="p.province"
+                                          :key="p.id"
+                                          :label="'จังหวัด' + p.province"
+                                          hide-details
+                                        >
+                                        </v-checkbox>
+                                      </div>
+                                      <div class="line"></div>
+                                      <div class="filter-side-bar">
+                                        <div
+                                          class="justify-space-between d-flex"
+                                        >
+                                          <p class="mb-0">อายุ</p>
+                                          <div @click="showDataFilter2">
+                                            <i
+                                              v-if="openTab2"
+                                              class="fi fi-rr-angle-small-up"
+                                            ></i>
+                                            <i
+                                              v-else
+                                              class="fi fi-rr-angle-small-down"
+                                            ></i>
+                                          </div>
+                                        </div>
+                                        <div v-if="openTab2">
+                                          <v-checkbox
+                                            v-for="i in filterList.age"
+                                            v-model="isAge"
+                                            :value="i.name"
+                                            :key="i.id"
+                                            :label="i.name"
+                                            hide-details
+                                          ></v-checkbox>
+                                        </div>
+                                      </div>
+                                      <div class="line"></div>
+                                      <div class="filter-side-bar">
+                                        <div
+                                          class="justify-space-between d-flex"
+                                        >
+                                          <p class="mb-0">เพศ</p>
+                                          <div @click="showDataFilter3">
+                                            <i
+                                              v-if="openTab3"
+                                              class="fi fi-rr-angle-small-up"
+                                            ></i>
+                                            <i
+                                              v-else
+                                              class="fi fi-rr-angle-small-down"
+                                            ></i>
+                                          </div>
+                                        </div>
+                                        <div v-if="openTab3">
+                                          <v-checkbox
+                                            v-for="i in filterList.gender"
+                                            v-model="isGender"
+                                            :value="i.name"
+                                            :key="i.id"
+                                            :label="i.name"
+                                            hide-details
+                                          ></v-checkbox>
+                                        </div>
+                                      </div>
+                                      <div class="line"></div>
+                                      <div class="filter-side-bar">
+                                        <div
+                                          class="justify-space-between d-flex"
+                                        >
+                                          <p class="mb-0">ขนาด</p>
+                                          <div @click="showDataFilter4">
+                                            <i
+                                              v-if="openTab4"
+                                              class="fi fi-rr-angle-small-up"
+                                            ></i>
+                                            <i
+                                              v-else
+                                              class="fi fi-rr-angle-small-down"
+                                            ></i>
+                                          </div>
+                                        </div>
+                                        <div v-if="openTab4">
+                                          <v-checkbox
+                                            v-for="i in filterList.bodySize"
+                                            v-model="isBodySize"
+                                            :value="i.name"
+                                            :key="i.id"
+                                            :label="i.name"
+                                            hide-details
+                                          ></v-checkbox>
+                                        </div>
+                                      </div>
+                                      <div class="line"></div>
+                                      <div class="filter-side-bar">
+                                        <div
+                                          class="justify-space-between d-flex"
+                                        >
+                                          <p class="mb-0">สี</p>
+                                          <div @click="showDataFilter5">
+                                            <i
+                                              v-if="openTab5"
+                                              class="fi fi-rr-angle-small-up"
+                                            ></i>
+                                            <i
+                                              v-else
+                                              class="fi fi-rr-angle-small-down"
+                                            ></i>
+                                          </div>
+                                        </div>
+                                        <div v-if="openTab5" class="scroll-bar">
+                                          <v-checkbox
+                                            v-for="i in filterList.color"
+                                            v-model="isColor"
+                                            :value="i.name"
+                                            :key="i.id"
+                                            :label="i.name"
+                                            hide-details
+                                          ></v-checkbox>
+                                        </div>
+                                      </div>
+                                      <div class="line"></div>
+                                      <div class="filter-side-bar">
+                                        <div
+                                          class="justify-space-between d-flex"
+                                        >
+                                          <p class="mb-0">ลักษณะขน</p>
+                                          <div @click="showDataFilter6">
+                                            <i
+                                              v-if="openTab6"
+                                              class="fi fi-rr-angle-small-up"
+                                            ></i>
+                                            <i
+                                              v-else
+                                              class="fi fi-rr-angle-small-down"
+                                            ></i>
+                                          </div>
+                                        </div>
+                                        <div v-if="openTab6">
+                                          <v-checkbox
+                                            v-for="i in filterList.hairStyle"
+                                            v-model="isHairStyle"
+                                            :value="i.name"
+                                            :key="i.id"
+                                            :label="i.name"
+                                            hide-details
+                                          ></v-checkbox>
+                                        </div>
+                                      </div>
+                                      <div class="line"></div>
+                                      <div class="filter-side-bar">
+                                        <div
+                                          class="justify-space-between d-flex"
+                                        >
+                                          <p class="mb-0">การใช้กระบะทราย</p>
+                                          <div @click="showDataFilter7">
+                                            <i
+                                              v-if="openTab7"
+                                              class="fi fi-rr-angle-small-up"
+                                            ></i>
+                                            <i
+                                              v-else
+                                              class="fi fi-rr-angle-small-down"
+                                            ></i>
+                                          </div>
+                                        </div>
+                                        <div v-if="openTab7">
+                                          <v-checkbox
+                                            v-for="i in filterList.sandBox"
+                                            v-model="isSandBox"
+                                            :value="i.name"
+                                            :key="i.id"
+                                            :label="i.name"
+                                            hide-details
+                                          ></v-checkbox>
+                                        </div>
+                                      </div>
+                                      <div class="line"></div>
+                                      <div class="filter-side-bar">
+                                        <div
+                                          class="justify-space-between d-flex"
+                                        >
+                                          <p class="mb-0">สายพันธุ์</p>
+                                          <div @click="showDataFilter8">
+                                            <i
+                                              v-if="openTab8"
+                                              class="fi fi-rr-angle-small-up"
+                                            ></i>
+                                            <i
+                                              v-else
+                                              class="fi fi-rr-angle-small-down"
+                                            ></i>
+                                          </div>
+                                        </div>
+                                        <div v-if="openTab8" class="scroll-bar">
+                                          <v-checkbox
+                                            v-for="i in filterList.breed"
+                                            v-model="isBreed"
+                                            :value="i.name"
+                                            :key="i.id"
+                                            :label="i.name"
+                                            hide-details
+                                          ></v-checkbox>
+                                        </div>
+                                      </div>
+                                      <div class="line"></div>
+                                      <div class="filter-side-bar">
+                                        <div
+                                          class="justify-space-between d-flex"
+                                        >
+                                          <p class="mb-0">ลักษณะนิสัย</p>
+                                          <div @click="showDataFilter9">
+                                            <i
+                                              v-if="openTab9"
+                                              class="fi fi-rr-angle-small-up"
+                                            ></i>
+                                            <i
+                                              v-else
+                                              class="fi fi-rr-angle-small-down"
+                                            ></i>
+                                          </div>
+                                        </div>
+                                        <div v-if="openTab9" class="scroll-bar">
+                                          <v-checkbox
+                                            v-for="i in filterList.characteristic"
+                                            v-model="isCharacteristic"
+                                            :value="i.name"
+                                            :key="i.id"
+                                            :label="i.name"
+                                            hide-details
+                                          ></v-checkbox>
+                                        </div>
+                                      </div>
+                                      <div class="line"></div>
+                                      <div class="filter-side-bar">
+                                        <div
+                                          class="justify-space-between d-flex"
+                                        >
+                                          <p class="mb-0">การได้รับวัคซีน</p>
+                                          <div @click="showDataFilter10">
+                                            <i
+                                              v-if="openTab10"
+                                              class="fi fi-rr-angle-small-up"
+                                            ></i>
+                                            <i
+                                              v-else
+                                              class="fi fi-rr-angle-small-down"
+                                            ></i>
+                                          </div>
+                                        </div>
+                                        <div v-if="openTab10">
+                                          <v-checkbox
+                                            v-for="i in filterList.receiveVaccine"
+                                            v-model="isVaccine"
+                                            :value="i.name"
+                                            :key="i.id"
+                                            :label="i.name"
+                                            hide-details
+                                          ></v-checkbox>
+                                        </div>
+                                      </div>
+                                      <div class="line"></div>
+                                      <div class="filter-side-bar">
+                                        <div
+                                          class="justify-space-between d-flex"
+                                        >
+                                          <p class="mb-0">การทำหมัน</p>
+                                          <div @click="showDataFilter11">
+                                            <i
+                                              v-if="openTab11"
+                                              class="fi fi-rr-angle-small-up"
+                                            ></i>
+                                            <i
+                                              v-else
+                                              class="fi fi-rr-angle-small-down"
+                                            ></i>
+                                          </div>
+                                        </div>
+                                        <div v-if="openTab11">
+                                          <v-checkbox
+                                            v-for="i in filterList.neutered"
+                                            v-model="isNeutered"
+                                            :value="i.name"
+                                            :key="i.id"
+                                            :label="i.name"
+                                            hide-details
+                                          ></v-checkbox>
+                                        </div>
+                                      </div>
+                                    </v-container>
+                                  </div>
+                                </div>
+                              </div>
+                            </v-container>
+                          </v-sheet>
+                        </v-bottom-sheet>
+                        <!--  -->
                       </v-col>
-                      <v-col class="d-flex">
-                        <v-select
-                          :items="items"
-                          label="เรียงตาม"
-                          outlined
-                        ></v-select>
+                      <v-col cols="6">
+                        <v-menu offset-y>
+                          <template v-slot:activator="{ on, attrs }">
+                            <div v-bind="attrs" v-on="on">
+                              <div class="filter-by">
+                                <div>เรียงตาม</div>
+                                <i class="fi fi-rr-angle-down"></i>
+                              </div>
+                            </div>
+                          </template>
+                          <v-list>
+                            <v-list-item
+                              v-for="(item, index) in items"
+                              :key="index"
+                            >
+                              <v-list-item-title
+                                @click="filterAction(item.action)"
+                                >{{ item.title }}</v-list-item-title
+                              >
+                            </v-list-item>
+                          </v-list>
+                        </v-menu>
                       </v-col>
                     </v-row>
                   </template>
@@ -70,7 +422,7 @@
                 <div>
                   <v-row>
                     <v-col
-                      v-for="post in posts"
+                      v-for="post in filterByProvince"
                       :key="post._id"
                       cols="12"
                       sm="4"
@@ -84,6 +436,15 @@
                         @click="getOnePost(post._id)"
                         class="card position-relative"
                       >
+                        <div
+                          v-if="post.statusbar === 'รับเลี้ยงสำเร็จ'"
+                          class="status-adopt-success"
+                        >
+                          รับเลี้ยงแล้ว
+                        </div>
+                        <div v-else class="status-adopt">
+                          ยังไม่ถูกรับเลี้ยง
+                        </div>
                         <div class="thumbnail">
                           <img
                             :src="`${$config.findHome}readFileIdFindHome?id=${post._id}`"
@@ -100,8 +461,10 @@
                                 <p class="mb-0 location">
                                   <i class="fi fi-rr-marker"></i>
                                   {{
+                                    "จังหวัด" +
                                     post.generalInfo.location.province +
                                     " " +
+                                    "เขต" +
                                     post.generalInfo.location.district
                                   }}
                                 </p>
@@ -231,7 +594,7 @@
                               <i v-else class="fi fi-rr-angle-small-down"></i>
                             </div>
                           </div>
-                          <div v-if="openTab5">
+                          <div v-if="openTab5" class="scroll-bar">
                             <v-checkbox
                               v-for="i in filterList.color"
                               v-model="isColor"
@@ -386,27 +749,39 @@
                 </div>
               </v-col>
               <v-col cols="9">
-                <div>
+                <div class="mb-9">
                   <v-row no-gutters justify="center">
-                    <v-col cols="10">
+                    <v-col cols="8" align-self="center">
                       <div>
                         <h2>รับเลี้ยงแมว</h2>
                       </div>
                     </v-col>
-                    <v-col cols="2">
-                      <template>
-                        <v-row align="center">
-                          <v-col class="d-flex">
-                            <v-select
-                              dense
-                              solo
-                              label="เรียงตาม"
-                              :items="items"
-                              outlined
-                            ></v-select>
-                          </v-col>
-                        </v-row>
-                      </template>
+                    <v-col cols="4">
+                      <v-menu offset-y>
+                        <template v-slot:activator="{ on, attrs }">
+                          <div v-bind="attrs" v-on="on">
+                            <v-row no-gutters justify="end">
+                              <v-col cols="9">
+                                <div class="filter-by">
+                                  <div>เรียงตาม</div>
+                                  <i class="fi fi-rr-angle-down"></i>
+                                </div>
+                              </v-col>
+                            </v-row>
+                          </div>
+                        </template>
+                        <v-list>
+                          <v-list-item
+                            v-for="(item, index) in items"
+                            :key="index"
+                          >
+                            <v-list-item-title
+                              @click="filterAction(item.action)"
+                              >{{ item.title }}</v-list-item-title
+                            >
+                          </v-list-item>
+                        </v-list>
+                      </v-menu>
                     </v-col>
                   </v-row>
                 </div>
@@ -427,6 +802,13 @@
                       class="card position-relative"
                     >
                       <div
+                        v-if="post.statusbar === 'รับเลี้ยงสำเร็จ'"
+                        class="status-adopt-success"
+                      >
+                        รับเลี้ยงแล้ว
+                      </div>
+                      <div v-else class="status-adopt">ยังไม่ถูกรับเลี้ยง</div>
+                      <!-- <div
                         v-if="post.generalInfo.gender === 'เพศเมีย'"
                         class="gender-icon"
                       >
@@ -434,7 +816,7 @@
                       </div>
                       <div v-else class="gender-icon-male">
                         <i class="fi fi-rr-mars"></i>
-                      </div>
+                      </div> -->
 
                       <div class="thumbnail">
                         <img
@@ -450,8 +832,10 @@
                               <p class="mb-0 location">
                                 <i class="fi fi-rr-marker"></i>
                                 {{
+                                  "จังหวัด" +
                                   post.generalInfo.location.province +
                                   " " +
+                                  "เขต" +
                                   post.generalInfo.location.district
                                 }}
                               </p>
@@ -477,21 +861,50 @@
 
                         <div class="adopt-sheet">
                           <v-row justify="center">
-                            <v-col cols="12">
+                            <v-col cols="12" md="8" lg="8">
                               <v-row justify="center">
-                                <v-col cols="12" md="8" lg="8">
-                                  <div class="text-left">
-                                    <h2>{{ onePost.generalInfo.catName }}</h2>
-                                    <p class="post-by">
-                                      โพสต์โดย
-                                      {{
-                                        onePost.author.firstName +
-                                        " " +
-                                        onePost.author.lastName
-                                      }}
-                                      | {{ convertDateTime(onePost.updatedAt) }}
-                                    </p>
+                                <v-col
+                                  cols="6"
+                                  align-self="center"
+                                  class="text-left pb-0"
+                                >
+                                  <h2>{{ onePost.generalInfo.catName }}</h2>
+                                </v-col>
+                                <v-col
+                                  cols="6"
+                                  align-self="center"
+                                  class="d-flex justify-end pb-0"
+                                >
+                                  <div @click="feelToPost(onePost._id)">
+                                    <div v-if="!isLike" class="un-like-btn">
+                                      <i class="fi fi-rr-heart"></i>
+                                      ถูกใจ
+                                    </div>
+                                    <div v-else class="like-btn">
+                                      <img
+                                        src="@/assets/imgs/fi-sr-heart.svg"
+                                        alt=""
+                                      />
+                                      ถูกใจ
+                                    </div>
                                   </div>
+                                </v-col>
+                                <v-col
+                                  cols="12"
+                                  align-self="center"
+                                  class="py-0"
+                                >
+                                  <p class="post-by text-left mb-0">
+                                    โพสต์โดย
+                                    {{
+                                      onePost.author.firstName +
+                                      " " +
+                                      onePost.author.lastName
+                                    }}
+                                    | {{ convertDateTime(onePost.updatedAt) }}
+                                  </p>
+                                </v-col>
+                                <v-col cols="12">
                                   <div class="cat-img">
                                     <img
                                       :src="`${$config.findHome}readFileIdFindHome?id=${onePost._id}`"
@@ -501,6 +914,7 @@
                                   <div class="mt-4 mt-lg-9">
                                     <div class="charac-show">
                                       <div
+                                        v-show="!Array.isArray(character)"
                                         v-for="(character, index) in onePost
                                           .generalInfo.characteristic"
                                         :key="index"
@@ -510,10 +924,20 @@
                                           {{ character }}
                                         </p>
                                       </div>
+                                      <div
+                                        v-for="(character, index) in onePost
+                                          .generalInfo.characteristic.habit"
+                                        :key="index"
+                                        class="charac-details"
+                                      >
+                                        <p class="mb-0">
+                                          {{ character }}
+                                        </p>
+                                      </div>
                                     </div>
                                   </div>
+
                                   <div class="mt-4 mt-lg-9">
-                                    <!-- general info -->
                                     <div>
                                       <div class="d-flex post-title">
                                         <i class="fi fi-rr-info"></i>
@@ -530,17 +954,16 @@
                                               <p>
                                                 อายุ:
                                                 {{ onePost.generalInfo.age }}
-                                                เดือน
                                               </p>
                                               <p>
-                                                การทำหมัน:
-                                                {{
-                                                  (onePost.generalInfo.neutered =
-                                                    "yes"
-                                                      ? "เคยทำหมัน"
-                                                      : "ไม่เคยทำหมัน")
-                                                }}
+                                                สี:
+                                                {{ onePost.generalInfo.color }}
                                               </p>
+                                              <p>
+                                                เพศ:
+                                                {{ onePost.generalInfo.gender }}
+                                              </p>
+
                                               <p>
                                                 ที่อยู่:
                                                 {{
@@ -556,19 +979,33 @@
                                           <v-col cols="12" md="6">
                                             <div>
                                               <p>
-                                                วัคซีนที่เคยได้รับ:
+                                                การทำหมัน:
                                                 {{
-                                                  onePost.generalInfo
-                                                    .receiveVaccine
+                                                  onePost.generalInfo.neutered
                                                 }}
                                               </p>
                                               <p>
-                                                วันที่รับวัคซีน:
+                                                วัคซีนที่ได้รับ:
                                                 {{
                                                   onePost.generalInfo
-                                                    .receiveDate
+                                                    .vaccination ===
+                                                    "ได้รับวัคซีนบางชนิด" ||
+                                                  onePost.generalInfo
+                                                    .vaccination ===
+                                                    "ได้รับวัคซีนครบตามช่วงอายุของแมว"
+                                                    ? " "
+                                                    : onePost.generalInfo
+                                                        .vaccination
                                                 }}
+                                                <span
+                                                  v-for="vac in onePost
+                                                    .generalInfo.receiveVaccine"
+                                                  :key="vac"
+                                                >
+                                                  {{ vac + "," }}
+                                                </span>
                                               </p>
+
                                               <p>
                                                 โรคประจำตัว:
                                                 {{
@@ -584,7 +1021,7 @@
                                         </v-row>
                                       </div>
                                     </div>
-                                    <!-- contact -->
+
                                     <div class="mt-6">
                                       <div class="d-flex post-title">
                                         <i class="fi fi-rr-portrait"></i>
@@ -637,8 +1074,8 @@
                             <div class="my-6">
                               <v-row justify="center">
                                 <v-col
-                                  v-for="i in 3"
-                                  :key="i"
+                                  v-for="(random, index) in randomPost"
+                                  :key="random._id"
                                   cols="12"
                                   sm="4"
                                   md="4"
@@ -646,19 +1083,35 @@
                                   xl="4"
                                   align-self="center"
                                 >
-                                  <div class="card">
+                                  <div
+                                    v-if="randomPost.length > 0"
+                                    class="card"
+                                  >
                                     <div
-                                      :class="[i == 3 ? 'backdrop' : '']"
+                                      v-if="
+                                        randomPost.statusbar ===
+                                        'รับเลี้ยงสำเร็จ'
+                                      "
+                                      class="status-adopt-success"
+                                    >
+                                      รับเลี้ยงแล้ว
+                                    </div>
+                                    <div v-else class="status-adopt">
+                                      ยังไม่ถูกรับเลี้ยง
+                                    </div>
+                                    <div
+                                      :class="[index == 2 ? 'backdrop' : '']"
                                     ></div>
                                     <button
-                                      v-if="i === 3"
-                                      :class="[i == 3 ? 'more' : '']"
+                                      @click="adoptCat"
+                                      v-if="index === 2"
+                                      :class="[index == 2 ? 'more' : '']"
                                     >
                                       ดูทั้งหมด
                                     </button>
                                     <div class="thumbnail">
                                       <img
-                                        src="@/assets/imgs/img-thumbnail.jpg"
+                                        :src="`${$config.findHome}readFileIdFindHome?id=${random._id}`"
                                         alt=""
                                       />
                                     </div>
@@ -669,10 +1122,18 @@
                                           class="pb-lg-3 pb-sm-3"
                                         >
                                           <div class="text-left">
-                                            <h2 class="h4">Name</h2>
+                                            <h2 class="h4">
+                                              {{ random.generalInfo.catName }}
+                                            </h2>
                                             <p class="mb-0 location">
                                               <i class="fi fi-rr-marker"></i
-                                              >Location
+                                              >{{
+                                                random.generalInfo.location
+                                                  .province +
+                                                " " +
+                                                random.generalInfo.location
+                                                  .district
+                                              }}
                                             </p>
                                           </div>
                                         </v-col>
@@ -773,7 +1234,7 @@ export default {
 
   data() {
     return {
-      items: ["เก่า", "ล่าสุด", "Best match"],
+      sheetMobile: false,
       sheet: false,
       onePost: null,
       posts: null,
@@ -802,6 +1263,15 @@ export default {
       isVaccine: [],
       isNeutered: [],
       isBreed: [],
+      randomPost: [],
+      items: [
+        { title: "เก่า", action: "old-post" },
+        { title: "ล่าสุด", action: "lastest-post" },
+        { title: "Best match", action: "best-match" },
+        { title: "ถูกใจแล้ว", action: "favor" },
+        { title: "ยังไม่ถูกรับเลี้ยง", action: "not-adopt" },
+        { title: "รับเลี้ยงแล้ว", action: "by-adopted" },
+      ],
     };
   },
   // async asyncData({ $axios, $config }) {
@@ -817,6 +1287,7 @@ export default {
   async created() {
     await this.fetchData();
   },
+
   computed: {
     duplicatedRemove() {
       let newProvince = [];
@@ -864,21 +1335,19 @@ export default {
           .filter((post) =>
             this.isBodySize.length !== 0
               ? this.isBodySize.some((habit) =>
-                  post.generalInfo.characteristic.includes(habit)
+                  post.generalInfo.characteristic.size.includes(habit)
                 )
               : post
           )
           .filter((post) =>
             this.isColor.length !== 0
-              ? this.isColor.some((color) =>
-                  post.generalInfo.characteristic.includes(color)
-                )
+              ? this.isColor.some((color) => post.generalInfo.color === color)
               : post
           )
           .filter((post) =>
             this.isHairStyle.length !== 0
               ? this.isHairStyle.some((hair) =>
-                  post.generalInfo.characteristic.includes(hair)
+                  post.generalInfo.characteristic.hair.includes(hair)
                 )
               : post
           )
@@ -889,29 +1358,30 @@ export default {
           )
           .filter((post) =>
             this.isSandBox.length !== 0
-              ? this.isSandBox.some((sandBox) =>
-                  post.generalInfo.characteristic.includes(sandBox)
+              ? this.isSandBox.some(
+                  (sandBox) =>
+                    post.generalInfo.characteristic.sandbox === sandBox
                 )
               : post
           )
           .filter((post) =>
             this.isCharacteristic.length !== 0
               ? this.isCharacteristic.some((charac) =>
-                  post.generalInfo.characteristic.includes(charac)
+                  post.generalInfo.characteristic.habit.includes(charac)
                 )
               : post
           )
           .filter((post) =>
             this.isVaccine.length !== 0
               ? this.isVaccine.some((vaccine) =>
-                  post.generalInfo.characteristic.includes(vaccine)
+                  post.generalInfo.vaccination.includes(vaccine)
                 )
               : post
           )
           .filter((post) =>
             this.isNeutered.length !== 0
               ? this.isNeutered.some((neutered) =>
-                  post.generalInfo.characteristic.includes(neutered)
+                  post.generalInfo.neutered.includes(neutered)
                 )
               : post
           )
@@ -924,19 +1394,162 @@ export default {
         return this.posts;
       }
     },
+    isLike() {
+      return this.$store.state.auth?.user?.favor?.some(
+        (fav) => this.onePost._id === fav.itemId
+      );
+    },
+    loggedIn() {
+      return this.$store.state.auth.loggedIn;
+    },
   },
+
   methods: {
+    async filterAction(action) {
+      if (action === "old-post") {
+        console.log("old-post");
+        try {
+          const res = await this.$axios.get(`${this.$config.findHome}oldPost`);
+          this.posts = res.data;
+        } catch (error) {
+          console.log(error);
+        }
+      }
+      if (action === "lastest-post") {
+        console.log("lastest-post");
+        try {
+          const res = await this.$axios.get(
+            `${this.$config.findHome}latestPost`
+          );
+          this.posts = res.data;
+        } catch (error) {
+          console.log(error);
+        }
+      }
+
+      if (action === "best-match") {
+        console.log("best-match");
+        if (this.loggedIn) {
+          if (this.$store.state.auth.user.idealCat.length <= 0) {
+            const checked = await this.$swal.fire({
+              confirmButtonColor: "#19ba88",
+              confirmButtonText: "ตกลง",
+              text: "กรุณาตอบแบบสอบถามให้เรียบร้อยก่อน",
+              icon: "warning",
+            });
+            if (checked.isConfirmed) {
+              this.$router.push("/matching");
+            }
+          } else {
+            try {
+              const res = await this.$axios.get(
+                `${this.$config.authURL}user/getBestmatch`
+              );
+              this.posts = res.data;
+            } catch (error) {
+              console.log(error);
+            }
+          }
+        } else {
+          const checked = await this.$swal.fire({
+            confirmButtonColor: "#19ba88",
+            confirmButtonText: "ตกลง",
+            text: "กรุณาเข้าสู่ระบบก่อน",
+            icon: "warning",
+          });
+          if (checked.isConfirmed) {
+            await this.$router.push("/login");
+          }
+        }
+      }
+      if (action === "favor") {
+        console.log("favor");
+        if (this.loggedIn) {
+          try {
+            const res = await this.$axios.get(
+              `${this.$config.findHome}getLikePost`
+            );
+            this.posts = res.data;
+          } catch (error) {
+            console.log(error);
+          }
+        } else {
+          const checked = await this.$swal.fire({
+            confirmButtonColor: "#19ba88",
+            confirmButtonText: "ตกลง",
+            text: "กรุณาเข้าสู่ระบบก่อน",
+            icon: "warning",
+          });
+          if (checked.isConfirmed) {
+            await this.$router.push("/login");
+          }
+        }
+      }
+      if (action === "not-adopt") {
+        console.log("not-adopt");
+        try {
+          const res = await this.$axios.get(
+            `${this.$config.findHome}getNotAdopt`
+          );
+          this.posts = res.data.success;
+        } catch (error) {
+          console.log(error);
+        }
+      }
+      if (action === "by-adopted") {
+        console.log("by-adopted");
+        try {
+          const res = await this.$axios.get(`${this.$config.findHome}getAdopt`);
+          this.posts = res.data;
+        } catch (error) {
+          console.log(error);
+        }
+      }
+    },
     async fetchData() {
       try {
         const res = await this.$axios.get(`${this.$config.findHome}allPost`);
-        // console.log(res.data);
+        console.log(res.data);
         this.posts = res.data;
+
+        const random = await this.$axios.get(
+          `${this.$config.findHome}RandomPost`
+        );
+        this.randomPost = random.data;
+        console.log(random.data);
       } catch (error) {
         console.log(error);
       }
     },
+    async feelToPost(id) {
+      if (this.loggedIn) {
+        try {
+          const res = await this.$axios.post(
+            `${this.$config.findHome}likePost?id=${id}`
+          );
+          console.log(res);
+          this.$store.commit("SET_FAVOR", id);
+        } catch (error) {
+          console.log(error);
+        }
+      } else {
+        const checked = await this.$swal.fire({
+          confirmButtonColor: "#19ba88",
+          confirmButtonText: "ตกลง",
+          text: "กรุณาเข้าสู่ระบบก่อน",
+          icon: "warning",
+        });
+        if (checked.isConfirmed) {
+          await this.$router.push("/login");
+        }
+      }
+    },
+
     goToMatching() {
       this.$router.push(`/matching`);
+    },
+    adoptCat() {
+      this.$router.push(`/adoptCat`);
     },
     showDataFilter11() {
       this.openTab11 = !this.openTab11;
@@ -1001,7 +1614,7 @@ export default {
       if (month < 10) {
         month = "0" + month;
       }
-      const newFormat = dt + "-" + month + "-" + year;
+      const newFormat = dt + "/" + month + "/" + year;
       return newFormat;
     },
   },
@@ -1009,34 +1622,190 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.gender-icon-male {
+.filter-by {
+  display: flex;
+  grid-gap: 10px;
+  gap: 10px;
+  border: 1px solid $gray;
+  border-radius: 50px;
+  padding: 14px 24px;
+  font-size: 14px;
+  justify-content: space-between;
+  align-items: center;
+  i {
+    font-size: 18px;
+    display: flex;
+  }
+  @media (min-width: 1440px) {
+    font-size: 18px;
+    i {
+      font-size: 24px;
+      display: flex;
+    }
+  }
+}
+.like-btn {
+  display: flex;
+  gap: 4px;
+  background: $white;
+  border: 1px solid $error;
+  border-radius: 50px;
+  justify-content: center;
+  font-size: 10px;
+  padding: 8px 16px;
+  width: 75px;
+  height: 24px;
+  align-items: center;
+  color: $error;
+  img {
+    width: 12px;
+    height: 12px;
+  }
+  @media (min-width: 1440px) {
+    gap: 8px;
+    border: 2px solid $error;
+    font-size: 14px;
+    padding: 10px 32px;
+    width: 138px;
+    height: 38px;
+    img {
+      width: 20px;
+      height: 20px;
+    }
+  }
+}
+.un-like-btn {
+  display: flex;
+  gap: 4px;
+  background: $white;
+  border: 1px solid $dark;
+  border-radius: 50px;
+  justify-content: center;
+  font-size: 10px;
+  padding: 8px 16px;
+  width: 75px;
+  height: 24px;
+  align-items: center;
+  i {
+    font-size: 12px;
+  }
+  @media (min-width: 1440px) {
+    gap: 8px;
+    border: 2px solid $dark;
+    font-size: 14px;
+    padding: 10px 32px;
+    width: 138px;
+    height: 38px;
+    i {
+      font-size: 20px;
+      color: $dark;
+    }
+  }
+}
+.post-title {
+  p {
+    font-weight: bold;
+    font-size: 16px;
+    @media (min-width: 1440px) {
+      font-size: 20px;
+    }
+    i {
+      font-size: 15px;
+      @media (min-width: 1440px) {
+        font-size: 20px;
+      }
+    }
+  }
+
+  gap: 4px;
+}
+.charac-show {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+
+  .charac-details {
+    background-color: $orange;
+    font-size: 14px;
+    display: flex;
+    justify-content: center;
+    padding: 6px 15px;
+
+    border-radius: 50px;
+    align-self: center;
+    p {
+      color: $white;
+    }
+  }
+}
+.cat-img {
+  img {
+    border-radius: 10px;
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+    align-items: center;
+    @media (min-width: 1440px) {
+      height: 520px;
+    }
+  }
+}
+.post-by {
+  font-size: 12px;
+  color: $gray;
+  @media (min-width: 1440px) {
+    font-size: 14px;
+  }
+}
+
+.status-adopt-success {
   position: absolute;
   top: 5%;
   right: 5%;
-  background-color: $white;
-  border-radius: 50%;
-  padding: 6px;
-  i {
-    display: flex;
-    justify-content: center;
-    font-size: 16px;
-    color: #13b8ff;
-  }
+  background-color: $success;
+  border-radius: 50px;
+  padding: 8px 12px;
+  font-size: 14px;
+  color: $white;
 }
-.gender-icon {
+.status-adopt {
   position: absolute;
   top: 5%;
   right: 5%;
-  background-color: $white;
-  border-radius: 50%;
-  padding: 6px;
-  i {
-    display: flex;
-    justify-content: center;
-    font-size: 16px;
-    color: #ff90e0;
-  }
+  background-color: $error;
+  border-radius: 50px;
+  padding: 8px 12px;
+  font-size: 14px;
+  color: $white;
 }
+// .gender-icon-male {
+//   position: absolute;
+//   top: 5%;
+//   right: 5%;
+//   background-color: $white;
+//   border-radius: 50%;
+//   padding: 6px;
+//   i {
+//     display: flex;
+//     justify-content: center;
+//     font-size: 16px;
+//     color: #13b8ff;
+//   }
+// }
+// .gender-icon {
+//   position: absolute;
+//   top: 5%;
+//   right: 5%;
+//   background-color: $white;
+//   border-radius: 50%;
+//   padding: 6px;
+//   i {
+//     display: flex;
+//     justify-content: center;
+//     font-size: 16px;
+//     color: #ff90e0;
+//   }
+// }
 ::v-deep
   .v-text-field.v-text-field--solo:not(.v-text-field--solo-flat)
   > .v-input__control
@@ -1088,43 +1857,7 @@ export default {
     border-radius: 50px 50px 0px 0px;
   }
 }
-.post-title {
-  p {
-    font-weight: bold;
-    font-size: 16px;
-    @media (min-width: 1440px) {
-      font-size: 20px;
-    }
-    i {
-      font-size: 15px;
-      @media (min-width: 1440px) {
-        font-size: 20px;
-      }
-    }
-  }
 
-  gap: 4px;
-}
-
-.charac-show {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 8px;
-
-  .charac-details {
-    background-color: $orange;
-    font-size: 14px;
-    display: flex;
-    justify-content: center;
-    padding: 6px 15px;
-
-    border-radius: 50px;
-    align-self: center;
-    p {
-      color: $white;
-    }
-  }
-}
 .location {
   i {
     color: $orange;
@@ -1151,26 +1884,8 @@ export default {
       font-size: 36px;
     }
   }
-  .post-by {
-    font-size: 12px;
-    color: $gray;
-    @media (min-width: 1440px) {
-      font-size: 14px;
-    }
-  }
 }
-.cat-img {
-  img {
-    border-radius: 10px;
-    width: 100%;
-    height: 200px;
-    object-fit: contain;
-    align-items: center;
-    @media (min-width: 1440px) {
-      height: 520px;
-    }
-  }
-}
+
 ::v-deep .theme--light.v-sheet {
   border-radius: 24px 24px 0px 0px;
   @media (min-width: 1440px) {
@@ -1314,9 +2029,9 @@ export default {
   border-radius: 50px;
   margin-bottom: 0px;
 }
-.gap-drop-down {
-  gap: 10px;
-}
+// .gap-drop-down {
+//   gap: 10px;
+// }
 .btn-search {
   background: linear-gradient(180deg, #fdc454 0%, #ff9474 100%);
   box-shadow: 0px 4px 15px #ffcab4;

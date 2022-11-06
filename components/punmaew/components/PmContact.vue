@@ -21,12 +21,17 @@
       </div>
       <div class="input-area mt-2">
         <p>เบอร์โทรศัพท์<span>*</span></p>
-        <validation-provider name="tel" rules="required" v-slot="{ errors }">
+        <validation-provider
+          name="tel"
+          rules="required|tel|length:10"
+          v-slot="{ errors }"
+        >
           <input
             v-model="tel"
             name="tel"
-            type="text"
+            pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}"
             placeholder="กรุณากรอกเบอร์โทรศัพท์"
+            required
           />
           <span class="valid-form">
             {{ errors[0] }}
@@ -51,6 +56,44 @@
           placeholder="กรุณากรอก Line ID"
         />
       </div>
+      <!-- ท่านได้ ยอมรับเงื่อนไขและข้อตกลง ของเรา -->
+
+      <div class="font-weight-bold mt-12 mb-4">
+        <v-row justify="center">
+          <v-col cols="12" align-self="center">
+            <div class="d-flex justify-center">
+              <validation-provider
+                name="terms"
+                rules="required|checkbox"
+                v-slot="{ errors }"
+              >
+                <div class="d-flex">
+                  <v-checkbox
+                    v-model="terms"
+                    type="checkbox"
+                    name="terms"
+                    required
+                  />
+                  <div>
+                    ท่านได้
+                    <a
+                      target="_blank"
+                      href="https://drive.google.com/file/d/1um5LIE1FzdZLnKM0VKwBw2wfxCiJm-aM/view?usp=sharing"
+                      class="document"
+                    >
+                      ยอมรับเงื่อนไขและข้อตกลง
+                    </a>
+                    ของเรา
+                  </div>
+                </div>
+                <span class="valid-form">
+                  {{ errors[0] }}
+                </span>
+              </validation-provider>
+            </div>
+          </v-col>
+        </v-row>
+      </div>
     </validation-observer>
   </section>
 </template>
@@ -74,6 +117,7 @@ export default {
   },
   data() {
     return {
+      terms: this.isEdit ? this.fetchForm.step3.terms : null,
       contactName: this.isEdit ? this.fetchForm.step3.contactName : "",
       tel: this.isEdit ? this.fetchForm.step3.tel : "",
       facebook: this.isEdit ? this.fetchForm.step3.facebook : "",
@@ -92,6 +136,7 @@ export default {
           tel: this.tel,
           facebook: this.facebook,
           line: this.line,
+          terms: this.terms,
         });
         return true;
       }
@@ -101,6 +146,10 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.document {
+  color: $orange-dark !important;
+  text-decoration-line: underline !important;
+}
 .valid-form {
   color: $error;
   font-weight: bold;

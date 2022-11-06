@@ -16,6 +16,7 @@ export default {
     TheFooter,
     TheHeader,
   },
+  name: "default",
 };
 </script>
 <style lang="scss" scoped>

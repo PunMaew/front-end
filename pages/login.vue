@@ -257,7 +257,7 @@
                 <validation-observer ref="registerForm">
                   <form @submit.prevent="register">
                     <v-row justify="center">
-                      <v-col align-self="center">
+                      <v-col>
                         <div class="input-area">
                           <p>ชื่อจริง</p>
                           <validation-provider
@@ -277,7 +277,7 @@
                         </div>
                       </v-col>
 
-                      <v-col align-self="center">
+                      <v-col>
                         <div class="input-area">
                           <p>นามสกุล</p>
                           <validation-provider
@@ -320,7 +320,7 @@
                       </v-col>
                     </v-row>
 
-                    <v-row justify="center" class="mt-0">
+                    <!-- <v-row justify="center" class="mt-0">
                       <v-col align-self="center" class="mt-0 pb-0 pt-4">
                         <div class="input-area">
                           <p>จังหวัด</p>
@@ -368,29 +368,45 @@
                           </validation-provider>
                         </div>
                       </v-col>
-                    </v-row>
-                    <v-row justify="center" class="mt-0">
-                      <v-col align-self="center" class="mt-0 py-0">
-                        <div class="input-area">
+                    </v-row> -->
+
+                    <v-row justify="center">
+                      <v-col>
+                        <div class="input-area-pass">
                           <p>รหัสผ่าน</p>
                           <validation-provider
                             rules="required"
                             v-slot="{ errors }"
                           >
-                            <input
-                              type="password"
-                              placeholder="กรุณากรอกรหัสผ่าน"
-                              v-model="passwordRegis"
-                              name="passwordRegis"
-                            />
+                            <div class="pass-input">
+                              <input
+                                type="password"
+                                placeholder="กรุณากรอกรหัสผ่าน"
+                                v-model="passwordRegis"
+                                name="passwordRegis"
+                              />
+                              <!-- <v-tooltip bottom>
+                                <template v-slot:activator="{ on, attrs }">
+                                  <div dark v-bind="attrs" v-on="on"> -->
+                              <div class="tooltip">
+                                <i class="fi fi-rr-info"></i>
+                                <!-- <div class="tooltip-text">Bottom tooltip</div> -->
+                              </div>
+                              <!-- </div>
+                                </template>
+                                <span>Bottom tooltip</span>
+                              </v-tooltip> -->
+                            </div>
+                            <p class="annotation">
+                              รหัสผ่านต้องมีอย่างน้อย 6 ตัว
+                            </p>
                             <span class="valid-form">
                               {{ errors[0] }}
                             </span>
                           </validation-provider>
                         </div>
                       </v-col>
-
-                      <v-col align-self="center">
+                      <v-col>
                         <div class="input-area">
                           <p>ยืนยันรหัสผ่าน</p>
                           <validation-provider
@@ -399,7 +415,7 @@
                           >
                             <input
                               type="password"
-                              placeholder="กรุณายืนยันรหัสผ่าน"
+                              placeholder="กรุณากรอกรหัสผ่านอีกครั้ง"
                               v-model="confirm"
                               name="confirm"
                             />
@@ -495,7 +511,7 @@
 import BaseButton from "../components/punmaew/components/BaseButton.vue";
 import { ValidationProvider } from "vee-validate";
 import { ValidationObserver } from "vee-validate";
-import provinceList from "@/assets/data/province.json";
+// import provinceList from "@/assets/data/province.json";
 import CardDialog from "../components/punmaew/components/CardDialog.vue";
 import CardFormAdopt from "../components/punmaew/components/CardFormAdopt.vue";
 export default {
@@ -509,9 +525,9 @@ export default {
   },
   data() {
     return {
-      province: provinceList,
-      selectProvince: "",
-      selectZip: "",
+      // province: provinceList,
+      // selectProvince: "",
+      // selectZip: "",
       items: ["Foo", "Bar", "Fizz", "Buzz"],
       openTab: true,
       dialog: false,
@@ -557,7 +573,7 @@ export default {
               },
             })
             .then((res) => {
-              console.log(res.data);
+              // console.log(res.data);
               console.log("login successfully");
             })
             .catch((error) => {
@@ -658,49 +674,38 @@ export default {
         console.log(error);
       }
     },
-    register() {
+    async register() {
       try {
-        this.$refs.registerForm.validate().then((success) => {
-          if (!success) {
-            return;
-          }
-          this.$axios
-            .post(`${this.$config.authURL}user/signup`, {
-              firstName: this.firstName,
-              lastName: this.lastName,
-              email: this.emailRegis,
-              password: this.passwordRegis,
-              confirmPassword: this.confirmPassword,
-              address: {
-                province: this.selectProvince,
-                zipCode: this.selectZip,
-              },
-            })
-            .then((res) => {
-              console.log(res.data);
-              this.dialog = true;
-              this.countdown();
-              console.log("register successfully");
-              // this.confirmOtpRegister();
-              // location.reload();
-            })
-            .catch((error) => {
-              console.log(error);
-              this.$swal.fire({
-                confirmButtonColor: "#19ba88",
-                confirmButtonText: "ตกลง",
-                title: "เกิดข้อผิดพลาด",
-                text: error.message,
-                icon: "warning",
-              });
-            });
+        const success = await this.$refs.registerForm.validate();
+        console.log(success);
+        if (!success) {
+          return;
+        }
 
-          this.$nextTick(() => {
-            this.$refs.registerForm.reset();
-          });
+        const res = await this.$axios.post(
+          `${this.$config.authURL}user/signup`,
+          {
+            firstName: this.firstName,
+            lastName: this.lastName,
+            email: this.emailRegis,
+            password: this.passwordRegis,
+            confirmPassword: this.confirm,
+            // address: {
+            //   province: this.selectProvince,
+            //   zipCode: this.selectZip,
+            // },
+          }
+        );
+        console.log(res);
+        this.$nextTick(() => {
+          this.$refs.registerForm.reset();
         });
+        // console.log(res);
+        this.dialog = true;
+        this.countdown();
       } catch (error) {
-        console.log(error);
+        // console.log(error);
+        // console.log(error.toJSON().config.data);
         this.$swal.fire({
           confirmButtonColor: "#19ba88",
           confirmButtonText: "ตกลง",
@@ -716,7 +721,7 @@ export default {
           if (!success) {
             return;
           }
-          if ((this.dialog = true)) {
+          if (this.dialog === true) {
             this.countdown();
             this.$axios
               .patch(`${this.$config.authURL}user/activate`, {
@@ -778,6 +783,39 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.tooltip::after {
+  content: "เพื่อความปลอดภัยที่มากขึ้น รหัสผ่านควรประกอบไปด้วยตัวเลข และอักษรตัวพิมพ์เล็ก ตัวพิมพ์ใหญ่";
+  background-color: #ffffff;
+  border-radius: 8px;
+  border: 1px solid $gray;
+  display: none;
+  padding: 8px;
+  font-size: 8px;
+  position: absolute;
+  transform: translate(-25%, calc(-100% - -97px));
+  width: 130px;
+  text-align: center;
+  box-shadow: 0px 2px 10px rgb(0 0 0 / 15%);
+  @media (min-width: 1440px) {
+    padding: 8px 12px;
+    font-size: 10px;
+    transform: translate(-18%, calc(-100% - -116px));
+    width: 180px;
+    text-align: center;
+    min-height: 60px;
+  }
+}
+
+.tooltip:hover::after {
+  display: block;
+}
+.tooltip {
+  position: relative;
+  cursor: pointer;
+  // .tooltip-text {
+
+  // }
+}
 .ui-icon-cross {
   display: flex;
   justify-content: right;
@@ -900,6 +938,7 @@ input[id="radio-3"] {
 }
 ::v-deep .v-input__slot {
   border-radius: 50px;
+  font-size: 12px;
 }
 ::v-deep .v-text-field > .v-input__control > .v-input__slot:after {
   border-style: none !important;
@@ -907,7 +946,10 @@ input[id="radio-3"] {
 .valid-form {
   color: $error;
   font-weight: bold;
-  font-size: 12px;
+  font-size: 10px;
+  @media (min-width: 1024px) {
+    font-size: 12px;
+  }
 }
 .set-bg-login {
   background-color: $orange-light;
@@ -931,7 +973,52 @@ input[id="radio-3"] {
   position: relative;
   padding: 56px 0px 56px 0px;
 }
-
+.input-area-pass {
+  .pass-input {
+    display: flex;
+    position: relative;
+    input {
+      width: 100%;
+      background-color: $light;
+      padding: 6px 40px 6px 16px;
+      font-size: 16px;
+      border-radius: 50px;
+      @media (min-width: 1440px) {
+        width: 100%;
+        background-color: $light;
+        // padding: 14px 24px;
+        padding: 14px 48px 14px 16px;
+        font-size: 16px;
+        border-radius: 50px;
+      }
+    }
+    input::placeholder {
+      font-size: 12px;
+      color: $gray;
+    }
+    i {
+      position: absolute;
+      top: 8px;
+      right: 16px;
+      font-size: 16px;
+      @media (min-width: 1440px) {
+        top: 16px;
+      }
+    }
+  }
+  .annotation {
+    font-size: 10px;
+    margin-top: 8px;
+  }
+  p {
+    font-size: 12px;
+    margin-bottom: 5px !important;
+    @media (min-width: 1440px) {
+      font-size: 14px;
+      // margin-bottom: 5px !important;
+    }
+  }
+}
 .input-area {
   p {
     font-size: 12px;
@@ -956,7 +1043,7 @@ input[id="radio-3"] {
     }
   }
   input::placeholder {
-    font-size: 14px;
+    font-size: 12px;
     color: $gray;
   }
   textarea {

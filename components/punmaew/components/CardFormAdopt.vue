@@ -9,7 +9,7 @@
             sm="8"
             md="7"
             lg="6"
-            xl="4"
+            xl="5"
             class="content-wrapper pt-2"
           >
             <section class="content">

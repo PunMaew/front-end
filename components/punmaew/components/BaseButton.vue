@@ -83,7 +83,7 @@ export default {
   transition: 0.5s;
   box-shadow: 0px 4px 15px rgba(105, 161, 255, 0.5);
   width: 160px;
-  padding: 11px 36px;
+  padding: 10px 12px;
   &:hover {
     background-position: right center;
   }
