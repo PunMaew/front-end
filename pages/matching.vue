@@ -5,20 +5,39 @@
         <v-col cols="12" align-self="center">
           <v-row justify="center">
             <v-col cols="12" align-self="center">
-              <div class="ideal-cats">
+              <div
+                v-if="this.$store.state.auth.user.idealCat.length <= 0"
+                class="ideal-cats"
+              >
                 <h2 class="ideal-title">ค้นหาแมวในอุดมคติ</h2>
                 <div>
-                  <div class="ideal-line mt-8 mt-lg-12">
-                    <div class="ideal-container">
-                      <div class="ideal-step">
-                        <div v-for="i in 10" :key="i" class="ideal"></div>
+                  <div>
+                    <div class="ideal-line mt-8 mt-lg-12">
+                      <div class="ideal-container">
+                        <div class="ideal-step">
+                          <div
+                            v-for="i in 10"
+                            :key="i"
+                            class="ideal"
+                            :class="[i <= currentStep && 'step-active']"
+                          ></div>
+                        </div>
                       </div>
                     </div>
+                    <div
+                      class="ideal-line-orange"
+                      :style="{
+                        width:
+                          currentStep == 10
+                            ? currentStep * 10 + '%'
+                            : currentStep * 9 + '%',
+                      }"
+                    ></div>
                   </div>
-
                   <div class="set-container">
                     <v-row justify="center">
                       <v-col cols="12" sm="8">
+                        <!-- <validation-observer ref="idealForm"> -->
                         <div v-if="currentStep === 1">
                           <div class="mt-12 mb-6 text-center">
                             <p class="font-weight-bold question-ideal">
@@ -30,21 +49,33 @@
                               <v-col cols="12" sm="8" lg="6">
                                 <div class="mb-7">
                                   <!-- valid -->
-
-                                  <div class="px-0" fluid>
-                                    <v-radio-group v-model="answerOne">
-                                      <v-radio
-                                        v-for="n in choiceListOne"
-                                        :key="n.id"
-                                        :label="`${n.answer}`"
-                                        :value="n"
-                                      ></v-radio>
-                                    </v-radio-group>
-                                  </div>
+                                  <validation-provider
+                                    rules="required"
+                                    v-slot="{ errors }"
+                                    name="answerOne"
+                                    ref="answerOne"
+                                  >
+                                    <div class="px-0" fluid>
+                                      <v-radio-group
+                                        name="answerOne"
+                                        v-model="answerOne"
+                                      >
+                                        <v-radio
+                                          v-for="n in choiceListOne"
+                                          :key="n.id"
+                                          :label="`${n.answer}`"
+                                          :value="n"
+                                        />
+                                      </v-radio-group>
+                                    </div>
+                                    <span class="valid-form">
+                                      {{ errors[0] }}
+                                    </span>
+                                  </validation-provider>
                                   <!--  -->
                                 </div>
                                 <base-button
-                                  @click="nextStep()"
+                                  @click="nextStep('answerOne')"
                                   :fillSearch="true"
                                 >
                                   ต่อไป
@@ -63,18 +94,26 @@
                             <v-row justify="center">
                               <v-col cols="12" sm="8" lg="6">
                                 <div class="mb-7">
-                                  <v-select
-                                    dense
-                                    filled
-                                    :items="choiceListTwo"
-                                    item-text="answer"
-                                    name="answer"
-                                    v-model="answerTwo.answer"
-                                    data-vv-name="select"
-                                    required
-                                    placeholder="กรุณาเลือกคำตอบ"
+                                  <validation-provider
+                                    rules="required"
+                                    v-slot="{ errors }"
+                                    ref="answerTwo"
                                   >
-                                  </v-select>
+                                    <v-select
+                                      dense
+                                      filled
+                                      :items="choiceListTwo"
+                                      item-text="answer"
+                                      name="answerTwo"
+                                      v-model="answerTwo"
+                                      data-vv-name="select"
+                                      required
+                                      placeholder="กรุณาเลือกคำตอบ"
+                                    />
+                                    <span class="valid-form">
+                                      {{ errors[0] }}
+                                    </span>
+                                  </validation-provider>
                                 </div>
                                 <div>
                                   <v-row
@@ -84,14 +123,14 @@
                                   >
                                     <v-col align-self="center">
                                       <base-button
-                                        @click="prevStep()"
+                                        @click="prevStep"
                                         :outline="true"
                                         >กลับ</base-button
                                       >
                                     </v-col>
                                     <v-col>
                                       <base-button
-                                        @click="nextStep()"
+                                        @click="nextStep('answerTwo')"
                                         :fillSearch="true"
                                         >ต่อไป</base-button
                                       >
@@ -112,18 +151,27 @@
                             <v-row justify="center">
                               <v-col cols="12" sm="8" lg="6">
                                 <div class="mb-7">
-                                  <v-select
-                                    dense
-                                    filled
-                                    :items="choiceListThree"
-                                    item-text="answer"
-                                    name="answer"
-                                    v-model="answerThree.answer"
-                                    data-vv-name="select"
-                                    required
-                                    placeholder="กรุณาเลือกคำตอบ"
+                                  <validation-provider
+                                    rules="required"
+                                    v-slot="{ errors }"
+                                    ref="answerThree"
                                   >
-                                  </v-select>
+                                    <v-select
+                                      dense
+                                      filled
+                                      :items="choiceListThree"
+                                      item-text="answer"
+                                      name="answerThree"
+                                      v-model="answerThree"
+                                      data-vv-name="select"
+                                      required
+                                      placeholder="กรุณาเลือกคำตอบ"
+                                    >
+                                    </v-select>
+                                    <span class="valid-form">
+                                      {{ errors[0] }}
+                                    </span>
+                                  </validation-provider>
                                 </div>
                                 <div>
                                   <v-row
@@ -140,7 +188,7 @@
                                     </v-col>
                                     <v-col>
                                       <base-button
-                                        @click="nextStep()"
+                                        @click="nextStep('answerThree')"
                                         :fillSearch="true"
                                         >ต่อไป</base-button
                                       >
@@ -161,18 +209,27 @@
                             <v-row justify="center">
                               <v-col cols="12" sm="8" lg="6">
                                 <div class="mb-7">
-                                  <v-select
-                                    dense
-                                    filled
-                                    :items="choiceListFour"
-                                    item-text="answer"
-                                    name="answer"
-                                    v-model="answerFour.answer"
-                                    data-vv-name="select"
-                                    required
-                                    placeholder="กรุณาเลือกคำตอบ"
+                                  <validation-provider
+                                    rules="required"
+                                    v-slot="{ errors }"
+                                    ref="answerFour"
                                   >
-                                  </v-select>
+                                    <v-select
+                                      dense
+                                      filled
+                                      :items="filterList.color"
+                                      item-text="name"
+                                      name="answerFour"
+                                      v-model="answerFour"
+                                      data-vv-name="select"
+                                      required
+                                      placeholder="กรุณาเลือกคำตอบ"
+                                    >
+                                    </v-select>
+                                    <span class="valid-form">
+                                      {{ errors[0] }}
+                                    </span>
+                                  </validation-provider>
                                 </div>
                                 <div>
                                   <v-row
@@ -189,7 +246,7 @@
                                     </v-col>
                                     <v-col>
                                       <base-button
-                                        @click="nextStep()"
+                                        @click="nextStep('answerFour')"
                                         :fillSearch="true"
                                         >ต่อไป</base-button
                                       >
@@ -210,18 +267,27 @@
                             <v-row justify="center">
                               <v-col cols="12" sm="8" lg="6">
                                 <div class="mb-7">
-                                  <v-autocomplete
-                                    dense
-                                    filled
-                                    :items="province"
-                                    item-text="province"
-                                    name="province"
-                                    v-model="answerFive.answer"
-                                    data-vv-name="select"
-                                    required
-                                    placeholder="กรุณาเลือกคำตอบ"
+                                  <validation-provider
+                                    rules="required"
+                                    v-slot="{ errors }"
+                                    ref="answerFive"
                                   >
-                                  </v-autocomplete>
+                                    <v-autocomplete
+                                      dense
+                                      filled
+                                      :items="province"
+                                      item-text="province"
+                                      name="province"
+                                      v-model="answerFive"
+                                      data-vv-name="select"
+                                      required
+                                      placeholder="กรุณาเลือกคำตอบ"
+                                    >
+                                    </v-autocomplete>
+                                    <span class="valid-form">
+                                      {{ errors[0] }}
+                                    </span>
+                                  </validation-provider>
                                 </div>
                                 <div>
                                   <v-row
@@ -231,14 +297,14 @@
                                   >
                                     <v-col align-self="center">
                                       <base-button
-                                        @click="prevStep()"
+                                        @click="prevStep"
                                         :outline="true"
                                         >กลับ</base-button
                                       >
                                     </v-col>
                                     <v-col>
                                       <base-button
-                                        @click="nextStep()"
+                                        @click="nextStep('answerFive')"
                                         :fillSearch="true"
                                         >ต่อไป</base-button
                                       >
@@ -259,18 +325,27 @@
                             <v-row justify="center">
                               <v-col cols="12" sm="8" lg="6">
                                 <div class="mb-7">
-                                  <v-autocomplete
-                                    dense
-                                    filled
-                                    :items="province"
-                                    item-text="district"
-                                    name="district"
-                                    v-model="answerSix.answer"
-                                    data-vv-name="select"
-                                    required
-                                    placeholder="กรุณาเลือกคำตอบ"
+                                  <validation-provider
+                                    rules="required"
+                                    v-slot="{ errors }"
+                                    ref="answerSix"
                                   >
-                                  </v-autocomplete>
+                                    <v-autocomplete
+                                      dense
+                                      filled
+                                      :items="province"
+                                      item-text="district"
+                                      name="district"
+                                      v-model="answerSix"
+                                      data-vv-name="select"
+                                      required
+                                      placeholder="กรุณาเลือกคำตอบ"
+                                    >
+                                    </v-autocomplete>
+                                    <span class="valid-form">
+                                      {{ errors[0] }}
+                                    </span>
+                                  </validation-provider>
                                 </div>
                                 <div>
                                   <v-row
@@ -287,7 +362,7 @@
                                     </v-col>
                                     <v-col>
                                       <base-button
-                                        @click="nextStep()"
+                                        @click="nextStep('answerSix')"
                                         :fillSearch="true"
                                         >ต่อไป</base-button
                                       >
@@ -308,18 +383,27 @@
                             <v-row justify="center">
                               <v-col cols="12" sm="8" lg="6">
                                 <div class="mb-7">
-                                  <v-autocomplete
-                                    dense
-                                    filled
-                                    :items="filterList.breed"
-                                    item-text="name"
-                                    name="breeds"
-                                    v-model="answerSeven.answer"
-                                    data-vv-name="select"
-                                    required
-                                    placeholder="กรุณาเลือกคำตอบ"
+                                  <validation-provider
+                                    rules="required"
+                                    v-slot="{ errors }"
+                                    ref="answerSeven"
                                   >
-                                  </v-autocomplete>
+                                    <v-autocomplete
+                                      dense
+                                      filled
+                                      :items="filterList.breed"
+                                      item-text="name"
+                                      name="breeds"
+                                      v-model="answerSeven"
+                                      data-vv-name="select"
+                                      required
+                                      placeholder="กรุณาเลือกคำตอบ"
+                                    >
+                                    </v-autocomplete>
+                                    <span class="valid-form">
+                                      {{ errors[0] }}
+                                    </span>
+                                  </validation-provider>
                                 </div>
                                 <div>
                                   <v-row
@@ -329,14 +413,14 @@
                                   >
                                     <v-col align-self="center">
                                       <base-button
-                                        @click="prevStep()"
+                                        @click="prevStep"
                                         :outline="true"
                                         >กลับ</base-button
                                       >
                                     </v-col>
                                     <v-col>
                                       <base-button
-                                        @click="nextStep()"
+                                        @click="nextStep('answerSeven')"
                                         :fillSearch="true"
                                         >ต่อไป</base-button
                                       >
@@ -357,18 +441,26 @@
                             <v-row justify="center">
                               <v-col cols="12" sm="8" lg="6">
                                 <div class="mb-7">
-                                  <v-select
-                                    dense
-                                    filled
-                                    :items="choiceListEight"
-                                    item-text="answer"
-                                    name="answer"
-                                    v-model="answerEight.answer"
-                                    data-vv-name="select"
-                                    required
-                                    placeholder="กรุณาเลือกคำตอบ"
+                                  <validation-provider
+                                    rules="required"
+                                    v-slot="{ errors }"
+                                    ref="answerEight"
                                   >
-                                  </v-select>
+                                    <v-radio-group
+                                      name="answerEight"
+                                      v-model="answerEight"
+                                    >
+                                      <v-radio
+                                        v-for="n in choiceListEight"
+                                        :key="n.id"
+                                        :label="`${n.answer}`"
+                                        :value="n"
+                                      />
+                                    </v-radio-group>
+                                    <span class="valid-form">
+                                      {{ errors[0] }}
+                                    </span>
+                                  </validation-provider>
                                 </div>
                                 <div>
                                   <v-row
@@ -378,14 +470,14 @@
                                   >
                                     <v-col align-self="center">
                                       <base-button
-                                        @click="prevStep()"
+                                        @click="prevStep"
                                         :outline="true"
                                         >กลับ</base-button
                                       >
                                     </v-col>
                                     <v-col>
                                       <base-button
-                                        @click="nextStep()"
+                                        @click="nextStep('answerEight')"
                                         :fillSearch="true"
                                         >ต่อไป</base-button
                                       >
@@ -399,25 +491,33 @@
                         <div v-if="currentStep === 9">
                           <div class="mt-12 mb-6 text-center">
                             <p class="font-weight-bold question-ideal">
-                              9. ต้องการแมวที่..
+                              9. ต้องการแมวที่...
                             </p>
                           </div>
                           <div>
                             <v-row justify="center">
                               <v-col cols="12" sm="8" lg="6">
                                 <div class="mb-7">
-                                  <v-select
-                                    dense
-                                    filled
-                                    :items="choiceListNine"
-                                    item-text="answer"
-                                    name="answer"
-                                    v-model="answerNine.answer"
-                                    data-vv-name="select"
-                                    required
-                                    placeholder="กรุณาเลือกคำตอบ"
+                                  <validation-provider
+                                    rules="required"
+                                    v-slot="{ errors }"
+                                    ref="answerNine"
                                   >
-                                  </v-select>
+                                    <v-radio-group
+                                      name="answerNine"
+                                      v-model="answerNine"
+                                    >
+                                      <v-radio
+                                        v-for="n in choiceListNine"
+                                        :key="n.id"
+                                        :label="`${n.answer}`"
+                                        :value="n"
+                                      />
+                                    </v-radio-group>
+                                    <span class="valid-form">
+                                      {{ errors[0] }}
+                                    </span>
+                                  </validation-provider>
                                 </div>
                                 <div>
                                   <v-row
@@ -427,14 +527,14 @@
                                   >
                                     <v-col align-self="center">
                                       <base-button
-                                        @click="prevStep()"
+                                        @click="prevStep"
                                         :outline="true"
                                         >กลับ</base-button
                                       >
                                     </v-col>
                                     <v-col>
                                       <base-button
-                                        @click="nextStep()"
+                                        @click="nextStep('answerNine')"
                                         :fillSearch="true"
                                         >ต่อไป</base-button
                                       >
@@ -448,25 +548,33 @@
                         <div v-if="currentStep === 10">
                           <div class="mt-12 mb-6 text-center">
                             <p class="font-weight-bold question-ideal">
-                              10. ต้องการแมวที่..
+                              10. ต้องการแมวที่...
                             </p>
                           </div>
                           <div>
                             <v-row justify="center">
                               <v-col cols="12" sm="8" lg="6">
                                 <div class="mb-7">
-                                  <v-select
-                                    dense
-                                    filled
-                                    :items="choiceListTen"
-                                    item-text="answer"
-                                    name="answer"
-                                    v-model="answerTen.answer"
-                                    data-vv-name="select"
-                                    required
-                                    placeholder="กรุณาเลือกคำตอบ"
+                                  <validation-provider
+                                    rules="required"
+                                    v-slot="{ errors }"
+                                    ref="answerTen"
                                   >
-                                  </v-select>
+                                    <v-radio-group
+                                      name="answerTen"
+                                      v-model="answerTen"
+                                    >
+                                      <v-radio
+                                        v-for="n in choiceListTen"
+                                        :key="n.id"
+                                        :label="`${n.answer}`"
+                                        :value="n"
+                                      />
+                                    </v-radio-group>
+                                    <span class="valid-form">
+                                      {{ errors[0] }}
+                                    </span>
+                                  </validation-provider>
                                 </div>
                                 <div>
                                   <v-row
@@ -476,27 +584,64 @@
                                   >
                                     <v-col align-self="center">
                                       <base-button
-                                        @click="prevStep()"
+                                        @click="prevStep"
                                         :outline="true"
                                         >กลับ</base-button
                                       >
                                     </v-col>
                                     <v-col>
                                       <base-button
-                                        @click="adealCat()"
+                                        @click="adealCat('answerTen')"
                                         :fillSearch="true"
                                         >ยืนยัน</base-button
                                       >
                                     </v-col>
                                   </v-row>
                                 </div>
-                              </v-col></v-row
-                            >
+                              </v-col>
+                            </v-row>
                           </div>
                         </div>
+                        <!-- </validation-observer> -->
                       </v-col>
                     </v-row>
                   </div>
+                </div>
+              </div>
+              <div class="ideal-cats-second" v-else>
+                <div class="ideal-title mb-6 mb-lg-16">
+                  <h2>ค้นหาแมวในอุดมคติ</h2>
+                </div>
+                <div>
+                  <v-row justify="center">
+                    <v-col cols="12">
+                      <div class="text-center">
+                        <div class="ideal-success">
+                          <v-row justify="center">
+                            <v-col cols="6" md="3">
+                              <img src="@/assets/imgs/banner.png" alt="" />
+                            </v-col>
+                          </v-row>
+                        </div>
+
+                        <div>
+                          <v-row justify="center">
+                            <v-col cols="12" md="6">
+                              <p class="mb-0 font-weight-bold ideal-second">
+                                คุณทำแบบสอบถามนี้แล้ว
+                              </p>
+                              <base-button></base-button>
+                              <base-button
+                                @click="editIdealCat"
+                                :fillSearch="true"
+                                >แก้ไขแมวในอุดมคติ</base-button
+                              >
+                            </v-col>
+                          </v-row>
+                        </div>
+                      </div>
+                    </v-col>
+                  </v-row>
                 </div>
               </div>
             </v-col>
@@ -508,36 +653,45 @@
 </template>
 
 <script>
+import { ValidationProvider } from "vee-validate";
+import { ValidationObserver } from "vee-validate";
 import filterList from "@/assets/data/filterList.json";
 import provinceList from "@/assets/data/province.json";
 import BaseButton from "../components/punmaew/components/BaseButton.vue";
 export default {
   middleware: "auth",
-  components: { BaseButton, filterList, provinceList },
+  components: {
+    ValidationProvider,
+    ValidationObserver,
+    BaseButton,
+    filterList,
+    provinceList,
+  },
   data() {
     return {
-      answerOne: { id: 1, answer: "" },
-      answerTwo: { id: 2, answer: "" },
-      answerThree: { id: 3, answer: "" },
-      answerFour: { id: 4, answer: "" },
-      answerFive: { id: 5, answer: "" },
-      answerSix: { id: 6, answer: "" },
-      answerSeven: { id: 7, answer: "" },
-      answerEight: { id: 8, answer: "" },
-      answerNine: { id: 9, answer: "" },
-      answerTen: { id: 10, answer: "" },
+      answerOne: null,
+      answerTwo: null,
+      answerThree: null,
+      answerFour: null,
+      answerFive: null,
+      answerSix: null,
+      answerSeven: null,
+      answerEight: null,
+      answerNine: null,
+      answerTen: null,
 
       choiceListOne: [
         { id: 1, answer: "1-3 เดือน" },
-        { id: 2, answer: "4 - 6 เดือน" },
-        { id: 3, answer: "7 - 9 เดือน" },
-        { id: 4, answer: "10 - 12 เดือน" },
+        { id: 2, answer: "4-6 เดือน" },
+        { id: 3, answer: "7-9 เดือน" },
+        { id: 4, answer: "10-12 เดือน" },
         { id: 5, answer: "1 ปีขึ้นไป" },
       ],
       choiceListTwo: [
         { id: 1, answer: "ขนสั้น" },
         { id: 2, answer: "ขนยาว" },
         { id: 3, answer: "ไม่มีขน" },
+        { id: 4, answer: "ไม่จำกัด" },
       ],
       choiceListThree: [
         { id: 1, answer: "เพศเมีย" },
@@ -565,8 +719,8 @@ export default {
         { id: 3, answer: "ไม่จำกัด" },
       ],
       choiceListTen: [
-        { id: 1, answer: "ได้รับวัคซีนครบ" },
-        { id: 2, answer: "ยังไม่ได้รับวัคซีน" },
+        { id: 1, answer: "ยังไม่ได้รับวัคซีน" },
+        { id: 2, answer: "ได้รับวัคซีนครบตามช่วงอายุของแมว" },
         { id: 3, answer: "ได้รับวัคซีนบางชนิด" },
         { id: 4, answer: "ไม่จำกัด" },
       ],
@@ -576,33 +730,60 @@ export default {
     };
   },
   methods: {
-    async adealCat() {
+    editIdealCat() {
+      this.$router.push("/editProfile?menu=3");
+    },
+    async adealCat(answer) {
       try {
+        const success = await this.$refs[answer].validate();
+        if (!success.valid) {
+          return;
+        }
         const res = await this.$axios.put(
           `${this.$config.authURL}user/idealCat?id=${this.$store.state.auth.user._id}`,
           {
             idealCat: [
               { answer: this.answerOne.answer },
-              { answer: this.answerTwo.answer },
-              { answer: this.answerThree.answer },
-              { answer: this.answerFour.answer },
-              { answer: this.answerFive.answer },
-              { answer: this.answerSix.answer },
-              { answer: this.answerSeven.answer },
+              { answer: this.answerTwo },
+              { answer: this.answerThree },
+              { answer: this.answerFour },
+              { answer: this.answerFive },
+              { answer: this.answerSix },
+              { answer: this.answerSeven },
               { answer: this.answerEight.answer },
               { answer: this.answerNine.answer },
               { answer: this.answerTen.answer },
             ],
           }
         );
-        console.log(res);
+        this.$store.commit("SET_IDEAL", [
+          { answer: this.answerOne.answer },
+          { answer: this.answerTwo },
+          { answer: this.answerThree },
+          { answer: this.answerFour },
+          { answer: this.answerFive },
+          { answer: this.answerSix },
+          { answer: this.answerSeven },
+          { answer: this.answerEight.answer },
+          { answer: this.answerNine.answer },
+          { answer: this.answerTen.answer },
+        ]);
+        console.log(res.data);
         this.$router.push("/adoptCat");
       } catch (error) {
         console.log(error);
       }
     },
-    nextStep() {
+
+    async nextStep(answer) {
+      // console.log("ข้อที่: ", answer);
+      const success = await this.$refs[answer].validate();
+      // console.log(success);
+      if (!success.valid) {
+        return;
+      }
       if (this.currentStep === 1 || this.currentStep < 10) {
+        await this.$refs[answer].reset();
         this.currentStep += 1;
       } else {
         console.log("Hello");
@@ -620,6 +801,22 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.ideal-second {
+  p {
+    font-size: 16px;
+  }
+  @media (min-width: 1440px) {
+    font-size: 40px;
+  }
+}
+.ideal-cats-second {
+  margin-bottom: 200px;
+}
+.ideal-success {
+  img {
+    width: 100%;
+  }
+}
 .set-container {
   min-height: 350px;
 }
@@ -654,15 +851,28 @@ export default {
     font-size: 24px;
   }
 }
+.ideal-title {
+  font-size: 24px;
+  @media (min-width: 1440px) {
+    font-size: 36px;
+  }
+}
 .ideal-cats {
   margin-bottom: 56px;
   @media (min-width: 1440px) {
     margin-bottom: 450px;
   }
-  .ideal-title {
-    font-size: 24px;
+
+  .ideal-line-orange {
+    position: relative;
+    border-top: 3px solid $yellow-dark;
+    top: -19px;
+    transition: width 0.5s;
+
     @media (min-width: 1440px) {
-      font-size: 36px;
+      border-top: 5px solid $yellow-dark;
+      top: -33px;
+      transition: width 0.5s;
     }
   }
   .ideal-line {
@@ -692,6 +902,10 @@ export default {
     display: flex;
     justify-content: space-between;
     gap: 10px;
+    .step-active {
+      background-color: $yellow-dark !important;
+      transition: background-color 1.5s;
+    }
     .ideal {
       position: relative;
       top: -10px;

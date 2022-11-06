@@ -1,5 +1,8 @@
 <template>
-  <header class="d-flex align-center position-relative" :class="`${_bg_color}`">
+  <header
+    class="d-flex align-center position-relative pt-6"
+    :class="`${_bg_color}`"
+  >
     <v-container class="justify-center d-flex">
       <v-row v-if="admin">
         <v-col sm="4" class="nav-left">
@@ -12,12 +15,12 @@
         </v-col> -->
       </v-row>
       <v-row v-else justify="center">
-        <v-col sm="4" class="nav-left">
+        <v-col sm="2" class="nav-left">
           <n-link to="/" class="opunmai">
             <img src="~/assets/imgs/pmlogo.png" alt="punmaew" id="logo" />
           </n-link>
         </v-col>
-        <v-col sm="4" class="nav-center">
+        <v-col sm="7" class="nav-center">
           <ul id="menu" class="d-none d-md-flex">
             <li>
               <n-link to="/articles" class="opunmai">
@@ -34,21 +37,44 @@
                 <p class="mb-0">รับเลี้ยงแมว</p>
               </n-link>
             </li>
+            <li v-if="loggedIn">
+              <n-link to="/editProfile" class="opunmai">
+                <p class="mb-0">โปรไฟล์ของฉัน</p>
+              </n-link>
+            </li>
           </ul>
         </v-col>
-        <v-col sm="4" class="nav-right">
+        <v-col sm="3" class="nav-right">
           <ul id="menu" class="d-none d-md-flex">
             <li v-if="loggedIn">
-              <client-only>
+              <div class="d-flex account-info">
+                <div class="user-icon mr-2 font-weight-bold">
+                  <i class="fi fi-rr-user"></i>
+                  {{ user.firstName }} |
+                </div>
+                <div
+                  @click="menuAction('logout')"
+                  class="d-flex font-weight-bold exit-system"
+                >
+                  ออกจากระบบ
+                </div>
+              </div>
+              <!-- <client-only>
                 <v-menu offset-y>
                   <template v-slot:activator="{ on, attrs }">
                     <div v-bind="attrs" v-on="on">
-                      <base-button :fill="true" class="d-flex justify-center">
+                      <base-button
+                        :fill="true"
+                        class="d-flex justify-center align-center"
+                      >
                         <div class="user-icon mr-2">
                           <i class="fi fi-rr-user"></i>
                         </div>
-                        {{ user.firstName }}</base-button
-                      >
+                        {{ user.firstName }}
+                        <i
+                          class="ml-2 user-icon fi fi-rr-angle-small-down d-flex"
+                        ></i>
+                      </base-button>
                     </div>
                   </template>
                   <v-list>
@@ -61,7 +87,7 @@
                     </v-list-item>
                   </v-list>
                 </v-menu>
-              </client-only>
+              </client-only> -->
             </li>
             <li v-else>
               <n-link to="/login" class="opunmai">
@@ -138,7 +164,7 @@ export default {
   data() {
     return {
       items: [
-        { title: "โปรไฟล์ของฉัน", action: "my-profile" },
+        // { title: "โปรไฟล์ของฉัน", action: "my-profile" },
         { title: "ออกจากระบบ", action: "logout" },
       ],
       login: false,
@@ -180,6 +206,7 @@ export default {
       }
       if (action === "logout") {
         try {
+          // คุณต้องการออกจากระบบหรือไม่
           this.$auth.logout();
           this.$router.push("/");
         } catch (error) {
@@ -192,10 +219,28 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.account-info {
+  justify-content: center;
+  align-items: center;
+  &:hover {
+    color: $dark;
+  }
+  @media (min-width: 1024px) {
+    font-size: 14px;
+  }
+  @media (min-width: 1440px) {
+    font-size: 16px;
+  }
+}
+.exit-system {
+  cursor: pointer;
+  color: $error;
+  text-decoration: underline;
+}
 .user-icon {
   i {
     font-size: 20px;
-    color: $white;
+    // color: $white;
   }
 }
 .bgColor {

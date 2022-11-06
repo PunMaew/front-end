@@ -133,22 +133,30 @@ export default {
               gender: res.data.data.generalInfo.gender,
               province: res.data.data.generalInfo.location.province,
               district: res.data.data.generalInfo.location.district,
-              subDistrict: res.data.data.generalInfo.location.subDistrict,
-              zipCode: res.data.data.generalInfo.location.zipCode,
+              // subDistrict: res.data.data.generalInfo.location.subDistrict,
+              // zipCode: res.data.data.generalInfo.location.zipCode,
+              vaccination: res.data.data.generalInfo.vaccination,
               receiveVaccine: res.data.data.generalInfo.receiveVaccine,
-              receiveDate: res.data.data.generalInfo.receiveDate,
+              // receiveDate: res.data.data.generalInfo.receiveDate,
               disease: res.data.data.generalInfo.disease,
               neutered: res.data.data.generalInfo.neutered,
               others: res.data.data.generalInfo.others,
             },
             step2: {
-              characteristic: res.data.data.generalInfo.characteristic,
+              // characteristic: res.data.data.generalInfo.characteristic,
+              characteristic: {
+                hair: res.data.data.generalInfo.characteristic.hair,
+                size: res.data.data.generalInfo.characteristic.size,
+                habit: res.data.data.generalInfo.characteristic.habit,
+                sandbox: res.data.data.generalInfo.characteristic.sandbox,
+              },
             },
             step3: {
               contactName: res.data.data.contact.contactName,
               tel: res.data.data.contact.tel,
               facebook: res.data.data.contact.facebook,
               line: res.data.data.contact.line,
+              terms: res.data.data.contact.terms,
             },
           },
           isEdit: true,
@@ -164,15 +172,17 @@ export default {
   },
   methods: {
     async updateFindHome() {
-      const format = parseInt(this.forms.step1.age, 10);
+      const format = this.forms.step1.age;
       const ageRange =
-        format <= 3
+        format === "1 เดือน" || format === "2 เดือน" || format === "3 เดือน"
           ? "1-3 เดือน"
-          : format >= 4 && format <= 6
+          : format === "4 เดือน" || format === "5 เดือน" || format === "6 เดือน"
           ? "4-6 เดือน"
-          : format >= 7 && format <= 9
+          : format === "7 เดือน" || format === "8 เดือน" || format === "9 เดือน"
           ? "7-9 เดือน"
-          : format >= 9 && format <= 12
+          : format === "10 เดือน" ||
+            format === "11 เดือน" ||
+            format === "12 เดือน"
           ? "10-12 เดือน"
           : "1 ปีขึ้นไป";
       try {
@@ -187,16 +197,23 @@ export default {
               ageRange: ageRange,
               location: {
                 province: this.forms.step1.province,
-                subDistrict: this.forms.step1.subDistrict,
+                // subDistrict: this.forms.step1.subDistrict,
                 district: this.forms.step1.district,
-                zipCode: this.forms.step1.zipCode,
+                // zipCode: this.forms.step1.zipCode,
               },
+              vaccination: this.forms.step1.vaccination,
               receiveVaccine: this.forms.step1.receiveVaccine,
-              receiveDate: this.forms.step1.receiveDate,
+              // receiveDate: this.forms.step1.receiveDate,
               disease: this.forms.step1.disease,
               neutered: this.forms.step1.neutered,
               gender: this.forms.step1.gender,
-              characteristic: this.forms.step2.characteristic,
+              // characteristic: this.forms.step2.characteristic,
+              characteristic: {
+                hair: this.forms.step2.characteristic.hair,
+                size: this.forms.step2.characteristic.size,
+                habit: this.forms.step2.characteristic.habit,
+                sandbox: this.forms.step2.characteristic.sandbox,
+              },
               others: this.forms.step1.others,
             },
             contact: {
@@ -204,6 +221,7 @@ export default {
               tel: this.forms.step3.tel,
               facebook: this.forms.step3.facebook,
               Line: this.forms.step3.line,
+              terms: this.forms.step3.terms,
             },
           }
         );
@@ -222,18 +240,20 @@ export default {
       }
     },
     async submitFindHome() {
-      // console.log(this.forms);
-      const format = parseInt(this.forms.step1.age, 10);
+      const format = this.forms.step1.age;
       const ageRange =
-        format <= 3
+        format === "1 เดือน" || format === "2 เดือน" || format === "3 เดือน"
           ? "1-3 เดือน"
-          : format >= 4 && format <= 6
+          : format === "4 เดือน" || format === "5 เดือน" || format === "6 เดือน"
           ? "4-6 เดือน"
-          : format >= 7 && format <= 9
+          : format === "7 เดือน" || format === "8 เดือน" || format === "9 เดือน"
           ? "7-9 เดือน"
-          : format >= 9 && format <= 12
+          : format === "10 เดือน" ||
+            format === "11 เดือน" ||
+            format === "12 เดือน"
           ? "10-12 เดือน"
           : "1 ปีขึ้นไป";
+
       try {
         const createPost = await this.$axios.post(
           `${this.$config.findHome}create`,
@@ -246,16 +266,23 @@ export default {
               ageRange: ageRange,
               location: {
                 province: this.forms.step1.province,
-                subDistrict: this.forms.step1.subDistrict,
+                // subDistrict: this.forms.step1.subDistrict,
                 district: this.forms.step1.district,
-                zipCode: this.forms.step1.zipCode,
+                // zipCode: this.forms.step1.zipCode,
               },
+              vaccination: this.forms.step1.vaccination,
               receiveVaccine: this.forms.step1.receiveVaccine,
-              receiveDate: this.forms.step1.receiveDate,
+              // receiveDate: this.forms.step1.receiveDate,
               disease: this.forms.step1.disease,
               neutered: this.forms.step1.neutered,
               gender: this.forms.step1.gender,
-              characteristic: this.forms.step2.characteristic,
+              // characteristic: this.forms.step2.characteristic,
+              characteristic: {
+                hair: this.forms.step2.characteristic.hair,
+                size: this.forms.step2.characteristic.size,
+                habit: this.forms.step2.characteristic.habit,
+                sandbox: this.forms.step2.characteristic.sandbox,
+              },
               others: this.forms.step1.others,
             },
             contact: {
@@ -263,6 +290,7 @@ export default {
               tel: this.forms.step3.tel,
               facebook: this.forms.step3.facebook,
               Line: this.forms.step3.line,
+              terms: this.forms.step3.terms,
             },
           }
         );

@@ -145,8 +145,10 @@
                                   <p class="mb-0 location">
                                     <i class="fi fi-rr-marker"></i>
                                     {{
+                                      "จังหวัด" +
                                       p.generalInfo.location.province +
                                       " " +
+                                      "เขต" +
                                       p.generalInfo.location.district
                                     }}
                                   </p>
@@ -644,7 +646,7 @@
                           </p>
                           <p class="mb-0">{{ account.email }}</p>
                           <p class="mb-0">{{ account.tel }}</p>
-                          <p class="mb-0">
+                          <!-- <p class="mb-0">
                             {{
                               account.address.province +
                               "," +
@@ -657,7 +659,7 @@
                               " " +
                               account.address.zipCode
                             }}
-                          </p>
+                          </p> -->
                         </div>
                         <div
                           @click="deleteAccount(account._id)"
@@ -749,139 +751,23 @@ export default {
       paragraph: "",
       isLoading: false,
       articles: [],
-      // articles: [
-      //   { id: 1, name: "บทความ A", date: "dd/mm/yyyy" },
-      //   { id: 2, name: "บทความ B", date: "dd/mm/yyyy" },
-      //   { id: 3, name: "บทความ C", date: "dd/mm/yyyy" },
-      //   { id: 4, name: "บทความ D", date: "dd/mm/yyyy" },
-      //   { id: 5, name: "บทความ E", date: "dd/mm/yyyy" },
-      //   { id: 6, name: "บทความ F", date: "dd/mm/yyyy" },
-      //   { id: 7, name: "บทความ G", date: "dd/mm/yyyy" },
-      //   { id: 8, name: "บทความ H", date: "dd/mm/yyyy" },
-      //   { id: 9, name: "บทความ I", date: "dd/mm/yyyy" },
-      //   { id: 10, name: "บทความ J", date: "dd/mm/yyyy" },
-      // ],
+
       articleCount: 3,
       moreArticle: false,
       moreUser: false,
       morePost: false,
       posts: [],
-      // posts: [
-      //   {
-      //     id: 1,
-      //     name: "FindHome A",
-      //     date: "dd/mm/yyyy",
-      //     fullName: "ชื่อผู้โพสต์ นามสกุล",
-      //     status: "ยังไม่ถูกรับเลี้ยง",
-      //   },
-      //   {
-      //     id: 2,
-      //     name: "FindHome B",
-      //     date: "dd/mm/yyyy",
-      //     fullName: "ชื่อผู้โพสต์ นามสกุล",
-      //     status: "รับเลี้ยงแล้ว",
-      //   },
-      //   {
-      //     id: 3,
-      //     name: "FindHome C",
-      //     date: "dd/mm/yyyy",
-      //     fullName: "ชื่อผู้โพสต์ นามสกุล",
-      //     status: "ยังไม่ถูกรับเลี้ยง",
-      //   },
-      //   {
-      //     id: 4,
-      //     name: "FindHome D",
-      //     date: "dd/mm/yyyy",
-      //     fullName: "ชื่อผู้โพสต์ นามสกุล",
-      //     status: "ยังไม่ถูกรับเลี้ยง",
-      //   },
-      //   {
-      //     id: 5,
-      //     name: "FindHome E",
-      //     date: "dd/mm/yyyy",
-      //     fullName: "ชื่อผู้โพสต์ นามสกุล",
-      //     status: "รับเลี้ยงแล้ว",
-      //   },
-      //   {
-      //     id: 6,
-      //     name: "FindHome F",
-      //     date: "dd/mm/yyyy",
-      //     fullName: "ชื่อผู้โพสต์ นามสกุล",
-      //     status: "ยังไม่ถูกรับเลี้ยง",
-      //   },
-      //   {
-      //     id: 7,
-      //     name: "FindHome G",
-      //     date: "dd/mm/yyyy",
-      //     fullName: "ชื่อผู้โพสต์ นามสกุล",
-      //     status: "ยังไม่ถูกรับเลี้ยง",
-      //   },
-      //   {
-      //     id: 8,
-      //     name: "FindHome H",
-      //     date: "dd/mm/yyyy",
-      //     fullName: "ชื่อผู้โพสต์ นามสกุล",
-      //     status: "ยังไม่ถูกรับเลี้ยง",
-      //   },
-      //   {
-      //     id: 9,
-      //     name: "FindHome I",
-      //     date: "dd/mm/yyyy",
-      //     fullName: "ชื่อผู้โพสต์ นามสกุล",
-      //     status: "รับเลี้ยงแล้ว",
-      //   },
-      //   {
-      //     id: 10,
-      //     name: "FindHome J",
-      //     date: "dd/mm/yyyy",
-      //     fullName: "ชื่อผู้โพสต์ นามสกุล",
-      //     status: "ยังไม่ถูกรับเลี้ยง",
-      //   },
-      // ],
+
       postCount: 3,
       users: [],
-      // users: [
-      //   { id: 1, name: "Firstname A" },
-      //   { id: 2, name: "Firstname B" },
-      //   { id: 3, name: "Firstname C" },
-      //   { id: 4, name: "Firstname D" },
-      //   { id: 5, name: "Firstname E" },
-      //   { id: 6, name: "Firstname F" },
-      //   { id: 7, name: "Firstname G" },
-      //   { id: 8, name: "Firstname H" },
-      //   { id: 9, name: "Firstname I" },
-      //   { id: 10, name: "Firstname J" },
-      // ],
+
       userCount: 3,
       newArticle: false,
       pars: [{ id: 1, no: 1, text: "" }],
       newParagraph: "",
       imageData: "",
       imageFile: "",
-      // allAccounts: [],
-      // allAccounts: [
-      //   {
-      //     id: 1,
-      //     name: " Firstname Lastname",
-      //     mail: "example@gmail.com",
-      //     tel: "0812345678",
-      //     address: "กรุงเทพมหานคร, บางมด, ประชาอุทิศ, 10140",
-      //   },
-      //   {
-      //     id: 2,
-      //     name: " Firstname Lastname",
-      //     mail: "example@gmail.com",
-      //     tel: "0812345678",
-      //     address: "กรุงเทพมหานคร, บางมด, ประชาอุทิศ, 10140",
-      //   },
-      //   {
-      //     id: 3,
-      //     name: " Firstname Lastname",
-      //     mail: "example@gmail.com",
-      //     tel: "0812345678",
-      //     address: "กรุงเทพมหานคร, บางมด, ประชาอุทิศ, 10140",
-      //   },
-      // ],
+
       searchArticle: "",
       searchAccount: "",
       editArticleId: "",

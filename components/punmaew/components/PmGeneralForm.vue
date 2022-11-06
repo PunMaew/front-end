@@ -28,7 +28,7 @@
             rules="required"
             v-slot="{ errors }"
           >
-            <input
+            <!-- <input
               v-model="color"
               name="color"
               type="text"
@@ -36,7 +36,20 @@
             />
             <span class="valid-form">
               {{ errors[0] }}
-            </span>
+            </span> -->
+            <v-autocomplete
+              dense
+              filled
+              :items="colorOfCat"
+              item-text="name"
+              name="color"
+              v-model="color"
+              data-vv-name="select"
+              required
+              placeholder="กรุณากรอกสี"
+              :error-messages="errors"
+            >
+            </v-autocomplete>
           </validation-provider>
         </div>
         <div class="input-area mt-2">
@@ -50,7 +63,7 @@
             v-model="breeds"
             data-vv-name="select"
             required
-            placeholder="กรุณากรอกสายพันธุ์"
+            placeholder="กรุณาเลือกสายพันธุ์"
           >
           </v-autocomplete>
 
@@ -62,17 +75,21 @@
           /> -->
         </div>
         <div class="input-area mt-2">
-          <p>อายุ (ระบุจำนวนเป็นเดือน เช่น 12)<span>*</span></p>
+          <p>อายุ<span>*</span></p>
           <validation-provider name="age" rules="required" v-slot="{ errors }">
-            <input
-              v-model="age"
+            <v-select
+              dense
+              filled
+              :items="ageOfCat"
+              item-text="name"
               name="age"
-              type="text"
-              placeholder="กรุณากรอกอายุ"
-            />
-            <span class="valid-form">
-              {{ errors[0] }}
-            </span>
+              v-model="age"
+              data-vv-name="select"
+              required
+              placeholder="กรุณาระบุอายุ"
+              :error-messages="errors"
+            >
+            </v-select>
           </validation-provider>
         </div>
         <div class="input-area mt-2">
@@ -148,6 +165,59 @@
           </validation-provider>
         </div>
         <div class="input-area">
+          <p>การรับวัคซีน<span>*</span></p>
+          <validation-provider
+            name="district"
+            rules="required"
+            v-slot="{ errors }"
+          >
+            <v-autocomplete
+              dense
+              filled
+              :items="vaccineHistory"
+              item-text="name"
+              name="vaccineHistory"
+              v-model="selectVaccineHistory"
+              :error-messages="errors"
+              data-vv-name="select"
+              required
+              placeholder="กรุณาเลือกการรับวัคซีน"
+            >
+            </v-autocomplete>
+          </validation-provider>
+        </div>
+        <div
+          v-if="
+            selectVaccineHistory &&
+            selectVaccineHistory !== 'ยังไม่ได้รับวัคซีน'
+          "
+          class="input-area"
+        >
+          <p>วัคซีนที่ได้รับ<span>*</span></p>
+          <validation-provider
+            name="district"
+            rules="required"
+            v-slot="{ errors }"
+          >
+            <v-autocomplete
+              multiple
+              dense
+              filled
+              :items="vaccine"
+              item-text="name"
+              name="receiveVaccine"
+              v-model="receiveVaccine"
+              :error-messages="errors"
+              data-vv-name="select"
+              required
+              placeholder="กรุณาเลือกวัคซีนที่ได้รับ"
+              class="custom-radius-vaccine"
+            >
+            </v-autocomplete>
+          </validation-provider>
+        </div>
+
+        <!-- <div class="input-area">
           <p>แขวง/ตำบล<span>*</span></p>
           <validation-provider
             name="tambon"
@@ -186,13 +256,13 @@
               {{ errors[0] }}
             </span>
           </validation-provider>
-        </div>
+        </div> -->
       </validation-observer>
     </div>
     <div v-else-if="progress.generalInfo === 3">
       <validation-observer ref="generalThirdForm">
         <p class="step-text">ข้อมูลทั่วไป 3 จากทั้งหมด 4</p>
-        <div class="input-area">
+        <!-- <div class="input-area">
           <p>วัคซีนที่เคยได้รับ (ไม่มีกรอก -)<span>*</span></p>
 
           <input
@@ -201,9 +271,9 @@
             type="text"
             placeholder="กรุณากรอกวัคซีนที่เคยได้รับ"
           />
-        </div>
+        </div> -->
 
-        <div class="input-area mt-4">
+        <!-- <div class="input-area mt-4">
           <p>วันที่รับวัคซีน</p>
           <input
             v-model="receiveDate"
@@ -211,39 +281,96 @@
             type="text"
             placeholder="กรุณากรอกวันที่รับวัคซีน"
           />
-        </div>
+        </div> -->
 
         <div class="input-area mt-4">
           <p>โรคประจำตัว (ไม่มีกรอก - )<span>*</span></p>
-
-          <input
-            v-model="disease"
+          <validation-provider
+            key="disease"
             name="disease"
-            type="text"
-            placeholder="กรุณากรอกโรคประจำตัว"
-          />
+            rules="required"
+            v-slot="{ errors }"
+          >
+            <input
+              key="disease"
+              v-model="disease"
+              name="disease"
+              type="text"
+              placeholder="กรุณากรอกโรคประจำตัว"
+            />
+            <span class="valid-form">
+              {{ errors[0] }}
+            </span>
+          </validation-provider>
         </div>
 
         <div>
           <div class="input-area mt-4">
-            <p>การทำหมัน</p>
+            <p>การทำหมัน<span>*</span></p>
           </div>
           <div class="d-flex">
-            <v-radio-group v-model="neutered" name="neutered" row>
-              <v-radio
-                v-for="n in neuteres"
-                :key="n.id"
-                :label="n.id === 1 ? 'เคยทำหมัน' : 'ไม่เคยทำหมัน'"
-                :value="n.name"
-              ></v-radio>
-            </v-radio-group>
+            <validation-provider
+              key="neutered"
+              name="neutered"
+              rules="required"
+              v-slot="{ errors }"
+            >
+              <v-radio-group v-model="neutered" name="neutered" row>
+                <v-radio
+                  v-for="n in neuteres"
+                  :key="n.id"
+                  :label="n.id === 1 ? 'ทำหมันแล้ว' : 'ยังไม่ได้ทำหมัน'"
+                  :value="n.name"
+                ></v-radio>
+              </v-radio-group>
+              <span class="valid-form">
+                {{ errors[0] }}
+              </span>
+            </validation-provider>
           </div>
+        </div>
+
+        <div>
+          <validation-provider
+            ref="provider"
+            :rules="this.isEdit ? `image` : `required|image`"
+            v-slot="{ errors }"
+          >
+            <div class="input-area">
+              <p>กรุณาแนบรูปแมว<span>*</span></p>
+              <span class="valid-form">
+                {{ errors[0] }}
+              </span>
+              <div @click="onClickImage" class="upload-image">
+                <div v-if="!imageData" class="icon-upload text-center">
+                  <i class="fi fi-rr-picture"></i>
+                  <p>เพิ่มรูป <span>ที่นี่</span></p>
+                </div>
+                <div class="img-container" v-else>
+                  <div class="edit-img-btn">
+                    <i class="fi fi-rr-pencil"></i> แก้ไขรูป
+                  </div>
+                  <div class="mb-10 article-img">
+                    <img :src="imageData" class="preview" alt="" />
+                  </div>
+                </div>
+                <input
+                  id="edit-article-image"
+                  ref="fileInput"
+                  type="file"
+                  accept="image/*"
+                  @change="uploadImage($event)"
+                  name="imageData"
+                />
+              </div>
+            </div>
+          </validation-provider>
         </div>
       </validation-observer>
     </div>
     <div v-else-if="progress.generalInfo === 4">
       <validation-observer ref="generalFourthForm">
-        <validation-provider
+        <!-- <validation-provider
           ref="provider"
           :rules="this.isEdit ? `image` : `required|image`"
           v-slot="{ errors }"
@@ -254,7 +381,7 @@
             <span class="valid-form">
               {{ errors[0] }}
             </span>
-            <!--  -->
+         
             <div @click="onClickImage" class="upload-image">
               <div v-if="!imageData" class="icon-upload text-center">
                 <i class="fi fi-rr-picture"></i>
@@ -278,8 +405,8 @@
               />
             </div>
           </div>
-        </validation-provider>
-        <!--  -->
+        </validation-provider> -->
+        <p class="step-text">ข้อมูลทั่วไป 4 จากทั้งหมด 4</p>
         <div class="input-area mt-2">
           <p>รายละเอียดเพิ่มเติม (ถ้ามี)</p>
           <textarea
@@ -332,36 +459,90 @@ export default {
         { id: 2, name: "เพศผู้" },
       ],
       neuteres: [
-        { id: 1, name: "เคยทำหมัน" },
-        { id: 2, name: "ไม่เคยทำหมัน" },
+        { id: 1, name: "ทำหมันแล้ว" },
+        { id: 2, name: "ยังไม่ได้ทำหมัน" },
       ],
       province: provinceList,
       tambon: tambonList,
       filterList: filterList,
+      colorOfCat: [
+        { id: 1, name: "ขาว" },
+        { id: 2, name: "ขาว-ดำ" },
+        { id: 3, name: "ขาว-ส้ม" },
+        { id: 4, name: "ขาว-เทา" },
+        { id: 5, name: "ขาว-น้ำตาล" },
+        { id: 6, name: "ขาว-ครีม" },
+        { id: 7, name: "ส้ม" },
+        { id: 8, name: "ครีม" },
+        { id: 9, name: "น้ำตาล" },
+        { id: 10, name: "ดำ" },
+        { id: 11, name: "เทา" },
+        { id: 12, name: "สามสี" },
+        { id: 13, name: "ลายสลิด" },
+        { id: 14, name: "สีเปรอะ" },
+        { id: 15, name: "สีเปรอะลายสลิด" },
+        { id: 16, name: "แต้มน้ำตาล" },
+        { id: 17, name: "แต้มเทา" },
+        { id: 18, name: "แต้มส้ม" },
+        { id: 19, name: "แต้มเปรอะ" },
+        { id: 20, name: "สีอื่น ๆ" },
+      ],
+      ageOfCat: [
+        { id: 1, name: "1 เดือน" },
+        { id: 2, name: "2 เดือน" },
+        { id: 1, name: "3 เดือน" },
+        { id: 1, name: "4 เดือน" },
+        { id: 1, name: "5 เดือน" },
+        { id: 1, name: "6 เดือน" },
+        { id: 1, name: "7 เดือน" },
+        { id: 1, name: "8 เดือน" },
+        { id: 1, name: "9 เดือน" },
+        { id: 1, name: "10 เดือน" },
+        { id: 1, name: "11 เดือน" },
+        { id: 1, name: "12 เดือน" },
+        { id: 1, name: "1 ปีขึ้นไป" },
+      ],
+      vaccineHistory: [
+        { id: 1, name: "ยังไม่ได้รับวัคซีน" },
+        { id: 2, name: "ได้รับวัคซีนครบตามช่วงอายุของแมว" },
+        { id: 3, name: "ได้รับวัคซีนบางชนิด" },
+      ],
+      vaccine: [
+        { id: 1, name: "วัคซีนโรคพิษสุนัขบ้า" },
+        { id: 2, name: "วัคซีนโรคช่องท้องอักเสบติดต่อ" },
+        { id: 3, name: "วัคซีนโรคมะเร็งเม็ดเลือดขาวในแมว" },
+        { id: 4, name: "วัคซีนโรคหัดแมว" },
+        { id: 5, name: "วัคซีนโรคลูคีเมียในแมว" },
+        { id: 6, name: "วัคซีนโรคสำไส้อักเสบในแมว" },
+        { id: 7, name: "วัคซีนโรคเอดส์แมว" },
+        { id: 8, name: "วัคซีนโรคไข้หวัดแมว" },
+      ],
       // v-model data
       selectProvince: this.isEdit ? this.fetchForm.step1.province : "",
       selectDistrict: this.isEdit ? this.fetchForm.step1.district : "",
-      selectTambon: this.isEdit ? this.fetchForm.step1.subDistrict : "",
+      // selectTambon: this.isEdit ? this.fetchForm.step1.subDistrict : "",
       catName: this.isEdit ? this.fetchForm.step1.catName : "",
       color: this.isEdit ? this.fetchForm.step1.color : "",
       breeds: this.isEdit ? this.fetchForm.step1.breeds : "",
       age: this.isEdit ? this.fetchForm.step1.age : "",
-      zipCode: this.isEdit ? this.fetchForm.step1.zipCode : "",
+      // zipCode: this.isEdit ? this.fetchForm.step1.zipCode : "",
+
       receiveVaccine: this.isEdit ? this.fetchForm.step1.receiveVaccine : "",
-      receiveDate: this.isEdit ? this.fetchForm.step1.receiveDate : "",
+      // receiveDate: this.isEdit ? this.fetchForm.step1.receiveDate : "",
       disease: this.isEdit ? this.fetchForm.step1.disease : "",
       gender: this.isEdit ? this.fetchForm.step1.gender : "",
       neutered: this.isEdit ? this.fetchForm.step1.neutered : "",
       others: this.isEdit ? this.fetchForm.step1.others : "",
+      selectVaccineHistory: this.isEdit ? this.fetchForm.step1.vaccination : "",
     };
   },
   methods: {
     async uploadImage(event) {
-      const { valid } = await this.$refs.provider.validate(event);
-      if (valid) {
-        console.log("Uploaded the file...");
-        var input = event.target;
-        if (input.files && input.files[0]) {
+      console.log("Uploaded the file...");
+      var input = event.target;
+      if (input.files && input.files[0]) {
+        const { valid } = await this.$refs.provider.validate(event);
+        if (valid) {
           this.imageFile = event.target.files[0];
           var reader = new FileReader();
           reader.onload = (e) => {
@@ -403,27 +584,30 @@ export default {
         this.$emit("form", {
           province: this.selectProvince,
           district: this.selectDistrict,
-          subDistrict: this.selectTambon,
-          zipCode: this.zipCode,
+          vaccination: this.selectVaccineHistory,
+          receiveVaccine: this.receiveVaccine,
+
+          // subDistrict: this.selectTambon,
+          // zipCode: this.zipCode,
         });
         return true;
       }
     },
     async validInfoThird() {
-      const success = await this.$refs.generalThirdForm.validate();
-      if (!success) {
-        return false;
-      } else {
-        this.$emit("form", {
-          receiveVaccine: this.receiveVaccine,
-          receiveDate: this.receiveDate,
-          disease: this.disease,
-          neutered: this.neutered,
-        });
-        return true;
-      }
-    },
-    async validInfoFourth() {
+      // const success = await this.$refs.generalThirdForm.validate();
+      // if (!success) {
+      //   return false;
+      // } else {
+      //   this.$emit("form", {
+      //     // receiveVaccine: this.receiveVaccine,
+      //     // receiveDate: this.receiveDate,
+      //     disease: this.disease,
+      //     neutered: this.neutered,
+
+      //   });
+      //   return true;
+      // }
+
       let formData = null;
       if (this.isEdit) {
         if (this.imageFile) {
@@ -440,12 +624,29 @@ export default {
       // const success = await this.$refs.generalFourthForm.validate();
 
       if (!this.isEdit && !formData) {
-        await this.$refs.generalFourthForm.validate();
+        await this.$refs.generalThirdForm.validate();
         return false;
       } else {
         this.$emit("form", {
           formData,
+          disease: this.disease,
+          neutered: this.neutered,
+          // others: this.others,
+        });
+        return true;
+      }
+    },
+    async validInfoFourth() {
+      const success = await this.$refs.generalFourthForm.validate();
+
+      if (!success) {
+        return false;
+      } else {
+        this.$emit("form", {
           others: this.others,
+        });
+        requestAnimationFrame(() => {
+          this.$refs.generalFourthForm.reset();
         });
         return true;
       }
@@ -497,6 +698,11 @@ export default {
 ::v-deep .v-text-field > .v-input__control > .v-input__slot:before {
   border-style: none;
 }
+::v-deep .custom-radius-vaccine {
+  .v-input__slot {
+    border-radius: 8px !important;
+  }
+}
 ::v-deep .v-input__slot {
   border-radius: 50px;
   margin-bottom: 0px;
@@ -507,6 +713,13 @@ export default {
 ::v-deep .v-text-field.v-text-field--enclosed .v-text-field__details {
   margin-bottom: 0px;
   padding: 0px;
+}
+::v-deep
+  .v-text-field.v-text-field--enclosed:not(.v-text-field--rounded)
+  > .v-input__control
+  > .v-input__slot,
+.v-text-field.v-text-field--enclosed .v-text-field__details {
+  padding: 6px 12px;
 }
 .step-text {
   font-size: 12px;

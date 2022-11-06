@@ -28,7 +28,6 @@
                 <adopt-btn-group>
                   <template slot="finderHome">
                     <button @click="finderHome" class="adoption-btn">
-                      <!-- <img src="@/assets/imgs/icon-cat.svg" alt="finderHome" /> -->
                       <svg
                         width="54"
                         height="41"
@@ -49,7 +48,6 @@
                   </template>
                   <template slot="adoptCat">
                     <button @click="adoptCat" class="adoption-btn">
-                      <!-- <img src="@/assets/imgs/icon-cat2.svg" alt="adoptCat" /> -->
                       <svg
                         width="54"
                         height="41"
@@ -74,12 +72,15 @@
           </v-col>
         </v-row>
       </v-container>
-      <!-- <div class="header-img d-none d-lg-block">
+      <div class="header-img d-lg-none d-md-none d-sm-none">
+        <img src="@/assets/imgs/header-landing-mobile.svg" alt="" />
+      </div>
+      <div class="header-img d-none d-lg-block d-md-block d-sm-block d-xl-none">
         <img src="@/assets/imgs/header-landing.svg" alt="" />
-      </div> -->
+      </div>
     </section>
 
-    <punmaew-banner :ordersm="false" :color="true">
+    <punmaew-banner :ordersm="false" :color="true" class="pm-banner">
       <template slot="img-banner">
         <img src="@/assets/imgs/banner.png" alt="" />
       </template>
@@ -196,6 +197,12 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.pm-banner {
+  position: relative;
+  z-index: 5;
+  top: -30px;
+  // top: 0;
+}
 @media (min-width: 1440px) {
   .banner-set-row {
     justify-content: flex-start !important;
@@ -261,6 +268,7 @@ export default {
 
 .header-img {
   position: absolute;
+  top: -80px;
   z-index: 5;
   width: 100%;
   min-height: 100%;
@@ -268,7 +276,7 @@ export default {
     width: 100%;
   }
   @media (min-width: 1440px) {
-    top: -8%;
+    top: -280px;
   }
 }
 .pm-avatar {

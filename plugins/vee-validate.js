@@ -1,5 +1,13 @@
 import { extend } from "vee-validate";
-import { required, alpha, email, image } from "vee-validate/dist/rules";
+import {
+  required,
+  alpha,
+  email,
+  image,
+  integer,
+  length,
+  numeric,
+} from "vee-validate/dist/rules";
 
 extend("required", {
   ...required,
@@ -17,4 +25,19 @@ extend("email", {
 extend("image", {
   ...image,
   message: "This field must be image only.",
+});
+
+function checkBoolean(value) {
+  return value === true;
+}
+extend("checkbox", checkBoolean);
+
+extend("tel", {
+  ...integer,
+  ...numeric,
+  message: "This field must be tel only. Exaxmple: 0629416444",
+});
+extend("length", {
+  ...length,
+  message: "This field must be 10 length only.",
 });

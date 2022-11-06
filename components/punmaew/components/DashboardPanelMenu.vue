@@ -10,23 +10,27 @@
               <p class="mb-0 header-panel-title font-weight-bold">
                 Admin Punmaew
               </p>
-              <p class="mb-0 header-panel-account">Piyathida Thaneewan</p>
+              <p class="mb-0 header-panel-account">Punmaew Application</p>
             </div>
           </div>
         </div>
         <div class="admin-content">
-          <div @click="menuDashboard('dashboard')" class="mt-12 tabs-menu">
+          <div
+            @click="menuDashboard('dashboard')"
+            :class="[currentMenu === 'dashboard' && 'actived']"
+            class="mt-12 tabs-menu"
+          >
             <i class="fi fi-rr-home"></i>
             Dashboard
           </div>
-          <div
+          <!-- <div
             @click="menuDashboard('notification')"
             class="mt-1 tabs-menu noti-area"
           >
             <i class="fi fi-rr-book-alt"></i>
             Notification
             <div class="no-ti">1</div>
-          </div>
+          </div> -->
           <!-- <div class="justify-space-between d-flex align-center">
             <div class="mt-1 tabs-menu">
               <i class="fi fi-rr-bell"></i>
@@ -34,15 +38,27 @@
             </div>
             <div class="no-ti">1</div>
           </div> -->
-          <div @click="menuDashboard('article')" class="mt-1 tabs-menu">
+          <div
+            @click="menuDashboard('article')"
+            :class="[currentMenu === 'article' && 'actived']"
+            class="mt-1 tabs-menu"
+          >
             <i class="fi fi-rr-book-alt"></i>
             Article Posts
           </div>
-          <div @click="menuDashboard('findhome')" class="mt-1 tabs-menu">
+          <div
+            @click="menuDashboard('findhome')"
+            :class="[currentMenu === 'findhome' && 'actived']"
+            class="mt-1 tabs-menu"
+          >
             <img src="@/assets/imgs/icon-find-home.svg" alt="" />
             Finder Home Posts
           </div>
-          <div @click="menuDashboard('users')" class="mt-1 tabs-menu">
+          <div
+            @click="menuDashboard('users')"
+            :class="[currentMenu === 'users' && 'actived']"
+            class="mt-1 tabs-menu"
+          >
             <i class="fi fi-rr-user"></i>
             Users
           </div>
@@ -77,14 +93,14 @@ export default {
           console.log(error);
         }
       }
-      if (menu === "notification") {
-        try {
-          return;
-          // this.$store.commit("SET_MENU", "notification");
-        } catch (error) {
-          console.log(error);
-        }
-      }
+      // if (menu === "notification") {
+      //   try {
+      //     return;
+      //     // this.$store.commit("SET_MENU", "notification");
+      //   } catch (error) {
+      //     console.log(error);
+      //   }
+      // }
 
       if (menu === "article") {
         try {
@@ -144,36 +160,45 @@ export default {
     }
   }
 }
-.noti-area {
-  position: relative;
-}
-.no-ti {
-  background-color: $orange-dark;
-  font-size: 16px;
-  color: $white;
-  width: 28px;
-  height: 28px;
-  display: flex;
-  justify-content: center;
-  border-radius: 8px;
-  position: absolute;
-  top: 25%;
-  right: 5%;
-  // position: absolute;
-  // left: -16px;
-}
+// .noti-area {
+//   position: relative;
+// }
+// .no-ti {
+//   background-color: $orange-dark;
+//   font-size: 16px;
+//   color: $white;
+//   width: 28px;
+//   height: 28px;
+//   display: flex;
+//   justify-content: center;
+//   border-radius: 8px;
+//   position: absolute;
+//   top: 25%;
+//   right: 5%;
+//   // position: absolute;
+//   // left: -16px;
+// }
 .tabs-menu {
   font-size: 20px;
   padding: 12px 16px;
   border-radius: 10px;
-  // color: $orange-dark;
   &:hover {
     background-color: $yellow;
+    color: $orange-dark;
   }
-  &:focus {
-    color: $orange-dark !important;
-    background-color: $yellow !important;
-  }
+  // &:focus {
+  //   color: $orange-dark !important;
+  //   background-color: $yellow !important;
+  // }
+  // &.actived {
+  //   color: $orange-dark !important;
+  //   background-color: $yellow !important;
+  // }
+}
+
+.actived {
+  color: $orange-dark !important;
+  background-color: $yellow !important;
 }
 
 .header-panel {

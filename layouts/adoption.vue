@@ -16,6 +16,7 @@ export default {
     // TheFooter,
     TheHeader,
   },
+  name: "adoption",
 };
 </script>
 <style lang="scss" scoped>

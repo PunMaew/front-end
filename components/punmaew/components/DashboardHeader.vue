@@ -10,7 +10,9 @@
           <!-- </n-link> -->
           <div class="nav-right font-weight-bold">
             | Admin
-            <i class="d-flex align-center fi fi-rr-angle-small-down"></i>
+            <!-- <i class="d-flex align-center fi fi-rr-angle-small-down"></i> -->
+            <!-- <i class="ml-3 d-flex align-center fi fi-rr-users"></i> -->
+            <i class="ml-2 d-flex align-center fi fi-rr-woman-head"></i>
           </div>
         </v-col>
       </v-row>

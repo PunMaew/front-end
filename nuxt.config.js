@@ -8,7 +8,7 @@ export default {
   // Global page headers: https://go.nuxtjs.dev/config-head
   head: {
     // titleTemplate: '%s - fe-punmaew',
-    title: "fe-punmaew",
+    title: "Punmaew",
     htmlAttrs: {
       lang: "th",
     },
@@ -123,6 +123,11 @@ export default {
             propertyName: "accessToken",
           },
           logout: { url: "user/logoutAdmin", method: "get" },
+          // user: {
+          //   url: "user/getAdmin",
+          //   method: "get",
+          //   propertyName: "user",
+          // },
           tokenName: "token",
         },
         // user: { url: '/api/auth/admin/user', method: 'get', propertyName: 'user' },

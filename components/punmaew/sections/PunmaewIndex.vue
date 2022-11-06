@@ -7,7 +7,7 @@
             <h2 class="pm-title">น้องแมวรอการช่วยเหลือ</h2>
           </v-col>
         </v-row>
-        <v-row justify="center">
+        <v-row>
           <v-col
             v-for="(post, index) in posts"
             :key="post._id"
@@ -18,7 +18,7 @@
             xl="4"
             align-self="center"
           >
-            <div class="card position-relative">
+            <div v-if="posts.length > 0" class="card position-relative">
               <div :class="[index == 2 ? 'backdrop' : '']"></div>
               <button
                 @click="adoptCat"
@@ -51,8 +51,10 @@
                       <p class="mb-0 location">
                         <i class="fi fi-rr-marker"></i>
                         {{
+                          "จังหวัด" +
                           post.generalInfo.location.province +
                           " " +
+                          "เขต" +
                           post.generalInfo.location.district
                         }}
                       </p>
@@ -70,7 +72,7 @@
             <h2 class="pm-title">บทความเกี่ยวกับแมว</h2>
           </v-col>
         </v-row>
-        <v-row justify="center">
+        <v-row>
           <v-col
             v-for="(i, index) in articles"
             :key="i._id"
@@ -81,7 +83,7 @@
             xl="4"
             align-self="center"
           >
-            <div class="card position-relative">
+            <div v-if="articles.length > 0" class="card position-relative">
               <div :class="[index == 2 ? 'backdrop' : '']"></div>
               <button
                 @click="article"
@@ -144,13 +146,13 @@ export default {
     async fetchData() {
       try {
         const res = await this.$axios.get(`${this.$config.findHome}RandomPost`);
-        console.log(res.data);
+        // console.log(res.data);
         this.posts = res.data;
 
         const article = await this.$axios.get(
           `${this.$config.articleURL}randomPostArticle`
         );
-        console.log(res.data);
+        // console.log(res.data);
         this.articles = article.data;
       } catch (error) {
         console.log(error);
