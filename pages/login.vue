@@ -553,7 +553,12 @@ export default {
       otpCode: "",
     };
   },
-  async asyncData({ store, redirect }) {
+  // mounted() {
+  //   if (this.$store.state.auth.loggedIn === true) {
+  //     this.$router.push("/");
+  //   }
+  // },
+  asyncData({ store, redirect }) {
     if (store.state.auth.loggedIn === true) {
       redirect("/");
     }
