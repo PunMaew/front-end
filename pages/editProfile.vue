@@ -742,11 +742,11 @@ export default {
     const menu = this.$route.query.menu;
     if (menu) this.selectProfileId = menu;
 
-    if (!process.server) {
-      if (this.$store.state.auth.loggedIn === false) {
-        this.$router.push("/login");
-      }
-    }
+    // if (!process.server) {
+    //   if (this.$store.state.auth.loggedIn === false) {
+    //     this.$router.push("/login");
+    //   }
+    // }
   },
   async asyncData({ $axios, $config, store }) {
     try {
