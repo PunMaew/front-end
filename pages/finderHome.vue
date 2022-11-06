@@ -94,7 +94,7 @@
 import CardFormAdopt from "../components/punmaew/components/CardFormAdopt.vue";
 import PmFromContainer from "../components/punmaew/components/PmFromContainer.vue";
 export default {
-  // middleware: "auth",
+  middleware: "auth",
   layout: "adoption",
   // mounted() {
   //   if (this.$store.state.auth.loggedIn === false) {
