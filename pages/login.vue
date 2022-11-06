@@ -553,6 +553,11 @@ export default {
       otpCode: "",
     };
   },
+  async asyncData({ store, redirect }) {
+    if (store.state.auth.loggedIn === true) {
+      redirect("/");
+    }
+  },
   methods: {
     login() {
       try {

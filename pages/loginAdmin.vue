@@ -282,6 +282,11 @@ export default {
       newConfirm: "",
     };
   },
+  async asyncData({ store, redirect }) {
+    if (store.state.auth.loggedIn === true) {
+      redirect("/dashboard");
+    }
+  },
   methods: {
     loginAdmin() {
       try {
