@@ -722,11 +722,7 @@ import { ValidationObserver } from "vee-validate";
 import BaseButton from "../components/punmaew/components/BaseButton.vue";
 export default {
   // middleware: "auth",
-  mounted() {
-    if (this.$store.state.auth.loggedIn === false) {
-      this.$router.push("/login");
-    }
-  },
+
   components: {
     ValidationProvider,
     ValidationObserver,
@@ -735,10 +731,20 @@ export default {
     tambonList,
     filterList,
   },
+
+  //   mounted() {
+  //   if (this.$store.state.auth.loggedIn === false) {
+  //     this.$router.push("/login");
+  //   }
+  // },
   created() {
     this.userProfile = JSON.parse(JSON.stringify(this.$store.state.auth.user));
     const menu = this.$route.query.menu;
     if (menu) this.selectProfileId = menu;
+
+    if (this.$store.state.auth.loggedIn === false) {
+      this.$router.push("/login");
+    }
   },
   async asyncData({ $axios, $config, store }) {
     try {
