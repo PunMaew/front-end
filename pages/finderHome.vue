@@ -120,7 +120,7 @@ export default {
     };
   },
   created() {
-    if (process.server) {
+    if (!process.server) {
       if (this.$store.state.auth.loggedIn === false) {
         this.$router.push("/login");
       }

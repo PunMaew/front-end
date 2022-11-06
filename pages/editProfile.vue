@@ -742,7 +742,7 @@ export default {
     const menu = this.$route.query.menu;
     if (menu) this.selectProfileId = menu;
 
-    if (process.server) {
+    if (!process.server) {
       if (this.$store.state.auth.loggedIn === false) {
         this.$router.push("/login");
       }
