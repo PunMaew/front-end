@@ -721,7 +721,12 @@ import { ValidationProvider } from "vee-validate";
 import { ValidationObserver } from "vee-validate";
 import BaseButton from "../components/punmaew/components/BaseButton.vue";
 export default {
-  middleware: "auth",
+  // middleware: "auth",
+  mounted() {
+    if (this.$store.state.auth.loggedIn === false) {
+      this.$router.push("/login");
+    }
+  },
   components: {
     ValidationProvider,
     ValidationObserver,
