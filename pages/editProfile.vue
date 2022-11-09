@@ -619,11 +619,8 @@
             </div>
           </div>
 
-          <div
-            v-if="selectProfileId == 4 && favorList.length > 0"
-            class="mt-12"
-          >
-            <div v-if="this.userProfile.favor.length <= 0">
+          <div v-if="selectProfileId == 4" class="mt-12">
+            <div v-if="this.favorList.length === 0">
               <v-row justify="center">
                 <v-col cols="12">
                   <div>
