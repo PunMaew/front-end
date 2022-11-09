@@ -760,7 +760,7 @@ export default {
     }
     // console.log(userState);
     try {
-      const myProfile = await $axios.get(`${$config.authURL}user/getUser`);
+      // const myProfile = await $axios.get(`${$config.authURL}user/getUser`);
 
       const res = await $axios.get(
         `${$config.findHome}getMyPost?id=${store.state.auth.user._id}`
@@ -786,14 +786,14 @@ export default {
           answerTen: { answer: ideal.data.idealCat[9].answer },
           favorList: favor.data,
           selectProfileId: menu ? menu : 1,
-          userProfile: myProfile.data.user,
+          // userProfile: myProfile.data.user,
         };
       } else {
         return {
           posts: res.data.mypost,
           favorList: favor.data,
           selectProfileId: menu ? menu : 1,
-          userProfile: myProfile.data.user,
+          // userProfile: myProfile.data.user,
         };
       }
     } catch (error) {
@@ -866,16 +866,16 @@ export default {
       ],
     };
   },
-  // async created() {
-  //   try {
-  //     const myProfile = await this.$axios.get(
-  //       `${this.$config.authURL}user/getUser`
-  //     );
-  //     console.log(myProfile.data);
-  //   } catch (error) {
-  //     console.log(error);
-  //   }
-  // },
+  async created() {
+    try {
+      const myProfile = await this.$axios.get(
+        `${this.$config.authURL}user/getUser`
+      );
+      this.userProfile = myProfile.data.user;
+    } catch (error) {
+      console.log(error);
+    }
+  },
   methods: {
     async editIdealCat() {
       try {
