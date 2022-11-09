@@ -34,7 +34,7 @@
           </v-container>
         </div>
 
-        <div v-if="userProfile" class="mt-sm-11">
+        <div v-show="userProfile" class="mt-sm-11">
           <!-- personal info -->
           <div v-if="selectProfileId == 1">
             <validation-observer ref="editProfileForm">
