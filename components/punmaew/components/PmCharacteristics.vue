@@ -142,6 +142,17 @@ export default {
       type: Object,
     },
   },
+  watch: {
+    "fetchForm.step2": {
+      handler(value) {
+        this.selectHairStyle = value?.characteristic?.hair;
+        this.selectSize = value?.characteristic?.size;
+        this.selectHabit = value?.characteristic?.habit;
+        this.selectLittleBox = value?.characteristic?.sandbox;
+      },
+      deep: true,
+    },
+  },
   data() {
     return {
       hairStyle: [
@@ -150,14 +161,14 @@ export default {
         { id: 3, name: "ไม่มีขน" },
       ],
       selectHairStyle: this.isEdit
-        ? this.fetchForm.step2.characteristic.hair
+        ? this.fetchForm.step2?.characteristic?.hair
         : "",
       size: [
         { id: 1, name: "ตัวขนาดเล็ก" },
         { id: 2, name: "ตัวขนาดกลาง" },
         { id: 3, name: "ตัวขนาดใหญ่" },
       ],
-      selectSize: this.isEdit ? this.fetchForm.step2.characteristic.size : "",
+      selectSize: this.isEdit ? this.fetchForm.step2?.characteristic?.size : "",
       habit: [
         { id: 1, name: "อยากรู้อยากเห็น" },
         { id: 2, name: "ขี้เล่น" },
@@ -170,13 +181,15 @@ export default {
         { id: 9, name: "ชอบนวด" },
         { id: 10, name: "เข้ากับคนง่าย" },
       ],
-      selectHabit: this.isEdit ? this.fetchForm.step2.characteristic.habit : "",
+      selectHabit: this.isEdit
+        ? this.fetchForm.step2?.characteristic?.habit
+        : "",
       littleBox: [
         { id: 1, name: "ใช้กระบะทรายเป็น" },
         { id: 2, name: "ไม่จำเป็นต้องใช้กระบะทรายเป็น" },
       ],
       selectLittleBox: this.isEdit
-        ? this.fetchForm.step2.characteristic.sandbox
+        ? this.fetchForm.step2?.characteristic?.sandbox
         : "",
       // characteristic: [
       //   { id: 1, name: "ตัวขนาดเล็ก" },
@@ -241,7 +254,7 @@ export default {
       //   { id: 29, name: "ยังไม่ได้ทำหมัน" },
       // ],
       // selectCharacteristic: this.isEdit
-      //   ? this.fetchForm.step2.characteristic
+      //   ? this.fetchForm.step2?.characteristic
       //   : "",
     };
   },

@@ -449,6 +449,36 @@ export default {
       default: {},
     },
   },
+  watch: {
+    "fetchForm.step1": {
+      handler(value) {
+        this.catName = value?.catName;
+        this.color = value?.color;
+        this.breeds = value?.breeds;
+        this.age = value?.age;
+        this.gender = value?.gender;
+      },
+      deep: true,
+    },
+    "progress.generalInfo": {
+      handler(value) {
+        // console.log("WATCH", value);
+        if (value === 2) {
+          this.selectProvince = this.fetchForm.step1?.province;
+          this.selectDistrict = this.fetchForm.step1?.district;
+          this.receiveVaccine = this.fetchForm.step1?.receiveVaccine;
+          this.selectVaccineHistory = this.fetchForm.step1?.vaccination;
+        } else if (value === 3) {
+          this.imageData = `${this.$config.findHome}readFileIdFindHome?id=${this.$route.query.id}`;
+          this.disease = this.fetchForm.step1?.disease;
+          this.neutered = this.fetchForm.step1?.neutered;
+        } else if (value === 4) {
+          this.others = this.fetchForm.step1?.others;
+        }
+      },
+      deep: true,
+    },
+  },
   data() {
     return {
       imageData: this.isEdit
@@ -519,22 +549,24 @@ export default {
         { id: 8, name: "วัคซีนโรคไข้หวัดแมว" },
       ],
       // v-model data
-      selectProvince: this.isEdit ? this.fetchForm.step1.province : "",
-      selectDistrict: this.isEdit ? this.fetchForm.step1.district : "",
+      selectProvince: this.isEdit ? this.fetchForm.step1?.province : "",
+      selectDistrict: this.isEdit ? this.fetchForm.step1?.district : "",
       // selectTambon: this.isEdit ? this.fetchForm.step1.subDistrict : "",
-      catName: this.isEdit ? this.fetchForm.step1.catName : "",
-      color: this.isEdit ? this.fetchForm.step1.color : "",
-      breeds: this.isEdit ? this.fetchForm.step1.breeds : "",
-      age: this.isEdit ? this.fetchForm.step1.age : "",
+      catName: this.isEdit ? this.fetchForm.step1?.catName : "",
+      color: this.isEdit ? this.fetchForm.step1?.color : "",
+      breeds: this.isEdit ? this.fetchForm.step1?.breeds : "",
+      age: this.isEdit ? this.fetchForm.step1?.age : "",
       // zipCode: this.isEdit ? this.fetchForm.step1.zipCode : "",
 
-      receiveVaccine: this.isEdit ? this.fetchForm.step1.receiveVaccine : "",
+      receiveVaccine: this.isEdit ? this.fetchForm.step1?.receiveVaccine : "",
       // receiveDate: this.isEdit ? this.fetchForm.step1.receiveDate : "",
-      disease: this.isEdit ? this.fetchForm.step1.disease : "",
-      gender: this.isEdit ? this.fetchForm.step1.gender : "",
-      neutered: this.isEdit ? this.fetchForm.step1.neutered : "",
-      others: this.isEdit ? this.fetchForm.step1.others : "",
-      selectVaccineHistory: this.isEdit ? this.fetchForm.step1.vaccination : "",
+      disease: this.isEdit ? this.fetchForm.step1?.disease : "",
+      gender: this.isEdit ? this.fetchForm.step1?.gender : "",
+      neutered: this.isEdit ? this.fetchForm.step1?.neutered : "",
+      others: this.isEdit ? this.fetchForm.step1?.others : "",
+      selectVaccineHistory: this.isEdit
+        ? this.fetchForm.step1?.vaccination
+        : "",
     };
   },
   methods: {

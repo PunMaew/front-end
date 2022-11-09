@@ -115,13 +115,25 @@ export default {
     ValidationProvider,
     ValidationObserver,
   },
+  watch: {
+    "fetchForm.step3": {
+      handler(value) {
+        this.terms = value?.terms;
+        this.contactName = value?.contactName;
+        this.tel = value?.tel;
+        this.facebook = value?.facebook;
+        this.line = value?.line;
+      },
+      deep: true,
+    },
+  },
   data() {
     return {
-      terms: this.isEdit ? this.fetchForm.step3.terms : null,
-      contactName: this.isEdit ? this.fetchForm.step3.contactName : "",
-      tel: this.isEdit ? this.fetchForm.step3.tel : "",
-      facebook: this.isEdit ? this.fetchForm.step3.facebook : "",
-      line: this.isEdit ? this.fetchForm.step3.line : "",
+      terms: this.isEdit ? this.fetchForm.step3?.terms : null,
+      contactName: this.isEdit ? this.fetchForm.step3?.contactName : "",
+      tel: this.isEdit ? this.fetchForm.step3?.tel : "",
+      facebook: this.isEdit ? this.fetchForm.step3?.facebook : "",
+      line: this.isEdit ? this.fetchForm.step3?.line : "",
     };
   },
   methods: {
