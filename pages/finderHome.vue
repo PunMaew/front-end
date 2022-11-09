@@ -115,62 +115,59 @@ export default {
       isEdit: false,
     };
   },
-  async asyncData({ query, $axios, $config, route, redirect, app }) {
+  async asyncData({ redirect, app }) {
     const cookie = await app.$cookies.get("auth._token.user");
     // console.log("COOKIE", cookie);
-
     if (!cookie) {
       return redirect("/login");
     }
-    console.log(query);
+  },
+  async created() {
+    const id = this.$route.query.id;
+    const isEdit = this.$route.query.isEdit;
     try {
-      if (query.id && query.isEdit) {
-        const res = await $axios.get(
-          `${$config.findHome}onePost?id=${query.id}`
+      if (id && isEdit) {
+        const res = await this.$axios.get(
+          `${this.$config.findHome}onePost?id=${id}`
         );
-        console.log(res.data.data);
-        return {
-          forms: {
-            step1: {
-              catName: res.data.data.generalInfo.catName,
-              color: res.data.data.generalInfo.color,
-              breeds: res.data.data.generalInfo.breeds,
-              age: res.data.data.generalInfo.age,
-              gender: res.data.data.generalInfo.gender,
-              province: res.data.data.generalInfo.location.province,
-              district: res.data.data.generalInfo.location.district,
-              // subDistrict: res.data.data.generalInfo.location.subDistrict,
-              // zipCode: res.data.data.generalInfo.location.zipCode,
-              vaccination: res.data.data.generalInfo.vaccination,
-              receiveVaccine: res.data.data.generalInfo.receiveVaccine,
-              // receiveDate: res.data.data.generalInfo.receiveDate,
-              disease: res.data.data.generalInfo.disease,
-              neutered: res.data.data.generalInfo.neutered,
-              others: res.data.data.generalInfo.others,
-            },
-            step2: {
-              // characteristic: res.data.data.generalInfo.characteristic,
-              characteristic: {
-                hair: res.data.data.generalInfo.characteristic.hair,
-                size: res.data.data.generalInfo.characteristic.size,
-                habit: res.data.data.generalInfo.characteristic.habit,
-                sandbox: res.data.data.generalInfo.characteristic.sandbox,
-              },
-            },
-            step3: {
-              contactName: res.data.data.contact.contactName,
-              tel: res.data.data.contact.tel,
-              facebook: res.data.data.contact.facebook,
-              line: res.data.data.contact.line,
-              terms: res.data.data.contact.terms,
+        this.forms = {
+          step1: {
+            catName: res.data.data.generalInfo.catName,
+            color: res.data.data.generalInfo.color,
+            breeds: res.data.data.generalInfo.breeds,
+            age: res.data.data.generalInfo.age,
+            gender: res.data.data.generalInfo.gender,
+            province: res.data.data.generalInfo.location.province,
+            district: res.data.data.generalInfo.location.district,
+            // subDistrict: res.data.data.generalInfo.location.subDistrict,
+            // zipCode: res.data.data.generalInfo.location.zipCode,
+            vaccination: res.data.data.generalInfo.vaccination,
+            receiveVaccine: res.data.data.generalInfo.receiveVaccine,
+            // receiveDate: res.data.data.generalInfo.receiveDate,
+            disease: res.data.data.generalInfo.disease,
+            neutered: res.data.data.generalInfo.neutered,
+            others: res.data.data.generalInfo.others,
+          },
+          step2: {
+            // characteristic: res.data.data.generalInfo.characteristic,
+            characteristic: {
+              hair: res.data.data.generalInfo.characteristic.hair,
+              size: res.data.data.generalInfo.characteristic.size,
+              habit: res.data.data.generalInfo.characteristic.habit,
+              sandbox: res.data.data.generalInfo.characteristic.sandbox,
             },
           },
-          isEdit: true,
+          step3: {
+            contactName: res.data.data.contact.contactName,
+            tel: res.data.data.contact.tel,
+            facebook: res.data.data.contact.facebook,
+            line: res.data.data.contact.line,
+            terms: res.data.data.contact.terms,
+          },
         };
+        this.isEdit = true;
       } else {
-        return {
-          isEdit: false,
-        };
+        this.isEdit = false;
       }
     } catch (error) {
       console.log(error);
