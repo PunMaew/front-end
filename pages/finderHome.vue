@@ -94,7 +94,8 @@
 import CardFormAdopt from "../components/punmaew/components/CardFormAdopt.vue";
 import PmFromContainer from "../components/punmaew/components/PmFromContainer.vue";
 export default {
-  middleware: "auth",
+  // middleware: "auth",
+  auth: false,
   layout: "adoption",
   components: { CardFormAdopt, PmFromContainer },
 
@@ -114,7 +115,13 @@ export default {
       isEdit: false,
     };
   },
-  async asyncData({ query, $axios, $config }) {
+  async asyncData({ query, $axios, $config, route, redirect, app }) {
+    const cookie = await app.$cookies.get("auth._token.user");
+    // console.log("COOKIE", cookie);
+
+    if (!cookie) {
+      return redirect("/login");
+    }
     console.log(query);
     try {
       if (query.id && query.isEdit) {
