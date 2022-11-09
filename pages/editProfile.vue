@@ -745,10 +745,12 @@ export default {
   //     }
   //   }
   // },
-  async asyncData({ $axios, $config, store, route, redirect }) {
+  async asyncData({ $axios, $config, store, route, redirect, app }) {
+    const cookie = await app.$cookies.get("auth._token.user");
+
     const menu = route.query.menu;
     const userState = store.state.auth.user;
-    if (!userState) {
+    if (!cookie) {
       return redirect("/login");
     }
     // console.log(userState);
