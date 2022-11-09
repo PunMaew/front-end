@@ -34,91 +34,95 @@
           </v-container>
         </div>
 
-        <div v-show="userProfile" class="mt-sm-11">
+        <div v-if="userProfile" class="mt-sm-11">
           <!-- personal info -->
-          <div v-if="selectProfileId == 1">
-            <validation-observer ref="editProfileForm">
-              <form @submit.prevent="editProfile">
-                <div class="profile-details">
-                  <div class="title-profile d-flex">
-                    <i class="fi fi-rr-info"></i>
-                    <h5>ข้อมูลส่วนตัว</h5>
-                  </div>
-                  <div>
-                    <v-row>
-                      <v-col cols="12" sm="6">
-                        <div class="input-area">
-                          <p>ชื่อจริง</p>
-                          <validation-provider
-                            name="firstName"
-                            rules="required"
-                            v-slot="{ errors }"
-                          >
-                            <input
-                              v-model="userProfile.firstName"
-                              type="text"
-                            />
-                            <span class="valid-form">
-                              {{ errors[0] }}
-                            </span>
-                          </validation-provider>
-                        </div>
-                      </v-col>
+          <client-only>
+            <div v-if="selectProfileId == 1">
+              <validation-observer ref="editProfileForm">
+                <form @submit.prevent="editProfile">
+                  <div class="profile-details">
+                    <div class="title-profile d-flex">
+                      <i class="fi fi-rr-info"></i>
+                      <h5>ข้อมูลส่วนตัว</h5>
+                    </div>
+                    <div>
+                      <v-row>
+                        <v-col cols="12" sm="6">
+                          <div class="input-area">
+                            <p>ชื่อจริง</p>
+                            <validation-provider
+                              name="firstName"
+                              rules="required"
+                              v-slot="{ errors }"
+                            >
+                              <input
+                                v-model="userProfile.firstName"
+                                type="text"
+                              />
+                              <span class="valid-form">
+                                {{ errors[0] }}
+                              </span>
+                            </validation-provider>
+                          </div>
+                        </v-col>
 
-                      <v-col cols="12" sm="6">
-                        <div class="input-area">
-                          <p>นามสกุล</p>
-                          <validation-provider
-                            name="lastName"
-                            rules="required"
-                            v-slot="{ errors }"
-                          >
-                            <input v-model="userProfile.lastName" type="text" />
-                            <span class="valid-form">
-                              {{ errors[0] }}
-                            </span>
-                          </validation-provider>
-                        </div>
-                      </v-col>
-                      <v-col cols="12" sm="6">
-                        <div class="input-area">
-                          <p>เบอร์โทรศัพท์</p>
-                          <input v-model="userProfile.tel" type="text" />
-                        </div>
-                      </v-col>
-                    </v-row>
+                        <v-col cols="12" sm="6">
+                          <div class="input-area">
+                            <p>นามสกุล</p>
+                            <validation-provider
+                              name="lastName"
+                              rules="required"
+                              v-slot="{ errors }"
+                            >
+                              <input
+                                v-model="userProfile.lastName"
+                                type="text"
+                              />
+                              <span class="valid-form">
+                                {{ errors[0] }}
+                              </span>
+                            </validation-provider>
+                          </div>
+                        </v-col>
+                        <v-col cols="12" sm="6">
+                          <div class="input-area">
+                            <p>เบอร์โทรศัพท์</p>
+                            <input v-model="userProfile.tel" type="text" />
+                          </div>
+                        </v-col>
+                      </v-row>
+                    </div>
                   </div>
-                </div>
 
-                <!-- account info -->
-                <div class="profile-details mt-7">
-                  <div class="title-profile d-flex">
-                    <i class="fi fi-rr-user"></i>
-                    <h5>ข้อมูลบัญชี</h5>
+                  <!-- account info -->
+                  <div class="profile-details mt-7">
+                    <div class="title-profile d-flex">
+                      <i class="fi fi-rr-user"></i>
+                      <h5>ข้อมูลบัญชี</h5>
+                    </div>
+                    <div>
+                      <v-row>
+                        <v-col cols="12" sm="6">
+                          <div class="input-area">
+                            <p>อีเมล</p>
+                            <validation-provider
+                              name="email"
+                              rules="required"
+                              v-slot="{ errors }"
+                            >
+                              <input v-model="userProfile.email" type="text" />
+                              <span class="valid-form">
+                                {{ errors[0] }}
+                              </span>
+                            </validation-provider>
+                          </div>
+                        </v-col>
+                      </v-row>
+                    </div>
                   </div>
-                  <div>
-                    <v-row>
-                      <v-col cols="12" sm="6">
-                        <div class="input-area">
-                          <p>อีเมล</p>
-                          <validation-provider
-                            name="email"
-                            rules="required"
-                            v-slot="{ errors }"
-                          >
-                            <input v-model="userProfile.email" type="text" />
-                            <span class="valid-form">
-                              {{ errors[0] }}
-                            </span>
-                          </validation-provider>
-                        </div>
-                      </v-col>
-                    </v-row>
-                  </div>
-                </div>
 
-                <!-- contact info -->
-                <!-- <div class="profile-details mt-7">
+                  <!-- contact info -->
+                  <!-- <div class="profile-details mt-7">
                   <div class="title-profile d-flex">
                     <i class="fi fi-rr-portrait"></i>
                     <h5>ข้อมูลติดต่อ</h5>
@@ -210,360 +214,11 @@
                   </div>
                 </div> -->
 
-                <!-- button submit edit profile -->
-                <div class="mt-12">
-                  <v-row justify="center">
-                    <v-col cols="12" sm="6">
-                      <base-button :fillSearch="true" :type="'submit'"
-                        >บันทึกข้อมูล</base-button
-                      >
-                    </v-col>
-                  </v-row>
-                </div>
-              </form>
-            </validation-observer>
-          </div>
-
-          <!-- myPost -->
-          <div v-if="selectProfileId == 2" class="mt-6">
-            <div class="d-flex justify-space-between my-post items-center">
-              <div>โพสต์หาบ้านของฉันทั้งหมด</div>
-              <div @click="goFindHome" class="new-post-btn">สร้างโพสต์ใหม่</div>
-            </div>
-            <div class="head-table">
-              <v-container>
-                <v-row>
-                  <v-col class="pt-2 px-7">
-                    <div>โพสต์</div>
-                  </v-col>
-                  <v-col>
-                    <div>วันที่โพสต์</div>
-                  </v-col>
-                  <v-col>
-                    <div>สถานะ</div>
-                  </v-col>
-                  <v-col> </v-col>
-                </v-row>
-              </v-container>
-            </div>
-
-            <div
-              v-for="post in posts"
-              :key="post._id"
-              class="card-article mt-4"
-            >
-              <v-row>
-                <v-col>
-                  <div class="name-article-header">
-                    <!-- <img
-                          :src="`${$config.findHome}readFileIdFindHome?id=${p._id}`"
-                          alt=""
-                        /> -->
-                    <img
-                      :src="`${$config.findHome}readFileIdFindHome?id=${post._id}`"
-                      alt=""
-                    />
-                    {{ post.generalInfo.catName }}
-                  </div>
-                </v-col>
-                <v-col class="name-article">
-                  <div>{{ convertDateTime(post.createdAt) }}</div>
-                </v-col>
-
-                <v-col class="name-article">
-                  <div
-                    @click="changeStatus(post)"
-                    :class="
-                      post.statusbar === 'ยังไม่ถูกรับเลี้ยง'
-                        ? 'not-adopt'
-                        : 'adopted'
-                    "
-                    class="cat-state-adopt"
-                  >
-                    รับเลี้ยงสำเร็จ
-                  </div>
-                </v-col>
-
-                <v-col class="name-article-bottom">
-                  <div class="icon-article">
-                    <nuxt-link :to="`/finderHome?isEdit=true&id=` + post._id">
-                      <i class="fi fi-rr-pencil"></i>
-                    </nuxt-link>
-                  </div>
-                  <div @click="deletePost(post._id)" class="icon-article">
-                    <i class="fi fi-rr-trash trash"></i>
-                  </div>
-                </v-col>
-              </v-row>
-            </div>
-          </div>
-
-          <!-- matchCat -->
-          <div v-if="selectProfileId == 3" class="mt-6 mt-lg-11">
-            <div v-if="this.$store.state.auth.user.idealCat.length > 0">
-              <validation-observer ref="idealForm">
-                <form @submit.prevent="editIdealCat">
-                  <div class="input-area">
-                    <v-row>
-                      <v-col lg="6" class="">
-                        <p>1. ต้องการแมวช่วงอายุเท่าไหร่</p>
-                        <validation-provider
-                          rules="required"
-                          v-slot="{ errors }"
-                          name="answerOne"
-                          ref="answerOne"
-                        >
-                          <div class="px-0" fluid>
-                            <v-radio-group name="answerOne" v-model="answerOne">
-                              <v-radio
-                                v-for="n in choiceListOne"
-                                :key="n.answer"
-                                :label="`${n.answer}`"
-                                :value="n"
-                              />
-                            </v-radio-group>
-                          </div>
-                          <span class="valid-form">
-                            {{ errors[0] }}
-                          </span>
-                        </validation-provider>
-                      </v-col>
-                    </v-row>
-                  </div>
-                  <div class="input-area mt-2">
-                    <v-row>
-                      <v-col lg="6" class="pt-0">
-                        <p>2. ลักษณะขนของแมวที่ต้องการ</p>
-                        <validation-provider
-                          rules="required"
-                          v-slot="{ errors }"
-                          ref="answerTwo"
-                        >
-                          <v-select
-                            dense
-                            filled
-                            :items="choiceListTwo"
-                            item-text="answer"
-                            name="answerTwo"
-                            v-model="answerTwo"
-                            data-vv-name="select"
-                            required
-                            placeholder="กรุณาเลือกคำตอบ"
-                          />
-                          <span class="valid-form">
-                            {{ errors[0] }}
-                          </span>
-                        </validation-provider>
-                      </v-col>
-                    </v-row>
-                  </div>
-                  <div class="input-area mt-2">
-                    <p>3. ต้องการแมวเพศไหน</p>
-                    <v-row>
-                      <v-col lg="6">
-                        <validation-provider
-                          rules="required"
-                          v-slot="{ errors }"
-                          ref="answerThree"
-                        >
-                          <v-select
-                            dense
-                            filled
-                            :items="choiceListThree"
-                            item-text="answer"
-                            name="answerThree"
-                            v-model="answerThree"
-                            data-vv-name="select"
-                            required
-                            placeholder="กรุณาเลือกคำตอบ"
-                          >
-                          </v-select>
-                          <span class="valid-form">
-                            {{ errors[0] }}
-                          </span>
-                        </validation-provider>
-                      </v-col>
-                    </v-row>
-                  </div>
-                  <div class="input-area mt-2">
-                    <p>4. สีแมวที่ต้องการ</p>
-                    <v-row>
-                      <v-col lg="6">
-                        <validation-provider
-                          rules="required"
-                          v-slot="{ errors }"
-                          ref="answerFour"
-                        >
-                          <v-select
-                            dense
-                            filled
-                            :items="filterList.colorSecond"
-                            item-text="name"
-                            name="answerFour"
-                            v-model="answerFour"
-                            data-vv-name="select"
-                            required
-                            placeholder="กรุณาเลือกคำตอบ"
-                          >
-                          </v-select>
-                          <span class="valid-form">
-                            {{ errors[0] }}
-                          </span>
-                        </validation-provider>
-                      </v-col>
-                    </v-row>
-                  </div>
-                  <div class="input-area mt-2">
-                    <p>5. ต้องการแมวจากจังหวัดไหน</p>
-                    <v-row>
-                      <v-col lg="6">
-                        <validation-provider
-                          rules="required"
-                          v-slot="{ errors }"
-                          ref="answerFive"
-                        >
-                          <v-autocomplete
-                            dense
-                            filled
-                            :items="province"
-                            item-text="province"
-                            name="province"
-                            v-model="answerFive"
-                            data-vv-name="select"
-                            required
-                            placeholder="กรุณาเลือกคำตอบ"
-                          >
-                          </v-autocomplete>
-                          <span class="valid-form">
-                            {{ errors[0] }}
-                          </span>
-                        </validation-provider>
-                      </v-col>
-                    </v-row>
-                  </div>
-                  <div class="input-area mt-2">
-                    <p>6. ต้องการแมวจากเขตไหน</p>
-                    <v-row>
-                      <v-col lg="6">
-                        <validation-provider
-                          rules="required"
-                          v-slot="{ errors }"
-                          ref="answerSix"
-                        >
-                          <v-autocomplete
-                            dense
-                            filled
-                            :items="province"
-                            item-text="district"
-                            name="district"
-                            v-model="answerSix"
-                            data-vv-name="select"
-                            required
-                            placeholder="กรุณาเลือกคำตอบ"
-                          >
-                          </v-autocomplete>
-                          <span class="valid-form">
-                            {{ errors[0] }}
-                          </span>
-                        </validation-provider>
-                      </v-col>
-                    </v-row>
-                  </div>
-                  <div class="input-area mt-2">
-                    <p>7. สายพันธุ์แมวที่ต้องการ</p>
-                    <v-row>
-                      <v-col lg="6">
-                        <validation-provider
-                          rules="required"
-                          v-slot="{ errors }"
-                          ref="answerSeven"
-                        >
-                          <v-autocomplete
-                            dense
-                            filled
-                            :items="filterList.breed"
-                            item-text="name"
-                            name="breeds"
-                            v-model="answerSeven"
-                            data-vv-name="select"
-                            required
-                            placeholder="กรุณาเลือกคำตอบ"
-                          >
-                          </v-autocomplete>
-                          <span class="valid-form">
-                            {{ errors[0] }}
-                          </span>
-                        </validation-provider>
-                      </v-col>
-                    </v-row>
-                  </div>
-                  <div class="input-area mt-2">
-                    <p>8. ต้องการแมวที่...</p>
-                    <validation-provider
-                      rules="required"
-                      v-slot="{ errors }"
-                      ref="answerEight"
-                    >
-                      <v-radio-group name="answerEight" v-model="answerEight">
-                        <v-radio
-                          v-for="n in choiceListEight"
-                          :key="n.answer"
-                          :label="`${n.answer}`"
-                          :value="n"
-                        />
-                      </v-radio-group>
-                      <span class="valid-form">
-                        {{ errors[0] }}
-                      </span>
-                    </validation-provider>
-                  </div>
-                  <div class="input-area mt-2">
-                    <p>9. ต้องการแมวที่...</p>
-                    <validation-provider
-                      rules="required"
-                      v-slot="{ errors }"
-                      ref="answerNine"
-                    >
-                      <v-radio-group name="answerNine" v-model="answerNine">
-                        <v-radio
-                          v-for="n in choiceListNine"
-                          :key="n.answer"
-                          :label="`${n.answer}`"
-                          :value="n"
-                        />
-                      </v-radio-group>
-                      <span class="valid-form">
-                        {{ errors[0] }}
-                      </span>
-                    </validation-provider>
-                  </div>
-                  <div class="input-area mt-2">
-                    <p>10. ต้องการแมวที่...</p>
-                    <validation-provider
-                      rules="required"
-                      v-slot="{ errors }"
-                      ref="answerTen"
-                    >
-                      <v-radio-group name="answerTen" v-model="answerTen">
-                        <v-radio
-                          v-for="n in choiceListTen"
-                          :key="n.answer"
-                          :label="`${n.answer}`"
-                          :value="n"
-                        />
-                      </v-radio-group>
-                      <span class="valid-form">
-                        {{ errors[0] }}
-                      </span>
-                    </validation-provider>
-                  </div>
-                  <div>
+                  <!-- button submit edit profile -->
+                  <div class="mt-12">
                     <v-row justify="center">
-                      <v-col cols="6">
-                        <base-button
-                          class="mt-6"
-                          :fillSearch="true"
-                          :type="'submit'"
+                      <v-col cols="12" sm="6">
+                        <base-button :fillSearch="true" :type="'submit'"
                           >บันทึกข้อมูล</base-button
                         >
                       </v-col>
@@ -572,139 +227,499 @@
                 </form>
               </validation-observer>
             </div>
-
-            <div v-else>
-              <v-row justify="center">
-                <v-col cols="12">
-                  <div>
-                    <v-row justify="center">
-                      <v-col cols="3">
-                        <div class="banner">
-                          <img src="@/assets/imgs/banner.png" alt="" />
-                        </div>
-                      </v-col>
-                    </v-row>
-                  </div>
-
-                  <div>
-                    <v-row justify="center">
-                      <v-col cols="6">
-                        <div class="match-cat mt-5">
-                          <p class="text-center title font-weight-bold">
-                            จับคู่แมวตัวโปรดของคุณ
-                          </p>
-                          <p class="text-center desc mt-6">
-                            ค้นหาแมวที่ต้องการช่วยเหลือให้ตรงใจคุณ
-                          </p>
-                        </div>
-                      </v-col>
-                      v
-                    </v-row>
-                  </div>
-                  <div>
-                    <v-row justify="center">
-                      <v-col cols="4">
-                        <base-button @click="goMatching" :fillSearch="true">
-                          <i class="fi fi-rr-search mr-2"></i>
-                          เริ่มค้นหาแมวในอุดมคติ</base-button
-                        >
-                      </v-col>
-                    </v-row>
-                  </div>
-                </v-col>
-              </v-row>
-            </div>
-          </div>
-
-          <div v-if="selectProfileId == 4" class="mt-12">
-            <div v-if="this.userProfile.favor.length <= 0">
-              <v-row justify="center">
-                <v-col cols="12">
-                  <div>
-                    <v-row justify="center">
-                      <v-col cols="3">
-                        <div class="banner">
-                          <img src="@/assets/imgs/cat-favor.png" alt="" />
-                        </div>
-                      </v-col>
-                    </v-row>
-                  </div>
-
-                  <div>
-                    <v-row justify="center">
-                      <v-col cols="6">
-                        <div class="match-cat">
-                          <p class="text-center title font-weight-bold">
-                            ยังไม่มีโพสต์แมวที่ถูกใจ
-                          </p>
-                        </div>
-                      </v-col>
-                      v
-                    </v-row>
-                  </div>
-                </v-col>
-              </v-row>
-            </div>
-            <div v-else>
+          </client-only>
+          <!-- myPost -->
+          <client-only>
+            <div v-if="selectProfileId == 2" class="mt-6">
               <div class="d-flex justify-space-between my-post items-center">
                 <div>โพสต์หาบ้านของฉันทั้งหมด</div>
                 <div @click="goFindHome" class="new-post-btn">
                   สร้างโพสต์ใหม่
                 </div>
               </div>
-              <!-- <div>Card</div> -->
-              <div>
+              <div class="head-table">
+                <v-container>
+                  <v-row>
+                    <v-col class="pt-2 px-7">
+                      <div>โพสต์</div>
+                    </v-col>
+                    <v-col>
+                      <div>วันที่โพสต์</div>
+                    </v-col>
+                    <v-col>
+                      <div>สถานะ</div>
+                    </v-col>
+                    <v-col> </v-col>
+                  </v-row>
+                </v-container>
+              </div>
+
+              <div
+                v-for="post in posts"
+                :key="post._id"
+                class="card-article mt-4"
+              >
                 <v-row>
-                  <v-col
-                    v-for="post in favorList"
-                    :key="post._id"
-                    cols="12"
-                    sm="4"
-                    md="4"
-                    lg="4"
-                    xl="4"
-                  >
-                    <div class="card position-relative">
-                      <div
-                        v-if="post.statusbar === 'รับเลี้ยงสำเร็จ'"
-                        class="status-adopt-success"
-                      >
-                        รับเลี้ยงแล้ว
-                      </div>
-                      <div v-else class="status-adopt">ยังไม่ถูกรับเลี้ยง</div>
-                      <div class="thumbnail">
-                        <img
-                          :src="`${$config.findHome}readFileIdFindHome?id=${post._id}`"
+                  <v-col>
+                    <div class="name-article-header">
+                      <!-- <img
+                          :src="`${$config.findHome}readFileIdFindHome?id=${p._id}`"
                           alt=""
-                        />
-                      </div>
-                      <div class="card-title">
-                        <v-row justify="center">
-                          <v-col cols="12" class="pb-lg-3 pb-sm-3">
-                            <div>
-                              <h2 class="h4">
-                                {{ post.generalInfo.catName }}
-                              </h2>
-                              <p class="mb-0 location">
-                                <i class="fi fi-rr-marker"></i>
-                                {{
-                                  "จังหวัด" +
-                                  post.generalInfo.location.province +
-                                  " " +
-                                  "เขต" +
-                                  post.generalInfo.location.district
-                                }}
-                              </p>
-                            </div>
-                          </v-col>
-                        </v-row>
-                      </div>
+                        /> -->
+                      <img
+                        :src="`${$config.findHome}readFileIdFindHome?id=${post._id}`"
+                        alt=""
+                      />
+                      {{ post.generalInfo.catName }}
+                    </div>
+                  </v-col>
+                  <v-col class="name-article">
+                    <div>{{ convertDateTime(post.createdAt) }}</div>
+                  </v-col>
+
+                  <v-col class="name-article">
+                    <div
+                      @click="changeStatus(post)"
+                      :class="
+                        post.statusbar === 'ยังไม่ถูกรับเลี้ยง'
+                          ? 'not-adopt'
+                          : 'adopted'
+                      "
+                      class="cat-state-adopt"
+                    >
+                      รับเลี้ยงสำเร็จ
+                    </div>
+                  </v-col>
+
+                  <v-col class="name-article-bottom">
+                    <div class="icon-article">
+                      <nuxt-link :to="`/finderHome?isEdit=true&id=` + post._id">
+                        <i class="fi fi-rr-pencil"></i>
+                      </nuxt-link>
+                    </div>
+                    <div @click="deletePost(post._id)" class="icon-article">
+                      <i class="fi fi-rr-trash trash"></i>
                     </div>
                   </v-col>
                 </v-row>
               </div>
             </div>
-          </div>
+          </client-only>
+          <!-- matchCat -->
+          <client-only>
+            <div v-if="selectProfileId == 3" class="mt-6 mt-lg-11">
+              <div v-if="this.$store.state.auth.user.idealCat.length > 0">
+                <validation-observer ref="idealForm">
+                  <form @submit.prevent="editIdealCat">
+                    <div class="input-area">
+                      <v-row>
+                        <v-col lg="6" class="">
+                          <p>1. ต้องการแมวช่วงอายุเท่าไหร่</p>
+                          <validation-provider
+                            rules="required"
+                            v-slot="{ errors }"
+                            name="answerOne"
+                            ref="answerOne"
+                          >
+                            <div class="px-0" fluid>
+                              <v-radio-group
+                                name="answerOne"
+                                v-model="answerOne"
+                              >
+                                <v-radio
+                                  v-for="n in choiceListOne"
+                                  :key="n.answer"
+                                  :label="`${n.answer}`"
+                                  :value="n"
+                                />
+                              </v-radio-group>
+                            </div>
+                            <span class="valid-form">
+                              {{ errors[0] }}
+                            </span>
+                          </validation-provider>
+                        </v-col>
+                      </v-row>
+                    </div>
+                    <div class="input-area mt-2">
+                      <v-row>
+                        <v-col lg="6" class="pt-0">
+                          <p>2. ลักษณะขนของแมวที่ต้องการ</p>
+                          <validation-provider
+                            rules="required"
+                            v-slot="{ errors }"
+                            ref="answerTwo"
+                          >
+                            <v-select
+                              dense
+                              filled
+                              :items="choiceListTwo"
+                              item-text="answer"
+                              name="answerTwo"
+                              v-model="answerTwo"
+                              data-vv-name="select"
+                              required
+                              placeholder="กรุณาเลือกคำตอบ"
+                            />
+                            <span class="valid-form">
+                              {{ errors[0] }}
+                            </span>
+                          </validation-provider>
+                        </v-col>
+                      </v-row>
+                    </div>
+                    <div class="input-area mt-2">
+                      <p>3. ต้องการแมวเพศไหน</p>
+                      <v-row>
+                        <v-col lg="6">
+                          <validation-provider
+                            rules="required"
+                            v-slot="{ errors }"
+                            ref="answerThree"
+                          >
+                            <v-select
+                              dense
+                              filled
+                              :items="choiceListThree"
+                              item-text="answer"
+                              name="answerThree"
+                              v-model="answerThree"
+                              data-vv-name="select"
+                              required
+                              placeholder="กรุณาเลือกคำตอบ"
+                            >
+                            </v-select>
+                            <span class="valid-form">
+                              {{ errors[0] }}
+                            </span>
+                          </validation-provider>
+                        </v-col>
+                      </v-row>
+                    </div>
+                    <div class="input-area mt-2">
+                      <p>4. สีแมวที่ต้องการ</p>
+                      <v-row>
+                        <v-col lg="6">
+                          <validation-provider
+                            rules="required"
+                            v-slot="{ errors }"
+                            ref="answerFour"
+                          >
+                            <v-select
+                              dense
+                              filled
+                              :items="filterList.colorSecond"
+                              item-text="name"
+                              name="answerFour"
+                              v-model="answerFour"
+                              data-vv-name="select"
+                              required
+                              placeholder="กรุณาเลือกคำตอบ"
+                            >
+                            </v-select>
+                            <span class="valid-form">
+                              {{ errors[0] }}
+                            </span>
+                          </validation-provider>
+                        </v-col>
+                      </v-row>
+                    </div>
+                    <div class="input-area mt-2">
+                      <p>5. ต้องการแมวจากจังหวัดไหน</p>
+                      <v-row>
+                        <v-col lg="6">
+                          <validation-provider
+                            rules="required"
+                            v-slot="{ errors }"
+                            ref="answerFive"
+                          >
+                            <v-autocomplete
+                              dense
+                              filled
+                              :items="province"
+                              item-text="province"
+                              name="province"
+                              v-model="answerFive"
+                              data-vv-name="select"
+                              required
+                              placeholder="กรุณาเลือกคำตอบ"
+                            >
+                            </v-autocomplete>
+                            <span class="valid-form">
+                              {{ errors[0] }}
+                            </span>
+                          </validation-provider>
+                        </v-col>
+                      </v-row>
+                    </div>
+                    <div class="input-area mt-2">
+                      <p>6. ต้องการแมวจากเขตไหน</p>
+                      <v-row>
+                        <v-col lg="6">
+                          <validation-provider
+                            rules="required"
+                            v-slot="{ errors }"
+                            ref="answerSix"
+                          >
+                            <v-autocomplete
+                              dense
+                              filled
+                              :items="province"
+                              item-text="district"
+                              name="district"
+                              v-model="answerSix"
+                              data-vv-name="select"
+                              required
+                              placeholder="กรุณาเลือกคำตอบ"
+                            >
+                            </v-autocomplete>
+                            <span class="valid-form">
+                              {{ errors[0] }}
+                            </span>
+                          </validation-provider>
+                        </v-col>
+                      </v-row>
+                    </div>
+                    <div class="input-area mt-2">
+                      <p>7. สายพันธุ์แมวที่ต้องการ</p>
+                      <v-row>
+                        <v-col lg="6">
+                          <validation-provider
+                            rules="required"
+                            v-slot="{ errors }"
+                            ref="answerSeven"
+                          >
+                            <v-autocomplete
+                              dense
+                              filled
+                              :items="filterList.breed"
+                              item-text="name"
+                              name="breeds"
+                              v-model="answerSeven"
+                              data-vv-name="select"
+                              required
+                              placeholder="กรุณาเลือกคำตอบ"
+                            >
+                            </v-autocomplete>
+                            <span class="valid-form">
+                              {{ errors[0] }}
+                            </span>
+                          </validation-provider>
+                        </v-col>
+                      </v-row>
+                    </div>
+                    <div class="input-area mt-2">
+                      <p>8. ต้องการแมวที่...</p>
+                      <validation-provider
+                        rules="required"
+                        v-slot="{ errors }"
+                        ref="answerEight"
+                      >
+                        <v-radio-group name="answerEight" v-model="answerEight">
+                          <v-radio
+                            v-for="n in choiceListEight"
+                            :key="n.answer"
+                            :label="`${n.answer}`"
+                            :value="n"
+                          />
+                        </v-radio-group>
+                        <span class="valid-form">
+                          {{ errors[0] }}
+                        </span>
+                      </validation-provider>
+                    </div>
+                    <div class="input-area mt-2">
+                      <p>9. ต้องการแมวที่...</p>
+                      <validation-provider
+                        rules="required"
+                        v-slot="{ errors }"
+                        ref="answerNine"
+                      >
+                        <v-radio-group name="answerNine" v-model="answerNine">
+                          <v-radio
+                            v-for="n in choiceListNine"
+                            :key="n.answer"
+                            :label="`${n.answer}`"
+                            :value="n"
+                          />
+                        </v-radio-group>
+                        <span class="valid-form">
+                          {{ errors[0] }}
+                        </span>
+                      </validation-provider>
+                    </div>
+                    <div class="input-area mt-2">
+                      <p>10. ต้องการแมวที่...</p>
+                      <validation-provider
+                        rules="required"
+                        v-slot="{ errors }"
+                        ref="answerTen"
+                      >
+                        <v-radio-group name="answerTen" v-model="answerTen">
+                          <v-radio
+                            v-for="n in choiceListTen"
+                            :key="n.answer"
+                            :label="`${n.answer}`"
+                            :value="n"
+                          />
+                        </v-radio-group>
+                        <span class="valid-form">
+                          {{ errors[0] }}
+                        </span>
+                      </validation-provider>
+                    </div>
+                    <div>
+                      <v-row justify="center">
+                        <v-col cols="6">
+                          <base-button
+                            class="mt-6"
+                            :fillSearch="true"
+                            :type="'submit'"
+                            >บันทึกข้อมูล</base-button
+                          >
+                        </v-col>
+                      </v-row>
+                    </div>
+                  </form>
+                </validation-observer>
+              </div>
+
+              <div v-else>
+                <v-row justify="center">
+                  <v-col cols="12">
+                    <div>
+                      <v-row justify="center">
+                        <v-col cols="3">
+                          <div class="banner">
+                            <img src="@/assets/imgs/banner.png" alt="" />
+                          </div>
+                        </v-col>
+                      </v-row>
+                    </div>
+
+                    <div>
+                      <v-row justify="center">
+                        <v-col cols="6">
+                          <div class="match-cat mt-5">
+                            <p class="text-center title font-weight-bold">
+                              จับคู่แมวตัวโปรดของคุณ
+                            </p>
+                            <p class="text-center desc mt-6">
+                              ค้นหาแมวที่ต้องการช่วยเหลือให้ตรงใจคุณ
+                            </p>
+                          </div>
+                        </v-col>
+                        v
+                      </v-row>
+                    </div>
+                    <div>
+                      <v-row justify="center">
+                        <v-col cols="4">
+                          <base-button @click="goMatching" :fillSearch="true">
+                            <i class="fi fi-rr-search mr-2"></i>
+                            เริ่มค้นหาแมวในอุดมคติ</base-button
+                          >
+                        </v-col>
+                      </v-row>
+                    </div>
+                  </v-col>
+                </v-row>
+              </div>
+            </div>
+          </client-only>
+          <client-only>
+            <div v-if="selectProfileId == 4" class="mt-12">
+              <div v-if="this.userProfile.favor.length <= 0">
+                <v-row justify="center">
+                  <v-col cols="12">
+                    <div>
+                      <v-row justify="center">
+                        <v-col cols="3">
+                          <div class="banner">
+                            <img src="@/assets/imgs/cat-favor.png" alt="" />
+                          </div>
+                        </v-col>
+                      </v-row>
+                    </div>
+
+                    <div>
+                      <v-row justify="center">
+                        <v-col cols="6">
+                          <div class="match-cat">
+                            <p class="text-center title font-weight-bold">
+                              ยังไม่มีโพสต์แมวที่ถูกใจ
+                            </p>
+                          </div>
+                        </v-col>
+                        v
+                      </v-row>
+                    </div>
+                  </v-col>
+                </v-row>
+              </div>
+              <div v-else>
+                <div class="d-flex justify-space-between my-post items-center">
+                  <div>โพสต์หาบ้านของฉันทั้งหมด</div>
+                  <div @click="goFindHome" class="new-post-btn">
+                    สร้างโพสต์ใหม่
+                  </div>
+                </div>
+                <!-- <div>Card</div> -->
+                <div>
+                  <v-row>
+                    <v-col
+                      v-for="post in favorList"
+                      :key="post._id"
+                      cols="12"
+                      sm="4"
+                      md="4"
+                      lg="4"
+                      xl="4"
+                    >
+                      <div class="card position-relative">
+                        <div
+                          v-if="post.statusbar === 'รับเลี้ยงสำเร็จ'"
+                          class="status-adopt-success"
+                        >
+                          รับเลี้ยงแล้ว
+                        </div>
+                        <div v-else class="status-adopt">
+                          ยังไม่ถูกรับเลี้ยง
+                        </div>
+                        <div class="thumbnail">
+                          <img
+                            :src="`${$config.findHome}readFileIdFindHome?id=${post._id}`"
+                            alt=""
+                          />
+                        </div>
+                        <div class="card-title">
+                          <v-row justify="center">
+                            <v-col cols="12" class="pb-lg-3 pb-sm-3">
+                              <div>
+                                <h2 class="h4">
+                                  {{ post.generalInfo.catName }}
+                                </h2>
+                                <p class="mb-0 location">
+                                  <i class="fi fi-rr-marker"></i>
+                                  {{
+                                    "จังหวัด" +
+                                    post.generalInfo.location.province +
+                                    " " +
+                                    "เขต" +
+                                    post.generalInfo.location.district
+                                  }}
+                                </p>
+                              </div>
+                            </v-col>
+                          </v-row>
+                        </div>
+                      </div>
+                    </v-col>
+                  </v-row>
+                </div>
+              </div>
+            </div>
+          </client-only>
         </div>
       </div>
     </v-container>
@@ -764,14 +779,14 @@ export default {
   },
   computed: {
     renderUserState() {
-      return this.$store.state.auth.user;
+      return this.$store.state.auth.user ?? null;
     },
   },
   async asyncData({ $axios, $config, store, route, redirect, app }) {
     const cookie = await app.$cookies.get("auth._token.user");
 
     const menu = route.query.menu;
-    const userState = store.state.auth.user;
+    // const userState = store.state.auth.user;
     if (!cookie) {
       return redirect("/login");
     }
@@ -784,7 +799,7 @@ export default {
       // console.log(ideal.data);
 
       const favor = await $axios.get(`${$config.findHome}getLikePost`);
-      console.log(favor.data);
+      // console.log(favor.data);
 
       if (ideal.data.idealCat.length > 0) {
         return {
