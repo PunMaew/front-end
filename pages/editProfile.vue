@@ -722,7 +722,8 @@ import { ValidationObserver } from "vee-validate";
 import BaseButton from "../components/punmaew/components/BaseButton.vue";
 export default {
   // middleware: "auth",
-  middleware: ["auth-user"],
+  // middleware: ["auth-user"],
+  auth: false,
   components: {
     ValidationProvider,
     ValidationObserver,
@@ -731,12 +732,26 @@ export default {
     tambonList,
     filterList,
   },
-  created() {
-    this.userProfile = JSON.parse(JSON.stringify(this.$store.state.auth.user));
-    const menu = this.$route.query.menu;
-    if (menu) this.selectProfileId = menu;
-  },
-  async asyncData({ $axios, $config, store }) {
+  // async created() {
+  //   const cookie = await this.$cookies.get("auth._token.user");
+
+  //   if (cookie) {
+  //     if (this.$store.state.auth.user) {
+  //       this.userProfile = JSON.parse(
+  //         JSON.stringify(this.$store.state.auth.user)
+  //       );
+  //       const menu = this.$route.query.menu;
+  //       if (menu) this.selectProfileId = menu;
+  //     }
+  //   }
+  // },
+  async asyncData({ $axios, $config, store, route, redirect }) {
+    const menu = route.query.menu;
+    const userState = store.state.auth.user;
+    if (!userState) {
+      return redirect("/login");
+    }
+    // console.log(userState);
     try {
       const res = await $axios.get(
         `${$config.findHome}getMyPost?id=${store.state.auth.user._id}`
@@ -761,11 +776,15 @@ export default {
           answerNine: { answer: ideal.data.idealCat[8].answer },
           answerTen: { answer: ideal.data.idealCat[9].answer },
           favorList: favor.data,
+          selectProfileId: menu ? menu : 1,
+          userProfile: userState,
         };
       } else {
         return {
           posts: res.data.mypost,
           favorList: favor.data,
+          selectProfileId: menu ? menu : 1,
+          userProfile: userState,
         };
       }
     } catch (error) {
