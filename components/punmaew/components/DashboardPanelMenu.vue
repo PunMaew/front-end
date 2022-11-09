@@ -126,7 +126,7 @@ export default {
       if (menu === "logoutAdmin") {
         try {
           this.$auth.logout();
-          // this.$router.push("/loginAdmin");
+          this.$router.push("/loginAdmin");
           // this.$store.commit("SET_MENU", "logoutAdmin");
         } catch (error) {
           console.log(error);

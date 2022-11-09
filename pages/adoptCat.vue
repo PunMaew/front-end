@@ -1500,7 +1500,7 @@ export default {
         console.log("by-adopted");
         try {
           const res = await this.$axios.get(`${this.$config.findHome}getAdopt`);
-          this.posts = res.data;
+          this.posts = res.data.success;
         } catch (error) {
           console.log(error);
         }

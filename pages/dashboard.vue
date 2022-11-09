@@ -790,7 +790,10 @@ export default {
   //   }
   // },
   async created() {
-    if (this.$store.state.auth.loggedIn == false) {
+    if (
+      this.$store.state.auth.loggedIn == false ||
+      this.$store.state.auth.strategy != "admin"
+    ) {
       this.$router.push("/loginAdmin");
     }
     await this.fetchData();
