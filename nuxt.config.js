@@ -66,6 +66,7 @@ export default {
     "@nuxtjs/axios",
     // "@nuxtjs/auth-next",
     "@nuxtjs/auth",
+    "cookie-universal-nuxt",
     "vue-sweetalert2/nuxt",
     [
       "@nuxtjs/dotenv",
