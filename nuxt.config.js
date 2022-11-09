@@ -102,7 +102,7 @@ export default {
             url: "user/getUser",
             method: "get",
             propertyName: "user",
-            // autoFetch: true,
+            autoFetch: true,
           },
           tokenName: "token",
         },

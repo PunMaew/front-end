@@ -697,7 +697,9 @@ import { ValidationObserver } from "vee-validate";
 import BaseButton from "../components/punmaew/components/BaseButton.vue";
 import CardDialog from "../components/punmaew/components/CardDialog.vue";
 export default {
-  middleware: "authAdmin",
+  // middleware: "authAdmin",
+  // middleware: "auth",
+  auth: false,
   components: {
     BaseButton,
     CardDialog,
@@ -788,6 +790,9 @@ export default {
   //   }
   // },
   async created() {
+    if (this.$store.state.auth.loggedIn == false) {
+      this.$router.push("/loginAdmin");
+    }
     await this.fetchData();
   },
   methods: {

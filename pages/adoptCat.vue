@@ -1231,7 +1231,7 @@ export default {
     AdoptBtnGroup,
     filterList,
   },
-
+  auth: false,
   data() {
     return {
       sheetMobile: false,

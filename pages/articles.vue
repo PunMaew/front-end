@@ -103,7 +103,7 @@ export default {
     PunmaewBanner,
     BaseButton,
   },
-
+  auth: false,
   data() {
     return {
       // allArticle: [

@@ -516,6 +516,7 @@ import CardDialog from "../components/punmaew/components/CardDialog.vue";
 import CardFormAdopt from "../components/punmaew/components/CardFormAdopt.vue";
 export default {
   layout: "adoption",
+  auth: false,
   components: {
     BaseButton,
     ValidationProvider,
@@ -564,43 +565,41 @@ export default {
   //   }
   // },
   methods: {
-    login() {
+    async login() {
       try {
-        this.$refs.loginForm.validate().then((success) => {
-          if (!success) {
-            return;
-          }
-          // this.$axios
-          //   .post(`${this.$config.authURL}user/login`, {
-          //     email: this.emailLogin,
-          //     password: this.password,
-          //   })
-          this.$auth
-            .loginWith("user", {
-              data: {
-                email: this.emailLogin,
-                password: this.password,
-              },
-            })
-            .then((res) => {
-              // console.log(res.data);
-              console.log("login successfully");
-            })
-            .catch((error) => {
-              console.log(error);
-              this.$swal.fire({
-                confirmButtonColor: "#19ba88",
-                confirmButtonText: "ตกลง",
-                title: "เกิดข้อผิดพลาด",
-                text: error.message,
-                icon: "warning",
-              });
-            });
-
-          this.$nextTick(() => {
-            this.$refs.loginForm.reset();
-          });
+        const success = await this.$refs.loginForm.validate();
+        if (!success) {
+          return;
+        }
+        // this.$axios
+        //   .post(`${this.$config.authURL}user/login`, {
+        //     email: this.emailLogin,
+        //     password: this.password,
+        //   })
+        await this.$auth.loginWith("user", {
+          data: {
+            email: this.emailLogin,
+            password: this.password,
+          },
         });
+        // .then((res) => {
+        // console.log(res.data);
+        this.$nextTick(() => {
+          this.$refs.loginForm.reset();
+        });
+        this.$router.push("/");
+        console.log("login successfully");
+        // })
+        // .catch((error) => {
+        //   console.log(error);
+        //   this.$swal.fire({
+        //     confirmButtonColor: "#19ba88",
+        //     confirmButtonText: "ตกลง",
+        //     title: "เกิดข้อผิดพลาด",
+        //     text: error.message,
+        //     icon: "warning",
+        //   });
+        // });
       } catch (error) {
         console.log(error);
         this.$swal.fire({

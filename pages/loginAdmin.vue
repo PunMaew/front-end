@@ -259,6 +259,7 @@ import BaseButton from "../components/punmaew/components/BaseButton.vue";
 import CardDialog from "../components/punmaew/components/CardDialog.vue";
 export default {
   layout: "admin",
+  auth: false,
   components: {
     CardFormAdopt,
     ValidationProvider,

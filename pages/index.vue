@@ -181,6 +181,7 @@ import BaseButton from "../components/punmaew/components/BaseButton.vue";
 import AdoptBtnGroup from "../components/punmaew/components/AdoptBtnGroup.vue";
 // import PunmaewBanner2 from "../components/punmaew/elements/PunmaewBanner2.vue";
 export default {
+  auth: false,
   components: { PunmaewBanner, BaseButton, PunmaewIndex, AdoptBtnGroup },
   methods: {
     finderHome() {

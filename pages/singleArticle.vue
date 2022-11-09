@@ -47,6 +47,7 @@
 
 <script>
 export default {
+  auth: false,
   props: {
     isSingle: {
       type: Boolean,
