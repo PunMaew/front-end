@@ -34,10 +34,10 @@
           </v-container>
         </div>
 
-        <div v-if="userProfile" class="mt-sm-11">
+        <div class="mt-sm-11">
           <!-- personal info -->
 
-          <div v-if="selectProfileId == 1">
+          <div v-if="selectProfileId == 1 && userProfile">
             <validation-observer ref="editProfileForm">
               <form @submit.prevent="editProfile">
                 <div class="profile-details">
@@ -303,7 +303,7 @@
           <!-- matchCat -->
 
           <div v-if="selectProfileId == 3" class="mt-6 mt-lg-11">
-            <div v-if="this.$store.state.auth.user.idealCat.length > 0">
+            <div v-if="myIdeals.length > 0">
               <validation-observer ref="idealForm">
                 <form @submit.prevent="editIdealCat">
                   <div class="input-area">
@@ -619,7 +619,10 @@
             </div>
           </div>
 
-          <div v-if="selectProfileId == 4" class="mt-12">
+          <div
+            v-if="selectProfileId == 4 && favorList.length > 0"
+            class="mt-12"
+          >
             <div v-if="this.userProfile.favor.length <= 0">
               <v-row justify="center">
                 <v-col cols="12">
@@ -735,21 +738,6 @@ export default {
     tambonList,
     filterList,
   },
-  // watch: {
-  //   renderUserState: {
-  //     handler(newValue, oldValue) {
-  //       this.userProfile = newValue;
-  //       console.log("new", newValue);
-  //     },
-  //     deep: true,
-  //     immediate: true,
-  //   },
-  // },
-  // computed: {
-  //   renderUserState() {
-  //     return this.$store.state.auth.user;
-  //   },
-  // },
   async asyncData({ $axios, $config, store, route, redirect, app }) {
     const cookie = await app.$cookies.get("auth._token.user");
     // console.log("COOKIE", cookie);
@@ -758,47 +746,45 @@ export default {
     if (!cookie) {
       return redirect("/login");
     }
+
+    return {
+      selectProfileId: menu ? parseInt(menu) : 1,
+    };
     // console.log(userState);
-    try {
-      // const myProfile = await $axios.get(`${$config.authURL}user/getUser`);
+    // try {
+    //   const res = await $axios.get(
+    //     `${$config.findHome}getMyPost?id=${store.state.auth.user._id}`
+    //   );
+    //   const ideal = await $axios.get(`${$config.authURL}user/getIdealCat`);
 
-      const res = await $axios.get(
-        `${$config.findHome}getMyPost?id=${store.state.auth.user._id}`
-      );
-      const ideal = await $axios.get(`${$config.authURL}user/getIdealCat`);
-      // console.log(ideal.data);
+    //   const favor = await $axios.get(`${$config.findHome}getLikePost`);
 
-      const favor = await $axios.get(`${$config.findHome}getLikePost`);
-      // console.log(favor.data);
-
-      if (ideal.data.idealCat.length > 0) {
-        return {
-          posts: res.data.mypost,
-          answerOne: { answer: ideal.data.idealCat[0].answer },
-          answerTwo: { answer: ideal.data.idealCat[1].answer },
-          answerThree: ideal.data.idealCat[2].answer,
-          answerFour: ideal.data.idealCat[3].answer,
-          answerFive: ideal.data.idealCat[4].answer,
-          answerSix: ideal.data.idealCat[5].answer,
-          answerSeven: ideal.data.idealCat[6].answer,
-          answerEight: { answer: ideal.data.idealCat[7].answer },
-          answerNine: { answer: ideal.data.idealCat[8].answer },
-          answerTen: { answer: ideal.data.idealCat[9].answer },
-          favorList: favor.data,
-          selectProfileId: menu ? menu : 1,
-          // userProfile: myProfile.data.user,
-        };
-      } else {
-        return {
-          posts: res.data.mypost,
-          favorList: favor.data,
-          selectProfileId: menu ? menu : 1,
-          // userProfile: myProfile.data.user,
-        };
-      }
-    } catch (error) {
-      console.log(error);
-    }
+    //   if (ideal.data.idealCat.length > 0) {
+    //     return {
+    //       posts: res.data.mypost,
+    //       answerOne: { answer: ideal.data.idealCat[0].answer },
+    //       answerTwo: { answer: ideal.data.idealCat[1].answer },
+    //       answerThree: ideal.data.idealCat[2].answer,
+    //       answerFour: ideal.data.idealCat[3].answer,
+    //       answerFive: ideal.data.idealCat[4].answer,
+    //       answerSix: ideal.data.idealCat[5].answer,
+    //       answerSeven: ideal.data.idealCat[6].answer,
+    //       answerEight: { answer: ideal.data.idealCat[7].answer },
+    //       answerNine: { answer: ideal.data.idealCat[8].answer },
+    //       answerTen: { answer: ideal.data.idealCat[9].answer },
+    //       favorList: favor.data,
+    //       selectProfileId: menu ? menu : 1,
+    //     };
+    //   } else {
+    //     return {
+    //       posts: res.data.mypost,
+    //       favorList: favor.data,
+    //       selectProfileId: menu ? menu : 1,
+    //     };
+    //   }
+    // } catch (error) {
+    //   console.log(error);
+    // }
   },
 
   data() {
@@ -810,6 +796,7 @@ export default {
         { id: 3, name: "แมวในอุดมคติ" },
         { id: 4, name: "การถูกใจของฉัน" },
       ],
+      myIdeals: [],
       province: provinceList,
       filterList: filterList,
       tambon: tambonList,
@@ -864,6 +851,7 @@ export default {
         { answer: "ได้รับวัคซีนบางชนิด" },
         { answer: "ไม่จำกัด" },
       ],
+      posts: [],
     };
   },
   async created() {
@@ -872,6 +860,33 @@ export default {
         `${this.$config.authURL}user/getUser`
       );
       this.userProfile = myProfile.data.user;
+
+      const res = await this.$axios.get(
+        `${this.$config.findHome}getMyPost?id=${this.$store.state.auth.user._id}`
+      );
+      this.posts = res.data.mypost;
+
+      const ideal = await this.$axios.get(
+        `${this.$config.authURL}user/getIdealCat`
+      );
+      this.myIdeals = ideal.data.idealCat;
+      if (ideal.data.idealCat.length > 0) {
+        this.answerOne = { answer: ideal.data.idealCat[0].answer };
+        this.answerTwo = { answer: ideal.data.idealCat[1].answer };
+        this.answerThree = ideal.data.idealCat[2].answer;
+        this.answerFour = ideal.data.idealCat[3].answer;
+        this.answerFive = ideal.data.idealCat[4].answer;
+        this.answerSix = ideal.data.idealCat[5].answer;
+        this.answerSeven = ideal.data.idealCat[6].answer;
+        this.answerEight = { answer: ideal.data.idealCat[7].answer };
+        this.answerNine = { answer: ideal.data.idealCat[8].answer };
+        this.answerTen = { answer: ideal.data.idealCat[9].answer };
+      }
+
+      const favor = await this.$axios.get(
+        `${this.$config.findHome}getLikePost`
+      );
+      this.favorList = favor.data;
     } catch (error) {
       console.log(error);
     }
