@@ -745,6 +745,16 @@ export default {
   //     }
   //   }
   // },
+  watch: {
+    renderUserState(newData) {
+      this.userProfile = newData;
+    },
+  },
+  computed: {
+    renderUserState() {
+      return this.$store.state.auth.user;
+    },
+  },
   async asyncData({ $axios, $config, store, route, redirect, app }) {
     const cookie = await app.$cookies.get("auth._token.user");
 
