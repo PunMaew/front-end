@@ -446,6 +446,7 @@ export default {
     },
     fetchForm: {
       type: Object,
+      default: {},
     },
   },
   data() {

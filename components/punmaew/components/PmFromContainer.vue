@@ -64,7 +64,6 @@ export default {
       type: Object,
     },
   },
-
   methods: {
     async updateFindHome() {
       if (this.currentStep === 3) {
