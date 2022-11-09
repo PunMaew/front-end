@@ -34,7 +34,7 @@
           </v-container>
         </div>
 
-        <div class="mt-sm-11">
+        <div v-if="userProfile" class="mt-sm-11">
           <!-- personal info -->
           <div v-if="selectProfileId == 1">
             <validation-observer ref="editProfileForm">
@@ -746,8 +746,20 @@ export default {
   //   }
   // },
   watch: {
-    renderUserState(newData) {
-      this.userProfile = newData;
+    // renderUserState(newData, oldData) {
+    //   console.log(oldData);
+    //   if (newData) {
+    //     this.userProfile = newData;
+    //     console.log(newData);
+    //   }
+    // },
+    renderUserState: {
+      handler(newValue, oldValue) {
+        this.userProfile = newValue;
+        console.log("new", newValue);
+      },
+      deep: true,
+      immediate: true,
     },
   },
   computed: {
@@ -789,14 +801,14 @@ export default {
           answerTen: { answer: ideal.data.idealCat[9].answer },
           favorList: favor.data,
           selectProfileId: menu ? menu : 1,
-          userProfile: userState,
+          // userProfile: userState,
         };
       } else {
         return {
           posts: res.data.mypost,
           favorList: favor.data,
           selectProfileId: menu ? menu : 1,
-          userProfile: userState,
+          // userProfile: userState,
         };
       }
     } catch (error) {
