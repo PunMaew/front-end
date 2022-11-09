@@ -5,6 +5,8 @@ export default {
   server: {
     port: 8080, // default: 3000
   },
+  ssr: true,
+  target: "server",
   // Global page headers: https://go.nuxtjs.dev/config-head
   head: {
     // titleTemplate: '%s - fe-punmaew',
