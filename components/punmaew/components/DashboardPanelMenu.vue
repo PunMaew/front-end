@@ -85,7 +85,7 @@ export default {
     },
   },
   methods: {
-    menuDashboard(menu) {
+    async menuDashboard(menu) {
       if (menu === "dashboard") {
         try {
           this.$store.commit("SET_MENU", "dashboard");
@@ -125,7 +125,7 @@ export default {
       }
       if (menu === "logoutAdmin") {
         try {
-          this.$auth.logout();
+          await this.$auth.logout();
           this.$router.push("/loginAdmin");
           // this.$store.commit("SET_MENU", "logoutAdmin");
         } catch (error) {

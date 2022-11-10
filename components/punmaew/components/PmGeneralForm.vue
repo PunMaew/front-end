@@ -452,27 +452,29 @@ export default {
   watch: {
     "fetchForm.step1": {
       handler(value) {
-        this.catName = value?.catName;
-        this.color = value?.color;
-        this.breeds = value?.breeds;
-        this.age = value?.age;
-        this.gender = value?.gender;
+        if (this.isEdit) {
+          this.catName = value?.catName;
+          this.color = value?.color;
+          this.breeds = value?.breeds;
+          this.age = value?.age;
+          this.gender = value?.gender;
+        }
       },
       deep: true,
     },
     "progress.generalInfo": {
       handler(value) {
         // console.log("WATCH", value);
-        if (value === 2) {
+        if (value === 2 && this.isEdit) {
           this.selectProvince = this.fetchForm.step1?.province;
           this.selectDistrict = this.fetchForm.step1?.district;
           this.receiveVaccine = this.fetchForm.step1?.receiveVaccine;
           this.selectVaccineHistory = this.fetchForm.step1?.vaccination;
-        } else if (value === 3) {
+        } else if (value === 3 && this.isEdit) {
           this.imageData = `${this.$config.findHome}readFileIdFindHome?id=${this.$route.query.id}`;
           this.disease = this.fetchForm.step1?.disease;
           this.neutered = this.fetchForm.step1?.neutered;
-        } else if (value === 4) {
+        } else if (value === 4 && this.isEdit) {
           this.others = this.fetchForm.step1?.others;
         }
       },
@@ -737,7 +739,7 @@ export default {
   }
 }
 ::v-deep .v-input__slot {
-  border-radius: 50px;
+  border-radius: 50px !important;
   margin-bottom: 0px;
 }
 ::v-deep .v-text-field > .v-input__control > .v-input__slot:after {
