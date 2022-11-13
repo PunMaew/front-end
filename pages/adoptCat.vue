@@ -214,7 +214,7 @@
                                         </div>
                                       </div>
                                       <div class="line"></div>
-                                      <div class="filter-side-bar">
+                                      <!-- <div class="filter-side-bar">
                                         <div
                                           class="justify-space-between d-flex"
                                         >
@@ -240,8 +240,8 @@
                                             hide-details
                                           ></v-checkbox>
                                         </div>
-                                      </div>
-                                      <div class="line"></div>
+                                      </div> -->
+                                      <!-- <div class="line"></div>
                                       <div class="filter-side-bar">
                                         <div
                                           class="justify-space-between d-flex"
@@ -268,8 +268,8 @@
                                             hide-details
                                           ></v-checkbox>
                                         </div>
-                                      </div>
-                                      <div class="line"></div>
+                                      </div> -->
+                                      <!-- <div class="line"></div> -->
                                       <div class="filter-side-bar">
                                         <div
                                           class="justify-space-between d-flex"
@@ -325,7 +325,7 @@
                                           ></v-checkbox>
                                         </div>
                                       </div>
-                                      <div class="line"></div>
+                                      <!-- <div class="line"></div>
                                       <div class="filter-side-bar">
                                         <div
                                           class="justify-space-between d-flex"
@@ -380,7 +380,7 @@
                                             hide-details
                                           ></v-checkbox>
                                         </div>
-                                      </div>
+                                      </div> -->
                                     </v-container>
                                   </div>
                                 </div>
@@ -605,7 +605,7 @@
                             ></v-checkbox>
                           </div>
                         </div>
-                        <div class="line"></div>
+                        <!-- <div class="line"></div>
                         <div class="filter-side-bar">
                           <div class="justify-space-between d-flex">
                             <p class="mb-0">ลักษณะขน</p>
@@ -650,7 +650,7 @@
                               hide-details
                             ></v-checkbox>
                           </div>
-                        </div>
+                        </div> -->
                         <div class="line"></div>
                         <div class="filter-side-bar">
                           <div class="justify-space-between d-flex">
@@ -697,7 +697,7 @@
                             ></v-checkbox>
                           </div>
                         </div>
-                        <div class="line"></div>
+                        <!-- <div class="line"></div>
                         <div class="filter-side-bar">
                           <div class="justify-space-between d-flex">
                             <p class="mb-0">การได้รับวัคซีน</p>
@@ -742,7 +742,7 @@
                               hide-details
                             ></v-checkbox>
                           </div>
-                        </div>
+                        </div> -->
                       </v-container>
                     </div>
                   </div>
@@ -1267,7 +1267,7 @@ export default {
       items: [
         { title: "เก่า", action: "old-post" },
         { title: "ล่าสุด", action: "lastest-post" },
-        { title: "Best match", action: "best-match" },
+        { title: "แมวในอุดมคติ", action: "best-match" },
         { title: "ถูกใจแล้ว", action: "favor" },
         { title: "ยังไม่ถูกรับเลี้ยง", action: "not-adopt" },
         { title: "รับเลี้ยงแล้ว", action: "by-adopted" },
@@ -1320,76 +1320,79 @@ export default {
         this.isBreed.length !== 0 ||
         this.isAge.length !== 0
       ) {
-        return this.posts
-          .filter((post) =>
-            this.isSelected.length !== 0
-              ? this.isSelected.indexOf(post.generalInfo.location.province) !==
-                -1
-              : post
-          )
-          .filter((post) =>
-            this.isGender.length !== 0
-              ? this.isGender.indexOf(post.generalInfo.gender) !== -1
-              : post
-          )
-          .filter((post) =>
-            this.isBodySize.length !== 0
-              ? this.isBodySize.some((habit) =>
-                  post.generalInfo.characteristic.size.includes(habit)
-                )
-              : post
-          )
-          .filter((post) =>
-            this.isColor.length !== 0
-              ? this.isColor.some((color) => post.generalInfo.color === color)
-              : post
-          )
-          .filter((post) =>
-            this.isHairStyle.length !== 0
-              ? this.isHairStyle.some((hair) =>
-                  post.generalInfo.characteristic.hair.includes(hair)
-                )
-              : post
-          )
-          .filter((post) =>
-            this.isBreed.length !== 0
-              ? this.isBreed.indexOf(post.generalInfo.breeds) != -1
-              : post
-          )
-          .filter((post) =>
-            this.isSandBox.length !== 0
-              ? this.isSandBox.some(
-                  (sandBox) =>
-                    post.generalInfo.characteristic.sandbox === sandBox
-                )
-              : post
-          )
-          .filter((post) =>
-            this.isCharacteristic.length !== 0
-              ? this.isCharacteristic.some((charac) =>
-                  post.generalInfo.characteristic.habit.includes(charac)
-                )
-              : post
-          )
-          .filter((post) =>
-            this.isVaccine.length !== 0
-              ? this.isVaccine.some((vaccine) =>
-                  post.generalInfo.vaccination.includes(vaccine)
-                )
-              : post
-          )
-          .filter((post) =>
-            this.isNeutered.length !== 0
-              ? this.isNeutered.some((neutered) =>
-                  post.generalInfo.neutered.includes(neutered)
-                )
-              : post
-          )
-          .filter((post) =>
-            this.isAge.length !== 0
-              ? this.isAge.indexOf(post.generalInfo.ageRange) != -1
-              : post
-          );
+        return (
+          this.posts
+            .filter((post) =>
+              this.isSelected.length !== 0
+                ? this.isSelected.indexOf(
+                    post.generalInfo.location.province
+                  ) !== -1
+                : post
+            )
+            .filter((post) =>
+              this.isGender.length !== 0
+                ? this.isGender.indexOf(post.generalInfo.gender) !== -1
+                : post
+            )
+            .filter((post) =>
+              this.isBodySize.length !== 0
+                ? this.isBodySize.some((habit) =>
+                    post.generalInfo.characteristic.size.includes(habit)
+                  )
+                : post
+            )
+            .filter((post) =>
+              this.isColor.length !== 0
+                ? this.isColor.some((color) => post.generalInfo.color === color)
+                : post
+            )
+            // .filter((post) =>
+            //   this.isHairStyle.length !== 0
+            //     ? this.isHairStyle.some((hair) =>
+            //         post.generalInfo.characteristic.hair.includes(hair)
+            //       )
+            //     : post
+            // )
+            .filter((post) =>
+              this.isBreed.length !== 0
+                ? this.isBreed.indexOf(post.generalInfo.breeds) != -1
+                : post
+            )
+            // .filter((post) =>
+            //   this.isSandBox.length !== 0
+            //     ? this.isSandBox.some(
+            //         (sandBox) =>
+            //           post.generalInfo.characteristic.sandbox === sandBox
+            //       )
+            //     : post
+            // )
+            .filter((post) =>
+              this.isCharacteristic.length !== 0
+                ? this.isCharacteristic.some((charac) =>
+                    post.generalInfo.characteristic.habit.includes(charac)
+                  )
+                : post
+            )
+            // .filter((post) =>
+            //   this.isVaccine.length !== 0
+            //     ? this.isVaccine.some((vaccine) =>
+            //         post.generalInfo.vaccination.includes(vaccine)
+            //       )
+            //     : post
+            // )
+            // .filter((post) =>
+            //   this.isNeutered.length !== 0
+            //     ? this.isNeutered.some((neutered) =>
+            //         post.generalInfo.neutered.includes(neutered)
+            //       )
+            //     : post
+            // )
+            .filter((post) =>
+              this.isAge.length !== 0
+                ? this.isAge.indexOf(post.generalInfo.ageRange) != -1
+                : post
+            )
+        );
       } else {
         return this.posts;
       }
@@ -1859,6 +1862,10 @@ export default {
 }
 
 .location {
+  display: -webkit-box;
+  -webkit-line-clamp: 1;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
   i {
     color: $orange;
     font-size: 12px;

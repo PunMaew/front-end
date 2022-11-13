@@ -117,100 +117,6 @@
                     </v-row>
                   </div>
                 </div>
-
-                <!-- contact info -->
-                <!-- <div class="profile-details mt-7">
-                  <div class="title-profile d-flex">
-                    <i class="fi fi-rr-portrait"></i>
-                    <h5>ข้อมูลติดต่อ</h5>
-                  </div>
-                  <div>
-                    <v-row>
-                      <v-col cols="12" sm="6">
-                        <div class="input-area">
-                          <p>จังหวัด</p>
-                          <validation-provider
-                            rules="required"
-                            v-slot="{ errors }"
-                          >
-                            <v-autocomplete
-                              dense
-                              filled
-                              :items="province"
-                              item-text="province"
-                              name="province"
-                              v-model="userProfile.address.province"
-                              :error-messages="errors"
-                              data-vv-name="select"
-                              placeholder="กรุณาเลือกจังหวัด"
-                              required
-                            >
-                            </v-autocomplete>
-                          </validation-provider>
-                        </div>
-                      </v-col>
-
-                      <v-col cols="12" sm="6">
-                        <div class="input-area">
-                          <p>เขต/อำเภอ</p>
-                          <v-autocomplete
-                            dense
-                            filled
-                            :items="province"
-                            item-text="district"
-                            name="district"
-                            v-model="userProfile.address.district"
-                            data-vv-name="select"
-                            placeholder="กรุณาเลือกเขต/อำเภอ"
-                          >
-                          </v-autocomplete>
-                        </div>
-                      </v-col>
-                      <v-col cols="12" sm="6">
-                        <div class="input-area">
-                          <p>แขวง/ตำบล</p>
-
-                          <v-autocomplete
-                            dense
-                            filled
-                            :items="tambon"
-                            item-text="name_th"
-                            name="tambon"
-                            v-model="userProfile.address.subDistrict"
-                            data-vv-name="select"
-                            placeholder="กรุณาเลือกแขวง/ตำบล"
-                          >
-                          </v-autocomplete>
-                        </div>
-                      </v-col>
-
-                      <v-col cols="12" sm="6">
-                        <div class="input-area">
-                          <p>รหัสไปรษณีย์</p>
-                          <validation-provider
-                            name="zipCode"
-                            rules="required"
-                            v-slot="{ errors }"
-                          >
-                            <v-autocomplete
-                              :items="province"
-                              filled
-                              name="zipCode"
-                              item-text="zip"
-                              dense
-                              v-model="userProfile.address.zipCode"
-                              :error-messages="errors"
-                              data-vv-name="select"
-                              placeholder="กรุณาเลือกรหัสไปรษณีย์"
-                              required
-                            ></v-autocomplete>
-                          </validation-provider>
-                        </div>
-                      </v-col>
-                    </v-row>
-                  </div>
-                </div> -->
-
                 <!-- button submit edit profile -->
                 <div class="mt-12">
                   <v-row justify="center">
@@ -224,7 +130,61 @@
               </form>
             </validation-observer>
           </div>
+          <!-- modalOtp -->
+          <div>
+            <validation-observer ref="otpChangeEmailnPass">
+              <card-dialog v-if="this.currentStep === 2" :dialog="dialog">
+                <template slot="title">
+                  <p class="otp-title">ยืนยันรหัส OTP</p>
+                </template>
+                <template slot="description">
+                  <p class="otp-desc">
+                    กรุณายืนยันรหัส OTP ที่ส่งไปที่อีเมล
+                    {{ userProfile.email }}
+                  </p>
+                </template>
+                <template slot="content">
+                  <p class="otp-countDown">
+                    {{ total.minutes }}:{{ total.seconds }}
+                  </p>
+                  <div>
+                    <v-row justify="center">
+                      <v-col cols="12" sm="7" lg="8" align-self="center">
+                        <validation-provider
+                          rules="required"
+                          v-slot="{ errors }"
+                          class="otp-content"
+                        >
+                          <v-otp-input
+                            length="6"
+                            v-model="otpCode"
+                            name="otpCode"
+                          ></v-otp-input>
+                          <span class="valid-form">
+                            {{ errors[0] }}
+                          </span>
+                          <base-button
+                            @click="confirmOtpResetEmail"
+                            :fillSearch="true"
+                            class="mt-6"
+                          >
+                            ยืนยันรหัส OTP
+                          </base-button>
 
+                          <div
+                            @click="resendOtpRegister"
+                            class="mt-5 text-center text-decoration-underline"
+                          >
+                            ส่งรหัสใหม่อีกครั้ง
+                          </div>
+                        </validation-provider>
+                      </v-col>
+                    </v-row>
+                  </div>
+                </template>
+              </card-dialog>
+            </validation-observer>
+          </div>
           <!-- myPost -->
 
           <div v-if="selectProfileId == 2" class="mt-6">
@@ -306,26 +266,26 @@
             <div v-if="myIdeals.length > 0">
               <validation-observer ref="idealForm">
                 <form @submit.prevent="editIdealCat">
-                  <div class="input-area">
+                  <div class="input-area mt-2">
                     <v-row>
-                      <v-col lg="6" class="">
-                        <p>1. ต้องการแมวช่วงอายุเท่าไหร่</p>
+                      <v-col lg="6" class="pt-0">
+                        <p>1. ลักษณะขนของแมวที่ต้องการ</p>
                         <validation-provider
                           rules="required"
                           v-slot="{ errors }"
-                          name="answerOne"
                           ref="answerOne"
                         >
-                          <div class="px-0" fluid>
-                            <v-radio-group name="answerOne" v-model="answerOne">
-                              <v-radio
-                                v-for="n in choiceListOne"
-                                :key="n.answer"
-                                :label="`${n.answer}`"
-                                :value="n"
-                              />
-                            </v-radio-group>
-                          </div>
+                          <v-select
+                            dense
+                            filled
+                            :items="choiceListOne"
+                            item-text="answer"
+                            name="answerOne"
+                            v-model="answerOne"
+                            data-vv-name="select"
+                            required
+                            placeholder="กรุณาเลือกคำตอบ"
+                          />
                           <span class="valid-form">
                             {{ errors[0] }}
                           </span>
@@ -361,9 +321,9 @@
                     </v-row>
                   </div>
                   <div class="input-area mt-2">
-                    <p>3. ต้องการแมวเพศไหน</p>
                     <v-row>
-                      <v-col lg="6">
+                      <v-col lg="6" class="pt-0">
+                        <p>3. ลักษณะขนของแมวที่ต้องการ</p>
                         <validation-provider
                           rules="required"
                           v-slot="{ errors }"
@@ -379,8 +339,7 @@
                             data-vv-name="select"
                             required
                             placeholder="กรุณาเลือกคำตอบ"
-                          >
-                          </v-select>
+                          />
                           <span class="valid-form">
                             {{ errors[0] }}
                           </span>
@@ -389,9 +348,9 @@
                     </v-row>
                   </div>
                   <div class="input-area mt-2">
-                    <p>4. สีแมวที่ต้องการ</p>
                     <v-row>
-                      <v-col lg="6">
+                      <v-col lg="6" class="pt-0">
+                        <p>4. แมวของฉันต้องได้รับวัคซีน...</p>
                         <validation-provider
                           rules="required"
                           v-slot="{ errors }"
@@ -400,165 +359,20 @@
                           <v-select
                             dense
                             filled
-                            :items="filterList.colorSecond"
-                            item-text="name"
+                            :items="choiceListFour"
+                            item-text="answer"
                             name="answerFour"
                             v-model="answerFour"
                             data-vv-name="select"
                             required
                             placeholder="กรุณาเลือกคำตอบ"
-                          >
-                          </v-select>
+                          />
                           <span class="valid-form">
                             {{ errors[0] }}
                           </span>
                         </validation-provider>
                       </v-col>
                     </v-row>
-                  </div>
-                  <div class="input-area mt-2">
-                    <p>5. ต้องการแมวจากจังหวัดไหน</p>
-                    <v-row>
-                      <v-col lg="6">
-                        <validation-provider
-                          rules="required"
-                          v-slot="{ errors }"
-                          ref="answerFive"
-                        >
-                          <v-autocomplete
-                            dense
-                            filled
-                            :items="province"
-                            item-text="province"
-                            name="province"
-                            v-model="answerFive"
-                            data-vv-name="select"
-                            required
-                            placeholder="กรุณาเลือกคำตอบ"
-                          >
-                          </v-autocomplete>
-                          <span class="valid-form">
-                            {{ errors[0] }}
-                          </span>
-                        </validation-provider>
-                      </v-col>
-                    </v-row>
-                  </div>
-                  <div class="input-area mt-2">
-                    <p>6. ต้องการแมวจากเขตไหน</p>
-                    <v-row>
-                      <v-col lg="6">
-                        <validation-provider
-                          rules="required"
-                          v-slot="{ errors }"
-                          ref="answerSix"
-                        >
-                          <v-autocomplete
-                            dense
-                            filled
-                            :items="province"
-                            item-text="district"
-                            name="district"
-                            v-model="answerSix"
-                            data-vv-name="select"
-                            required
-                            placeholder="กรุณาเลือกคำตอบ"
-                          >
-                          </v-autocomplete>
-                          <span class="valid-form">
-                            {{ errors[0] }}
-                          </span>
-                        </validation-provider>
-                      </v-col>
-                    </v-row>
-                  </div>
-                  <div class="input-area mt-2">
-                    <p>7. สายพันธุ์แมวที่ต้องการ</p>
-                    <v-row>
-                      <v-col lg="6">
-                        <validation-provider
-                          rules="required"
-                          v-slot="{ errors }"
-                          ref="answerSeven"
-                        >
-                          <v-autocomplete
-                            dense
-                            filled
-                            :items="filterList.breed"
-                            item-text="name"
-                            name="breeds"
-                            v-model="answerSeven"
-                            data-vv-name="select"
-                            required
-                            placeholder="กรุณาเลือกคำตอบ"
-                          >
-                          </v-autocomplete>
-                          <span class="valid-form">
-                            {{ errors[0] }}
-                          </span>
-                        </validation-provider>
-                      </v-col>
-                    </v-row>
-                  </div>
-                  <div class="input-area mt-2">
-                    <p>8. ต้องการแมวที่...</p>
-                    <validation-provider
-                      rules="required"
-                      v-slot="{ errors }"
-                      ref="answerEight"
-                    >
-                      <v-radio-group name="answerEight" v-model="answerEight">
-                        <v-radio
-                          v-for="n in choiceListEight"
-                          :key="n.answer"
-                          :label="`${n.answer}`"
-                          :value="n"
-                        />
-                      </v-radio-group>
-                      <span class="valid-form">
-                        {{ errors[0] }}
-                      </span>
-                    </validation-provider>
-                  </div>
-                  <div class="input-area mt-2">
-                    <p>9. ต้องการแมวที่...</p>
-                    <validation-provider
-                      rules="required"
-                      v-slot="{ errors }"
-                      ref="answerNine"
-                    >
-                      <v-radio-group name="answerNine" v-model="answerNine">
-                        <v-radio
-                          v-for="n in choiceListNine"
-                          :key="n.answer"
-                          :label="`${n.answer}`"
-                          :value="n"
-                        />
-                      </v-radio-group>
-                      <span class="valid-form">
-                        {{ errors[0] }}
-                      </span>
-                    </validation-provider>
-                  </div>
-                  <div class="input-area mt-2">
-                    <p>10. ต้องการแมวที่...</p>
-                    <validation-provider
-                      rules="required"
-                      v-slot="{ errors }"
-                      ref="answerTen"
-                    >
-                      <v-radio-group name="answerTen" v-model="answerTen">
-                        <v-radio
-                          v-for="n in choiceListTen"
-                          :key="n.answer"
-                          :label="`${n.answer}`"
-                          :value="n"
-                        />
-                      </v-radio-group>
-                      <span class="valid-form">
-                        {{ errors[0] }}
-                      </span>
-                    </validation-provider>
                   </div>
                   <div>
                     <v-row justify="center">
@@ -619,8 +433,9 @@
             </div>
           </div>
 
+          <!-- favor -->
           <div v-if="selectProfileId == 4" class="mt-12">
-            <div v-if="this.favorList.length === 0">
+            <div v-if="this.favorList.length == 0">
               <v-row justify="center">
                 <v-col cols="12">
                   <div>
@@ -723,6 +538,7 @@ import provinceList from "@/assets/data/province.json";
 import { ValidationProvider } from "vee-validate";
 import { ValidationObserver } from "vee-validate";
 import BaseButton from "../components/punmaew/components/BaseButton.vue";
+import CardDialog from "../components/punmaew/components/CardDialog.vue";
 export default {
   // middleware: "auth",
   // middleware: ["auth-user"],
@@ -734,6 +550,7 @@ export default {
     BaseButton,
     tambonList,
     filterList,
+    CardDialog,
   },
   async asyncData({ $axios, $config, store, route, redirect, app }) {
     const cookie = await app.$cookies.get("auth._token.user");
@@ -786,6 +603,14 @@ export default {
 
   data() {
     return {
+      newEmail: "",
+      currentStep: 1,
+      otpCode: "",
+      total: {
+        minutes: 0,
+        seconds: 0,
+      },
+      dialog: false,
       favorList: [],
       profiles: [
         { id: 1, name: "ข้อมูลส่วนตัว" },
@@ -809,44 +634,22 @@ export default {
       answerTwo: null,
       answerThree: null,
       answerFour: null,
-      answerFive: null,
-      answerSix: null,
-      answerSeven: null,
-      answerEight: null,
-      answerNine: null,
-      answerTen: null,
+
       choiceListOne: [
-        { answer: "1-3 เดือน" },
-        { answer: "4-6 เดือน" },
-        { answer: "7-9 เดือน" },
-        { answer: "10-12 เดือน" },
-        { answer: "1 ปีขึ้นไป" },
-      ],
-      choiceListTwo: [
         { answer: "ขนสั้น" },
         { answer: "ขนยาว" },
         { answer: "ไม่มีขน" },
-        { answer: "ไม่จำกัด" },
       ],
+
       choiceListThree: [
-        { answer: "เพศเมีย" },
-        { answer: "เพศผู้" },
-        { answer: "ไม่จำกัด" },
-      ],
-      choiceListEight: [
         { answer: "ใช้กระบะทรายเป็น" },
-        { answer: "ไม่จำเป็นต้องใช้กระบะทรายเป็น" },
+        { answer: "ใช้กระบะทรายไม่เป็น" },
       ],
-      choiceListNine: [
-        { answer: "ทำหมันแล้ว" },
-        { answer: "ยังไม่ได้ทำหมัน" },
-        { answer: "ไม่จำกัด" },
-      ],
-      choiceListTen: [
+      choiceListTwo: [{ answer: "ทำหมันแล้ว" }, { answer: "ยังไม่ได้ทำหมัน" }],
+      choiceListFour: [
         { answer: "ยังไม่ได้รับวัคซีน" },
         { answer: "ได้รับวัคซีนครบตามช่วงอายุของแมว" },
         { answer: "ได้รับวัคซีนบางชนิด" },
-        { answer: "ไม่จำกัด" },
       ],
       posts: [],
     };
@@ -868,16 +671,10 @@ export default {
       );
       this.myIdeals = ideal.data.idealCat;
       if (ideal.data.idealCat.length > 0) {
-        this.answerOne = { answer: ideal.data.idealCat[0].answer };
-        this.answerTwo = { answer: ideal.data.idealCat[1].answer };
+        this.answerOne = ideal.data.idealCat[0].answer;
+        this.answerTwo = ideal.data.idealCat[1].answer;
         this.answerThree = ideal.data.idealCat[2].answer;
         this.answerFour = ideal.data.idealCat[3].answer;
-        this.answerFive = ideal.data.idealCat[4].answer;
-        this.answerSix = ideal.data.idealCat[5].answer;
-        this.answerSeven = ideal.data.idealCat[6].answer;
-        this.answerEight = { answer: ideal.data.idealCat[7].answer };
-        this.answerNine = { answer: ideal.data.idealCat[8].answer };
-        this.answerTen = { answer: ideal.data.idealCat[9].answer };
       }
 
       const favor = await this.$axios.get(
@@ -899,16 +696,10 @@ export default {
           `${this.$config.authURL}user/idealCat?id=${this.$store.state.auth.user._id}`,
           {
             idealCat: [
-              { answer: this.answerOne.answer.answer },
-              { answer: this.answerTwo.answer },
+              { answer: this.answerOne },
+              { answer: this.answerTwo },
               { answer: this.answerThree },
               { answer: this.answerFour },
-              { answer: this.answerFive },
-              { answer: this.answerSix },
-              { answer: this.answerSeven },
-              { answer: this.answerEight.answer },
-              { answer: this.answerNine.answer },
-              { answer: this.answerTen.answer },
             ],
           }
         );
@@ -919,7 +710,7 @@ export default {
           icon: "success",
         });
 
-        // console.log(res.data);
+        console.log(res.data);
       } catch (error) {
         this.$swal.fire({
           confirmButtonColor: "#19ba88",
@@ -998,40 +789,129 @@ export default {
           }
         });
     },
-    editProfile() {
+    async resendOtpRegister() {
+      console.log("resend");
       try {
-        this.$refs.editProfileForm.validate().then((success) => {
-          if (!success) {
-            return;
-          }
-          this.$axios
-            .put(
-              `${this.$config.authURL}user/editProfile?id=${this.userProfile._id}`,
-              {
-                firstName: this.userProfile.firstName,
-                lastName: this.userProfile.lastName,
-                email: this.userProfile.email,
-                tel: this.userProfile.tel,
-                // address: {
-                //   province: this.userProfile.address.province,
-                //   district: this.userProfile.address.district,
-                //   subDistrict: this.userProfile.address.subDistrict,
-                //   zipCode: this.userProfile.address.zipCode,
-                // },
-              }
-            )
-            .then((res) => {
-              this.$swal.fire({
-                confirmButtonColor: "#19ba88",
-                confirmButtonText: "ตกลง",
-                text: "บันทึกข้อมูลเรียบร้อยแล้ว",
-                icon: "success",
-              });
-              console.log(res.data);
-            });
-        });
+        const res = await this.$axios.put(
+          `${this.$config.authURL}user/againOTPEmail?id=${this.userProfile._id}`
+        );
+        console.log(res);
+        clearInterval(this.timeInterval);
+        this.countdown();
       } catch (error) {
         console.log(error);
+      }
+    },
+
+    async confirmOtpResetEmail() {
+      try {
+        const success = this.$refs.otpChangeEmailnPass.validate();
+        if (!success) {
+          return;
+        }
+        await this.$axios.put(
+          `${this.$config.authURL}user/editProfile?id=${this.userProfile._id}`,
+          {
+            firstName: this.userProfile.firstName,
+            lastName: this.userProfile.lastName,
+            tel: this.userProfile.tel,
+          }
+        );
+
+        await this.$axios.patch(`${this.$config.authURL}user/verify`, {
+          email: this.$store.state.auth.user.email,
+          code: this.otpCode,
+        });
+        await this.$axios.put(`${this.$config.authURL}user/editEmail`, {
+          email: this.userProfile.email,
+        });
+
+        await this.$auth.fetchUser();
+        this.$swal.fire({
+          confirmButtonColor: "#19ba88",
+          confirmButtonText: "ตกลง",
+          text: "บันทึกข้อมูลเรียบร้อยแล้ว",
+          icon: "success",
+        });
+        clearInterval(this.timeInterval);
+        this.dialog = false;
+
+        console.log("update email success");
+      } catch (error) {
+        this.$swal.fire({
+          confirmButtonColor: "#19ba88",
+          confirmButtonText: "ตกลง",
+          title: "เกิดข้อผิดพลาด",
+          text: error.response.data.message,
+          icon: "warning",
+        });
+      }
+    },
+
+    countdown() {
+      const second = 1000;
+      const minute = second * 60;
+      const hour = minute * 60;
+      // const countdown = new Date().getTime() + 15 * 60 * 1000;
+      const countdown = new Date().getTime() + 1 * 60 * 1000;
+
+      this.timeInterval = setInterval(() => {
+        const now = new Date().getTime();
+        const distance = countdown - now;
+
+        this.total.minutes = Math.floor((distance % hour) / minute);
+        this.total.seconds = Math.floor((distance % minute) / second);
+        if (distance < 1) {
+          this.total.minutes = 0;
+          this.total.seconds = 0;
+          clearInterval(this.timeInterval);
+        }
+      }, 1000);
+    },
+
+    async editProfile() {
+      try {
+        const success = this.$refs.editProfileForm.validate();
+        if (!success) {
+          return;
+        }
+        if (this.userProfile.email != this.$store.state.auth.user.email) {
+          await this.$axios.put(`${this.$config.authURL}user/resetEmail`);
+          this.currentStep += 1;
+          this.dialog = true;
+          this.countdown();
+        } else {
+          await this.$axios.put(
+            `${this.$config.authURL}user/editProfile?id=${this.userProfile._id}`,
+            {
+              firstName: this.userProfile.firstName,
+              lastName: this.userProfile.lastName,
+
+              tel: this.userProfile.tel,
+            }
+          );
+          this.$swal.fire({
+            confirmButtonColor: "#19ba88",
+            confirmButtonText: "ตกลง",
+            text: "บันทึกข้อมูลเรียบร้อยแล้ว",
+            icon: "success",
+          });
+        }
+
+        // console.log(res.data);
+        // .then((res) => {
+
+        //   console.log(res.data);
+        // });
+        // });
+      } catch (error) {
+        this.$swal.fire({
+          confirmButtonColor: "#19ba88",
+          confirmButtonText: "ตกลง",
+          title: "เกิดข้อผิดพลาด",
+          text: error.response.data.message,
+          icon: "warning",
+        });
       }
     },
     convertDateTime(d) {
@@ -1072,6 +952,48 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.valid-form {
+  color: $error;
+  font-weight: bold;
+  font-size: 10px;
+  @media (min-width: 1024px) {
+    font-size: 12px;
+  }
+}
+.otp-title {
+  text-align: center;
+  font-size: 18px;
+  font-weight: bold;
+  @media (min-width: 1440px) {
+    font-size: 24px;
+  }
+}
+.otp-desc {
+  text-align: center;
+  font-size: 14px;
+  @media (min-width: 1440px) {
+    font-size: 16px;
+  }
+}
+.otp-content {
+  input {
+    width: 100%;
+    background-color: $light;
+    padding: 8px 16px;
+    font-size: 16px;
+    border-radius: 50px;
+    @media (min-width: 1440px) {
+      padding: 14px 24px;
+    }
+  }
+}
+
+.otp-countDown {
+  text-align: center;
+  font-size: 16px;
+  font-weight: medium;
+  color: $orange-dark;
+}
 .status-adopt-success {
   position: absolute;
   top: 5%;

@@ -173,7 +173,7 @@
                                       ยืนยันรหัส OTP
                                     </base-button>
                                     <div
-                                      @click="resendOtp"
+                                      @click="resendOtpRegister"
                                       class="mt-5 text-center text-decoration-underline"
                                     >
                                       ส่งรหัสใหม่อีกครั้ง
@@ -320,56 +320,6 @@
                       </v-col>
                     </v-row>
 
-                    <!-- <v-row justify="center" class="mt-0">
-                      <v-col align-self="center" class="mt-0 pb-0 pt-4">
-                        <div class="input-area">
-                          <p>จังหวัด</p>
-                          <validation-provider
-                            rules="required"
-                            v-slot="{ errors }"
-                          >
-                            <v-autocomplete
-                              dense
-                              filled
-                              :items="province"
-                              item-text="province"
-                              name="province"
-                              v-model="selectProvince"
-                              :error-messages="errors"
-                              data-vv-name="select"
-                              placeholder="กรุณาเลือกจังหวัด"
-                              required
-                            >
-                            </v-autocomplete>
-                          </validation-provider>
-                        </div>
-                      </v-col>
-
-                      <v-col align-self="center" class="mt-0 pb-0">
-                        <div class="input-area">
-                          <p>รหัสไปรษณีย์</p>
-
-                          <validation-provider
-                            rules="required"
-                            v-slot="{ errors }"
-                          >
-                            <v-autocomplete
-                              :items="province"
-                              filled
-                              name="zipCode"
-                              item-text="zip"
-                              dense
-                              v-model="selectZip"
-                              :error-messages="errors"
-                              data-vv-name="select"
-                              placeholder="กรุณาเลือกรหัสไปรษณีย์"
-                              required
-                            ></v-autocomplete>
-                          </validation-provider>
-                        </div>
-                      </v-col>
-                    </v-row> -->
-
                     <v-row justify="center">
                       <v-col>
                         <div class="input-area-pass">
@@ -385,17 +335,10 @@
                                 v-model="passwordRegis"
                                 name="passwordRegis"
                               />
-                              <!-- <v-tooltip bottom>
-                                <template v-slot:activator="{ on, attrs }">
-                                  <div dark v-bind="attrs" v-on="on"> -->
+
                               <div class="tooltip">
                                 <i class="fi fi-rr-info"></i>
-                                <!-- <div class="tooltip-text">Bottom tooltip</div> -->
                               </div>
-                              <!-- </div>
-                                </template>
-                                <span>Bottom tooltip</span>
-                              </v-tooltip> -->
                             </div>
                             <p class="annotation">
                               รหัสผ่านต้องมีอย่างน้อย 6 ตัว
@@ -437,68 +380,65 @@
                             สมัครสมาชิก
                           </base-button>
                         </div>
-                        <validation-observer ref="otpRegisForm">
-                          <card-dialog :dialog="dialog">
-                            <template slot="title">
-                              <p class="otp-title">ยืนยันรหัส OTP</p>
-                            </template>
-                            <template slot="description">
-                              <p class="otp-desc">
-                                กรุณายืนยันรหัส OTP ที่ส่งไปที่อีเมล
-                                {{ this.emailRegis }}
-                              </p>
-                            </template>
-                            <template slot="content">
-                              <p class="otp-countDown">
-                                {{ total.minutes }}:{{ total.seconds }}
-                              </p>
-                              <div>
-                                <v-row justify="center">
-                                  <v-col
-                                    cols="12"
-                                    sm="7"
-                                    lg="8"
-                                    align-self="center"
-                                  >
-                                    <validation-provider
-                                      rules="required"
-                                      v-slot="{ errors }"
-                                      class="otp-content"
-                                    >
-                                      <v-otp-input
-                                        length="6"
-                                        v-model="otpCode"
-                                        name="otpCode"
-                                      ></v-otp-input>
-                                      <span class="valid-form">
-                                        {{ errors[0] }}
-                                      </span>
-                                      <base-button
-                                        :fillSearch="true"
-                                        class="mt-6"
-                                        @click="confirmOtpRegister"
-                                      >
-                                        ยืนยันรหัส OTP
-                                      </base-button>
-                                      <!-- @click="resendOtpRegister(._id)" -->
-                                      <div
-                                        class="mt-5 text-center text-decoration-underline"
-                                      >
-                                        ส่งรหัสใหม่อีกครั้ง
-                                      </div>
-                                    </validation-provider>
-                                  </v-col>
-                                </v-row>
-                              </div>
-                            </template>
-                          </card-dialog>
-                        </validation-observer>
+
                         <!--  -->
                       </v-col>
                     </v-row>
                   </form>
                 </validation-observer>
               </div>
+              <validation-observer ref="otpRegisForm">
+                <card-dialog :dialog="dialog">
+                  <template slot="title">
+                    <p class="otp-title">ยืนยันรหัส OTP</p>
+                  </template>
+                  <template slot="description">
+                    <p class="otp-desc">
+                      กรุณายืนยันรหัส OTP ที่ส่งไปที่อีเมล
+                      {{ this.emailRegis }}
+                    </p>
+                  </template>
+                  <template slot="content">
+                    <p class="otp-countDown">
+                      {{ total.minutes }}:{{ total.seconds }}
+                    </p>
+                    <div>
+                      <v-row justify="center">
+                        <v-col cols="12" sm="7" lg="8" align-self="center">
+                          <validation-provider
+                            rules="required"
+                            v-slot="{ errors }"
+                            class="otp-content"
+                          >
+                            <v-otp-input
+                              length="6"
+                              v-model="otpCode"
+                              name="otpCode"
+                            ></v-otp-input>
+                            <span class="valid-form">
+                              {{ errors[0] }}
+                            </span>
+                            <base-button
+                              :fillSearch="true"
+                              class="mt-6"
+                              @click="confirmOtpRegister"
+                            >
+                              ยืนยันรหัส OTP
+                            </base-button>
+                            <!-- @click="resendOtpRegister(._id)" -->
+                            <div
+                              @click="resendOtpRegister"
+                              class="mt-5 text-center text-decoration-underline"
+                            >
+                              ส่งรหัสใหม่อีกครั้ง
+                            </div>
+                          </validation-provider>
+                        </v-col>
+                      </v-row>
+                    </div>
+                  </template>
+                </card-dialog>
+              </validation-observer>
             </template>
           </card-form-adopt>
         </v-col>
@@ -552,6 +492,7 @@ export default {
       confirm: "",
       currentStep: 1,
       otpCode: "",
+      regisId: "",
     };
   },
   mounted() {
@@ -559,11 +500,7 @@ export default {
       this.$router.push("/");
     }
   },
-  // asyncData({ store, redirect }) {
-  //   if (store.state.auth.loggedIn === true) {
-  //     redirect("/");
-  //   }
-  // },
+
   methods: {
     async login() {
       try {
@@ -571,66 +508,62 @@ export default {
         if (!success) {
           return;
         }
-        // this.$axios
-        //   .post(`${this.$config.authURL}user/login`, {
-        //     email: this.emailLogin,
-        //     password: this.password,
-        //   })
+
         await this.$auth.loginWith("user", {
           data: {
             email: this.emailLogin,
             password: this.password,
           },
         });
-        // .then((res) => {
-        // console.log(res.data);
+
         this.$nextTick(() => {
           this.$refs.loginForm.reset();
         });
+
         this.$router.push("/");
         console.log("login successfully");
-        // })
-        // .catch((error) => {
-        //   console.log(error);
-        //   this.$swal.fire({
-        //     confirmButtonColor: "#19ba88",
-        //     confirmButtonText: "ตกลง",
-        //     title: "เกิดข้อผิดพลาด",
-        //     text: error.message,
-        //     icon: "warning",
-        //   });
-        // });
       } catch (error) {
-        console.log(error);
-        this.$swal.fire({
-          confirmButtonColor: "#19ba88",
-          confirmButtonText: "ตกลง",
-          title: "เกิดข้อผิดพลาด",
-          text: error.message,
-          icon: "warning",
-        });
+        if (error.response.data.active === false) {
+          this.regisId = error.response.data._id;
+          this.dialog = true;
+          this.countdown();
+        } else {
+          console.log(error.response);
+          this.$swal.fire({
+            confirmButtonColor: "#19ba88",
+            confirmButtonText: "ตกลง",
+            title: "เกิดข้อผิดพลาด",
+            text: error.response.data.message,
+            icon: "warning",
+          });
+        }
       }
     },
-    nextStep() {
+    async nextStep() {
       try {
-        this.$refs.otpForm.validate().then((success) => {
-          if (!success) {
-            return;
-          }
-          this.$axios
-            .patch(`${this.$config.authURL}user/forgot`, {
-              email: this.emailOtp,
-            })
-            .then((res) => {
-              console.log(res);
-              this.currentStep += 1;
-              this.countdown();
-              // this.setNewPassword();
-            });
-          this.$nextTick(() => {
-            this.$refs.otpForm.reset();
-          });
+        // this.$refs.otpForm.validate().then((success) => {
+        //   if (!success) {
+        //     return;
+        //   }
+        const success = this.$refs.otpForm.validate();
+        if (!success) {
+          return;
+        }
+        await this.$axios.patch(`${this.$config.authURL}user/forgot`, {
+          email: this.emailOtp,
         });
+        this.currentStep += 1;
+        this.countdown();
+        // .then((res) => {
+        //   console.log(res);
+        //   this.currentStep += 1;
+        //   this.countdown();
+        //   // this.setNewPassword();
+        // });
+        this.$nextTick(() => {
+          this.$refs.otpForm.reset();
+        });
+        // });
       } catch (error) {
         console.log(error);
       }
@@ -699,13 +632,10 @@ export default {
             email: this.emailRegis,
             password: this.passwordRegis,
             confirmPassword: this.confirm,
-            // address: {
-            //   province: this.selectProvince,
-            //   zipCode: this.selectZip,
-            // },
           }
         );
         console.log(res);
+        this.regisId = res.data._id;
         this.$nextTick(() => {
           this.$refs.registerForm.reset();
         });
@@ -724,30 +654,32 @@ export default {
         });
       }
     },
-    confirmOtpRegister() {
-      try {
-        this.$refs.otpRegisForm.validate().then((success) => {
-          if (!success) {
-            return;
-          }
-          if (this.dialog === true) {
-            this.countdown();
-            this.$axios
-              .patch(`${this.$config.authURL}user/activate`, {
-                email: this.emailRegis,
-                code: this.otpCode,
-              })
-              .then((res) => {
-                console.log(res);
-                location.reload();
-              });
-          } else {
-            console.log(error);
-          }
 
-          this.$nextTick(() => {
-            this.$refs.otpRegisForm.reset();
-          });
+    async confirmOtpRegister() {
+      try {
+        const success = this.$refs.otpRegisForm.validate();
+        if (!success) {
+          return;
+        }
+
+        if (this.dialog === true) {
+          this.countdown();
+          await this.$axios
+            .patch(`${this.$config.authURL}user/activate`, {
+              email: this.openTab ? this.emailLogin : this.emailRegis,
+              code: this.otpCode,
+            })
+            .then((res) => {
+              console.log(res);
+              clearInterval(this.timeInterval);
+              location.reload();
+            });
+        } else {
+          console.log(error);
+        }
+
+        this.$nextTick(() => {
+          this.$refs.otpRegisForm.reset();
         });
       } catch (error) {
         console.log(error);
@@ -766,6 +698,7 @@ export default {
       const minute = second * 60;
       const hour = minute * 60;
       const countdown = new Date().getTime() + 15 * 60 * 1000;
+      // const countdown = new Date().getTime() + 1 * 60 * 1000;
 
       this.timeInterval = setInterval(() => {
         const now = new Date().getTime();
@@ -774,15 +707,21 @@ export default {
         this.total.minutes = Math.floor((distance % hour) / minute);
         this.total.seconds = Math.floor((distance % minute) / second);
         if (distance < 1) {
+          this.total.minutes = 0;
+          this.total.seconds = 0;
           clearInterval(this.timeInterval);
         }
       }, 1000);
     },
-    resendOtpRegister(id) {
+    async resendOtpRegister() {
       console.log("resend");
-      // PUT: http://localhost:5443/user/againOTP?id=
       try {
-        this.$axios.post(`${this.$config.authURL}user/againOTP?id=${id}`, {});
+        const res = await this.$axios.put(
+          `${this.$config.authURL}user/againOTP?id=${this.regisId}`
+        );
+        console.log(res);
+        clearInterval(this.timeInterval);
+        this.countdown();
       } catch (error) {
         console.log(error);
       }

@@ -395,10 +395,19 @@
                             </div>
                             <div
                               @click="addParagraph"
-                              class="font-weight-bold font-orange"
+                              class="font-weight-bold font-orange mb-4"
                             >
                               + เพิ่มย่อหน้า
                             </div>
+                          </div>
+                          <div class="input-area mb-4">
+                            <p>ที่มา</p>
+                            <input
+                              v-model="sourceArticle"
+                              name="sourceArticle"
+                              type="text"
+                              placeholder="Source URL"
+                            />
                           </div>
                           <div class="mt-12">
                             <v-row no-gutters justify="center" class="btn-area">
@@ -434,7 +443,7 @@
                         <v-col cols="12">
                           <div class="mb-10">
                             <validation-provider
-                              rules="required|image"
+                              :rules="isEditArticle ? '' : 'required|image'"
                               v-slot="{ errors }"
                               ref="provider"
                             >
@@ -516,11 +525,22 @@
                             </div>
                             <div
                               @click="addParagraph"
-                              class="font-weight-bold font-orange"
+                              class="font-weight-bold font-orange mb-4"
                             >
                               + เพิ่มย่อหน้า
                             </div>
                           </div>
+
+                          <div class="input-area">
+                            <p>ที่มา</p>
+                            <input
+                              v-model="sourceArticle"
+                              name="sourceArticle"
+                              type="text"
+                              placeholder="Source URL"
+                            />
+                          </div>
+
                           <div class="mt-12">
                             <v-row no-gutters justify="center" class="btn-area">
                               <v-col align-self="center">
@@ -749,6 +769,7 @@ export default {
       selectTabId: 1,
       isEditArticle: false,
       isNewArticle: false,
+      sourceArticle: "",
       articleName: "",
       paragraph: "",
       isLoading: false,
@@ -818,18 +839,21 @@ export default {
           `${this.$config.articleURL}updateArticle?id=${this.editArticleId}`,
           {
             title: this.articleName,
+            source: this.sourceArticle,
             details,
           }
         );
 
         // updateImageArticle?id=
-        let formData = new FormData();
-        formData.append("image", this.imageFile);
-        const uploadImageArticle = await this.$axios.post(
-          `${this.$config.articleURL}updateImageArticle?id=${this.editArticleId}`,
-          formData
-        );
-        console.log(uploadImageArticle);
+        if (this.imageFile) {
+          let formData = new FormData();
+          formData.append("image", this.imageFile);
+          const uploadImageArticle = await this.$axios.post(
+            `${this.$config.articleURL}updateImageArticle?id=${this.editArticleId}`,
+            formData
+          );
+          console.log(uploadImageArticle);
+        }
 
         this.$nextTick(() => {
           this.$refs.updateArticleForm.reset();
@@ -859,6 +883,7 @@ export default {
         });
       }
       this.pars = pars;
+      this.sourceArticle = article.source;
       this.imageData = `${this.$config.articleURL}readFileId?id=${article._id}`;
     },
     async newCreateArticle() {
@@ -885,6 +910,7 @@ export default {
           {
             title: this.articleName,
             details,
+            source: this.sourceArticle,
           }
         );
 
@@ -942,6 +968,7 @@ export default {
       this.imageData = "";
       this.articleName = "";
       this.pars = [{ id: 1, no: 1, text: "" }];
+      this.sourceArticle = "";
     },
     menuDashboard(menu) {
       if (menu === "article") {
@@ -1072,11 +1099,13 @@ export default {
       this.$refs.fileInput.click();
     },
     async uploadImage(event) {
-      const { valid } = await this.$refs.provider.validate(event);
-      if (valid) {
-        // console.log("Uploaded the file...");
-        var input = event.target;
-        if (input.files && input.files[0]) {
+      // const { valid } = await this.$refs.provider.validate(event);
+      // if (valid) {
+      // console.log("Uploaded the file...");
+      var input = event.target;
+      if (input.files && input.files[0]) {
+        const { valid } = await this.$refs.provider.validate(event);
+        if (valid) {
           this.imageFile = event.target.files[0];
           var reader = new FileReader();
           reader.onload = (e) => {
@@ -1085,6 +1114,7 @@ export default {
           reader.readAsDataURL(input.files[0]);
         }
       }
+      // }
     },
     addParagraph() {
       this.pars.push({

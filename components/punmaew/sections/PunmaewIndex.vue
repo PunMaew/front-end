@@ -28,14 +28,13 @@
                 ดูทั้งหมด
               </button>
               <div
-                v-if="post.generalInfo.gender === 'เพศเมีย'"
-                class="gender-icon"
+                v-if="post.statusbar === 'รับเลี้ยงสำเร็จ'"
+                class="status-adopt-success"
               >
-                <i class="fi fi-rr-venus"></i>
+                รับเลี้ยงแล้ว
               </div>
-              <div v-else class="gender-icon-male">
-                <i class="fi fi-rr-mars"></i>
-              </div>
+              <div v-else class="status-adopt">ยังไม่ถูกรับเลี้ยง</div>
+
               <div class="thumbnail">
                 <img
                   :src="`${$config.findHome}readFileIdFindHome?id=${post._id}`"
@@ -193,21 +192,27 @@ export default {
     color: #13b8ff;
   }
 }
-.gender-icon {
+.status-adopt-success {
   position: absolute;
-  z-index: 0;
   top: 5%;
   right: 5%;
-  background-color: $white;
-  border-radius: 50%;
-  padding: 6px;
-  i {
-    display: flex;
-    justify-content: center;
-    font-size: 16px;
-    color: #ff90e0;
-  }
+  background-color: $success;
+  border-radius: 50px;
+  padding: 8px 12px;
+  font-size: 14px;
+  color: $white;
 }
+.status-adopt {
+  position: absolute;
+  top: 5%;
+  right: 5%;
+  background-color: $error;
+  border-radius: 50px;
+  padding: 8px 12px;
+  font-size: 14px;
+  color: $white;
+}
+
 .backdrop {
   background: #000000;
   z-index: 10;
