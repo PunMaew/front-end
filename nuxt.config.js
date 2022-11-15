@@ -31,6 +31,11 @@ export default {
         "http-equiv": "Content-Security-Policy",
         content: "upgrade-insecure-requests",
       },
+      {
+        hid: `og:image`,
+        property: "og:image",
+        content: "/fb-share.png",
+      },
     ],
     link: [
       {
@@ -43,6 +48,11 @@ export default {
         href: "https://cdn-uicons.flaticon.com/uicons-regular-rounded/css/uicons-regular-rounded.css",
       },
     ],
+    // script: [
+    //   {
+    //     src: "https://connect.facebook.net/en_US/all.js",
+    //   },
+    // ],
   },
 
   // Global CSS: https://go.nuxtjs.dev/config-css
@@ -50,6 +60,7 @@ export default {
 
   // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
   plugins: ["~/plugins/vee-validate"],
+  //  , "@/plugins/fb-sdk.client.js"
 
   // Auto import components: https://go.nuxtjs.dev/config-components
   components: true,
@@ -76,7 +87,17 @@ export default {
         filename: ".env",
       },
     ],
+    //
+
+    // "nuxt-facebook-pixel-module",
   ],
+  // facebook: {
+  //   /* module options */
+  //   track: "PageView",
+  //   pixelId: "541416380212227",
+  //   autoPageView: true,
+  //   disabled: false,
+  // },
   styleResources: {
     scss: ["~/assets/scss/abstracts/_variables.scss"],
   },

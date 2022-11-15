@@ -15,7 +15,12 @@
               <div class="mt-5">
                 <v-row>
                   <v-col cols="1">
-                    <div class="share">SHARE</div>
+                    <div class="share text-center">SHARE</div>
+                    <div class="share-hr mt-12 mb-4"></div>
+                    <!-- @click="shareFacebook" -->
+                    <div class="share-fb mt-12 text-center">
+                      <img src="@/assets/imgs/f_logo.png" alt="" />
+                    </div>
                   </v-col>
                   <v-col cols="11">
                     <div class="title">
@@ -34,6 +39,7 @@
                         {{ i.text }}
                       </p>
                     </div>
+                    <div class="source">ที่มา: {{ singleArticle.source }}</div>
                   </v-col>
                 </v-row>
               </div>
@@ -54,28 +60,86 @@ export default {
       default: false,
     },
   },
-  async asyncData({ $axios, $config, query }) {
-    try {
-      const res = await $axios.get(
-        `${$config.articleURL}oneArticle?id=${query.id}`
-      );
-      // console.log(res.data.data);
-      return {
-        singleArticle: res.data.data,
-      };
-    } catch (error) {
-      console.log(error);
-    }
-  },
+  // async asyncData({ $axios, $config, query }) {
+  //   try {
+  //     const res = await $axios.get(
+  //       `${$config.articleURL}oneArticle?id=${query.id}`
+  //     );
+  //     // console.log(res.data.data);
+  //     return {
+  //       singleArticle: res.data.data,
+  //     };
+  //   } catch (error) {
+  //     console.log(error);
+  //   }
+  // },
   data() {
     return {
       singleArticle: {},
     };
   },
-  computed: {
-    getDetailsArticle() {},
+  async created() {
+    await this.fetchData();
   },
   methods: {
+    async fetchData() {
+      try {
+        const res = await this.$axios.get(
+          `${this.$config.articleURL}oneArticle?id=${this.$route.query.id}`
+        );
+        this.singleArticle = res.data.data;
+        // console.log(res.data.data);
+        // return {
+        //   singleArticle: res.data.data,
+        // };
+      } catch (error) {
+        console.log(error);
+      }
+    },
+    // shareFacebook() {
+    //   console.log("hello");
+
+    //   const shareUrl = `https://punmaew.sit.kmutt.ac.th/singleArticle?isSingle=true&id=${this.singleArticle._id}`;
+    //   // const shareUrl = `http://localhost:8080//singleArticle?isSingle=true&id=${this.singleArticle._id}`;
+    //   try {
+    //     FB.init({
+    //       appId: "4610237905714008",
+    //       autoLogAppEvents: true,
+    //       xfbml: true,
+    //       version: "v10.0",
+    //     });
+    //     FB.ui(
+    //       {
+    //         method: "share_open_graph",
+    //         action_type: "og.shares",
+    //         action_properties: JSON.stringify({
+    //           object: {
+    //             // "og:image": this.cert.certUrl,
+    //             "og:url": shareUrl,
+    //             "og.image": `${this.$config.articleURL}readFileId=${this.singleArticle._id}`,
+    //             "og:title":
+    //               "Punmaew - Web Application สำหรับช่วยเหลือน้องแมวไร้บ้าน",
+    //             "og:description": "บทความเกี่ยวกับแมว",
+    //           },
+    //         }),
+    //       },
+    //       (response) => {
+    //         console.log("share response", response);
+    //       }
+    //     );
+    //   } catch (error) {
+    //     console.log(error);
+    //     // this.$swal({
+    //     //   toast: true,
+    //     //   title: "ไม่สามารถแชร์ FB ได้",
+    //     //   icon: "warning",
+    //     //   timer: 2000,
+    //     //   showConfirmButton: false,
+    //     //   position: "top-end",
+    //     //   timerProgressBar: true,
+    //     // });
+    //   }
+    // },
     convertDateTime(d) {
       let newDate = new Date(d);
       let year = newDate.getFullYear();
@@ -95,6 +159,20 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.source {
+  color: $gray;
+}
+.share-hr {
+  // border-left: 1px solid $gray;
+  // height: 56px;
+  border: 1px solid $gray;
+  transform: rotate(90deg);
+}
+.share-fb {
+  img {
+    width: 35px;
+  }
+}
 .share {
   font-size: 14px;
   color: $gray;
