@@ -20,7 +20,7 @@
 
                     <div
                       @click="shareFacebook"
-                      class="share-fb mt-12 text-center"
+                      class="share-fb mt-12 text-center cur-pointer"
                     >
                       <img src="@/assets/imgs/f_logo.png" alt="" />
                     </div>
@@ -118,7 +118,7 @@ export default {
             action_properties: JSON.stringify({
               object: {
                 "og:url": shareUrl,
-                "og.image": `${this.$config.articleURL}readFileId=${this.singleArticle._id}`,
+                // "og.image": `${this.$config.articleURL}readFileId=${this.singleArticle._id}`,
                 "og:title":
                   "Punmaew - Web Application สำหรับช่วยเหลือน้องแมวไร้บ้าน",
                 "og:description": "บทความเกี่ยวกับแมว",
@@ -161,6 +161,9 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.cur-pointer {
+  cursor: pointer;
+}
 .source {
   color: $gray;
 }
