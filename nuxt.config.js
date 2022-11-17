@@ -50,7 +50,7 @@ export default {
     ],
     script: [
       {
-        src: "https://connect.facebook.net/en_US/all.js",
+        src: "https://connect.facebook.net/en_US/sdk.js",
       },
     ],
   },
