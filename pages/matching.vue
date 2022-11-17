@@ -1,13 +1,21 @@
 <template>
   <div>
-    <section v-if="this.$store.state.auth.user.idealCat.length <= 0">
+    <section
+      v-if="
+        this.$store.state.auth.user.idealCat &&
+        this.$store.state.auth.user.idealCat.length <= 0
+      "
+    >
       <v-container>
         <v-row justify="center">
           <v-col cols="12" align-self="center">
             <v-row justify="center">
               <v-col cols="12" align-self="center">
                 <div
-                  v-if="this.$store.state.auth.user.idealCat.length <= 0"
+                  v-if="
+                    this.$store.state.auth.user.idealCat &&
+                    this.$store.state.auth.user.idealCat.length <= 0
+                  "
                   class="ideal-cats"
                 >
                   <div>

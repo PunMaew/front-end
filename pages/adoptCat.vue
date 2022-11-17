@@ -65,7 +65,10 @@
                               <div class="filter-sheet">
                                 <div class="justify-space-between d-flex">
                                   <p class="mb-2 ml-3"><b>ค้นหาจากพิกัด</b></p>
-                                  <div @click="showDataFilter">
+                                  <div
+                                    @click="showDataFilter"
+                                    class="cur-pointer"
+                                  >
                                     <i
                                       v-if="openTab"
                                       class="fi fi-rr-angle-small-up"
@@ -107,7 +110,10 @@
                                           class="justify-space-between d-flex"
                                         >
                                           <p class="mb-0">อายุ</p>
-                                          <div @click="showDataFilter2">
+                                          <div
+                                            @click="showDataFilter2"
+                                            class="cur-pointer"
+                                          >
                                             <i
                                               v-if="openTab2"
                                               class="fi fi-rr-angle-small-up"
@@ -135,7 +141,10 @@
                                           class="justify-space-between d-flex"
                                         >
                                           <p class="mb-0">เพศ</p>
-                                          <div @click="showDataFilter3">
+                                          <div
+                                            @click="showDataFilter3"
+                                            class="cur-pointer"
+                                          >
                                             <i
                                               v-if="openTab3"
                                               class="fi fi-rr-angle-small-up"
@@ -163,7 +172,10 @@
                                           class="justify-space-between d-flex"
                                         >
                                           <p class="mb-0">ขนาด</p>
-                                          <div @click="showDataFilter4">
+                                          <div
+                                            @click="showDataFilter4"
+                                            class="cur-pointer"
+                                          >
                                             <i
                                               v-if="openTab4"
                                               class="fi fi-rr-angle-small-up"
@@ -191,7 +203,10 @@
                                           class="justify-space-between d-flex"
                                         >
                                           <p class="mb-0">สี</p>
-                                          <div @click="showDataFilter5">
+                                          <div
+                                            @click="showDataFilter5"
+                                            class="cur-pointer"
+                                          >
                                             <i
                                               v-if="openTab5"
                                               class="fi fi-rr-angle-small-up"
@@ -275,7 +290,10 @@
                                           class="justify-space-between d-flex"
                                         >
                                           <p class="mb-0">สายพันธุ์</p>
-                                          <div @click="showDataFilter8">
+                                          <div
+                                            @click="showDataFilter8"
+                                            class="cur-pointer"
+                                          >
                                             <i
                                               v-if="openTab8"
                                               class="fi fi-rr-angle-small-up"
@@ -303,7 +321,10 @@
                                           class="justify-space-between d-flex"
                                         >
                                           <p class="mb-0">ลักษณะนิสัย</p>
-                                          <div @click="showDataFilter9">
+                                          <div
+                                            @click="showDataFilter9"
+                                            class="cur-pointer"
+                                          >
                                             <i
                                               v-if="openTab9"
                                               class="fi fi-rr-angle-small-up"
@@ -395,7 +416,9 @@
                           <template v-slot:activator="{ on, attrs }">
                             <div v-bind="attrs" v-on="on">
                               <div class="filter-by">
-                                <div>เรียงตาม</div>
+                                <div>
+                                  {{ sortByName ? sortByName : "เรียงตาม" }}
+                                </div>
                                 <i class="fi fi-rr-angle-down"></i>
                               </div>
                             </div>
@@ -486,7 +509,7 @@
                 <div>
                   <div class="justify-space-between d-flex">
                     <p class="mb-2 ml-3"><b>ค้นหาจากพิกัด</b></p>
-                    <div @click="showDataFilter">
+                    <div @click="showDataFilter" class="cur-pointer">
                       <i v-if="openTab" class="fi fi-rr-angle-small-up"></i>
                       <i v-else class="fi fi-rr-angle-small-down"></i>
                     </div>
@@ -517,7 +540,7 @@
                         <div class="filter-side-bar">
                           <div class="justify-space-between d-flex">
                             <p class="mb-0">อายุ</p>
-                            <div @click="showDataFilter2">
+                            <div @click="showDataFilter2" class="cur-pointer">
                               <i
                                 v-if="openTab2"
                                 class="fi fi-rr-angle-small-up"
@@ -540,7 +563,7 @@
                         <div class="filter-side-bar">
                           <div class="justify-space-between d-flex">
                             <p class="mb-0">เพศ</p>
-                            <div @click="showDataFilter3">
+                            <div @click="showDataFilter3" class="cur-pointer">
                               <i
                                 v-if="openTab3"
                                 class="fi fi-rr-angle-small-up"
@@ -563,7 +586,7 @@
                         <div class="filter-side-bar">
                           <div class="justify-space-between d-flex">
                             <p class="mb-0">ขนาด</p>
-                            <div @click="showDataFilter4">
+                            <div @click="showDataFilter4" class="cur-pointer">
                               <i
                                 v-if="openTab4"
                                 class="fi fi-rr-angle-small-up"
@@ -586,7 +609,7 @@
                         <div class="filter-side-bar">
                           <div class="justify-space-between d-flex">
                             <p class="mb-0">สี</p>
-                            <div @click="showDataFilter5">
+                            <div @click="showDataFilter5" class="cur-pointer">
                               <i
                                 v-if="openTab5"
                                 class="fi fi-rr-angle-small-up"
@@ -655,7 +678,7 @@
                         <div class="filter-side-bar">
                           <div class="justify-space-between d-flex">
                             <p class="mb-0">สายพันธุ์</p>
-                            <div @click="showDataFilter8">
+                            <div @click="showDataFilter8" class="cur-pointer">
                               <i
                                 v-if="openTab8"
                                 class="fi fi-rr-angle-small-up"
@@ -678,7 +701,7 @@
                         <div class="filter-side-bar">
                           <div class="justify-space-between d-flex">
                             <p class="mb-0">ลักษณะนิสัย</p>
-                            <div @click="showDataFilter9">
+                            <div @click="showDataFilter9" class="cur-pointer">
                               <i
                                 v-if="openTab9"
                                 class="fi fi-rr-angle-small-up"
@@ -763,7 +786,9 @@
                             <v-row no-gutters justify="end">
                               <v-col cols="9">
                                 <div class="filter-by">
-                                  <div>เรียงตาม</div>
+                                  <div>
+                                    {{ sortByName ? sortByName : "เรียงตาม" }}
+                                  </div>
                                   <i class="fi fi-rr-angle-down"></i>
                                 </div>
                               </v-col>
@@ -776,6 +801,7 @@
                             :key="index"
                           >
                             <v-list-item-title
+                              class="cur-pointer"
                               @click="filterAction(item.action)"
                               >{{ item.title }}</v-list-item-title
                             >
@@ -876,11 +902,14 @@
                                   class="d-flex justify-end pb-0"
                                 >
                                   <div @click="feelToPost(onePost._id)">
-                                    <div v-if="!isLike" class="un-like-btn">
+                                    <div
+                                      v-if="!isLike"
+                                      class="un-like-btn cur-pointer"
+                                    >
                                       <i class="fi fi-rr-heart"></i>
                                       ถูกใจ
                                     </div>
-                                    <div v-else class="like-btn">
+                                    <div v-else class="like-btn cur-pointer">
                                       <img
                                         src="@/assets/imgs/fi-sr-heart.svg"
                                         alt=""
@@ -1234,6 +1263,7 @@ export default {
   auth: false,
   data() {
     return {
+      sortByName: "เรียงตาม",
       sheetMobile: false,
       sheet: false,
       onePost: null,
@@ -1410,6 +1440,7 @@ export default {
   methods: {
     async filterAction(action) {
       if (action === "old-post") {
+        this.sortByName = "เก่า";
         console.log("old-post");
         try {
           const res = await this.$axios.get(`${this.$config.findHome}oldPost`);
@@ -1419,6 +1450,7 @@ export default {
         }
       }
       if (action === "lastest-post") {
+        this.sortByName = "ล่าสุด";
         console.log("lastest-post");
         try {
           const res = await this.$axios.get(
@@ -1431,6 +1463,7 @@ export default {
       }
 
       if (action === "best-match") {
+        this.sortByName = "แมวในอุดมคติ";
         console.log("best-match");
         if (this.loggedIn) {
           if (this.$store.state.auth.user.idealCat.length <= 0) {
@@ -1466,6 +1499,7 @@ export default {
         }
       }
       if (action === "favor") {
+        this.sortByName = "ถูกใจแล้ว";
         console.log("favor");
         if (this.loggedIn) {
           try {
@@ -1489,6 +1523,7 @@ export default {
         }
       }
       if (action === "not-adopt") {
+        this.sortByName = "ยังไม่ถูกรับเลี้ยง";
         console.log("not-adopt");
         try {
           const res = await this.$axios.get(
@@ -1500,6 +1535,7 @@ export default {
         }
       }
       if (action === "by-adopted") {
+        this.sortByName = "รับเลี้ยงแล้ว";
         console.log("by-adopted");
         try {
           const res = await this.$axios.get(`${this.$config.findHome}getAdopt`);
@@ -1625,13 +1661,17 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.cur-pointer {
+  cursor: pointer;
+}
 .filter-by {
   display: flex;
   grid-gap: 10px;
   gap: 10px;
   border: 1px solid $gray;
   border-radius: 50px;
-  padding: 14px 24px;
+  // padding: 14px 24px;
+  padding: 12px 14px;
   font-size: 14px;
   justify-content: space-between;
   align-items: center;
@@ -1781,34 +1821,7 @@ export default {
   font-size: 14px;
   color: $white;
 }
-// .gender-icon-male {
-//   position: absolute;
-//   top: 5%;
-//   right: 5%;
-//   background-color: $white;
-//   border-radius: 50%;
-//   padding: 6px;
-//   i {
-//     display: flex;
-//     justify-content: center;
-//     font-size: 16px;
-//     color: #13b8ff;
-//   }
-// }
-// .gender-icon {
-//   position: absolute;
-//   top: 5%;
-//   right: 5%;
-//   background-color: $white;
-//   border-radius: 50%;
-//   padding: 6px;
-//   i {
-//     display: flex;
-//     justify-content: center;
-//     font-size: 16px;
-//     color: #ff90e0;
-//   }
-// }
+
 ::v-deep
   .v-text-field.v-text-field--solo:not(.v-text-field--solo-flat)
   > .v-input__control
@@ -1853,8 +1866,16 @@ export default {
 .footer-more {
   background-color: $light;
 }
+
+::v-deep .v-bottom-sheet.v-dialog::-webkit-scrollbar {
+  display: none;
+}
 ::v-deep .v-bottom-sheet.v-dialog {
-  overflow: scroll;
+  overflow-y: scroll;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+  //
+
   border-radius: 24px 24px 0px 0px;
   @media (min-width: 1440px) {
     border-radius: 50px 50px 0px 0px;
@@ -1885,6 +1906,14 @@ export default {
   }
 }
 .adopt-sheet {
+  margin-top: 40px;
+  @media (min-width: 768px) {
+    margin-top: 46px;
+  }
+  @media (min-width: 1440px) {
+    margin-top: 64px;
+  }
+
   h2 {
     font-size: 24px;
     @media (min-width: 1440px) {
@@ -1893,12 +1922,12 @@ export default {
   }
 }
 
-::v-deep .theme--light.v-sheet {
-  border-radius: 24px 24px 0px 0px;
-  @media (min-width: 1440px) {
-    border-radius: 50px 50px 0px 0px;
-  }
-}
+// ::v-deep .theme--light.v-sheet {
+//   border-radius: 24px 24px 0px 0px;
+//   @media (min-width: 1440px) {
+//     border-radius: 50px 50px 0px 0px;
+//   }
+// }
 .set-sheet {
   row-gap: 16px;
   display: grid;
@@ -1906,12 +1935,27 @@ export default {
     row-gap: 32px;
   }
   .cross-circle {
+    z-index: 30;
+    position: fixed;
+    right: 3%;
     display: flex;
     justify-content: right;
+    @media (min-width: 1440px) {
+      right: 2%;
+    }
+    @media (min-width: 2560px) {
+      right: 1%;
+    }
     i {
       font-size: 24px;
       @media (min-width: 768px) {
-        font-size: 46px;
+        font-size: 28px;
+      }
+      @media (min-width: 1440px) {
+        font-size: 32px;
+      }
+      @media (min-width: 2560px) {
+        font-size: 44px;
       }
     }
   }

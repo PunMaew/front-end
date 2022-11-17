@@ -123,6 +123,9 @@
                   <v-list-item link to="/adoptCat">
                     <v-list-item-title>รับเลี้ยงแมว</v-list-item-title>
                   </v-list-item>
+                  <v-list-item v-if="loggedIn" link to="/editProfile">
+                    <v-list-item-title>โปรไฟล์ของฉัน</v-list-item-title>
+                  </v-list-item>
                   <v-list-item v-if="loggedIn" @click="menuAction('logout')">
                     <v-list-item-title>ออกจากระบบ</v-list-item-title>
                   </v-list-item>

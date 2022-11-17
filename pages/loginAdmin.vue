@@ -3,7 +3,9 @@
     <v-container>
       <v-row justify="center">
         <v-col cols="12" align-self="center">
-          <card-form-adopt class="card-form-adopt">
+          <card-form-adopt
+            class="card-form-adopt d-none d-md-flex d-lg-flex d-xl-flex"
+          >
             <template slot="content">
               <div>
                 <v-row justify="center">
@@ -245,6 +247,18 @@
               </div>
             </template>
           </card-form-adopt>
+
+          <div class="d-md-none d-lg-none d-xl-none">
+            <div class="text-center">
+              <v-container>
+                <v-row justify="center">
+                  <v-col align-self="center" cols="12">
+                    This website is supported on desktop only.
+                  </v-col>
+                </v-row>
+              </v-container>
+            </div>
+          </div>
         </v-col>
       </v-row>
     </v-container>
@@ -283,12 +297,13 @@ export default {
       newConfirm: "",
     };
   },
+
   created() {
     if (
       this.$store.state.auth.loggedIn === true &&
       this.$store.state.auth.strategy == "admin"
     ) {
-      this.$router.push("/dashboard");
+      this.$router.push("/dashboard?menu=dashboard");
     }
   },
   // asyncData({ store, redirect }) {
@@ -313,7 +328,7 @@ export default {
         // .then((res) => {
         // console.log(res.data);
         console.log("login admin successfully");
-        this.$router.push("/dashboard");
+        this.$router.push("/dashboard?menu=dashboard");
         // })
       } catch (error) {
         console.log(error);
@@ -321,7 +336,7 @@ export default {
           confirmButtonColor: "#19ba88",
           confirmButtonText: "ตกลง",
           title: "เกิดข้อผิดพลาด",
-          text: error.message,
+          text: error.response.data.message,
           icon: "warning",
         });
       }
@@ -434,6 +449,9 @@ export default {
 .title {
   p {
     font-size: 40px;
+    @media (min-width: 2560px) {
+      font-size: 32px;
+    }
   }
 }
 .set-img-logo {

@@ -579,11 +579,7 @@
               </div>
               <div class="mt-11">
                 <h2>โพสต์หาบ้านทั้งหมด</h2>
-                <div
-                  v-for="p in allPostFindHome"
-                  :key="p.id"
-                  class="card-article mt-4"
-                >
+                <div v-for="p in posts" :key="p.id" class="card-article mt-4">
                   <v-row>
                     <v-col>
                       <div class="name-article-header">
@@ -683,7 +679,7 @@
                         </div>
                         <div
                           @click="deleteAccount(account._id)"
-                          class="mt-4 footer-btn font-weight-bold"
+                          class="mt-4 footer-btn font-weight-bold cur-pointer"
                         >
                           ลบบัญชีผู้ใช้
                         </div>
@@ -766,7 +762,7 @@ export default {
         { id: 2, name: "โพสต์หาบ้าน" },
         { id: 3, name: "บัญชีผู้ใช้" },
       ],
-      selectTabId: 1,
+      // selectTabId: 1,
       isEditArticle: false,
       isNewArticle: false,
       sourceArticle: "",
@@ -794,22 +790,24 @@ export default {
       searchArticle: "",
       searchAccount: "",
       editArticleId: "",
+      tabsFocus: "article",
     };
   },
-  // async asyncData({ $axios, $config }) {
-  //   try {
-  //     // const res = await $axios.get(`${$config.findHome}allPost`);
-  //     // const user = await $axios.get(`${$config.authURL}user/getallusers`);
-  //     const article = await $axios.get(`${$config.articleURL}allArticle`);
-  //     return {
-  //       // posts: res.data,
-  //       // users: user.data,
-  //       articles: article.data,
-  //     };
-  //   } catch (error) {
-  //     console.log(error);
-  //   }
-  // },
+  async asyncData({ route, store }) {
+    const menu = route.query.menu;
+    if (!menu) {
+      store.commit("SET_MENU", "dashboard");
+    } else {
+      store.commit("SET_MENU", menu);
+    }
+  },
+
+  mounted() {
+    window.onbeforeunload = function () {
+      return "Changes you made may not be saved.";
+    };
+    // return this.$auth.logout();
+  },
   async created() {
     if (
       this.$store.state.auth.loggedIn == false ||
@@ -818,6 +816,8 @@ export default {
       this.$router.push("/loginAdmin");
     }
     await this.fetchData();
+    // const menu = this.$route.query.menu;
+    // this.$store.commit("SET_MENU", menu);
   },
   methods: {
     async updateArticle() {
@@ -848,16 +848,18 @@ export default {
         if (this.imageFile) {
           let formData = new FormData();
           formData.append("image", this.imageFile);
-          const uploadImageArticle = await this.$axios.post(
+          // const uploadImageArticle =
+          await this.$axios.post(
             `${this.$config.articleURL}updateImageArticle?id=${this.editArticleId}`,
             formData
           );
-          console.log(uploadImageArticle);
+          // console.log(uploadImageArticle);
         }
-
         this.$nextTick(() => {
           this.$refs.updateArticleForm.reset();
         });
+        this.cancleArticle();
+        await this.fetchData();
       } catch (error) {
         this.$swal.fire({
           confirmButtonColor: "#19ba88",
@@ -872,7 +874,7 @@ export default {
     getDataArticle(article) {
       this.isEditArticle = true;
       this.editArticleId = article._id;
-      console.log(article);
+      // console.log(article);
       this.articleName = article.title;
       const pars = [];
       for (let index = 0; index < article.details.length; index++) {
@@ -916,15 +918,19 @@ export default {
 
         let formData = new FormData();
         formData.append("image", this.imageFile);
-        const uploadImageArticle = await this.$axios.post(
+        // const uploadImageArticle =
+        await this.$axios.post(
           `${this.$config.articleURL}uploadArticle/${articleDetails.data.postIdArticle}`,
           formData
         );
-        console.log(uploadImageArticle);
+        // console.log(uploadImageArticle);
 
         this.$nextTick(() => {
           this.$refs.createArticleForm.reset();
         });
+
+        this.cancleArticle();
+        await this.fetchData();
       } catch (error) {
         console.log(error);
       }
@@ -935,7 +941,7 @@ export default {
           `${this.$config.articleURL}allArticle`
         );
         this.articles = article.data;
-        console.log(article.data);
+        // console.log(article.data);
 
         const res = await this.$axios.get(`${this.$config.findHome}allPost`);
         this.posts = res.data;
@@ -1013,8 +1019,8 @@ export default {
             text: "โพสต์ของคุณถูกลบแล้ว",
             icon: "success",
           });
-          let newArray = this.posts.filter((item) => item._id != id);
-          this.posts = newArray;
+          let newArray = this.articles.filter((item) => item._id != id);
+          this.articles = newArray;
         }
       } catch (error) {
         this.$swal.fire({
@@ -1124,12 +1130,12 @@ export default {
       this.newParagraph = "";
     },
     selectTabs(refName) {
+      this.tabsFocus = refName;
       this.$refs[refName].scrollIntoView({ behavior: "smooth" });
-      // this.selectTabId = item.id;
     },
     showMoreArticle() {
       this.moreArticle = !this.moreArticle;
-      console.log(this.moreArticle);
+      // console.log(this.moreArticle);
       if (this.articleCount === this.articles.length) {
         this.articleCount = 3;
         return;
@@ -1139,7 +1145,7 @@ export default {
     },
     showMorePost() {
       this.morePost = !this.morePost;
-      console.log(this.morePost);
+      // console.log(this.morePost);
       if (this.postCount === this.posts.length) {
         this.postCount = 3;
         return;
@@ -1149,7 +1155,7 @@ export default {
     },
     showMoreUser() {
       this.moreUser = !this.moreUser;
-      console.log(this.moreUser);
+      // console.log(this.moreUser);
       if (this.userCount === this.users.length) {
         this.userCount = 3;
         return;
@@ -1162,6 +1168,9 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.cur-pointer {
+  cursor: pointer;
+}
 .valid-form {
   color: $error;
   font-weight: bold;
@@ -1365,6 +1374,7 @@ export default {
     justify-content: flex-end;
   }
   .icon-article {
+    cursor: pointer;
     display: flex;
     gap: 16px;
     i {
@@ -1532,11 +1542,14 @@ export default {
   background-color: $purple-light;
   border-radius: 10px;
   font-size: 24px;
-  // .bar-block {
-  //   // border-bottom: 3px solid $purple-dark;
-  //   // border-bottom-right-radius: 6px 2px;
-  //   // border-bottom-left-radius: 10px 11px
-  // }
+}
+.bar-block {
+  cursor: pointer;
+  &:hover {
+    // border-bottom: 5px solid $purple-dark;
+    border-radius: 10px;
+    color: $purple-dark;
+  }
 }
 
 .head-title {

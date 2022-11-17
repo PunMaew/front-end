@@ -186,7 +186,7 @@ export default {
         : "",
       littleBox: [
         { id: 1, name: "ใช้กระบะทรายเป็น" },
-        { id: 2, name: "ไม่จำเป็นต้องใช้กระบะทรายเป็น" },
+        { id: 2, name: "ใช้กระบะทรายไม่เป็น" },
       ],
       selectLittleBox: this.isEdit
         ? this.fetchForm.step2?.characteristic?.sandbox

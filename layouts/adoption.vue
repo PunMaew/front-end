@@ -17,6 +17,16 @@ export default {
     TheHeader,
   },
   name: "adoption",
+  watch: {
+    "$store.state.auth": {
+      handler(old) {
+        if (old.loggedIn && old.strategy === "admin") {
+          this.$router.push("/dashboard");
+        }
+      },
+      immediate: true,
+    },
+  },
 };
 </script>
 <style lang="scss" scoped>

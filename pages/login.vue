@@ -649,7 +649,7 @@ export default {
           confirmButtonColor: "#19ba88",
           confirmButtonText: "ตกลง",
           title: "เกิดข้อผิดพลาด",
-          text: error.message,
+          text: error.response.data.message,
           icon: "warning",
         });
       }
@@ -879,6 +879,9 @@ input[id="radio-3"] {
   }
   @media (min-width: 1440px) {
     padding: 56px;
+  }
+  @media (min-width: 2560px) {
+    padding: 38px;
   }
 }
 ::v-deep .v-text-field > .v-input__control > .v-input__slot:before {

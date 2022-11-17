@@ -25,6 +25,16 @@ import DashboardPanelMenu from "../components/punmaew/components/DashboardPanelM
 import DashboardPanelMain from "../components/punmaew/elements/DashboardPanelMain.vue";
 export default {
   components: { DashboardPanelMenu, DashboardHeader, DashboardPanelMain },
+  watch: {
+    "$store.state.auth": {
+      handler(old) {
+        if (old.loggedIn && old.strategy != "admin") {
+          this.$router.push("/");
+        }
+      },
+      immediate: true,
+    },
+  },
 };
 </script>
 <style lang="scss" scoped>

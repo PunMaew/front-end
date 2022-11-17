@@ -120,36 +120,22 @@
     <div v-else-if="progress.generalInfo === 2">
       <validation-observer ref="generalSecondForm">
         <p class="step-text">ข้อมูลทั่วไป 2 จากทั้งหมด 4</p>
-        <div class="input-area">
-          <p>จังหวัด<span>*</span></p>
-          <validation-provider
-            name="province"
-            rules="required"
-            v-slot="{ errors }"
-          >
-            <v-autocomplete
-              dense
-              filled
-              :items="province"
-              item-text="province"
-              name="province"
-              v-model="selectProvince"
-              :error-messages="errors"
-              data-vv-name="select"
-              required
-              placeholder="กรุณาเลือกจังหวัด"
-            >
-            </v-autocomplete>
-          </validation-provider>
-        </div>
-        <div class="input-area">
+        <div class="input-area mb-2">
           <p>เขต/อำเภอ<span>*</span></p>
           <validation-provider
             name="district"
             rules="required"
             v-slot="{ errors }"
           >
-            <v-autocomplete
+            <addressinput-district
+              v-model="selectDistrict"
+              placeholder="กรุณาเลือกเขต/อำเภอ"
+              class="address-input"
+            />
+            <span class="valid-form">
+              {{ errors[0] }}
+            </span>
+            <!-- <v-autocomplete
               dense
               filled
               :items="province"
@@ -161,13 +147,44 @@
               required
               placeholder="กรุณาเลือกเขต/อำเภอ"
             >
-            </v-autocomplete>
+            </v-autocomplete> -->
           </validation-provider>
         </div>
+        <div class="input-area mb-2">
+          <p>จังหวัด<span>*</span></p>
+          <validation-provider
+            name="province"
+            rules="required"
+            v-slot="{ errors }"
+          >
+            <!-- <v-autocomplete
+              dense
+              filled
+              :items="province"
+              item-text="province"
+              name="province"
+              v-model="selectProvince"
+              :error-messages="errors"
+              data-vv-name="select"
+              required
+              placeholder="กรุณาเลือกจังหวัด"
+            >
+            </v-autocomplete> -->
+            <addressinput-province
+              v-model="selectProvince"
+              placeholder="กรุณาเลือกจังหวัด"
+              class="address-input"
+            />
+            <span class="valid-form">
+              {{ errors[0] }}
+            </span>
+          </validation-provider>
+        </div>
+
         <div class="input-area">
           <p>การรับวัคซีน<span>*</span></p>
           <validation-provider
-            name="district"
+            name="vaccineHistory"
             rules="required"
             v-slot="{ errors }"
           >
@@ -195,7 +212,7 @@
         >
           <p>วัคซีนที่ได้รับ<span>*</span></p>
           <validation-provider
-            name="district"
+            name="receiveVaccine"
             rules="required"
             v-slot="{ errors }"
           >
@@ -691,6 +708,19 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+::v-deep .address-input {
+  .th-address-input {
+    border-radius: 50px !important;
+    background-color: $light;
+    border: none;
+    padding: 6px 12px;
+    color: $dark;
+    height: 36px;
+    @media (min-width: 1440px) {
+      height: 50px;
+    }
+  }
+}
 .preview {
   width: 100%;
   max-height: 248px;

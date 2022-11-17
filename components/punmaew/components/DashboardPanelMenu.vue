@@ -1,5 +1,4 @@
 <template>
-  <!-- <section class="d-none d-md-flex d-lg-flex d-xl-flex"> -->
   <v-col cols="12" md="3" id="dashbard-menu">
     <div id="dashbard-menu-container">
       <div>
@@ -23,21 +22,6 @@
             <i class="fi fi-rr-home"></i>
             Dashboard
           </div>
-          <!-- <div
-            @click="menuDashboard('notification')"
-            class="mt-1 tabs-menu noti-area"
-          >
-            <i class="fi fi-rr-book-alt"></i>
-            Notification
-            <div class="no-ti">1</div>
-          </div> -->
-          <!-- <div class="justify-space-between d-flex align-center">
-            <div class="mt-1 tabs-menu">
-              <i class="fi fi-rr-bell"></i>
-              Notification
-            </div>
-            <div class="no-ti">1</div>
-          </div> -->
           <div
             @click="menuDashboard('article')"
             :class="[currentMenu === 'article' && 'actived']"
@@ -88,22 +72,16 @@ export default {
     async menuDashboard(menu) {
       if (menu === "dashboard") {
         try {
+          this.$router.replace(`${this.$route.path}?menu=${menu}`);
           this.$store.commit("SET_MENU", "dashboard");
         } catch (error) {
           console.log(error);
         }
       }
-      // if (menu === "notification") {
-      //   try {
-      //     return;
-      //     // this.$store.commit("SET_MENU", "notification");
-      //   } catch (error) {
-      //     console.log(error);
-      //   }
-      // }
 
       if (menu === "article") {
         try {
+          this.$router.replace(`${this.$route.path}?menu=${menu}`);
           this.$store.commit("SET_MENU", "article");
         } catch (error) {
           console.log(error);
@@ -111,6 +89,7 @@ export default {
       }
       if (menu === "findhome") {
         try {
+          this.$router.replace(`${this.$route.path}?menu=${menu}`);
           this.$store.commit("SET_MENU", "findhome");
         } catch (error) {
           console.log(error);
@@ -118,6 +97,7 @@ export default {
       }
       if (menu === "users") {
         try {
+          this.$router.replace(`${this.$route.path}?menu=${menu}`);
           this.$store.commit("SET_MENU", "users");
         } catch (error) {
           console.log(error);
@@ -127,7 +107,6 @@ export default {
         try {
           await this.$auth.logout();
           this.$router.push("/loginAdmin");
-          // this.$store.commit("SET_MENU", "logoutAdmin");
         } catch (error) {
           console.log(error);
         }
@@ -150,6 +129,7 @@ export default {
 
 @media (min-width: 920px) {
   #menu-fix-footer {
+    cursor: pointer;
     position: fixed;
     bottom: 50px;
     color: $error;
@@ -160,25 +140,9 @@ export default {
     }
   }
 }
-// .noti-area {
-//   position: relative;
-// }
-// .no-ti {
-//   background-color: $orange-dark;
-//   font-size: 16px;
-//   color: $white;
-//   width: 28px;
-//   height: 28px;
-//   display: flex;
-//   justify-content: center;
-//   border-radius: 8px;
-//   position: absolute;
-//   top: 25%;
-//   right: 5%;
-//   // position: absolute;
-//   // left: -16px;
-// }
+
 .tabs-menu {
+  cursor: pointer;
   font-size: 20px;
   padding: 12px 16px;
   border-radius: 10px;
@@ -186,14 +150,6 @@ export default {
     background-color: $yellow;
     color: $orange-dark;
   }
-  // &:focus {
-  //   color: $orange-dark !important;
-  //   background-color: $yellow !important;
-  // }
-  // &.actived {
-  //   color: $orange-dark !important;
-  //   background-color: $yellow !important;
-  // }
 }
 
 .actived {

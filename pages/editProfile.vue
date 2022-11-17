@@ -14,6 +14,7 @@
             name="profiles"
             v-model="selectProfile"
             @change="filteredData"
+            class="menu-drop-down"
           >
           </v-select>
         </div>
@@ -27,6 +28,11 @@
                 @click="selectTabs(profile)"
                 v-for="(profile, index) in profiles"
                 :key="index"
+                :class="
+                  profile.id === selectProfileId
+                    ? 'border-block'
+                    : 'cur-pointer'
+                "
               >
                 <div>{{ profile.name }}</div>
               </v-col>
@@ -140,7 +146,7 @@
                 <template slot="description">
                   <p class="otp-desc">
                     กรุณายืนยันรหัส OTP ที่ส่งไปที่อีเมล
-                    {{ userProfile.email }}
+                    {{ this.$store.state.auth.user.email }}
                   </p>
                 </template>
                 <template slot="content">
@@ -190,12 +196,17 @@
           <div v-if="selectProfileId == 2" class="mt-6">
             <div class="d-flex justify-space-between my-post items-center">
               <div>โพสต์หาบ้านของฉันทั้งหมด</div>
-              <div @click="goFindHome" class="new-post-btn">สร้างโพสต์ใหม่</div>
+              <div @click="goFindHome" class="new-post-btn cur-pointer">
+                สร้างโพสต์ใหม่
+              </div>
             </div>
-            <div class="head-table">
+            <div
+              class="head-table d-none d-sm-flex d-md-flex d-lg-flex d-xl-flex"
+            >
               <v-container>
                 <v-row>
-                  <v-col class="pt-2 px-7">
+                  <!-- class="pt-2 px-7" -->
+                  <v-col>
                     <div>โพสต์</div>
                   </v-col>
                   <v-col>
@@ -215,12 +226,8 @@
               class="card-article mt-4"
             >
               <v-row>
-                <v-col>
+                <v-col cols="5" sm="3" align-self="center">
                   <div class="name-article-header">
-                    <!-- <img
-                          :src="`${$config.findHome}readFileIdFindHome?id=${p._id}`"
-                          alt=""
-                        /> -->
                     <img
                       :src="`${$config.findHome}readFileIdFindHome?id=${post._id}`"
                       alt=""
@@ -228,11 +235,11 @@
                     {{ post.generalInfo.catName }}
                   </div>
                 </v-col>
-                <v-col class="name-article">
+                <v-col cols="7" sm="3" class="name-article">
                   <div>{{ convertDateTime(post.createdAt) }}</div>
                 </v-col>
 
-                <v-col class="name-article">
+                <v-col cols="6" sm="3" class="name-article">
                   <div
                     @click="changeStatus(post)"
                     :class="
@@ -240,13 +247,18 @@
                         ? 'not-adopt'
                         : 'adopted'
                     "
-                    class="cat-state-adopt"
+                    class="cat-state-adopt cur-pointer"
                   >
-                    รับเลี้ยงสำเร็จ
+                    <!-- รอการรับเลี้ยง รับเลี้ยงสำเร็จ -->
+                    {{
+                      post.statusbar === "ยังไม่ถูกรับเลี้ยง"
+                        ? "รอการรับเลี้ยง"
+                        : "รับเลี้ยงสำเร็จ"
+                    }}
                   </div>
                 </v-col>
 
-                <v-col class="name-article-bottom">
+                <v-col cols="6" sm="3" class="name-article-bottom">
                   <div class="icon-article">
                     <nuxt-link :to="`/finderHome?isEdit=true&id=` + post._id">
                       <i class="fi fi-rr-pencil"></i>
@@ -395,7 +407,7 @@
                 <v-col cols="12">
                   <div>
                     <v-row justify="center">
-                      <v-col cols="3">
+                      <v-col cols="8" sm="3" xl="2">
                         <div class="banner">
                           <img src="@/assets/imgs/banner.png" alt="" />
                         </div>
@@ -405,22 +417,21 @@
 
                   <div>
                     <v-row justify="center">
-                      <v-col cols="6">
-                        <div class="match-cat mt-5">
+                      <v-col cols="12" sm="6">
+                        <div class="match-cat mt-2 mt-lg-5">
                           <p class="text-center title font-weight-bold">
                             จับคู่แมวตัวโปรดของคุณ
                           </p>
-                          <p class="text-center desc mt-6">
+                          <p class="text-center desc mt-2 mt-lg-6">
                             ค้นหาแมวที่ต้องการช่วยเหลือให้ตรงใจคุณ
                           </p>
                         </div>
                       </v-col>
-                      v
                     </v-row>
                   </div>
                   <div>
                     <v-row justify="center">
-                      <v-col cols="4">
+                      <v-col cols="12" sm="4">
                         <base-button @click="goMatching" :fillSearch="true">
                           <i class="fi fi-rr-search mr-2"></i>
                           เริ่มค้นหาแมวในอุดมคติ</base-button
@@ -434,13 +445,13 @@
           </div>
 
           <!-- favor -->
-          <div v-if="selectProfileId == 4" class="mt-12">
+          <div v-if="selectProfileId == 4" class="mt-6 mt-md-12">
             <div v-if="this.favorList.length == 0">
               <v-row justify="center">
                 <v-col cols="12">
                   <div>
                     <v-row justify="center">
-                      <v-col cols="3">
+                      <v-col cols="8" sm="3" xl="2">
                         <div class="banner">
                           <img src="@/assets/imgs/cat-favor.png" alt="" />
                         </div>
@@ -450,14 +461,13 @@
 
                   <div>
                     <v-row justify="center">
-                      <v-col cols="6">
+                      <v-col cols="12" sm="6">
                         <div class="match-cat">
                           <p class="text-center title font-weight-bold">
                             ยังไม่มีโพสต์แมวที่ถูกใจ
                           </p>
                         </div>
                       </v-col>
-                      v
                     </v-row>
                   </div>
                 </v-col>
@@ -466,12 +476,12 @@
             <div v-else>
               <div class="d-flex justify-space-between my-post items-center">
                 <div>โพสต์หาบ้านของฉันทั้งหมด</div>
-                <div @click="goFindHome" class="new-post-btn">
+                <div @click="goFindHome" class="new-post-btn cur-pointer">
                   สร้างโพสต์ใหม่
                 </div>
               </div>
               <!-- <div>Card</div> -->
-              <div>
+              <div class="mt-4">
                 <v-row>
                   <v-col
                     v-for="post in favorList"
@@ -540,8 +550,6 @@ import { ValidationObserver } from "vee-validate";
 import BaseButton from "../components/punmaew/components/BaseButton.vue";
 import CardDialog from "../components/punmaew/components/CardDialog.vue";
 export default {
-  // middleware: "auth",
-  // middleware: ["auth-user"],
   auth: false,
   components: {
     ValidationProvider,
@@ -564,41 +572,6 @@ export default {
     return {
       selectProfileId: menu ? parseInt(menu) : 1,
     };
-    // console.log(userState);
-    // try {
-    //   const res = await $axios.get(
-    //     `${$config.findHome}getMyPost?id=${store.state.auth.user._id}`
-    //   );
-    //   const ideal = await $axios.get(`${$config.authURL}user/getIdealCat`);
-
-    //   const favor = await $axios.get(`${$config.findHome}getLikePost`);
-
-    //   if (ideal.data.idealCat.length > 0) {
-    //     return {
-    //       posts: res.data.mypost,
-    //       answerOne: { answer: ideal.data.idealCat[0].answer },
-    //       answerTwo: { answer: ideal.data.idealCat[1].answer },
-    //       answerThree: ideal.data.idealCat[2].answer,
-    //       answerFour: ideal.data.idealCat[3].answer,
-    //       answerFive: ideal.data.idealCat[4].answer,
-    //       answerSix: ideal.data.idealCat[5].answer,
-    //       answerSeven: ideal.data.idealCat[6].answer,
-    //       answerEight: { answer: ideal.data.idealCat[7].answer },
-    //       answerNine: { answer: ideal.data.idealCat[8].answer },
-    //       answerTen: { answer: ideal.data.idealCat[9].answer },
-    //       favorList: favor.data,
-    //       selectProfileId: menu ? menu : 1,
-    //     };
-    //   } else {
-    //     return {
-    //       posts: res.data.mypost,
-    //       favorList: favor.data,
-    //       selectProfileId: menu ? menu : 1,
-    //     };
-    //   }
-    // } catch (error) {
-    //   console.log(error);
-    // }
   },
 
   data() {
@@ -852,8 +825,8 @@ export default {
       const second = 1000;
       const minute = second * 60;
       const hour = minute * 60;
-      // const countdown = new Date().getTime() + 15 * 60 * 1000;
-      const countdown = new Date().getTime() + 1 * 60 * 1000;
+      const countdown = new Date().getTime() + 15 * 60 * 1000;
+      // const countdown = new Date().getTime() + 1 * 60 * 1000;
 
       this.timeInterval = setInterval(() => {
         const now = new Date().getTime();
@@ -952,6 +925,20 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.cur-pointer {
+  cursor: pointer;
+}
+.border-block {
+  cursor: pointer;
+  border-bottom: 5px solid $purple-dark;
+  color: $purple-dark;
+}
+::v-deep .menu-drop-down {
+  .v-input__slot {
+    background-color: $purple-light !important;
+    border-radius: 10px;
+  }
+}
 .valid-form {
   color: $error;
   font-weight: bold;
@@ -1025,10 +1012,16 @@ export default {
 }
 .match-cat {
   .title {
-    font-size: 40px !important;
+    font-size: 24px !important;
+    @media (min-width: 1440px) {
+      font-size: 40px !important;
+    }
   }
   .desc {
-    font-size: 18px !important;
+    font-size: 14px !important;
+    @media (min-width: 1440px) {
+      font-size: 18px !important;
+    }
   }
 }
 .banner {
@@ -1040,22 +1033,38 @@ export default {
   background-color: $white;
   box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.15);
   border-radius: 8px;
-  padding: 16px 24px;
+  padding: 16px;
   font-weight: bold;
+
+  @media (min-width: 768px) {
+    padding: 16px 24px;
+  }
   .name-article-header {
     display: flex;
     gap: 16px;
     align-items: center;
+    font-size: 10px;
+    @media (min-width: 768px) {
+      font-size: 16px;
+    }
     img {
-      width: 50px;
-      height: 50px;
+      width: 32px;
+      height: 32px;
       border-radius: 8px;
       max-width: 100%;
       object-fit: cover;
       align-items: center;
+      @media (min-width: 768px) {
+        width: 50px;
+        height: 50px;
+      }
     }
   }
   .name-article {
+    font-size: 10px;
+    @media (min-width: 768px) {
+      font-size: 16px;
+    }
     display: flex;
     gap: 16px;
     align-items: center;
@@ -1072,9 +1081,16 @@ export default {
     .cat-state-adopt {
       background-color: $white;
       border-radius: 50px;
-
+      padding: 8px 12px;
       box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.1);
-      padding: 14px 30px;
+      @media (min-width: 768px) {
+        padding: 8px 20px;
+        font-size: 14px;
+      }
+      @media (min-width: 1440px) {
+        font-size: 16px;
+        padding: 14px 30px;
+      }
     }
     .not-adopt {
       background-color: $white;
@@ -1087,16 +1103,24 @@ export default {
     }
   }
   .name-article-bottom {
+    // font-size: 10px;
+    // @media (min-width: 768px) {
+    //   font-size: 16px;
+    // }
     display: flex;
     gap: 16px;
     align-items: center;
     justify-content: flex-end;
   }
   .icon-article {
+    cursor: pointer;
     display: flex;
     gap: 16px;
     i {
-      font-size: 24px;
+      font-size: 16px;
+      @media (min-width: 768px) {
+        font-size: 24px;
+      }
     }
     .trash {
       color: $error;
@@ -1108,6 +1132,13 @@ export default {
   border-radius: 10px;
   font-weight: bold;
   margin-top: 18px;
+  font-size: 10px;
+  @media (min-width: 768px) {
+    font-size: 16px;
+  }
+  @media (min-width: 1440px) {
+    font-size: 20px;
+  }
 }
 .my-post {
   font-size: 12px;
@@ -1137,10 +1168,13 @@ export default {
 .menu-tabs {
   background-color: $purple-light;
   border-radius: 10px;
-  font-size: 20px;
+  font-size: 16px;
   color: $dark;
   .tabs {
     border-bottom: 3px solid $purple-dark;
+  }
+  @media (min-width: 1440px) {
+    font-size: 16px;
   }
 }
 @media (min-width: 1440px) {
@@ -1235,7 +1269,7 @@ export default {
       }
       @media (min-width: 1024px) {
         width: 100%;
-        height: 200px;
+        height: 260px;
       }
     }
   }
@@ -1334,6 +1368,11 @@ export default {
       padding: 13px 20px;
       height: 50px;
     }
+  }
+}
+@media (min-width: 1264px) {
+  .container {
+    max-width: 1185px;
   }
 }
 </style>
