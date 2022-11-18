@@ -1256,10 +1256,10 @@ export default {
     overflow: hidden;
     line-height: 0;
     img {
-      max-width: 100%;
-      // width: 100%;
-      // height: 260px;
+      width: 100%;
+      height: 200px;
       transition: 0.3s all;
+      object-fit: cover;
       &:hover {
         transform: scale(1.1);
       }

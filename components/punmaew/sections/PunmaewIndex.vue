@@ -275,7 +275,7 @@ export default {
     line-height: 0;
     img {
       // max-width: 100%;
-      height: 150px;
+      height: 200px;
       width: 100%;
       object-fit: cover;
       // width: 100%;
