@@ -14,18 +14,25 @@
               </div>
               <div class="mt-5">
                 <v-row>
-                  <v-col cols="1">
-                    <div class="share text-center">SHARE</div>
-                    <div class="share-hr mt-12 mb-4"></div>
+                  <!-- class="d-none d-lg-flex d-xl-flex" -->
+                  <v-col cols="12" md="1">
+                    <div
+                      class="d-none d-md-flex d-lg-flex d-xl-flex share text-center"
+                    >
+                      SHARE
+                    </div>
+                    <div
+                      class="d-none d-md-flex d-lg-flex d-xl-flex share-hr mt-12 mb-4"
+                    ></div>
                     <!--  @click="shareFacebook" -->
                     <div
                       @click="shareFacebook"
-                      class="share-fb mt-12 text-center cur-pointer"
+                      class="d-none d-md-flex d-lg-flex d-xl-flex share-fb mt-12 text-center cur-pointer"
                     >
                       <img src="@/assets/imgs/f_logo.png" alt="" />
                     </div>
                   </v-col>
-                  <v-col cols="11">
+                  <v-col cols="12" md="11">
                     <div class="title">
                       <h2>{{ singleArticle.title }}</h2>
                       <p class="mb-0 post-by">
@@ -201,8 +208,12 @@ export default {
 }
 .title {
   h2 {
-    line-height: 64px;
-    font-size: 36px;
+    line-height: 44px;
+    font-size: 24px;
+    @media (min-width: 1440px) {
+      line-height: 64px;
+      font-size: 36px;
+    }
   }
   .post-by {
     font-size: 14px;
