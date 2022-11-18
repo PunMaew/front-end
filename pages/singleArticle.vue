@@ -57,6 +57,18 @@
 <script>
 export default {
   auth: false,
+    head() {
+    return {
+      title: this.singleArticle.titlee,
+      meta: [
+        {
+          hid: `og:image`,
+          property: "og:image",
+          content: "/fb-share.png"
+        }
+      ]
+    };
+  },
   props: {
     isSingle: {
       type: Boolean,
