@@ -112,8 +112,6 @@ export default {
       }
     },
     shareFacebook() {
-      console.log("hello");
-
       const shareUrl = `https://punmaew.sit.kmutt.ac.th/singleArticle?isSingle=true&id=${this.singleArticle._id}`;
 
       try {
@@ -130,8 +128,8 @@ export default {
             action_properties: JSON.stringify({
               object: {
                 "og:url": shareUrl,
-                // "og.image": `${this.$config.articleURL}readFileId?id=${this.singleArticle._id}`,
-                "og.image": require(`@/static/fb-thumbnail.jpg`),
+                "og.image": `${this.$config.articleURL}readFileId?id=${this.singleArticle._id}`,
+                // "og.image": require(`@/static/fb-thumbnail.jpg`),
                 "og:title":
                   "Punmaew - Web Application สำหรับช่วยเหลือน้องแมวไร้บ้าน",
                 "og:description": "บทความเกี่ยวกับแมว",
