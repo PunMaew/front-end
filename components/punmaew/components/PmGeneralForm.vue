@@ -121,7 +121,7 @@
       <validation-observer ref="generalSecondForm">
         <p class="step-text">ข้อมูลทั่วไป 2 จากทั้งหมด 4</p>
         <div class="input-area mb-2">
-          <p>เขต/อำเภอ<span>*</span></p>
+          <!-- <p>เขต/อำเภอ<span>*</span></p> -->
           <validation-provider
             name="district"
             rules="required"
@@ -151,7 +151,7 @@
           </validation-provider>
         </div>
         <div class="input-area mb-2">
-          <p>จังหวัด<span>*</span></p>
+          <!-- <p>จังหวัด<span>*</span></p> -->
           <validation-provider
             name="province"
             rules="required"
@@ -716,8 +716,11 @@ export default {
     padding: 6px 12px;
     color: $dark;
     height: 36px;
+    font-size: 14px;
+
     @media (min-width: 1440px) {
       height: 50px;
+      font-size: 16px;
     }
   }
 }

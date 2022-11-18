@@ -18,7 +18,10 @@
                     <div class="share text-center">SHARE</div>
                     <div class="share-hr mt-12 mb-4"></div>
                     <!--  @click="shareFacebook" -->
-                    <div class="share-fb mt-12 text-center cur-pointer">
+                    <div
+                      @click="shareFacebook"
+                      class="share-fb mt-12 text-center cur-pointer"
+                    >
                       <img src="@/assets/imgs/f_logo.png" alt="" />
                     </div>
                   </v-col>
@@ -96,49 +99,49 @@ export default {
         console.log(error);
       }
     },
-    // shareFacebook() {
-    //   console.log("hello");
+    shareFacebook() {
+      console.log("hello");
 
-    //   const shareUrl = `https://punmaew.sit.kmutt.ac.th/singleArticle?isSingle=true&id=${this.singleArticle._id}`;
-    //   // const shareUrl = `http://localhost:8080//singleArticle?isSingle=true&id=${this.singleArticle._id}`;
-    //   try {
-    //     FB.init({
-    //       appId: "",
-    //       autoLogAppEvents: true,
-    //       xfbml: true,
-    //       version: "v10.0",
-    //     });
-    //     FB.ui(
-    //       {
-    //         method: "share_open_graph",
-    //         action_type: "og.shares",
-    //         action_properties: JSON.stringify({
-    //           object: {
-    //             "og:url": shareUrl,
-    //             // "og.image": `${this.$config.articleURL}readFileId=${this.singleArticle._id}`,
-    //             "og:title":
-    //               "Punmaew - Web Application สำหรับช่วยเหลือน้องแมวไร้บ้าน",
-    //             "og:description": "บทความเกี่ยวกับแมว",
-    //           },
-    //         }),
-    //       },
-    //       (response) => {
-    //         console.log("share response", response);
-    //       }
-    //     );
-    //   } catch (error) {
-    //     console.log(error);
-    //     this.$swal({
-    //       toast: true,
-    //       title: "ไม่สามารถแชร์ FB ได้",
-    //       icon: "warning",
-    //       timer: 2000,
-    //       showConfirmButton: false,
-    //       position: "top-end",
-    //       timerProgressBar: true,
-    //     });
-    //   }
-    // },
+      const shareUrl = `https://punmaew.sit.kmutt.ac.th/singleArticle?isSingle=true&id=${this.singleArticle._id}`;
+
+      try {
+        FB.init({
+          appId: "537211941604055",
+          autoLogAppEvents: true,
+          xfbml: true,
+          version: "v10.0",
+        });
+        FB.ui(
+          {
+            method: "share_open_graph",
+            action_type: "og.shares",
+            action_properties: JSON.stringify({
+              object: {
+                "og:url": shareUrl,
+                // "og.image": `${this.$config.articleURL}readFileId=${this.singleArticle._id}`,
+                "og:title":
+                  "Punmaew - Web Application สำหรับช่วยเหลือน้องแมวไร้บ้าน",
+                "og:description": "บทความเกี่ยวกับแมว",
+              },
+            }),
+          },
+          (response) => {
+            console.log("share response", response);
+          }
+        );
+      } catch (error) {
+        console.log(error);
+        this.$swal({
+          toast: true,
+          title: "ไม่สามารถแชร์ FB ได้",
+          icon: "warning",
+          timer: 2000,
+          showConfirmButton: false,
+          position: "top-end",
+          timerProgressBar: true,
+        });
+      }
+    },
     convertDateTime(d) {
       let newDate = new Date(d);
       let year = newDate.getFullYear();
