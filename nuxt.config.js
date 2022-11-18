@@ -34,7 +34,7 @@ export default {
       {
         hid: `og:image`,
         property: "og:image",
-        content: "/fb-share.png",
+        content: "/fb-thumbnail.jpg",
       },
     ],
     link: [

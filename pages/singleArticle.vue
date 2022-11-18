@@ -57,16 +57,16 @@
 <script>
 export default {
   auth: false,
-    head() {
+  head() {
     return {
       title: this.singleArticle.titlee,
       meta: [
         {
           hid: `og:image`,
           property: "og:image",
-          content: "/fb-share.png"
-        }
-      ]
+          content: "/fb-thumbnail.jpg",
+        },
+      ],
     };
   },
   props: {
@@ -125,12 +125,13 @@ export default {
         });
         FB.ui(
           {
-            method: "share_open_graph",
+            method: "share",
             action_type: "og.shares",
             action_properties: JSON.stringify({
               object: {
                 "og:url": shareUrl,
-                "og.image": `${this.$config.articleURL}readFileId?id=${this.singleArticle._id}`,
+                // "og.image": `${this.$config.articleURL}readFileId?id=${this.singleArticle._id}`,
+                "og.image": require(`@/static/fb-thumbnail.jpg`),
                 "og:title":
                   "Punmaew - Web Application สำหรับช่วยเหลือน้องแมวไร้บ้าน",
                 "og:description": "บทความเกี่ยวกับแมว",
