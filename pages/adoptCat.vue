@@ -1628,7 +1628,8 @@ export default {
       this.$router.push(`/finderHome`);
     },
     adoptCat() {
-      this.$router.push(`/adoptCat`);
+      // this.$router.push(`/adoptCat`);
+      location.reload();
     },
     async getOnePost(id) {
       try {
