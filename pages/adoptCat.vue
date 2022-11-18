@@ -2019,9 +2019,10 @@ export default {
     overflow: hidden;
     line-height: 0;
     img {
-      max-width: 100%;
-      // width: 100%;
-      // height: 260px;
+      // max-width: 100%;
+      width: 100%;
+      height: 150px;
+      object-fit: cover;
       transition: 0.3s all;
       &:hover {
         transform: scale(1.1);

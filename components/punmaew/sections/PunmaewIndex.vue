@@ -274,7 +274,10 @@ export default {
     overflow: hidden;
     line-height: 0;
     img {
-      max-width: 100%;
+      // max-width: 100%;
+      height: 150px;
+      width: 100%;
+      object-fit: cover;
       // width: 100%;
       // height: 260px;
       transition: 0.3s all;
