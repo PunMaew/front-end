@@ -1929,6 +1929,9 @@ export default {
 //     border-radius: 50px 50px 0px 0px;
 //   }
 // }
+.filter-sheet {
+  margin-top: 40px;
+}
 .set-sheet {
   row-gap: 16px;
   display: grid;
