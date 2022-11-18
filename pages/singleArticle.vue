@@ -4,7 +4,7 @@
       <v-row justify="center">
         <v-col cols="12" align-self="center">
           <v-row justify="center">
-            <v-col cols="10" align-self="center">
+            <v-col cols="12" md="10" align-self="center">
               <div v-if="singleArticle._id" class="article-img">
                 <img
                   :src="`${$config.articleURL}readFileId?id=${singleArticle._id}`"
