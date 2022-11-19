@@ -950,9 +950,11 @@
                                             <p class="mb-0 location">
                                               <i class="fi fi-rr-marker"></i
                                               >{{
+                                                "จังหวัด" +
                                                 random.generalInfo.location
                                                   .province +
                                                 " " +
+                                                "เขต" +
                                                 random.generalInfo.location
                                                   .district
                                               }}
