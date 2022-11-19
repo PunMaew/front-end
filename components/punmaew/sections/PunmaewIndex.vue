@@ -35,7 +35,7 @@
               </div>
               <div v-else class="status-adopt">ยังไม่ถูกรับเลี้ยง</div>
 
-              <div v-if="posts._id" class="thumbnail">
+              <div class="thumbnail">
                 <img
                   :src="`${$config.findHome}readFileIdFindHome?id=${post._id}`"
                   alt=""
@@ -91,7 +91,7 @@
               >
                 ดูทั้งหมด
               </button>
-              <div v-if="articles._id" class="thumbnail">
+              <div class="thumbnail">
                 <img
                   :src="`${$config.articleURL}readFileId?id=${i._id}`"
                   alt=""
