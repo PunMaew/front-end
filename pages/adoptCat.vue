@@ -229,62 +229,7 @@
                                         </div>
                                       </div>
                                       <div class="line"></div>
-                                      <!-- <div class="filter-side-bar">
-                                        <div
-                                          class="justify-space-between d-flex"
-                                        >
-                                          <p class="mb-0">ลักษณะขน</p>
-                                          <div @click="showDataFilter6">
-                                            <i
-                                              v-if="openTab6"
-                                              class="fi fi-rr-angle-small-up"
-                                            ></i>
-                                            <i
-                                              v-else
-                                              class="fi fi-rr-angle-small-down"
-                                            ></i>
-                                          </div>
-                                        </div>
-                                        <div v-if="openTab6">
-                                          <v-checkbox
-                                            v-for="i in filterList.hairStyle"
-                                            v-model="isHairStyle"
-                                            :value="i.name"
-                                            :key="i.id"
-                                            :label="i.name"
-                                            hide-details
-                                          ></v-checkbox>
-                                        </div>
-                                      </div> -->
-                                      <!-- <div class="line"></div>
-                                      <div class="filter-side-bar">
-                                        <div
-                                          class="justify-space-between d-flex"
-                                        >
-                                          <p class="mb-0">การใช้กระบะทราย</p>
-                                          <div @click="showDataFilter7">
-                                            <i
-                                              v-if="openTab7"
-                                              class="fi fi-rr-angle-small-up"
-                                            ></i>
-                                            <i
-                                              v-else
-                                              class="fi fi-rr-angle-small-down"
-                                            ></i>
-                                          </div>
-                                        </div>
-                                        <div v-if="openTab7">
-                                          <v-checkbox
-                                            v-for="i in filterList.sandBox"
-                                            v-model="isSandBox"
-                                            :value="i.name"
-                                            :key="i.id"
-                                            :label="i.name"
-                                            hide-details
-                                          ></v-checkbox>
-                                        </div>
-                                      </div> -->
-                                      <!-- <div class="line"></div> -->
+
                                       <div class="filter-side-bar">
                                         <div
                                           class="justify-space-between d-flex"
@@ -346,62 +291,6 @@
                                           ></v-checkbox>
                                         </div>
                                       </div>
-                                      <!-- <div class="line"></div>
-                                      <div class="filter-side-bar">
-                                        <div
-                                          class="justify-space-between d-flex"
-                                        >
-                                          <p class="mb-0">การได้รับวัคซีน</p>
-                                          <div @click="showDataFilter10">
-                                            <i
-                                              v-if="openTab10"
-                                              class="fi fi-rr-angle-small-up"
-                                            ></i>
-                                            <i
-                                              v-else
-                                              class="fi fi-rr-angle-small-down"
-                                            ></i>
-                                          </div>
-                                        </div>
-                                        <div v-if="openTab10">
-                                          <v-checkbox
-                                            v-for="i in filterList.receiveVaccine"
-                                            v-model="isVaccine"
-                                            :value="i.name"
-                                            :key="i.id"
-                                            :label="i.name"
-                                            hide-details
-                                          ></v-checkbox>
-                                        </div>
-                                      </div>
-                                      <div class="line"></div>
-                                      <div class="filter-side-bar">
-                                        <div
-                                          class="justify-space-between d-flex"
-                                        >
-                                          <p class="mb-0">การทำหมัน</p>
-                                          <div @click="showDataFilter11">
-                                            <i
-                                              v-if="openTab11"
-                                              class="fi fi-rr-angle-small-up"
-                                            ></i>
-                                            <i
-                                              v-else
-                                              class="fi fi-rr-angle-small-down"
-                                            ></i>
-                                          </div>
-                                        </div>
-                                        <div v-if="openTab11">
-                                          <v-checkbox
-                                            v-for="i in filterList.neutered"
-                                            v-model="isNeutered"
-                                            :value="i.name"
-                                            :key="i.id"
-                                            :label="i.name"
-                                            hide-details
-                                          ></v-checkbox>
-                                        </div>
-                                      </div> -->
                                     </v-container>
                                   </div>
                                 </div>
@@ -409,7 +298,6 @@
                             </v-container>
                           </v-sheet>
                         </v-bottom-sheet>
-                        <!--  -->
                       </v-col>
                       <v-col cols="6">
                         <v-menu offset-y>
@@ -628,52 +516,7 @@
                             ></v-checkbox>
                           </div>
                         </div>
-                        <!-- <div class="line"></div>
-                        <div class="filter-side-bar">
-                          <div class="justify-space-between d-flex">
-                            <p class="mb-0">ลักษณะขน</p>
-                            <div @click="showDataFilter6">
-                              <i
-                                v-if="openTab6"
-                                class="fi fi-rr-angle-small-up"
-                              ></i>
-                              <i v-else class="fi fi-rr-angle-small-down"></i>
-                            </div>
-                          </div>
-                          <div v-if="openTab6">
-                            <v-checkbox
-                              v-for="i in filterList.hairStyle"
-                              v-model="isHairStyle"
-                              :value="i.name"
-                              :key="i.id"
-                              :label="i.name"
-                              hide-details
-                            ></v-checkbox>
-                          </div>
-                        </div>
-                        <div class="line"></div>
-                        <div class="filter-side-bar">
-                          <div class="justify-space-between d-flex">
-                            <p class="mb-0">การใช้กระบะทราย</p>
-                            <div @click="showDataFilter7">
-                              <i
-                                v-if="openTab7"
-                                class="fi fi-rr-angle-small-up"
-                              ></i>
-                              <i v-else class="fi fi-rr-angle-small-down"></i>
-                            </div>
-                          </div>
-                          <div v-if="openTab7">
-                            <v-checkbox
-                              v-for="i in filterList.sandBox"
-                              v-model="isSandBox"
-                              :value="i.name"
-                              :key="i.id"
-                              :label="i.name"
-                              hide-details
-                            ></v-checkbox>
-                          </div>
-                        </div> -->
+
                         <div class="line"></div>
                         <div class="filter-side-bar">
                           <div class="justify-space-between d-flex">
@@ -720,52 +563,6 @@
                             ></v-checkbox>
                           </div>
                         </div>
-                        <!-- <div class="line"></div>
-                        <div class="filter-side-bar">
-                          <div class="justify-space-between d-flex">
-                            <p class="mb-0">การได้รับวัคซีน</p>
-                            <div @click="showDataFilter10">
-                              <i
-                                v-if="openTab10"
-                                class="fi fi-rr-angle-small-up"
-                              ></i>
-                              <i v-else class="fi fi-rr-angle-small-down"></i>
-                            </div>
-                          </div>
-                          <div v-if="openTab10">
-                            <v-checkbox
-                              v-for="i in filterList.receiveVaccine"
-                              v-model="isVaccine"
-                              :value="i.name"
-                              :key="i.id"
-                              :label="i.name"
-                              hide-details
-                            ></v-checkbox>
-                          </div>
-                        </div>
-                        <div class="line"></div>
-                        <div class="filter-side-bar">
-                          <div class="justify-space-between d-flex">
-                            <p class="mb-0">การทำหมัน</p>
-                            <div @click="showDataFilter11">
-                              <i
-                                v-if="openTab11"
-                                class="fi fi-rr-angle-small-up"
-                              ></i>
-                              <i v-else class="fi fi-rr-angle-small-down"></i>
-                            </div>
-                          </div>
-                          <div v-if="openTab11">
-                            <v-checkbox
-                              v-for="i in filterList.neutered"
-                              v-model="isNeutered"
-                              :value="i.name"
-                              :key="i.id"
-                              :label="i.name"
-                              hide-details
-                            ></v-checkbox>
-                          </div>
-                        </div> -->
                       </v-container>
                     </div>
                   </div>
@@ -834,15 +631,6 @@
                         รับเลี้ยงแล้ว
                       </div>
                       <div v-else class="status-adopt">ยังไม่ถูกรับเลี้ยง</div>
-                      <!-- <div
-                        v-if="post.generalInfo.gender === 'เพศเมีย'"
-                        class="gender-icon"
-                      >
-                        <i class="fi fi-rr-venus"></i>
-                      </div>
-                      <div v-else class="gender-icon-male">
-                        <i class="fi fi-rr-mars"></i>
-                      </div> -->
 
                       <div class="thumbnail">
                         <img
@@ -943,7 +731,9 @@
                                   <div class="mt-4 mt-lg-9">
                                     <div class="charac-show">
                                       <div
-                                        v-show="!Array.isArray(character)"
+                                        v-show="
+                                          !Array.isArray(character) && character
+                                        "
                                         v-for="(character, index) in onePost
                                           .generalInfo.characteristic"
                                         :key="index"
@@ -954,6 +744,7 @@
                                         </p>
                                       </div>
                                       <div
+                                        v-show="character"
                                         v-for="(character, index) in onePost
                                           .generalInfo.characteristic.habit"
                                         :key="index"
@@ -1100,6 +891,7 @@
                             <div class="mt-10">
                               <h2 class="text-left">น้องแมวที่คุณอาจสนใจ</h2>
                             </div>
+
                             <div class="my-6">
                               <v-row justify="center">
                                 <v-col
@@ -1113,6 +905,7 @@
                                   align-self="center"
                                 >
                                   <div
+                                    @click="getOnePost(random._id)"
                                     v-if="randomPost.length > 0"
                                     class="card"
                                   >
@@ -1304,16 +1097,7 @@ export default {
       ],
     };
   },
-  // async asyncData({ $axios, $config }) {
-  //   try {
-  //     const res = await $axios.get(`${$config.findHome}allPost`);
-  //     return {
-  //       posts: res.data,
-  //     };
-  //   } catch (error) {
-  //     console.log(error);
-  //   }
-  // },
+
   async created() {
     await this.fetchData();
   },
@@ -1350,79 +1134,50 @@ export default {
         this.isBreed.length !== 0 ||
         this.isAge.length !== 0
       ) {
-        return (
-          this.posts
-            .filter((post) =>
-              this.isSelected.length !== 0
-                ? this.isSelected.indexOf(
-                    post.generalInfo.location.province
-                  ) !== -1
-                : post
-            )
-            .filter((post) =>
-              this.isGender.length !== 0
-                ? this.isGender.indexOf(post.generalInfo.gender) !== -1
-                : post
-            )
-            .filter((post) =>
-              this.isBodySize.length !== 0
-                ? this.isBodySize.some((habit) =>
-                    post.generalInfo.characteristic.size.includes(habit)
-                  )
-                : post
-            )
-            .filter((post) =>
-              this.isColor.length !== 0
-                ? this.isColor.some((color) => post.generalInfo.color === color)
-                : post
-            )
-            // .filter((post) =>
-            //   this.isHairStyle.length !== 0
-            //     ? this.isHairStyle.some((hair) =>
-            //         post.generalInfo.characteristic.hair.includes(hair)
-            //       )
-            //     : post
-            // )
-            .filter((post) =>
-              this.isBreed.length !== 0
-                ? this.isBreed.indexOf(post.generalInfo.breeds) != -1
-                : post
-            )
-            // .filter((post) =>
-            //   this.isSandBox.length !== 0
-            //     ? this.isSandBox.some(
-            //         (sandBox) =>
-            //           post.generalInfo.characteristic.sandbox === sandBox
-            //       )
-            //     : post
-            // )
-            .filter((post) =>
-              this.isCharacteristic.length !== 0
-                ? this.isCharacteristic.some((charac) =>
-                    post.generalInfo.characteristic.habit.includes(charac)
-                  )
-                : post
-            )
-            // .filter((post) =>
-            //   this.isVaccine.length !== 0
-            //     ? this.isVaccine.some((vaccine) =>
-            //         post.generalInfo.vaccination.includes(vaccine)
-            //       )
-            //     : post
-            // )
-            // .filter((post) =>
-            //   this.isNeutered.length !== 0
-            //     ? this.isNeutered.some((neutered) =>
-            //         post.generalInfo.neutered.includes(neutered)
-            //       )
-            //     : post
-            // )
-            .filter((post) =>
-              this.isAge.length !== 0
-                ? this.isAge.indexOf(post.generalInfo.ageRange) != -1
-                : post
-            )
-        );
+        return this.posts
+          .filter((post) =>
+            this.isSelected.length !== 0
+              ? this.isSelected.indexOf(post.generalInfo.location.province) !==
+                -1
+              : post
+          )
+          .filter((post) =>
+            this.isGender.length !== 0
+              ? this.isGender.indexOf(post.generalInfo.gender) !== -1
+              : post
+          )
+          .filter((post) =>
+            this.isBodySize.length !== 0
+              ? this.isBodySize.some((habit) =>
+                  post.generalInfo.characteristic.size.includes(habit)
+                )
+              : post
+          )
+          .filter((post) =>
+            this.isColor.length !== 0
+              ? this.isColor.some((color) => post.generalInfo.color === color)
+              : post
+          )
+
+          .filter((post) =>
+            this.isBreed.length !== 0
+              ? this.isBreed.indexOf(post.generalInfo.breeds) != -1
+              : post
+          )
+
+          .filter((post) =>
+            this.isCharacteristic.length !== 0
+              ? this.isCharacteristic.some((charac) =>
+                  post.generalInfo.characteristic.habit.includes(charac)
+                )
+              : post
+          )
+
+          .filter((post) =>
+            this.isAge.length !== 0
+              ? this.isAge.indexOf(post.generalInfo.ageRange) != -1
+              : post
+          );
       } else {
         return this.posts;
       }
@@ -1441,7 +1196,7 @@ export default {
     async filterAction(action) {
       if (action === "old-post") {
         this.sortByName = "เก่า";
-        console.log("old-post");
+        // console.log("old-post");
         try {
           const res = await this.$axios.get(`${this.$config.findHome}oldPost`);
           this.posts = res.data;
@@ -1451,7 +1206,7 @@ export default {
       }
       if (action === "lastest-post") {
         this.sortByName = "ล่าสุด";
-        console.log("lastest-post");
+        // console.log("lastest-post");
         try {
           const res = await this.$axios.get(
             `${this.$config.findHome}latestPost`
@@ -1464,7 +1219,7 @@ export default {
 
       if (action === "best-match") {
         this.sortByName = "แมวในอุดมคติ";
-        console.log("best-match");
+        // console.log("best-match");
         if (this.loggedIn) {
           if (this.$store.state.auth.user.idealCat.length <= 0) {
             const checked = await this.$swal.fire({
@@ -1500,7 +1255,7 @@ export default {
       }
       if (action === "favor") {
         this.sortByName = "ถูกใจแล้ว";
-        console.log("favor");
+        // console.log("favor");
         if (this.loggedIn) {
           try {
             const res = await this.$axios.get(
@@ -1524,7 +1279,7 @@ export default {
       }
       if (action === "not-adopt") {
         this.sortByName = "ยังไม่ถูกรับเลี้ยง";
-        console.log("not-adopt");
+        // console.log("not-adopt");
         try {
           const res = await this.$axios.get(
             `${this.$config.findHome}getNotAdopt`
@@ -1536,7 +1291,7 @@ export default {
       }
       if (action === "by-adopted") {
         this.sortByName = "รับเลี้ยงแล้ว";
-        console.log("by-adopted");
+        // console.log("by-adopted");
         try {
           const res = await this.$axios.get(`${this.$config.findHome}getAdopt`);
           this.posts = res.data.success;
@@ -1548,14 +1303,14 @@ export default {
     async fetchData() {
       try {
         const res = await this.$axios.get(`${this.$config.findHome}allPost`);
-        console.log(res.data);
+        // console.log(res.data);
         this.posts = res.data;
 
         const random = await this.$axios.get(
           `${this.$config.findHome}RandomPost`
         );
         this.randomPost = random.data;
-        console.log(random.data);
+        // console.log(random.data);
       } catch (error) {
         console.log(error);
       }
@@ -1566,7 +1321,7 @@ export default {
           const res = await this.$axios.post(
             `${this.$config.findHome}likePost?id=${id}`
           );
-          console.log(res);
+          // console.log(res);
           this.$store.commit("SET_FAVOR", id);
         } catch (error) {
           console.log(error);
@@ -1622,13 +1377,11 @@ export default {
     },
     showDataFilter() {
       this.openTab = !this.openTab;
-      // console.log(this.openTab);
     },
     finderHome() {
       this.$router.push(`/finderHome`);
     },
     adoptCat() {
-      // this.$router.push(`/adoptCat`);
       location.reload();
     },
     async getOnePost(id) {
@@ -1671,7 +1424,7 @@ export default {
   gap: 10px;
   border: 1px solid $gray;
   border-radius: 50px;
-  // padding: 14px 24px;
+
   padding: 12px 14px;
   font-size: 14px;
   justify-content: space-between;
@@ -1922,13 +1675,6 @@ export default {
     }
   }
 }
-
-// ::v-deep .theme--light.v-sheet {
-//   border-radius: 24px 24px 0px 0px;
-//   @media (min-width: 1440px) {
-//     border-radius: 50px 50px 0px 0px;
-//   }
-// }
 .filter-sheet {
   margin-top: 40px;
 }
@@ -1939,6 +1685,7 @@ export default {
     row-gap: 32px;
   }
   .cross-circle {
+    cursor: pointer;
     z-index: 30;
     position: fixed;
     right: 3%;

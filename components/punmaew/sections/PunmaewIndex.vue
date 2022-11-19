@@ -35,7 +35,7 @@
               </div>
               <div v-else class="status-adopt">ยังไม่ถูกรับเลี้ยง</div>
 
-              <div class="thumbnail">
+              <div v-if="posts._id" class="thumbnail">
                 <img
                   :src="`${$config.findHome}readFileIdFindHome?id=${post._id}`"
                   alt=""
@@ -91,7 +91,7 @@
               >
                 ดูทั้งหมด
               </button>
-              <div class="thumbnail">
+              <div v-if="articles._id" class="thumbnail">
                 <img
                   :src="`${$config.articleURL}readFileId?id=${i._id}`"
                   alt=""
@@ -274,12 +274,9 @@ export default {
     overflow: hidden;
     line-height: 0;
     img {
-      // max-width: 100%;
       height: 200px;
       width: 100%;
       object-fit: cover;
-      // width: 100%;
-      // height: 260px;
       transition: 0.3s all;
       &:hover {
         transform: scale(1.1);

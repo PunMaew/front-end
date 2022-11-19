@@ -2,12 +2,9 @@
   <header class="d-none d-md-flex d-lg-flex d-xl-flex align-center">
     <v-container class="justify-center d-flex">
       <v-row>
-        <v-col cols="5"> </v-col>
-        <v-col cols="4"></v-col>
-        <v-col cols="3">
-          <img src="~/assets/imgs/pmlogo.png" alt="punmaew" id="logo" />
-
+        <v-col cols="12">
           <div class="nav-right font-weight-bold">
+            <img src="~/assets/imgs/pmlogo.png" alt="punmaew" id="logo" />
             | Admin
             <i class="ml-2 d-flex align-center fi fi-rr-woman-head"></i>
           </div>
@@ -31,12 +28,6 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-// .logo {
-//   display: flex;
-//   justify-content: flex-end;
-//   gap: 4px;
-//   font-size: 24px;
-// }
 .user-icon {
   i {
     font-size: 20px;
@@ -49,7 +40,6 @@ export default {
 .nav-left {
   padding-top: 0px;
   padding-bottom: 0px;
-  // padding-left: 0px;
 }
 .nav-center {
   padding-top: 0px;
@@ -62,8 +52,11 @@ export default {
   display: flex;
   padding-top: 0px;
   padding-bottom: 0px;
-  // padding-right: 0px;
+
   font-size: 24px;
+  img {
+    margin-right: 128px;
+  }
 }
 header {
   padding: 0;

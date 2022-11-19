@@ -254,7 +254,7 @@ export default {
           console.log(updateImageFindHome);
         }
 
-        console.log("update successfully");
+        // console.log("update successfully");
         this.$router.push("/adoptCat");
       } catch (error) {
         console.log(error);
@@ -321,7 +321,7 @@ export default {
           this.forms.step1.formData
         );
         console.log(uploadFindHome);
-        console.log("submit successfully");
+        // console.log("submit successfully");
         this.$router.push("/adoptCat");
         // .then((res) => {
         //   console.log(res.data);

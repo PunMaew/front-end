@@ -521,7 +521,7 @@ export default {
         });
 
         this.$router.push("/");
-        console.log("login successfully");
+        // console.log("login successfully");
       } catch (error) {
         if (error.response.data.active === false) {
           this.regisId = error.response.data._id;
@@ -619,22 +619,20 @@ export default {
     async register() {
       try {
         const success = await this.$refs.registerForm.validate();
-        console.log(success);
+        // console.log(success);
         if (!success) {
           return;
         }
 
-        const res = await this.$axios.post(
-          `${this.$config.authURL}user/signup`,
-          {
-            firstName: this.firstName,
-            lastName: this.lastName,
-            email: this.emailRegis,
-            password: this.passwordRegis,
-            confirmPassword: this.confirm,
-          }
-        );
-        console.log(res);
+        // const res =
+        await this.$axios.post(`${this.$config.authURL}user/signup`, {
+          firstName: this.firstName,
+          lastName: this.lastName,
+          email: this.emailRegis,
+          password: this.passwordRegis,
+          confirmPassword: this.confirm,
+        });
+        // console.log(res);
         this.regisId = res.data._id;
         this.$nextTick(() => {
           this.$refs.registerForm.reset();

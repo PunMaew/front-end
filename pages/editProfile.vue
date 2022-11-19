@@ -205,7 +205,6 @@
             >
               <v-container>
                 <v-row>
-                  <!-- class="pt-2 px-7" -->
                   <v-col>
                     <div>โพสต์</div>
                   </v-col>
@@ -665,7 +664,8 @@ export default {
         if (!success) {
           return;
         }
-        const res = await this.$axios.put(
+        // const res =
+        await this.$axios.put(
           `${this.$config.authURL}user/idealCat?id=${this.$store.state.auth.user._id}`,
           {
             idealCat: [
@@ -683,13 +683,13 @@ export default {
           icon: "success",
         });
 
-        console.log(res.data);
+        // console.log(res.data);
       } catch (error) {
         this.$swal.fire({
           confirmButtonColor: "#19ba88",
           confirmButtonText: "ตกลง",
           title: "เกิดข้อผิดพลาด",
-          text: error.message,
+          text: error.response.data.message,
           icon: "warning",
         });
         console.log(error);
@@ -718,7 +718,7 @@ export default {
             confirmButtonColor: "#19ba88",
             confirmButtonText: "ตกลง",
             title: "เกิดข้อผิดพลาด",
-            text: error.message,
+            text: error.response.data.message,
             icon: "warning",
           });
           console.log(error);
@@ -754,7 +754,7 @@ export default {
                 confirmButtonColor: "#19ba88",
                 confirmButtonText: "ตกลง",
                 title: "เกิดข้อผิดพลาด",
-                text: error.message,
+                text: error.response.data.message,
                 icon: "warning",
               });
               console.log(error);
@@ -1251,7 +1251,7 @@ export default {
   padding-bottom: 0;
   box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
   border-radius: 20px;
-  cursor: pointer;
+  // cursor: pointer;
   .thumbnail {
     overflow: hidden;
     line-height: 0;

@@ -1,5 +1,5 @@
 <template>
-  <v-col cols="12" md="3" id="dashbard-menu">
+  <v-col cols="12" md="4" lg="3" id="dashbard-menu">
     <div id="dashbard-menu-container">
       <div>
         <div class="admin-account">
@@ -13,6 +13,7 @@
             </div>
           </div>
         </div>
+
         <div class="admin-content">
           <div
             @click="menuDashboard('dashboard')"

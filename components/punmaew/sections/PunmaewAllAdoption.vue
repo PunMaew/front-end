@@ -4,11 +4,7 @@
       <v-row justify="center">
         <v-col cols="12" align-self="center">
           <v-row justify="center">
-            <v-col cols="3" align-self="center">
-              <!-- <div>
-                <p>ค้นหาจากพิกัด</p>
-              </div> -->
-            </v-col>
+            <v-col cols="3" align-self="center"> </v-col>
           </v-row>
         </v-col>
       </v-row>

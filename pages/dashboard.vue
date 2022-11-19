@@ -1316,6 +1316,10 @@ export default {
   border-radius: 50px;
   border: 1px solid $error;
   background-color: $white;
+  &:hover {
+    background-color: $error;
+    color: $white;
+  }
 }
 .card-block-user {
   background-color: $white;
