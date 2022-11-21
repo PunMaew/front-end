@@ -505,6 +505,7 @@ export default {
     async login() {
       try {
         const success = await this.$refs.loginForm.validate();
+        console.log(success);
         if (!success) {
           return;
         }
@@ -549,11 +550,21 @@ export default {
         if (!success) {
           return;
         }
+        // await this.$axios.patch(`${this.$config.authURL}user/forgot`, {
+        //   email: this.emailOtp,
+        // });
+        // this.currentStep += 1;
+        // this.countdown();
+
+        // const res =
         await this.$axios.patch(`${this.$config.authURL}user/forgot`, {
           email: this.emailOtp,
         });
+
+        // this.regisId = res.data._id;
         this.currentStep += 1;
         this.countdown();
+
         // .then((res) => {
         //   console.log(res);
         //   this.currentStep += 1;
@@ -716,10 +727,15 @@ export default {
     async resendOtpRegister() {
       console.log("resend");
       try {
-        const res = await this.$axios.put(
-          `${this.$config.authURL}user/againOTP?id=${this.regisId}`
-        );
-        console.log(res);
+        // const res = await this.$axios.put(
+        //   `${this.$config.authURL}user/againOTP?id=${this.regisId}`
+        // );
+        // console.log(res);
+        await this.$axios.patch(`${this.$config.authURL}user/forgot`, {
+          email: this.emailOtp,
+        });
+        // this.regisId = res.data._id;
+        //
         clearInterval(this.timeInterval);
         this.countdown();
       } catch (error) {

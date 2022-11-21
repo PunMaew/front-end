@@ -563,20 +563,6 @@ export default {
       }
     },
     async validInfoThird() {
-      // const success = await this.$refs.generalThirdForm.validate();
-      // if (!success) {
-      //   return false;
-      // } else {
-      //   this.$emit("form", {
-      //     // receiveVaccine: this.receiveVaccine,
-      //     // receiveDate: this.receiveDate,
-      //     disease: this.disease,
-      //     neutered: this.neutered,
-
-      //   });
-      //   return true;
-      // }
-
       let formData = null;
       if (this.isEdit) {
         if (this.imageFile) {
@@ -590,19 +576,22 @@ export default {
         }
       }
 
-      // const success = await this.$refs.generalFourthForm.validate();
-
       if (!this.isEdit && !formData) {
         await this.$refs.generalThirdForm.validate();
         return false;
       } else {
-        this.$emit("form", {
-          formData,
-          disease: this.disease,
-          neutered: this.neutered,
-          // others: this.others,
-        });
-        return true;
+        const success = await this.$refs.generalThirdForm.validate();
+        if (success) {
+          this.$emit("form", {
+            formData,
+            disease: this.disease,
+            neutered: this.neutered,
+            // others: this.others,
+          });
+          return true;
+        } else {
+          return false;
+        }
       }
     },
     async validInfoFourth() {
