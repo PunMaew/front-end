@@ -1,24 +1,14 @@
 <template>
   <section>
     <validation-observer ref="contactForm">
-      <div class="input-area">
-        <p>ชื่อผู้ติดต่อ<span>*</span></p>
-        <validation-provider
-          name="contactName"
-          rules="required"
-          v-slot="{ errors }"
-        >
-          <input
-            v-model="contactName"
-            name="contactName"
-            type="text"
-            placeholder="กรุณากรอกชื่อผู้ติดต่อ"
-          />
-          <span class="valid-form">
-            {{ errors[0] }}
-          </span>
-        </validation-provider>
-      </div>
+      <base-label-input
+        label="ชื่อผู้ติดต่อ"
+        requireText="*"
+        nameInput="contactName"
+        placehold="กรุณากรอกชื่อผู้ติดต่อ"
+        v-model="contactName"
+      />
+
       <div class="input-area mt-2">
         <p>เบอร์โทรศัพท์<span>*</span></p>
         <validation-provider
@@ -38,25 +28,21 @@
           </span>
         </validation-provider>
       </div>
-      <div class="input-area mt-2">
-        <p>Facebook</p>
-        <input
-          v-model="facebook"
-          name="facebook"
-          type="text"
-          placeholder="กรุณากรอกชื่อ Facebook"
-        />
-      </div>
-      <div class="input-area mt-2">
-        <p>Line</p>
-        <input
-          v-model="line"
-          name="line"
-          type="text"
-          placeholder="กรุณากรอก Line ID"
-        />
-      </div>
-      <!-- ท่านได้ ยอมรับเงื่อนไขและข้อตกลง ของเรา -->
+
+      <base-label-input
+        class="mt-2"
+        label="Facebook"
+        nameInput="facebook"
+        placehold="กรุณากรอกชื่อ Facebook"
+        v-model="facebook"
+      />
+      <base-label-input
+        class="mt-2"
+        label="Line"
+        nameInput="line"
+        placehold="กรุณากรอก Line ID"
+        v-model="line"
+      />
 
       <div class="font-weight-bold mt-12 mb-4">
         <v-row justify="center">
@@ -101,6 +87,7 @@
 <script>
 import { ValidationProvider } from "vee-validate";
 import { ValidationObserver } from "vee-validate";
+import BaseLabelInput from "../elements/BaseLabelInput.vue";
 export default {
   props: {
     isEdit: {
@@ -114,6 +101,7 @@ export default {
   components: {
     ValidationProvider,
     ValidationObserver,
+    BaseLabelInput,
   },
   watch: {
     "fetchForm.step3": {

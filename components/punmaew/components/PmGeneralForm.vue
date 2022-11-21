@@ -3,7 +3,14 @@
     <div v-if="progress.generalInfo === 1">
       <validation-observer ref="generalFirstForm">
         <p class="step-text">ข้อมูลทั่วไป 1 จากทั้งหมด 4</p>
-        <div class="input-area">
+        <base-label-input
+          label="ชื่อแมว"
+          requireText="*"
+          nameInput="catName"
+          placehold="กรุณากรอกชื่อแมว"
+          v-model="catName"
+        />
+        <!-- <div class="input-area">
           <p>ชื่อแมว<span>*</span></p>
           <validation-provider
             name="catName"
@@ -20,7 +27,7 @@
               {{ errors[0] }}
             </span>
           </validation-provider>
-        </div>
+        </div> -->
         <div class="input-area mt-2">
           <p>สี<span>*</span></p>
           <validation-provider
@@ -28,15 +35,6 @@
             rules="required"
             v-slot="{ errors }"
           >
-            <!-- <input
-              v-model="color"
-              name="color"
-              type="text"
-              placeholder="กรุณากรอกสี"
-            />
-            <span class="valid-form">
-              {{ errors[0] }}
-            </span> -->
             <v-autocomplete
               dense
               filled
@@ -135,19 +133,6 @@
             <span class="valid-form">
               {{ errors[0] }}
             </span>
-            <!-- <v-autocomplete
-              dense
-              filled
-              :items="province"
-              item-text="district"
-              name="district"
-              v-model="selectDistrict"
-              :error-messages="errors"
-              data-vv-name="select"
-              required
-              placeholder="กรุณาเลือกเขต/อำเภอ"
-            >
-            </v-autocomplete> -->
           </validation-provider>
         </div>
         <div class="input-area mb-2">
@@ -279,47 +264,14 @@
     <div v-else-if="progress.generalInfo === 3">
       <validation-observer ref="generalThirdForm">
         <p class="step-text">ข้อมูลทั่วไป 3 จากทั้งหมด 4</p>
-        <!-- <div class="input-area">
-          <p>วัคซีนที่เคยได้รับ (ไม่มีกรอก -)<span>*</span></p>
-
-          <input
-            v-model="receiveVaccine"
-            name="receiveVaccine"
-            type="text"
-            placeholder="กรุณากรอกวัคซีนที่เคยได้รับ"
-          />
-        </div> -->
-
-        <!-- <div class="input-area mt-4">
-          <p>วันที่รับวัคซีน</p>
-          <input
-            v-model="receiveDate"
-            name="receiveDate"
-            type="text"
-            placeholder="กรุณากรอกวันที่รับวัคซีน"
-          />
-        </div> -->
-
-        <div class="input-area mt-4">
-          <p>โรคประจำตัว (ไม่มีกรอก - )<span>*</span></p>
-          <validation-provider
-            key="disease"
-            name="disease"
-            rules="required"
-            v-slot="{ errors }"
-          >
-            <input
-              key="disease"
-              v-model="disease"
-              name="disease"
-              type="text"
-              placeholder="กรุณากรอกโรคประจำตัว"
-            />
-            <span class="valid-form">
-              {{ errors[0] }}
-            </span>
-          </validation-provider>
-        </div>
+        <base-label-input
+          label="โรคประจำตัว (ไม่มีกรอก - )"
+          requireText="*"
+          nameInput="disease"
+          placehold="กรุณากรอกโรคประจำตัว"
+          key="disease"
+          v-model="disease"
+        />
 
         <div>
           <div class="input-area mt-4">
@@ -387,42 +339,6 @@
     </div>
     <div v-else-if="progress.generalInfo === 4">
       <validation-observer ref="generalFourthForm">
-        <!-- <validation-provider
-          ref="provider"
-          :rules="this.isEdit ? `image` : `required|image`"
-          v-slot="{ errors }"
-        >
-          <p class="step-text">ข้อมูลทั่วไป 4 จากทั้งหมด 4</p>
-          <div class="input-area">
-            <p>กรุณาแนบรูปแมว<span>*</span></p>
-            <span class="valid-form">
-              {{ errors[0] }}
-            </span>
-         
-            <div @click="onClickImage" class="upload-image">
-              <div v-if="!imageData" class="icon-upload text-center">
-                <i class="fi fi-rr-picture"></i>
-                <p>เพิ่มรูป <span>ที่นี่</span></p>
-              </div>
-              <div class="img-container" v-else>
-                <div class="edit-img-btn">
-                  <i class="fi fi-rr-pencil"></i> แก้ไขรูป
-                </div>
-                <div class="mb-10 article-img">
-                  <img :src="imageData" class="preview" alt="" />
-                </div>
-              </div>
-              <input
-                id="edit-article-image"
-                ref="fileInput"
-                type="file"
-                accept="image/*"
-                @change="uploadImage($event)"
-                name="imageData"
-              />
-            </div>
-          </div>
-        </validation-provider> -->
         <p class="step-text">ข้อมูลทั่วไป 4 จากทั้งหมด 4</p>
         <div class="input-area mt-2">
           <p>รายละเอียดเพิ่มเติม (ถ้ามี)</p>
@@ -433,7 +349,6 @@
             placeholder="กรุณากรอกรายละเอียดเพิ่มเติม"
           />
         </div>
-        <!-- </validation-provider> -->
       </validation-observer>
     </div>
   </section>
@@ -445,6 +360,7 @@ import { ValidationProvider } from "vee-validate";
 import { ValidationObserver } from "vee-validate";
 import provinceList from "@/assets/data/province.json";
 import tambonList from "@/assets/data/tambon.json";
+import BaseLabelInput from "../elements/BaseLabelInput.vue";
 export default {
   components: {
     ValidationProvider,
@@ -452,6 +368,7 @@ export default {
     provinceList,
     tambonList,
     filterList,
+    BaseLabelInput,
   },
   props: {
     progress: {

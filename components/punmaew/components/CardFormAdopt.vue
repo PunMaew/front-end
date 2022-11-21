@@ -1,6 +1,5 @@
 <template>
   <section class="set-bg-paper">
-    <!-- <div class="wrapper" :class="!hasNav ? 'popup' : ''"> -->
     <div class="wrapper">
       <v-container>
         <v-row justify="center">

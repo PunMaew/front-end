@@ -1,5 +1,4 @@
 <template>
-  <!-- <div class="d-flex justify-center mb-8"> -->
   <div>
     <v-row justify="center">
       <v-col cols="12" align-self="center">

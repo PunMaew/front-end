@@ -624,14 +624,16 @@ export default {
           return;
         }
 
-        // const res =
-        await this.$axios.post(`${this.$config.authURL}user/signup`, {
-          firstName: this.firstName,
-          lastName: this.lastName,
-          email: this.emailRegis,
-          password: this.passwordRegis,
-          confirmPassword: this.confirm,
-        });
+        const res = await this.$axios.post(
+          `${this.$config.authURL}user/signup`,
+          {
+            firstName: this.firstName,
+            lastName: this.lastName,
+            email: this.emailRegis,
+            password: this.passwordRegis,
+            confirmPassword: this.confirm,
+          }
+        );
         // console.log(res);
         this.regisId = res.data._id;
         this.$nextTick(() => {

@@ -54,7 +54,7 @@
                   <div>
                     <v-row>
                       <v-col cols="12" sm="6">
-                        <div class="input-area">
+                        <!-- <div class="input-area">
                           <p>ชื่อจริง</p>
                           <validation-provider
                             name="firstName"
@@ -69,29 +69,39 @@
                               {{ errors[0] }}
                             </span>
                           </validation-provider>
-                        </div>
+                        </div> -->
+                        <base-label-input
+                          label="ชื่อจริง"
+                          nameInput="firstName"
+                          requireText="*"
+                          placehold="กรุณากรอกชื่อจริง"
+                          v-model="userProfile.firstName"
+                        />
                       </v-col>
 
                       <v-col cols="12" sm="6">
-                        <div class="input-area">
-                          <p>นามสกุล</p>
-                          <validation-provider
-                            name="lastName"
-                            rules="required"
-                            v-slot="{ errors }"
-                          >
-                            <input v-model="userProfile.lastName" type="text" />
-                            <span class="valid-form">
-                              {{ errors[0] }}
-                            </span>
-                          </validation-provider>
-                        </div>
+                        <base-label-input
+                          label="นามสกุล"
+                          nameInput="lastName"
+                          requireText="*"
+                          placehold="กรุณากรอกนามสกุล"
+                          v-model="userProfile.lastName"
+                        />
                       </v-col>
                       <v-col cols="12" sm="6">
-                        <div class="input-area">
+                        <!-- <div class="input-area">
                           <p>เบอร์โทรศัพท์</p>
-                          <input v-model="userProfile.tel" type="text" />
-                        </div>
+                          <input
+                            v-model="userProfile.tel"
+                            placeholder="กรุณากรอกเบอร์โทรศัพท์"
+                            type="text"
+                          />
+                        </div> -->
+                        <base-label-input
+                          label="เบอร์โทรศัพท์"
+                          placehold="กรุณากรอกเบอร์โทรศัพท์"
+                          v-model="userProfile.tel"
+                        />
                       </v-col>
                     </v-row>
                   </div>
@@ -106,7 +116,14 @@
                   <div>
                     <v-row>
                       <v-col cols="12" sm="6">
-                        <div class="input-area">
+                        <base-label-input
+                          nameInput="email"
+                          label="อีเมล"
+                          requireText="*"
+                          placehold="กรุณากรอกอีเมล"
+                          v-model="userProfile.email"
+                        />
+                        <!-- <div class="input-area">
                           <p>อีเมล</p>
                           <validation-provider
                             name="email"
@@ -118,7 +135,7 @@
                               {{ errors[0] }}
                             </span>
                           </validation-provider>
-                        </div>
+                        </div> -->
                       </v-col>
                     </v-row>
                   </div>
@@ -548,6 +565,7 @@ import { ValidationProvider } from "vee-validate";
 import { ValidationObserver } from "vee-validate";
 import BaseButton from "../components/punmaew/components/BaseButton.vue";
 import CardDialog from "../components/punmaew/components/CardDialog.vue";
+import BaseLabelInput from "../components/punmaew/elements/BaseLabelInput.vue";
 export default {
   auth: false,
   components: {
@@ -558,6 +576,7 @@ export default {
     tambonList,
     filterList,
     CardDialog,
+    BaseLabelInput,
   },
   async asyncData({ $axios, $config, store, route, redirect, app }) {
     const cookie = await app.$cookies.get("auth._token.user");
@@ -844,7 +863,8 @@ export default {
 
     async editProfile() {
       try {
-        const success = this.$refs.editProfileForm.validate();
+        const success = await this.$refs.editProfileForm.validate();
+        // console.log(success);
         if (!success) {
           return;
         }
