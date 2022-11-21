@@ -300,15 +300,11 @@
         </div>
 
         <div>
-          <validation-provider
-            ref="provider"
-            :rules="this.isEdit ? `image` : `required|image`"
-            v-slot="{ errors }"
-          >
+          <validation-provider ref="provider" rules="image">
             <div class="input-area">
               <p>กรุณาแนบรูปแมว<span>*</span></p>
-              <span class="valid-form">
-                {{ errors[0] }}
+              <span v-if="imageError" class="valid-form">
+                {{ imageError }}
               </span>
               <div @click="onClickImage" class="upload-image">
                 <div v-if="!imageData" class="icon-upload text-center">
@@ -405,7 +401,10 @@ export default {
           this.receiveVaccine = this.fetchForm.step1?.receiveVaccine;
           this.selectVaccineHistory = this.fetchForm.step1?.vaccination;
         } else if (value === 3 && this.isEdit) {
-          this.imageData = `${this.$config.findHome}readFileIdFindHome?id=${this.$route.query.id}`;
+          if (!this.fetchForm.step1?.formData) {
+            this.imageData = `${this.$config.findHome}readFileIdFindHome?id=${this.$route.query.id}`;
+          }
+
           this.disease = this.fetchForm.step1?.disease;
           this.neutered = this.fetchForm.step1?.neutered;
         } else if (value === 4 && this.isEdit) {
@@ -417,6 +416,7 @@ export default {
   },
   data() {
     return {
+      imageError: null,
       imageData: this.isEdit
         ? `${this.$config.findHome}readFileIdFindHome?id=${this.$route.query.id}`
         : null,
@@ -505,6 +505,9 @@ export default {
         : "",
     };
   },
+  beforeDestroy() {
+    this.imageError = null;
+  },
   methods: {
     async uploadImage(event) {
       console.log("Uploaded the file...");
@@ -512,6 +515,7 @@ export default {
       if (input.files && input.files[0]) {
         const { valid } = await this.$refs.provider.validate(event);
         if (valid) {
+          this.imageError = null;
           this.imageFile = event.target.files[0];
           var reader = new FileReader();
           reader.onload = (e) => {
@@ -578,6 +582,7 @@ export default {
 
       if (!this.isEdit && !formData) {
         await this.$refs.generalThirdForm.validate();
+        this.imageError = "This field is required";
         return false;
       } else {
         const success = await this.$refs.generalThirdForm.validate();
@@ -588,6 +593,7 @@ export default {
             neutered: this.neutered,
             // others: this.others,
           });
+          this.imageError = null;
           return true;
         } else {
           return false;

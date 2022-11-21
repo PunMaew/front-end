@@ -149,8 +149,49 @@ export default {
       //   }
       // }
     },
-    prevStep() {
-      this.$emit("prevStep");
+    async prevStep() {
+      if (this.progress.generalInfo === 1 && this.currentStep === 1) {
+        let valid = await this.$refs.generalForm.validInfoFirst();
+        console.log(valid);
+        if (valid) {
+          this.$emit("prevStep");
+        } else {
+          return;
+        }
+      } else if (this.progress.generalInfo === 2 && this.currentStep === 1) {
+        let valid = await this.$refs.generalForm.validInfoSecond();
+        console.log(valid);
+        if (valid) {
+          this.$emit("prevStep");
+        } else {
+          return;
+        }
+      } else if (this.progress.generalInfo === 3 && this.currentStep === 1) {
+        let valid = await this.$refs.generalForm.validInfoThird();
+        console.log(valid);
+        if (valid) {
+          this.$emit("prevStep");
+        } else {
+          return;
+        }
+      } else if (this.progress.generalInfo === 4 && this.currentStep === 1) {
+        let valid = await this.$refs.generalForm.validInfoFourth();
+        console.log(valid);
+        if (valid) {
+          this.$emit("prevStep");
+        } else {
+          return;
+        }
+      } else if (this.currentStep === 2) {
+        let valid = await this.$refs.characterForm.validCharacter();
+        console.log(valid);
+        if (valid) {
+          this.$emit("prevStep");
+        } else {
+          return;
+        }
+      }
+      this.$refs.generalForm.imageError = null;
     },
   },
 };
