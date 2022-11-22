@@ -275,10 +275,16 @@
                 </v-col>
 
                 <v-col cols="6" sm="3" class="name-article-bottom">
-                  <div class="icon-article">
+                  <div
+                    v-if="post.statusbar === 'ยังไม่ถูกรับเลี้ยง'"
+                    class="icon-article"
+                  >
                     <nuxt-link :to="`/finderHome?isEdit=true&id=` + post._id">
                       <i class="fi fi-rr-pencil"></i>
                     </nuxt-link>
+                  </div>
+                  <div v-else class="icon-article-succes">
+                    <i class="fi fi-rr-pencil"></i>
                   </div>
                   <div @click="deletePost(post._id)" class="icon-article">
                     <i class="fi fi-rr-trash trash"></i>
@@ -1131,6 +1137,21 @@ export default {
     gap: 16px;
     align-items: center;
     justify-content: flex-end;
+  }
+  .icon-article-succes {
+    cursor: not-allowed;
+    display: flex;
+    gap: 16px;
+    i {
+      color: $gray;
+      font-size: 16px;
+      @media (min-width: 768px) {
+        font-size: 24px;
+      }
+    }
+    .trash {
+      color: $error;
+    }
   }
   .icon-article {
     cursor: pointer;
