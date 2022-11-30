@@ -158,17 +158,15 @@ export default {
             gender: res.data.data.generalInfo.gender,
             province: res.data.data.generalInfo.location.province,
             district: res.data.data.generalInfo.location.district,
-            // subDistrict: res.data.data.generalInfo.location.subDistrict,
-            // zipCode: res.data.data.generalInfo.location.zipCode,
+
             vaccination: res.data.data.generalInfo.vaccination,
             receiveVaccine: res.data.data.generalInfo.receiveVaccine,
-            // receiveDate: res.data.data.generalInfo.receiveDate,
+
             disease: res.data.data.generalInfo.disease,
             neutered: res.data.data.generalInfo.neutered,
             others: res.data.data.generalInfo.others,
           },
           step2: {
-            // characteristic: res.data.data.generalInfo.characteristic,
             characteristic: {
               hair: res.data.data.generalInfo.characteristic.hair,
               size: res.data.data.generalInfo.characteristic.size,
@@ -218,17 +216,16 @@ export default {
               ageRange: ageRange,
               location: {
                 province: this.forms.step1.province,
-                // subDistrict: this.forms.step1.subDistrict,
+
                 district: this.forms.step1.district,
-                // zipCode: this.forms.step1.zipCode,
               },
               vaccination: this.forms.step1.vaccination,
               receiveVaccine: this.forms.step1.receiveVaccine,
-              // receiveDate: this.forms.step1.receiveDate,
+
               disease: this.forms.step1.disease,
               neutered: this.forms.step1.neutered,
               gender: this.forms.step1.gender,
-              // characteristic: this.forms.step2.characteristic,
+
               characteristic: {
                 hair: this.forms.step2.characteristic.hair,
                 size: this.forms.step2.characteristic.size,
@@ -254,7 +251,6 @@ export default {
           console.log(updateImageFindHome);
         }
 
-        // console.log("update successfully");
         this.$router.push("/adoptCat");
       } catch (error) {
         console.log(error);
@@ -287,17 +283,16 @@ export default {
               ageRange: ageRange,
               location: {
                 province: this.forms.step1.province,
-                // subDistrict: this.forms.step1.subDistrict,
+
                 district: this.forms.step1.district,
-                // zipCode: this.forms.step1.zipCode,
               },
               vaccination: this.forms.step1.vaccination,
               receiveVaccine: this.forms.step1.receiveVaccine,
-              // receiveDate: this.forms.step1.receiveDate,
+
               disease: this.forms.step1.disease,
               neutered: this.forms.step1.neutered,
               gender: this.forms.step1.gender,
-              // characteristic: this.forms.step2.characteristic,
+
               characteristic: {
                 hair: this.forms.step2.characteristic.hair,
                 size: this.forms.step2.characteristic.size,
@@ -321,13 +316,8 @@ export default {
           this.forms.step1.formData
         );
         console.log(uploadFindHome);
-        // console.log("submit successfully");
+
         this.$router.push("/adoptCat");
-        // .then((res) => {
-        //   console.log(res.data);
-        //   console.log("submit successfully");
-        //   this.$router.push("/adoptCat");
-        // });
       } catch (error) {
         console.log(error);
       }
@@ -354,7 +344,6 @@ export default {
       if (this.currentStep === 1) {
         if (this.progress.generalInfo <= 3) {
           this.progress.generalInfo += 1;
-          //this.$forceUpdate();
         } else {
           this.currentStep += 1;
         }
@@ -436,26 +425,6 @@ export default {
   margin-top: 0px;
   padding-top: 0px;
 }
-
-// .step-title {
-//   .step-block {
-//     p {
-//       font-size: 12px;
-//       font-weight: bold;
-//       @media (min-width: 1440px) {
-//         font-size: 16px;
-//       }
-//     }
-//   }
-//   .left {
-//     color: $dark;
-//     border-bottom: 3px solid $yellow-dark;
-//   }
-//   .right {
-//     color: $gray;
-//     border-bottom: 3px solid $light;
-//   }
-// }
 
 .finder-form {
   margin-bottom: 24px;

@@ -10,24 +10,7 @@
           placehold="กรุณากรอกชื่อแมว"
           v-model="catName"
         />
-        <!-- <div class="input-area">
-          <p>ชื่อแมว<span>*</span></p>
-          <validation-provider
-            name="catName"
-            rules="required"
-            v-slot="{ errors }"
-          >
-            <input
-              v-model="catName"
-              name="catName"
-              type="text"
-              placeholder="กรุณากรอกชื่อแมว"
-            />
-            <span class="valid-form">
-              {{ errors[0] }}
-            </span>
-          </validation-provider>
-        </div> -->
+
         <div class="input-area mt-2">
           <p>สี<span>*</span></p>
           <validation-provider
@@ -64,13 +47,6 @@
             placeholder="กรุณาเลือกสายพันธุ์"
           >
           </v-autocomplete>
-
-          <!-- <input
-            v-model="breeds"
-            name="breeds"
-            type="text"
-            placeholder="กรุณากรอกสายพันธุ์"
-          /> -->
         </div>
         <div class="input-area mt-2">
           <p>อายุ<span>*</span></p>
@@ -119,7 +95,6 @@
       <validation-observer ref="generalSecondForm">
         <p class="step-text">ข้อมูลทั่วไป 2 จากทั้งหมด 4</p>
         <div class="input-area mb-2">
-          <!-- <p>เขต/อำเภอ<span>*</span></p> -->
           <validation-provider
             name="district"
             rules="required"
@@ -136,25 +111,11 @@
           </validation-provider>
         </div>
         <div class="input-area mb-2">
-          <!-- <p>จังหวัด<span>*</span></p> -->
           <validation-provider
             name="province"
             rules="required"
             v-slot="{ errors }"
           >
-            <!-- <v-autocomplete
-              dense
-              filled
-              :items="province"
-              item-text="province"
-              name="province"
-              v-model="selectProvince"
-              :error-messages="errors"
-              data-vv-name="select"
-              required
-              placeholder="กรุณาเลือกจังหวัด"
-            >
-            </v-autocomplete> -->
             <addressinput-province
               v-model="selectProvince"
               placeholder="กรุณาเลือกจังหวัด"
@@ -218,47 +179,6 @@
             </v-autocomplete>
           </validation-provider>
         </div>
-
-        <!-- <div class="input-area">
-          <p>แขวง/ตำบล<span>*</span></p>
-          <validation-provider
-            name="tambon"
-            rules="required"
-            v-slot="{ errors }"
-          >
-            <v-autocomplete
-              dense
-              filled
-              :items="tambon"
-              item-text="name_th"
-              name="tambon"
-              v-model="selectTambon"
-              :error-messages="errors"
-              data-vv-name="select"
-              placeholder="กรุณาเลือกแขวง/ตำบล"
-              required
-            >
-            </v-autocomplete>
-          </validation-provider>
-        </div>
-        <div class="input-area">
-          <p>รหัสไปรษณีย์<span>*</span></p>
-          <validation-provider
-            name="zipCode"
-            rules="required"
-            v-slot="{ errors }"
-          >
-            <input
-              v-model="zipCode"
-              name="zipCode"
-              type="text"
-              placeholder="กรุณากรอกรหัสไปรษณีย์"
-            />
-            <span class="valid-form">
-              {{ errors[0] }}
-            </span>
-          </validation-provider>
-        </div> -->
       </validation-observer>
     </div>
     <div v-else-if="progress.generalInfo === 3">
@@ -394,7 +314,6 @@ export default {
     },
     "progress.generalInfo": {
       handler(value) {
-        // console.log("WATCH", value);
         if (value === 2 && this.isEdit) {
           this.selectProvince = this.fetchForm.step1?.province;
           this.selectDistrict = this.fetchForm.step1?.district;
@@ -484,18 +403,17 @@ export default {
         { id: 7, name: "วัคซีนโรคเอดส์แมว" },
         { id: 8, name: "วัคซีนโรคไข้หวัดแมว" },
       ],
-      // v-model data
+
       selectProvince: this.isEdit ? this.fetchForm.step1?.province : "",
       selectDistrict: this.isEdit ? this.fetchForm.step1?.district : "",
-      // selectTambon: this.isEdit ? this.fetchForm.step1.subDistrict : "",
+
       catName: this.isEdit ? this.fetchForm.step1?.catName : "",
       color: this.isEdit ? this.fetchForm.step1?.color : "",
       breeds: this.isEdit ? this.fetchForm.step1?.breeds : "",
       age: this.isEdit ? this.fetchForm.step1?.age : "",
-      // zipCode: this.isEdit ? this.fetchForm.step1.zipCode : "",
 
       receiveVaccine: this.isEdit ? this.fetchForm.step1?.receiveVaccine : "",
-      // receiveDate: this.isEdit ? this.fetchForm.step1.receiveDate : "",
+
       disease: this.isEdit ? this.fetchForm.step1?.disease : "",
       gender: this.isEdit ? this.fetchForm.step1?.gender : "",
       neutered: this.isEdit ? this.fetchForm.step1?.neutered : "",
@@ -530,11 +448,10 @@ export default {
     },
     async validInfoFirst() {
       const success = await this.$refs.generalFirstForm.validate();
-      // console.log(success);
+
       if (!success) {
         return false;
       } else {
-        // console.log("emitData");
         this.$emit("form", {
           catName: this.catName,
           color: this.color,
@@ -550,7 +467,7 @@ export default {
     },
     async validInfoSecond() {
       const success = await this.$refs.generalSecondForm.validate();
-      // console.log(success);
+
       if (!success) {
         return false;
       } else {
@@ -559,9 +476,6 @@ export default {
           district: this.selectDistrict,
           vaccination: this.selectVaccineHistory,
           receiveVaccine: this.receiveVaccine,
-
-          // subDistrict: this.selectTambon,
-          // zipCode: this.zipCode,
         });
         return true;
       }
@@ -591,7 +505,6 @@ export default {
             formData,
             disease: this.disease,
             neutered: this.neutered,
-            // others: this.others,
           });
           this.imageError = null;
           return true;
@@ -736,7 +649,6 @@ export default {
 }
 
 .input-area {
-  // margin-top: -6px;
   p {
     font-size: 14px;
     margin-bottom: 4px;

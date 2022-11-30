@@ -56,186 +56,7 @@
                         </span>
                       </validation-provider>
                     </div>
-                    <!--  -->
-                    <!-- <div class="mt-2">
-                      <p class="set-forget-pass" @click="dialog2 = true">
-                        หากลืมรหัสผ่าน
-                      </p>
 
-                      <validation-observer ref="otpForm">
-                        <card-dialog
-                          :dialog="dialog2"
-                          v-if="this.currentStep === 1"
-                        >
-                          <template slot="icon">
-                            <div
-                              @click="dialog2 = !dialog2"
-                              class="ui-icon-cross"
-                            >
-                              <i class="fi fi-rr-cross-circle"></i>
-                            </div>
-                          </template>
-
-                          <template slot="title">
-                            <p class="otp-title">รีเซ็ตรหัสผ่าน</p>
-                          </template>
-                          <template slot="description">
-                            <p class="otp-desc">
-                              กรุณากรอกอีเมลเพื่อรับรหัส OTP
-                              สำหรับรีเซ็ตรหัสผ่าน
-                            </p>
-                          </template>
-                          <template slot="content">
-                            <validation-provider
-                              rules="required|email"
-                              v-slot="{ errors }"
-                              class="otp-content"
-                            >
-                              <input
-                                v-model="emailOtp"
-                                placeholder="กรุณากรอกอีเมล"
-                                name="email"
-                              />
-                              <span class="valid-form">
-                                {{ errors[0] }}
-                              </span>
-                              <base-button
-                                :fillSearch="true"
-                                class="mt-6"
-                                @click="nextStep"
-                              >
-                                ส่งรหัส OTP
-                              </base-button>
-                            </validation-provider>
-                          </template>
-                        </card-dialog>
-
-                        <card-dialog
-                          :dialog="dialog2"
-                          v-if="this.currentStep === 2"
-                        >
-                          <template slot="title">
-                            <p class="otp-title">ยืนยันรหัส OTP</p>
-                          </template>
-                          <template slot="icon">
-                            <div
-                              @click="dialog2 = !dialog2"
-                              class="ui-icon-cross"
-                            >
-                              <i class="fi fi-rr-cross-circle"></i>
-                            </div>
-                          </template>
-                          <template slot="description">
-                            <p class="otp-desc">
-                              กรุณายืนยันรหัส OTP ที่ส่งไปที่อีเมล
-                              {{ this.emailOtp }}
-                            </p>
-                          </template>
-                          <template slot="content">
-                            <p class="otp-countDown">
-                              {{ total.minutes }}:{{ total.seconds }}
-                            </p>
-                            <div>
-                              <v-row justify="center">
-                                <v-col
-                                  cols="12"
-                                  sm="7"
-                                  lg="8"
-                                  align-self="center"
-                                >
-                                  <validation-provider
-                                    rules="required"
-                                    v-slot="{ errors }"
-                                    class="otp-content"
-                                  >
-                                    <v-otp-input
-                                      length="6"
-                                      v-model="otpCode"
-                                      name="otpCode"
-                                    ></v-otp-input>
-                                    <span class="valid-form">
-                                      {{ errors[0] }}
-                                    </span>
-                                    <base-button
-                                      :fillSearch="true"
-                                      class="mt-6"
-                                      @click="confirmOtpNewPassWord"
-                                    >
-                                      ยืนยันรหัส OTP
-                                    </base-button>
-                                    <div
-                                      @click="resendOtp"
-                                      class="mt-5 text-center text-decoration-underline"
-                                    >
-                                      ส่งรหัสใหม่อีกครั้ง
-                                    </div>
-                                  </validation-provider>
-                                </v-col>
-                              </v-row>
-                            </div>
-                          </template>
-                        </card-dialog>
-
-                        <card-dialog
-                          :dialog="dialog2"
-                          v-if="this.currentStep === 3"
-                        >
-                          <template slot="title">
-                            <p class="otp-title">สร้างรหัสผ่านใหม่</p>
-                          </template>
-                          <template slot="content">
-                            <div>
-                              <v-row justify="center">
-                                <v-col cols="10" align-self="center">
-                                  <div class="input-area">
-                                    <p>รหัสผ่านใหม่</p>
-                                    <validation-provider
-                                      rules="required"
-                                      v-slot="{ errors }"
-                                    >
-                                      <input
-                                        type="password"
-                                        placeholder="กรุณากรอกรหัสผ่านใหม่"
-                                        v-model="newPass"
-                                        name="newPass"
-                                      />
-                                      <span class="valid-form">
-                                        {{ errors[0] }}
-                                      </span>
-                                    </validation-provider>
-                                  </div>
-
-                                  <div class="input-area mt-5">
-                                    <p>ยืนยันรหัสผ่าน</p>
-                                    <validation-provider
-                                      rules="required"
-                                      v-slot="{ errors }"
-                                    >
-                                      <input
-                                        type="password"
-                                        placeholder="กรุณายืนยันรหัสผ่าน"
-                                        v-model="newConfirm"
-                                        name="newConfirm"
-                                      />
-                                      <span class="valid-form">
-                                        {{ errors[0] }}
-                                      </span>
-                                      <base-button
-                                        :fillSearch="true"
-                                        class="mt-6"
-                                        @click="setNewPassword"
-                                      >
-                                        ยืนยัน
-                                      </base-button>
-                                    </validation-provider>
-                                  </div>
-                                </v-col>
-                              </v-row>
-                            </div>
-                          </template>
-                        </card-dialog>
-                      </validation-observer>
-                    </div> -->
                     <base-button
                       class="mt-6"
                       :fillSearch="true"
@@ -306,11 +127,7 @@ export default {
       this.$router.push("/dashboard?menu=dashboard");
     }
   },
-  // asyncData({ store, redirect }) {
-  //   if (store.state.auth.loggedIn === true) {
-  //     redirect("/dashboard");
-  //   }
-  // },
+
   methods: {
     async loginAdmin() {
       try {
@@ -318,18 +135,16 @@ export default {
         if (!success) {
           return;
         }
-        //
+
         await this.$auth.loginWith("admin", {
           data: {
             email: this.emailLogin,
             password: this.password,
           },
         });
-        // .then((res) => {
-        // console.log(res.data);
+
         console.log("login admin successfully");
         this.$router.push("/dashboard?menu=dashboard");
-        // })
       } catch (error) {
         console.log(error);
         this.$swal.fire({
@@ -341,10 +156,6 @@ export default {
         });
       }
     },
-    // nextStep() {},
-    //   confirmOtpNewPassWord() {},
-    //   resendOtp() {},
-    //   setNewPassword() {},
   },
 };
 </script>

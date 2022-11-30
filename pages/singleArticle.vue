@@ -10,11 +10,9 @@
                   :src="`${$config.articleURL}readFileId?id=${singleArticle._id}`"
                   alt=""
                 />
-                <!-- <img src="@/assets/imgs/img-thumbnail.jpg" alt="" /> -->
               </div>
               <div class="mt-5">
                 <v-row>
-                  <!-- class="d-none d-lg-flex d-xl-flex" -->
                   <v-col cols="12" md="1">
                     <div
                       class="d-none d-md-flex d-lg-flex d-xl-flex share text-center"
@@ -24,7 +22,7 @@
                     <div
                       class="d-none d-md-flex d-lg-flex d-xl-flex share-hr mt-12 mb-4"
                     ></div>
-                    <!--  @click="shareFacebook" -->
+
                     <div
                       @click="shareFacebook"
                       class="d-none d-md-flex d-lg-flex d-xl-flex share-fb mt-12 text-center cur-pointer"
@@ -82,19 +80,7 @@ export default {
       default: false,
     },
   },
-  // async asyncData({ $axios, $config, query }) {
-  //   try {
-  //     const res = await $axios.get(
-  //       `${$config.articleURL}oneArticle?id=${query.id}`
-  //     );
-  //     // console.log(res.data.data);
-  //     return {
-  //       singleArticle: res.data.data,
-  //     };
-  //   } catch (error) {
-  //     console.log(error);
-  //   }
-  // },
+
   data() {
     return {
       singleArticle: {},
@@ -110,10 +96,6 @@ export default {
           `${this.$config.articleURL}oneArticle?id=${this.$route.query.id}`
         );
         this.singleArticle = res.data.data;
-        // console.log(res.data.data);
-        // return {
-        //   singleArticle: res.data.data,
-        // };
       } catch (error) {
         console.log(error);
       }
@@ -135,7 +117,7 @@ export default {
             action_properties: JSON.stringify({
               object: {
                 "og:url": shareUrl,
-                // "og.image": `${this.$config.articleURL}readFileId?id=${this.singleArticle._id}`,
+
                 "og.image": require(`@/static/fb-thumbnail.jpg`),
                 "og:title":
                   "Punmaew - Web Application สำหรับช่วยเหลือน้องแมวไร้บ้าน",
@@ -186,8 +168,6 @@ export default {
   color: $gray;
 }
 .share-hr {
-  // border-left: 1px solid $gray;
-  // height: 56px;
   border: 1px solid $gray;
   transform: rotate(90deg);
 }

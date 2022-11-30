@@ -60,11 +60,9 @@ export default {
 }
 header {
   padding: 0;
-  // background: #fff;
+
   z-index: 50;
   position: relative;
-  // border-bottom: 1px solid#f9f9f9;
-  // background-color: $orange-light;
 }
 #logo {
   margin-left: -16px;
@@ -78,8 +76,6 @@ header {
 }
 .link-btn .btn {
   max-width: 120px;
-  // padding-top: 8px;
-  // padding-bottom: 6px;
 }
 ul#menu {
   padding: 0;

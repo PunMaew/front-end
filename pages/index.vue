@@ -127,7 +127,6 @@
               <adopt-btn-group>
                 <template slot="finderHome">
                   <button @click="finderHome" class="adoption-btn">
-                    <!-- <img src="@/assets/imgs/icon-cat.svg" alt="finderHome" /> -->
                     <svg
                       width="54"
                       height="41"
@@ -147,7 +146,6 @@
                 </template>
                 <template slot="adoptCat">
                   <button @click="adoptCat" class="adoption-btn">
-                    <!-- <img src="@/assets/imgs/icon-cat2.svg" alt="adoptCat" /> -->
                     <svg
                       width="54"
                       height="41"
@@ -179,7 +177,7 @@ import PunmaewIndex from "../components/punmaew/sections/PunmaewIndex.vue";
 import PunmaewBanner from "../components/punmaew/elements/PunmaewBanner.vue";
 import BaseButton from "../components/punmaew/components/BaseButton.vue";
 import AdoptBtnGroup from "../components/punmaew/components/AdoptBtnGroup.vue";
-// import PunmaewBanner2 from "../components/punmaew/elements/PunmaewBanner2.vue";
+
 export default {
   auth: false,
   components: { PunmaewBanner, BaseButton, PunmaewIndex, AdoptBtnGroup },
@@ -202,7 +200,6 @@ export default {
   position: relative;
   z-index: 5;
   top: -30px;
-  // top: 0;
 }
 @media (min-width: 1440px) {
   .banner-set-row {
@@ -227,7 +224,7 @@ export default {
   color: $purple-dark;
   box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.2);
   border-radius: 8px;
-  // padding: 15px 12px;
+
   padding: 4px 8px;
   font-size: 12px;
   font-weight: bold;

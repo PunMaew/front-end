@@ -41,8 +41,6 @@
         </div>
 
         <div class="mt-sm-11">
-          <!-- personal info -->
-
           <div v-if="selectProfileId == 1 && userProfile">
             <validation-observer ref="editProfileForm">
               <form @submit.prevent="editProfile">
@@ -54,22 +52,6 @@
                   <div>
                     <v-row>
                       <v-col cols="12" sm="6">
-                        <!-- <div class="input-area">
-                          <p>ชื่อจริง</p>
-                          <validation-provider
-                            name="firstName"
-                            rules="required"
-                            v-slot="{ errors }"
-                          >
-                            <input
-                              v-model="userProfile.firstName"
-                              type="text"
-                            />
-                            <span class="valid-form">
-                              {{ errors[0] }}
-                            </span>
-                          </validation-provider>
-                        </div> -->
                         <base-label-input
                           label="ชื่อจริง"
                           nameInput="firstName"
@@ -89,14 +71,6 @@
                         />
                       </v-col>
                       <v-col cols="12" sm="6">
-                        <!-- <div class="input-area">
-                          <p>เบอร์โทรศัพท์</p>
-                          <input
-                            v-model="userProfile.tel"
-                            placeholder="กรุณากรอกเบอร์โทรศัพท์"
-                            type="text"
-                          />
-                        </div> -->
                         <base-label-input
                           label="เบอร์โทรศัพท์"
                           placehold="กรุณากรอกเบอร์โทรศัพท์"
@@ -107,7 +81,6 @@
                   </div>
                 </div>
 
-                <!-- account info -->
                 <div class="profile-details mt-7">
                   <div class="title-profile d-flex">
                     <i class="fi fi-rr-user"></i>
@@ -123,24 +96,11 @@
                           placehold="กรุณากรอกอีเมล"
                           v-model="userProfile.email"
                         />
-                        <!-- <div class="input-area">
-                          <p>อีเมล</p>
-                          <validation-provider
-                            name="email"
-                            rules="required"
-                            v-slot="{ errors }"
-                          >
-                            <input v-model="userProfile.email" type="text" />
-                            <span class="valid-form">
-                              {{ errors[0] }}
-                            </span>
-                          </validation-provider>
-                        </div> -->
                       </v-col>
                     </v-row>
                   </div>
                 </div>
-                <!-- button submit edit profile -->
+
                 <div class="mt-12">
                   <v-row justify="center">
                     <v-col cols="12" sm="6">
@@ -153,7 +113,7 @@
               </form>
             </validation-observer>
           </div>
-          <!-- modalOtp -->
+
           <div>
             <validation-observer ref="otpChangeEmailnPass">
               <card-dialog v-if="this.currentStep === 2" :dialog="dialog">
@@ -208,7 +168,6 @@
               </card-dialog>
             </validation-observer>
           </div>
-          <!-- myPost -->
 
           <div v-if="selectProfileId == 2" class="mt-6">
             <div class="d-flex justify-space-between my-post items-center">
@@ -265,7 +224,6 @@
                     "
                     class="cat-state-adopt cur-pointer"
                   >
-                    <!-- รอการรับเลี้ยง รับเลี้ยงสำเร็จ -->
                     {{
                       post.statusbar === "ยังไม่ถูกรับเลี้ยง"
                         ? "รอการรับเลี้ยง"
@@ -293,8 +251,6 @@
               </v-row>
             </div>
           </div>
-
-          <!-- matchCat -->
 
           <div v-if="selectProfileId == 3" class="mt-6 mt-lg-11">
             <div v-if="myIdeals.length > 0">
@@ -466,7 +422,6 @@
             </div>
           </div>
 
-          <!-- favor -->
           <div v-if="selectProfileId == 4" class="mt-6 mt-md-12">
             <div v-if="this.favorList.length == 0">
               <v-row justify="center">
@@ -502,7 +457,7 @@
                   สร้างโพสต์ใหม่
                 </div>
               </div>
-              <!-- <div>Card</div> -->
+
               <div class="mt-4">
                 <v-row>
                   <v-col
@@ -558,8 +513,6 @@
         </div>
       </div>
     </v-container>
-    <!-- </form>
-    </validation-observer> -->
   </section>
 </template>
 
@@ -586,9 +539,9 @@ export default {
   },
   async asyncData({ $axios, $config, store, route, redirect, app }) {
     const cookie = await app.$cookies.get("auth._token.user");
-    // console.log("COOKIE", cookie);
+
     const menu = route.query.menu;
-    // const userState = store.state.auth.user;
+
     if (!cookie) {
       return redirect("/login");
     }
@@ -689,7 +642,7 @@ export default {
         if (!success) {
           return;
         }
-        // const res =
+
         await this.$axios.put(
           `${this.$config.authURL}user/idealCat?id=${this.$store.state.auth.user._id}`,
           {
@@ -707,8 +660,6 @@ export default {
           text: "แก้ไขแมวในอุดมคติของคุณเรียบร้อยแล้ว",
           icon: "success",
         });
-
-        // console.log(res.data);
       } catch (error) {
         this.$swal.fire({
           confirmButtonColor: "#19ba88",
@@ -749,8 +700,6 @@ export default {
           console.log(error);
         }
       }
-
-      // findHome/changeStatus
     },
     deletePost(id) {
       this.$swal
@@ -851,7 +800,6 @@ export default {
       const minute = second * 60;
       const hour = minute * 60;
       const countdown = new Date().getTime() + 15 * 60 * 1000;
-      // const countdown = new Date().getTime() + 1 * 60 * 1000;
 
       this.timeInterval = setInterval(() => {
         const now = new Date().getTime();
@@ -870,7 +818,7 @@ export default {
     async editProfile() {
       try {
         const success = await this.$refs.editProfileForm.validate();
-        // console.log(success);
+
         if (!success) {
           return;
         }
@@ -896,13 +844,6 @@ export default {
             icon: "success",
           });
         }
-
-        // console.log(res.data);
-        // .then((res) => {
-
-        //   console.log(res.data);
-        // });
-        // });
       } catch (error) {
         this.$swal.fire({
           confirmButtonColor: "#19ba88",
@@ -1129,10 +1070,6 @@ export default {
     }
   }
   .name-article-bottom {
-    // font-size: 10px;
-    // @media (min-width: 768px) {
-    //   font-size: 16px;
-    // }
     display: flex;
     gap: 16px;
     align-items: center;
@@ -1292,7 +1229,7 @@ export default {
   padding-bottom: 0;
   box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
   border-radius: 20px;
-  // cursor: pointer;
+
   .thumbnail {
     overflow: hidden;
     line-height: 0;

@@ -1,5 +1,4 @@
 <template>
-  <!-- persistent -->
   <v-dialog persistent v-model="dialog" max-width="540">
     <div class="set-bg-otp">
       <slot name="icon"></slot>

@@ -96,7 +96,6 @@
                   :src="`${$config.articleURL}readFileId?id=${i._id}`"
                   alt=""
                 />
-                <!-- <img src="@/assets/imgs/img-thumbnail.jpg" alt="" /> -->
               </div>
               <div class="card-title">
                 <v-row justify="center">
@@ -106,11 +105,7 @@
                       <p class="mb-0 intro-content-card">
                         {{ i.details[0].text }}
                       </p>
-                      <!-- <v-row>
-                        <v-col cols="12" class="d-flex mt-1">
-                          <h6 class="read-articles ml-1 mt-1">อ่านบทความ >></h6>
-                        </v-col>
-                      </v-row> -->
+
                       <div class="d-flex mt-2">
                         <h6 class="read-articles">
                           อ่านบทความ
@@ -145,13 +140,13 @@ export default {
     async fetchData() {
       try {
         const res = await this.$axios.get(`${this.$config.findHome}RandomPost`);
-        // console.log(res.data);
+
         this.posts = res.data;
 
         const article = await this.$axios.get(
           `${this.$config.articleURL}randomPostArticle`
         );
-        // console.log(res.data);
+
         this.articles = article.data;
       } catch (error) {
         console.log(error);

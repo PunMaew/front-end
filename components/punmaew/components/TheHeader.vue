@@ -11,9 +11,6 @@
               <img src="~/assets/imgs/pmlogo.png" alt="punmaew" id="logo" />
             </n-link>
           </v-col>
-          <!-- <v-col sm="4">
-          <base-button :fill="true">เข้าสู่ระบบ</base-button>
-        </v-col> -->
         </v-row>
         <v-row v-else justify="center">
           <v-col sm="2" class="nav-left">
@@ -62,35 +59,6 @@
                     </div>
                   </div>
                 </client-only>
-                <!-- <client-only>
-                <v-menu offset-y>
-                  <template v-slot:activator="{ on, attrs }">
-                    <div v-bind="attrs" v-on="on">
-                      <base-button
-                        :fill="true"
-                        class="d-flex justify-center align-center"
-                      >
-                        <div class="user-icon mr-2">
-                          <i class="fi fi-rr-user"></i>
-                        </div>
-                        {{ user.firstName }}
-                        <i
-                          class="ml-2 user-icon fi fi-rr-angle-small-down d-flex"
-                        ></i>
-                      </base-button>
-                    </div>
-                  </template>
-                  <v-list>
-                    <v-list-item
-                      @click="menuAction(item.action)"
-                      v-for="(item, index) in items"
-                      :key="index"
-                    >
-                      <v-list-item-title>{{ item.title }}</v-list-item-title>
-                    </v-list-item>
-                  </v-list>
-                </v-menu>
-              </client-only> -->
               </li>
               <li v-else>
                 <n-link to="/login" class="opunmai">
@@ -170,55 +138,19 @@ export default {
   },
   data() {
     return {
-      items: [
-        // { title: "โปรไฟล์ของฉัน", action: "my-profile" },
-        { title: "ออกจากระบบ", action: "logout" },
-      ],
+      items: [{ title: "ออกจากระบบ", action: "logout" }],
       login: false,
     };
   },
 
   methods: {
-    // sweet() {
-    //   this.$swal
-    //     .fire({
-    //       // title: "ยืนยันที่จะลบโพสต์หรือไม่ ?",
-    //       text: "ยืนยันที่จะลบโพสต์หรือไม่ ?",
-    //       icon: "warning",
-    //       confirmButtonColor: "#F77272",
-    //       showCancelButton: true,
-    //       confirmButtonText: "ลบ",
-    //       cancelButtonText: "ยกเลิก",
-    //     })
-    //     .then((result) => {
-    //       if (result.isConfirmed) {
-    //         // this.$swal.fire(
-    //         //   "Deleted!",
-    //         //   "Your file has been deleted.",
-    //         //   "success"
-    //         // );
-    //         this.$swal.fire({
-    //           confirmButtonColor: "#19ba88",
-    //           confirmButtonText: "ตกลง",
-    //           text: "โพสต์ของคุณถูกลบแล้ว",
-    //           icon: "success",
-    //         });
-    //       }
-    //     });
-    // },
     menuAction(action) {
       if (action === "my-profile") {
         this.$router.push("/editProfile");
-        // console.log(action);
       }
       if (action === "logout") {
-        try {
-          // คุณต้องการออกจากระบบหรือไม่
-          this.$auth.logout();
-          this.$router.push("/");
-        } catch (error) {
-          console.log(error);
-        }
+        this.$auth.logout();
+        this.$router.push("/");
       }
     },
   },
@@ -247,7 +179,6 @@ export default {
 .user-icon {
   i {
     font-size: 20px;
-    // color: $white;
   }
 }
 .bgColor {
@@ -256,7 +187,6 @@ export default {
 .nav-left {
   padding-top: 0px;
   padding-bottom: 0px;
-  // padding-left: 0px;
 }
 .nav-center {
   padding-top: 0px;
@@ -269,15 +199,12 @@ export default {
   display: flex;
   padding-top: 0px;
   padding-bottom: 0px;
-  // padding-right: 0px;
 }
 header {
   padding: 15px 0;
-  // background: #fff;
+
   z-index: 50;
   position: relative;
-  // border-bottom: 1px solid#f9f9f9;
-  // background-color: $orange-light;
 }
 #logo {
   height: 35px;
@@ -290,8 +217,6 @@ header {
 }
 .link-btn .btn {
   max-width: 120px;
-  // padding-top: 8px;
-  // padding-bottom: 6px;
 }
 ul#menu {
   padding: 0;

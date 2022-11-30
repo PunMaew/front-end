@@ -44,7 +44,6 @@ export default {
   }
 }
 .content {
-  // min-height: 515px;
   width: 100%;
   background-color: $white;
   padding: 16px;
@@ -75,11 +74,6 @@ export default {
     flex: 1 1;
     display: flex;
     justify-content: center;
-    // align-items: center;
-    // margin-top: 50px;
   }
-  // &.popup {
-  //   margin-top: 0;
-  // }
 }
 </style>

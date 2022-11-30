@@ -72,7 +72,6 @@ export default {
   }
 }
 .fill {
-  // border-radius: 50px;
   background-image: linear-gradient(
     to right,
     #609fff 0%,
@@ -90,7 +89,6 @@ export default {
 }
 
 .fillSearch {
-  // border-radius: 50px;
   background-image: linear-gradient(
     to right,
     #ff9474 0%,
@@ -117,7 +115,6 @@ export default {
     margin-right: 5px;
   }
   @media (min-width: 1440px) {
-    // width: 55%;
     padding-top: 14px;
     padding-bottom: 14px;
     font-size: 18px;

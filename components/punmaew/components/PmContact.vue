@@ -127,7 +127,7 @@ export default {
   methods: {
     async validContact() {
       const success = await this.$refs.contactForm.validate();
-      // console.log(success);
+
       if (!success) {
         return false;
       } else {

@@ -25,7 +25,7 @@
         </v-col>
       </v-row>
     </div>
-    <!-- currentStep === 3 -->
+
     <v-row
       v-if="this.currentStep === 3"
       no-gutters

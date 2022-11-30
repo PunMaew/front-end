@@ -106,54 +106,10 @@ export default {
   auth: false,
   data() {
     return {
-      // allArticle: [
-      //   {
-      //     _id: 1,
-      //     title: "Name",
-      //     details: [
-      //       {
-      //         _id: 1,
-      //         paraNumber: "1",
-      //         text: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Velit enim id hendrerit velit egestas cum quam.",
-      //       },
-      //     ],
-      //   },
-      //   {
-      //     _id: 2,
-      //     title: "Name",
-      //     details: [
-      //       {
-      //         _id: 2,
-      //         paraNumber: "1",
-      //         text: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Velit enim id hendrerit velit egestas cum quam.",
-      //       },
-      //     ],
-      //   },
-      //   {
-      //     _id: 3,
-      //     title: "Name",
-      //     details: [
-      //       {
-      //         _id: 3,
-      //         paraNumber: "1",
-      //         text: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Velit enim id hendrerit velit egestas cum quam.",
-      //       },
-      //     ],
-      //   },
-      // ],
       allArticle: [],
     };
   },
-  // async asyncData({ $axios, $config }) {
-  //   try {
-  //     const res = await $axios.get(`${$config.articleURL}allArticle`);
-  //     return {
-  //       allArticle: res.data,
-  //     };
-  //   } catch (error) {
-  //     console.log(error);
-  //   }
-  // },
+
   async created() {
     await this.fetchData();
   },
@@ -200,7 +156,6 @@ export default {
     overflow: hidden;
     line-height: 0;
     img {
-      // max-width: 100%;
       height: 200px;
       width: 100%;
       object-fit: cover;
@@ -227,13 +182,6 @@ export default {
       -webkit-box-orient: vertical;
       overflow: hidden;
     }
-    // .title {
-    //   white-space: nowrap;
-    //   overflow: hidden;
-    //   text-overflow: ellipsis;
-    //   font-weight: bold;
-    //   font-size: 24px;
-    // }
   }
   &:hover {
     .card-title {

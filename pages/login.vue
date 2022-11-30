@@ -33,7 +33,6 @@
                 </div>
               </div>
 
-              <!-- Login -->
               <div v-if="openTab" class="mt-3">
                 <validation-observer ref="loginForm">
                   <form @submit.prevent="login">
@@ -252,7 +251,7 @@
                   </form>
                 </validation-observer>
               </div>
-              <!-- Register -->
+
               <div class="mt-3" v-else>
                 <validation-observer ref="registerForm">
                   <form @submit.prevent="register">
@@ -425,7 +424,7 @@
                             >
                               ยืนยันรหัส OTP
                             </base-button>
-                            <!-- @click="resendOtpRegister(._id)" -->
+
                             <div
                               @click="resendOtpRegister"
                               class="mt-5 text-center text-decoration-underline"
@@ -451,7 +450,7 @@
 import BaseButton from "../components/punmaew/components/BaseButton.vue";
 import { ValidationProvider } from "vee-validate";
 import { ValidationObserver } from "vee-validate";
-// import provinceList from "@/assets/data/province.json";
+
 import CardDialog from "../components/punmaew/components/CardDialog.vue";
 import CardFormAdopt from "../components/punmaew/components/CardFormAdopt.vue";
 export default {
@@ -466,9 +465,6 @@ export default {
   },
   data() {
     return {
-      // province: provinceList,
-      // selectProvince: "",
-      // selectZip: "",
       items: ["Foo", "Bar", "Fizz", "Buzz"],
       openTab: true,
       dialog: false,
@@ -522,7 +518,6 @@ export default {
         });
 
         this.$router.push("/");
-        // console.log("login successfully");
       } catch (error) {
         if (error.response.data.active === false) {
           this.regisId = error.response.data._id;
@@ -542,39 +537,21 @@ export default {
     },
     async nextStep() {
       try {
-        // this.$refs.otpForm.validate().then((success) => {
-        //   if (!success) {
-        //     return;
-        //   }
         const success = this.$refs.otpForm.validate();
         if (!success) {
           return;
         }
-        // await this.$axios.patch(`${this.$config.authURL}user/forgot`, {
-        //   email: this.emailOtp,
-        // });
-        // this.currentStep += 1;
-        // this.countdown();
 
-        // const res =
         await this.$axios.patch(`${this.$config.authURL}user/forgot`, {
           email: this.emailOtp,
         });
 
-        // this.regisId = res.data._id;
         this.currentStep += 1;
         this.countdown();
 
-        // .then((res) => {
-        //   console.log(res);
-        //   this.currentStep += 1;
-        //   this.countdown();
-        //   // this.setNewPassword();
-        // });
         this.$nextTick(() => {
           this.$refs.otpForm.reset();
         });
-        // });
       } catch (error) {
         console.log(error);
       }
@@ -630,7 +607,7 @@ export default {
     async register() {
       try {
         const success = await this.$refs.registerForm.validate();
-        // console.log(success);
+
         if (!success) {
           return;
         }
@@ -645,17 +622,15 @@ export default {
             confirmPassword: this.confirm,
           }
         );
-        // console.log(res);
+
         this.regisId = res.data._id;
         this.$nextTick(() => {
           this.$refs.registerForm.reset();
         });
-        // console.log(res);
+
         this.dialog = true;
         this.countdown();
       } catch (error) {
-        // console.log(error);
-        // console.log(error.toJSON().config.data);
         this.$swal.fire({
           confirmButtonColor: "#19ba88",
           confirmButtonText: "ตกลง",
@@ -727,15 +702,10 @@ export default {
     async resendOtpRegister() {
       console.log("resend");
       try {
-        // const res = await this.$axios.put(
-        //   `${this.$config.authURL}user/againOTP?id=${this.regisId}`
-        // );
-        // console.log(res);
         await this.$axios.patch(`${this.$config.authURL}user/forgot`, {
           email: this.emailOtp,
         });
-        // this.regisId = res.data._id;
-        //
+
         clearInterval(this.timeInterval);
         this.countdown();
       } catch (error) {
@@ -776,9 +746,6 @@ export default {
 .tooltip {
   position: relative;
   cursor: pointer;
-  // .tooltip-text {
-
-  // }
 }
 .ui-icon-cross {
   display: flex;
@@ -927,7 +894,6 @@ input[id="radio-3"] {
   img {
     width: 100%;
   }
-  // margin-bottom: 20px;
 }
 .test {
   text-align: center;
@@ -953,7 +919,7 @@ input[id="radio-3"] {
       @media (min-width: 1440px) {
         width: 100%;
         background-color: $light;
-        // padding: 14px 24px;
+
         padding: 14px 48px 14px 16px;
         font-size: 16px;
         border-radius: 50px;
@@ -982,7 +948,6 @@ input[id="radio-3"] {
     margin-bottom: 5px !important;
     @media (min-width: 1440px) {
       font-size: 14px;
-      // margin-bottom: 5px !important;
     }
   }
 }
@@ -992,7 +957,6 @@ input[id="radio-3"] {
     margin-bottom: 5px !important;
     @media (min-width: 1440px) {
       font-size: 14px;
-      // margin-bottom: 5px !important;
     }
   }
   input {
@@ -1071,7 +1035,7 @@ input[id="radio-3"] {
 
 .set-forget-pass {
   font-size: 12px;
-  // padding: 10px 0px 10px 0px;
+
   text-decoration: underline;
   cursor: pointer;
 }

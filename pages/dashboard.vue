@@ -62,7 +62,6 @@
                       >
                         <div class="card-block">
                           <div class="thumbnail">
-                            <!-- <img src="@/assets/imgs/img-thumbnail.jpg" alt="" /> -->
                             <img
                               :src="`${$config.articleURL}readFileId?id=${i._id}`"
                               alt=""
@@ -129,7 +128,6 @@
                       >
                         <div class="card-block">
                           <div class="thumbnail">
-                            <!-- <img src="@/assets/imgs/img-thumbnail.jpg" alt="" /> -->
                             <img
                               :src="`${$config.findHome}readFileIdFindHome?id=${p._id}`"
                               alt=""
@@ -277,7 +275,7 @@
                             :src="`${$config.articleURL}readFileId?id=${a._id}`"
                             alt=""
                           />
-                          <!-- <img src="@/assets/imgs/img-thumbnail.jpg" alt="" /> -->
+
                           {{ a.title }}
                         </div>
                       </v-col>
@@ -587,7 +585,7 @@
                           :src="`${$config.findHome}readFileIdFindHome?id=${p._id}`"
                           alt=""
                         />
-                        <!-- <img src="@/assets/imgs/img-thumbnail.jpg" alt="" /> -->
+
                         {{ p.generalInfo.catName }}
                       </div>
                     </v-col>
@@ -662,20 +660,6 @@
                           </p>
                           <p class="mb-0">{{ account.email }}</p>
                           <p class="mb-0">{{ account.tel }}</p>
-                          <!-- <p class="mb-0">
-                            {{
-                              account.address.province +
-                              "," +
-                              " " +
-                              account.address.subDistrict +
-                              "," +
-                              " " +
-                              account.address.district +
-                              "," +
-                              " " +
-                              account.address.zipCode
-                            }}
-                          </p> -->
                         </div>
                         <div
                           @click="deleteAccount(account._id)"
@@ -713,8 +697,6 @@ import { ValidationObserver } from "vee-validate";
 import BaseButton from "../components/punmaew/components/BaseButton.vue";
 import CardDialog from "../components/punmaew/components/CardDialog.vue";
 export default {
-  // middleware: "authAdmin",
-  // middleware: "auth",
   auth: false,
   components: {
     BaseButton,
@@ -762,7 +744,7 @@ export default {
         { id: 2, name: "โพสต์หาบ้าน" },
         { id: 3, name: "บัญชีผู้ใช้" },
       ],
-      // selectTabId: 1,
+
       isEditArticle: false,
       isNewArticle: false,
       sourceArticle: "",
@@ -806,7 +788,6 @@ export default {
     window.onbeforeunload = function () {
       return "Changes you made may not be saved.";
     };
-    // return this.$auth.logout();
   },
   async created() {
     if (
@@ -816,8 +797,6 @@ export default {
       this.$router.push("/loginAdmin");
     }
     await this.fetchData();
-    // const menu = this.$route.query.menu;
-    // this.$store.commit("SET_MENU", menu);
   },
   methods: {
     async updateArticle() {
@@ -844,16 +823,14 @@ export default {
           }
         );
 
-        // updateImageArticle?id=
         if (this.imageFile) {
           let formData = new FormData();
           formData.append("image", this.imageFile);
-          // const uploadImageArticle =
+
           await this.$axios.post(
             `${this.$config.articleURL}updateImageArticle?id=${this.editArticleId}`,
             formData
           );
-          // console.log(uploadImageArticle);
         }
         this.$nextTick(() => {
           this.$refs.updateArticleForm.reset();
@@ -874,7 +851,7 @@ export default {
     getDataArticle(article) {
       this.isEditArticle = true;
       this.editArticleId = article._id;
-      // console.log(article);
+
       this.articleName = article.title;
       const pars = [];
       for (let index = 0; index < article.details.length; index++) {
@@ -897,14 +874,12 @@ export default {
         }
 
         const details = [];
-        // pars: [{ id: 1, no: 1, text: "" }],
+
         for (let index = 0; index < this.pars.length; index++) {
-          // index < this.pars.length ใช่ ทำข้างล่าง
           details.push({
             paraNumber: this.pars[index].no,
             text: this.pars[index].text,
           });
-          // index++
         }
 
         const articleDetails = await this.$axios.post(
@@ -918,12 +893,11 @@ export default {
 
         let formData = new FormData();
         formData.append("image", this.imageFile);
-        // const uploadImageArticle =
+
         await this.$axios.post(
           `${this.$config.articleURL}uploadArticle/${articleDetails.data.postIdArticle}`,
           formData
         );
-        // console.log(uploadImageArticle);
 
         this.$nextTick(() => {
           this.$refs.createArticleForm.reset();
@@ -941,7 +915,6 @@ export default {
           `${this.$config.articleURL}allArticle`
         );
         this.articles = article.data;
-        // console.log(article.data);
 
         const res = await this.$axios.get(`${this.$config.findHome}allPost`);
         this.posts = res.data;
@@ -1105,9 +1078,6 @@ export default {
       this.$refs.fileInput.click();
     },
     async uploadImage(event) {
-      // const { valid } = await this.$refs.provider.validate(event);
-      // if (valid) {
-      // console.log("Uploaded the file...");
       var input = event.target;
       if (input.files && input.files[0]) {
         const { valid } = await this.$refs.provider.validate(event);
@@ -1120,7 +1090,6 @@ export default {
           reader.readAsDataURL(input.files[0]);
         }
       }
-      // }
     },
     addParagraph() {
       this.pars.push({
@@ -1135,7 +1104,7 @@ export default {
     },
     showMoreArticle() {
       this.moreArticle = !this.moreArticle;
-      // console.log(this.moreArticle);
+
       if (this.articleCount === this.articles.length) {
         this.articleCount = 3;
         return;
@@ -1145,7 +1114,7 @@ export default {
     },
     showMorePost() {
       this.morePost = !this.morePost;
-      // console.log(this.morePost);
+
       if (this.postCount === this.posts.length) {
         this.postCount = 3;
         return;
@@ -1155,7 +1124,7 @@ export default {
     },
     showMoreUser() {
       this.moreUser = !this.moreUser;
-      // console.log(this.moreUser);
+
       if (this.userCount === this.users.length) {
         this.userCount = 3;
         return;
@@ -1220,10 +1189,7 @@ export default {
   border-radius: 20px;
   box-shadow: 0px 4px 30px rgba(0, 0, 0, 0.15);
 }
-// ::v-deep .v-overlay__scrim {
-//   width: 75%;
-//   left: auto;
-// }
+
 .btn-area {
   gap: 10px;
 }
@@ -1390,7 +1356,6 @@ export default {
   }
 }
 .search-area {
-  // margin-top: 16px;
   background-color: $white;
   box-shadow: 0px 2px 20px rgba(0, 0, 0, 0.1);
   border-radius: 50px;
@@ -1478,13 +1443,12 @@ export default {
   display: flex;
   justify-content: center;
   align-items: center;
-  // color: $purple;
+
   color: $purple-dark;
   i {
     display: flex;
   }
   &:hover {
-    // color: $purple-dark;
     color: $purple;
   }
 }
@@ -1505,8 +1469,7 @@ export default {
     line-height: 0;
     img {
       max-width: 100%;
-      // width: 100%;
-      // height: 260px;
+
       transition: 0.3s all;
       &:hover {
         transform: scale(1.1);
@@ -1550,7 +1513,6 @@ export default {
 .bar-block {
   cursor: pointer;
   &:hover {
-    // border-bottom: 5px solid $purple-dark;
     border-radius: 10px;
     color: $purple-dark;
   }

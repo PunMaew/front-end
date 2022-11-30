@@ -1198,7 +1198,7 @@ export default {
     async filterAction(action) {
       if (action === "old-post") {
         this.sortByName = "เก่า";
-        // console.log("old-post");
+
         try {
           const res = await this.$axios.get(`${this.$config.findHome}oldPost`);
           this.posts = res.data;
@@ -1221,7 +1221,7 @@ export default {
 
       if (action === "best-match") {
         this.sortByName = "แมวในอุดมคติ";
-        // console.log("best-match");
+
         if (this.loggedIn) {
           if (this.$store.state.auth.user.idealCat.length <= 0) {
             const checked = await this.$swal.fire({
@@ -1257,7 +1257,7 @@ export default {
       }
       if (action === "favor") {
         this.sortByName = "ถูกใจแล้ว";
-        // console.log("favor");
+
         if (this.loggedIn) {
           try {
             const res = await this.$axios.get(
@@ -1281,7 +1281,7 @@ export default {
       }
       if (action === "not-adopt") {
         this.sortByName = "ยังไม่ถูกรับเลี้ยง";
-        // console.log("not-adopt");
+
         try {
           const res = await this.$axios.get(
             `${this.$config.findHome}getNotAdopt`
@@ -1293,7 +1293,7 @@ export default {
       }
       if (action === "by-adopted") {
         this.sortByName = "รับเลี้ยงแล้ว";
-        // console.log("by-adopted");
+
         try {
           const res = await this.$axios.get(`${this.$config.findHome}getAdopt`);
           this.posts = res.data.success;
@@ -1305,14 +1305,13 @@ export default {
     async fetchData() {
       try {
         const res = await this.$axios.get(`${this.$config.findHome}allPost`);
-        // console.log(res.data);
+
         this.posts = res.data;
 
         const random = await this.$axios.get(
           `${this.$config.findHome}RandomPost`
         );
         this.randomPost = random.data;
-        // console.log(random.data);
       } catch (error) {
         console.log(error);
       }
@@ -1323,7 +1322,7 @@ export default {
           const res = await this.$axios.post(
             `${this.$config.findHome}likePost?id=${id}`
           );
-          // console.log(res);
+
           this.$store.commit("SET_FAVOR", id);
         } catch (error) {
           console.log(error);
@@ -1771,7 +1770,6 @@ export default {
     overflow: hidden;
     line-height: 0;
     img {
-      // max-width: 100%;
       width: 100%;
       height: 200px;
       object-fit: cover;
@@ -1834,9 +1832,7 @@ export default {
   border-radius: 50px;
   margin-bottom: 0px;
 }
-// .gap-drop-down {
-//   gap: 10px;
-// }
+
 .btn-search {
   background: linear-gradient(180deg, #fdc454 0%, #ff9474 100%);
   box-shadow: 0px 4px 15px #ffcab4;

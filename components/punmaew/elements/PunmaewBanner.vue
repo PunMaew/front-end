@@ -24,59 +24,8 @@
                 <div>
                   <slot name="content-banner" />
                 </div>
-                <!-- <div>
-                  <p class="text-center text-sm-left desc-banner mb-0">
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                    Velit
-                  </p>
-                  <button class="btn-search d-none d-sm-flex mt-4">
-                    <img src="@/assets/imgs/icon-search.svg" alt="" />
-                    เริ่มค้นหาแมวในอุดมคติ
-                  </button>
-                </div> -->
-
-                <!-- or -->
-
-                <!-- <div>
-                  <v-row justify="center" class="banner-set-row">
-                    <v-col cols="12" lg="10" align-self="center" class="pt-0">
-                      <div class="btn-area">
-                        <v-row no-gutters justify="center" class="btn-set-row">
-                          <v-col align-self="center">
-                            <button @click="finderHome" class="adoption-btn">
-                              <img
-                                src="@/assets/imgs/icon-cat.svg"
-                                alt="finderHome"
-                              />
-                              <span>หาบ้านให้แมว</span>
-                            </button>
-                          </v-col>
-                          <v-col align-self="center">
-                            <button @click="adoptCat" class="adoption-btn">
-                              <img
-                                src="@/assets/imgs/icon-cat2.svg"
-                                alt="adoptCat"
-                              />
-                              <span>รับเลี้ยงแมว</span>
-                            </button>
-                          </v-col>
-                        </v-row>
-                      </div>
-                    </v-col>
-                  </v-row>
-                </div> -->
               </v-col>
               <slot name="details-other" />
-              <!-- <v-col
-                cols="10"
-                align-self="center"
-                class="pt-0 d-sm-none d-md-none d-lg-none d-xl-none"
-              >
-                <button class="btn-search">
-                  <img src="@/assets/imgs/icon-search.svg" alt="" />
-                  เริ่มค้นหาแมวในอุดมคติ
-                </button>
-              </v-col> -->
             </v-row>
           </div>
         </v-col>

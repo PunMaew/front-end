@@ -6,7 +6,6 @@ $swal2-title-font-size: 1.4rem;
 $swal2-content-margin: 0 0 1em 0;
 $swal2-confirm-button-font-size: 1em;
 .swal2-confirm.swal2-styled {
-  // background: $success !important;
   padding: 0.5em 2em;
   border-radius: 50px !important;
 }
@@ -18,10 +17,7 @@ $swal2-confirm-button-font-size: 1em;
   border: 1px solid $gray !important;
   border-radius: 50px !important;
 }
-// .swal2-icon.swal2-success {
-//   border-color: $success !important;
-//   color: $success !important;
-// }
+
 .swal2-icon.swal2-warning {
   border-color: $error !important;
   color: $error !important;
@@ -38,4 +34,3 @@ $swal2-confirm-button-font-size: 1em;
 .swal2-popup.swal2-modal {
   border-radius: 20px;
 }
-// @import "~sweetalert2/src/sweetalert2";

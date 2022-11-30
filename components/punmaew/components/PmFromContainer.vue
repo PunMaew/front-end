@@ -68,7 +68,7 @@ export default {
     async updateFindHome() {
       if (this.currentStep === 3) {
         let valid = await this.$refs.contactForm.validContact();
-        console.log(valid);
+
         if (valid) {
           this.$emit("edit");
         } else {
@@ -79,7 +79,7 @@ export default {
     async submitFindHome() {
       if (this.currentStep === 3) {
         let valid = await this.$refs.contactForm.validContact();
-        console.log(valid);
+
         if (valid) {
           this.$emit("submit");
         } else {
@@ -100,7 +100,7 @@ export default {
     async nextStep() {
       if (this.progress.generalInfo === 1 && this.currentStep === 1) {
         let valid = await this.$refs.generalForm.validInfoFirst();
-        console.log(valid);
+
         if (valid) {
           this.$emit("nextStep");
         } else {
@@ -108,7 +108,7 @@ export default {
         }
       } else if (this.progress.generalInfo === 2 && this.currentStep === 1) {
         let valid = await this.$refs.generalForm.validInfoSecond();
-        console.log(valid);
+
         if (valid) {
           this.$emit("nextStep");
         } else {
@@ -116,7 +116,7 @@ export default {
         }
       } else if (this.progress.generalInfo === 3 && this.currentStep === 1) {
         let valid = await this.$refs.generalForm.validInfoThird();
-        console.log(valid);
+
         if (valid) {
           this.$emit("nextStep");
         } else {
@@ -124,7 +124,7 @@ export default {
         }
       } else if (this.progress.generalInfo === 4 && this.currentStep === 1) {
         let valid = await this.$refs.generalForm.validInfoFourth();
-        console.log(valid);
+
         if (valid) {
           this.$emit("nextStep");
         } else {
@@ -132,27 +132,18 @@ export default {
         }
       } else if (this.currentStep === 2) {
         let valid = await this.$refs.characterForm.validCharacter();
-        console.log(valid);
+
         if (valid) {
           this.$emit("nextStep");
         } else {
           return;
         }
       }
-      // else if (this.currentStep === 3) {
-      //   let valid = await this.$refs.contactForm.validContact();
-      //   console.log(valid);
-      //   if (valid) {
-      //     this.$emit("nextStep");
-      //   } else {
-      //     return;
-      //   }
-      // }
     },
     async prevStep() {
       if (this.progress.generalInfo === 1 && this.currentStep === 1) {
         let valid = await this.$refs.generalForm.validInfoFirst();
-        console.log(valid);
+
         if (valid) {
           this.$emit("prevStep");
         } else {
@@ -160,7 +151,7 @@ export default {
         }
       } else if (this.progress.generalInfo === 2 && this.currentStep === 1) {
         let valid = await this.$refs.generalForm.validInfoSecond();
-        console.log(valid);
+
         if (valid) {
           this.$emit("prevStep");
         } else {
@@ -168,7 +159,7 @@ export default {
         }
       } else if (this.progress.generalInfo === 3 && this.currentStep === 1) {
         let valid = await this.$refs.generalForm.validInfoThird();
-        console.log(valid);
+
         if (valid) {
           this.$emit("prevStep");
         } else {
@@ -176,7 +167,7 @@ export default {
         }
       } else if (this.progress.generalInfo === 4 && this.currentStep === 1) {
         let valid = await this.$refs.generalForm.validInfoFourth();
-        console.log(valid);
+
         if (valid) {
           this.$emit("prevStep");
         } else {
@@ -184,7 +175,7 @@ export default {
         }
       } else if (this.currentStep === 2) {
         let valid = await this.$refs.characterForm.validCharacter();
-        console.log(valid);
+
         if (valid) {
           this.$emit("prevStep");
         } else {
@@ -201,7 +192,6 @@ export default {
 .set-container {
   min-height: 460px;
   @media (min-width: 1440px) {
-    // max-height: 536px;
     max-height: 750px;
   }
 }
